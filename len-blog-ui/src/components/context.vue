@@ -16,7 +16,7 @@
           <li class="one">
             <Card style="height: 200px">
               <div class="blog-title" @click="detail">
-            <h3>lenos快速开发脚手架lenos啊啊啊啊啊啊啊啊......</h3>
+            <h3>lenos快速开发脚手架lenos{{id}}......</h3>
               </div>
             <p class="time">作者：<span>zxm</span> • 2017-10-31 10:05:47</p>
             <p class="cot">lenos快速开发脚手架</p>
@@ -66,7 +66,6 @@
 
 
   export default {
-
   name: 'context',
   data (){
     return {
@@ -82,6 +81,7 @@
         }
       ],
       value1:0,
+      param:''
     }
   },
   created:function(){
@@ -95,6 +95,9 @@
       // return this.msg.split('').reverse().join('');
       return Date.now();
     }*/
+    id:function(){
+      return this.$route.params.id
+    }
   },
 
   methods:{
@@ -115,6 +118,8 @@
       this.$router.push('/home/'+this.message);
     }
   },
+    mounted(){
+    },
 
   //侦听属性
   watch:{

@@ -7,25 +7,31 @@
       <Col :xs="24" :sm="18" :lg="14">
         <Menu mode="horizontal" :theme="theme1" active-name="1">
           <MenuItem name="1">
-            <router-link to="/blogHead">
+            <router-link to="/java">
               <div>
                 <Icon type="ios-paper"></Icon>
                 java
               </div>
             </router-link>
           </MenuItem>
+          <router-link to="/架构">
           <MenuItem name="2">
             <Icon type="ios-people"></Icon>
             架构
           </MenuItem>
+          </router-link>
+          <router-link to="/Linux">
           <MenuItem name="3">
             <Icon type="ios-people"></Icon>
             Linux
           </MenuItem>
+          </router-link>
+          <router-link to="/其他">
           <MenuItem name="4">
             <Icon type="ios-people"></Icon>
             其他
           </MenuItem>
+          </router-link>
         </Menu>
       </Col>
     </Row>

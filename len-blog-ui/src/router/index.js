@@ -11,7 +11,7 @@ export default new Router({
 
   routes: [
     {
-      path: '/',
+      path: '/:id',
       name: 'context',
       component: context
     },
