@@ -11,8 +11,13 @@ export default new Router({
 
   routes: [
     {
-      path: '/:id',
+      path: '/',
       name: 'context',
+      component: context
+    },
+    {
+      path: '/:id',
+      name: 'detail',
       component: context
     },
     {
