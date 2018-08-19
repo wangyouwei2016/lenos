@@ -8,6 +8,7 @@ import com.len.base.CurrentUser;
 import com.len.exception.MyException;
 import com.len.util.ReType;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.ibatis.session.RowBounds;
 import org.apache.shiro.SecurityUtils;
 
 import java.io.Serializable;
@@ -44,20 +45,24 @@ public abstract class BaseServiceImpl<T, E extends Serializable> implements Base
     public abstract BaseMapper<T, E> getMappser();
 
 
+
     @Override
     public List<T> select(T t) {
         return getMappser().select(t);
     }
+
 
     @Override
     public List<T> selectAll() {
         return getMappser().selectAll();
     }
 
+
     @Override
     public List<T> selectByIds(String ids) {
         return getMappser().selectByIds(ids);
     }
+
 
     @Override
     public int selectCount(T t) {
@@ -65,9 +70,11 @@ public abstract class BaseServiceImpl<T, E extends Serializable> implements Base
     }
 
 
+    @Override
     public int deleteByPrimaryKey(E id) {
         return getMappser().deleteByPrimaryKey(id);
     }
+
 
     @Override
     public int insert(T record) {
@@ -120,11 +127,13 @@ public abstract class BaseServiceImpl<T, E extends Serializable> implements Base
         return record;
     }
 
+
     @Override
     public int insertSelective(T record) {
         record = addValue(record, true);
         return getMappser().insertSelective(record);
     }
+
 
 
     @Override
@@ -133,51 +142,61 @@ public abstract class BaseServiceImpl<T, E extends Serializable> implements Base
         return getMappser().updateByPrimaryKeySelective(record);
     }
 
+
     @Override
     public int updateByPrimaryKey(T record) {
         record = addValue(record, false);
         return getMappser().updateByPrimaryKey(record);
     }
 
+
     @Override
     public List<T> selectListByPage(T record) {
         return getMappser().selectListByPage(record);
     }
+
 
     @Override
     public int deleteByPrimaryKey(Object o) {
         return getMappser().deleteByPrimaryKey(o);
     }
 
+
     @Override
     public int delete(T t) {
         return getMappser().delete(t);
     }
+
 
     @Override
     public boolean existsWithPrimaryKey(Object o) {
         return getMappser().existsWithPrimaryKey(o);
     }
 
+
     @Override
     public T selectByPrimaryKey(Object o) {
         return getMappser().selectByPrimaryKey(o);
     }
+
 
     @Override
     public T selectOne(T t) {
         return getMappser().selectOne(t);
     }
 
+
     @Override
     public int deleteByIds(String s) {
         return getMappser().deleteByIds(s);
     }
 
+
     @Override
     public int insertList(List<T> list) {
         return getMappser().insertList(list);
     }
+
 
     @Override
     public int insertUseGeneratedKeys(T t) {
@@ -205,4 +224,51 @@ public abstract class BaseServiceImpl<T, E extends Serializable> implements Base
         return new ReType(tPage.getTotal(), tList);
     }
 
+
+    @Override
+    public int deleteByExample(Object o) {
+        return getMappser().deleteByExample(o);
+    }
+
+
+    @Override
+    public List<T> selectByExample(Object o) {
+        return getMappser().selectByExample(o);
+    }
+
+
+    @Override
+    public int selectCountByExample(Object o) {
+        return getMappser().selectCountByExample(o);
+    }
+
+
+    @Override
+    public T selectOneByExample(Object o) {
+        return getMappser().selectOneByExample(o);
+    }
+
+
+    @Override
+    public int updateByExample(T t, Object o) {
+        return getMappser().updateByExample(t,o);
+    }
+
+
+    @Override
+    public int updateByExampleSelective(T t, Object o) {
+        return getMappser().updateByExampleSelective(t,o);
+    }
+
+
+    @Override
+    public List<T> selectByExampleAndRowBounds(Object o, RowBounds rowBounds) {
+        return getMappser().selectByExampleAndRowBounds(o,rowBounds);
+    }
+
+
+    @Override
+    public List<T> selectByRowBounds(T t, RowBounds rowBounds) {
+        return getMappser().selectByRowBounds(t,rowBounds);
+    }
 }
