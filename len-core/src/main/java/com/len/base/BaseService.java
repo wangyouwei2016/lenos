@@ -69,4 +69,6 @@ public interface BaseService<T, E extends Serializable> {
 
     public ReType show(T t, int page, int limit);
 
+    public ReType getList(T t, int page, int limit);
+
 }

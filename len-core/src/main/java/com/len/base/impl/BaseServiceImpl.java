@@ -226,6 +226,20 @@ public abstract class BaseServiceImpl<T, E extends Serializable> implements Base
 
 
     @Override
+    public ReType getList(T t, int page, int limit) {
+        List<T> tList = null;
+        Page<T> tPage = PageHelper.startPage(page, limit);
+        try {
+            tList = getMappser().selectListByPage(t);
+        } catch (MyException e) {
+            log.error("class:BaseServiceImpl ->method:getList->message:" + e.getMessage());
+            e.printStackTrace();
+        }
+        return new ReType(tPage.getTotal(),tPage.getPageNum(), tList);
+    }
+
+
+    @Override
     public int deleteByExample(Object o) {
         return getMappser().deleteByExample(o);
     }
