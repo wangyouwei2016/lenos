@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Table(name = "user_leave")
 public class UserLeave implements Serializable {
     @Id
-    @GeneratedValue(generator = "JDBC")
+    @Column(name = "id")
     private String id;
 
     @Column(name = "user_id")
