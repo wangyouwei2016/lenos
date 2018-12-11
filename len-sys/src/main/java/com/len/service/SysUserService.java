@@ -62,4 +62,5 @@ public interface SysUserService extends BaseService<SysUser,String> {
    */
   int rePass(SysUser user);
 
+  public void setMenuAndRoles(String username);
 }
