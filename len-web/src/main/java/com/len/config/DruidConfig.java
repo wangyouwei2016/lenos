@@ -1,3 +1,4 @@
+/*
 package com.len.config;
 
 import com.alibaba.druid.pool.DruidDataSource;
@@ -20,11 +21,13 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
+*/
 /**
  * @author zhuxiaomeng
  * @date 2018/1/2.
  * @email 154040976@qq.com
- */
+ *//*
+
 @Configuration
 @EnableTransactionManagement
 public class DruidConfig {
@@ -104,3 +107,4 @@ public class DruidConfig {
   }
 
 }
+*/

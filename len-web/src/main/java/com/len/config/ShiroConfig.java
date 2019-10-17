@@ -17,8 +17,10 @@ import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.filter.DelegatingFilterProxy;
 
 import javax.servlet.Filter;
 import java.util.*;
@@ -175,7 +177,6 @@ public class ShiroConfig {
         defaultWebSessionManager.setSessionIdUrlRewritingEnabled(false);
         return defaultWebSessionManager;
     }
-/*
   @Bean
   public FilterRegistrationBean delegatingFilterProxy(){
     FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean();
@@ -185,7 +186,7 @@ public class ShiroConfig {
 
     filterRegistrationBean.setFilter(proxy);
     return filterRegistrationBean;
-  }*/
+  }
 
 
 }

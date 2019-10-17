@@ -116,11 +116,11 @@
 
 
 
-    <dependency>
+    <!--<dependency>
       <groupId>com.alibaba</groupId>
       <artifactId>druid</artifactId>
       <version>1.1.10</version>
-    </dependency>
+    </dependency>-->
 
     <!--mybatis spring整合包-->
     <dependency>
