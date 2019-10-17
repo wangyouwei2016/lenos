@@ -74,7 +74,7 @@ java -jar len-web.jar
 
 ## 技术
 * jdk：1.8
-* 核心框架：spring boot 2.0.1.RELEASE
+* 核心框架：spring boot 2.1.9.RELEASE
 * 安全框架：Apache Shiro
 * 工作流引擎：Activiti
 * 数据库连接池：druid
