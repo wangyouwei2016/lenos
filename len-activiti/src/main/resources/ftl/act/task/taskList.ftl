@@ -41,7 +41,7 @@
   </div>
 </div>
 
-<table id="taskList" class="layui-hide" lay-filter="task"></table>
+<table id="taskList" width="100%" lay-filter="task"></table>
 <script type="text/html" id="toolBar">
   {{# if(d.flag){ }}
   <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="update"><i class="layui-icon">&#xe640;</i>编辑</a>
@@ -100,6 +100,14 @@
       id: 'taskList',
       elem: '#taskList'
       , url: 'showTaskList'
+        ,parseData: function(res){
+            return {
+                "code": res.code,
+                "msg": res.msg,
+                "count": res.count,
+                "data": res.data
+            };
+        }
       , cols: [[
           {checkbox: true, fixed: true, width: '5%'}
         , {field: 'id', title: '任务编码', width: '10%', sort: true}

@@ -9,57 +9,46 @@
 <head>
   <meta charset="UTF-8">
   <title>角色管理</title>
-  <meta name="renderer" content="webkit">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <meta name="viewport"
-        content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi"/>
-  <link rel="stylesheet" href="${re.contextPath}/plugin/layui/css/layui.css">
-  <link rel="stylesheet" href="${re.contextPath}/plugin/lenos/main.css">
-  <script type="text/javascript" src="${re.contextPath}/plugin/jquery/jquery-3.2.1.min.js"></script>
-  <script type="text/javascript" src="${re.contextPath}/plugin/layui/layui.all.js"
-          charset="utf-8"></script>
+<#include "/system/base/header.ftl">
 </head>
 
 <body>
 <div class="lenos-search">
   <div class="select">
     角色名：
-    <div class="layui-inline">
+    <span class="layui-inline">
       <input class="layui-input" height="20px" id="rolename" autocomplete="off">
-    </div>
+    </span>
     描述：
-    <div class="layui-inline">
+    <span class="layui-inline">
       <input class="layui-input" height="20px" id="remark" autocomplete="off">
-    </div>
-    <button class="select-on layui-btn layui-btn-sm" data-type="select"><i class="layui-icon"></i>
-    </button>
-    <button class="layui-btn layui-btn-sm icon-position-button" id="refresh" style="float: right;"
-            data-type="reload">
-      <i class="layui-icon">ဂ</i>
-    </button>
+    </span>
   </div>
-
+  <div class="len-form-item">
+    <button type="button" class="layui-btn layui-btn-normal layui-btn layui-btn-sm"  data-type="select">查询</button>
+    <button type="button" class="layui-btn layui-btn-normal layui-btn layui-btn-sm" data-type="reload">重置</button>
+  </div>
 </div>
-<div class="layui-col-md12" style="height:40px;margin-top:3px;">
+<div class="layui-col-md12">
   <div class="layui-btn-group">
     <@shiro.hasPermission name="role:add">
-    <button class="layui-btn layui-btn-normal" data-type="add">
+    <button class="layui-btn layui-btn-normal layui-btn-sm" data-type="add">
       <i class="layui-icon">&#xe608;</i>新增
     </button>
     </@shiro.hasPermission>
     <#--<@shiro.hasPermission name="role:update">-->
-    <button class="layui-btn layui-btn-normal" data-type="update">
+    <button class="layui-btn layui-btn-normal layui-btn-sm" data-type="update">
       <i class="layui-icon">&#xe642;</i>编辑
     </button>
    <#-- </@shiro.hasPermission>-->
     <@shiro.hasPermission name="role:select">
-    <button class="layui-btn layui-btn-normal" data-type="detail">
+    <button class="layui-btn layui-btn-normal layui-btn-sm" data-type="detail">
       <i class="layui-icon">&#xe605;</i>查看
     </button>
     </@shiro.hasPermission>
   </div>
 </div>
-<table id="roleList" class="layui-hide" lay-filter="user"></table>
+<table id="roleList"  width="100%"  lay-filter="user"></table>
 <script type="text/html" id="toolBar">
   <@shiro.hasPermission name="role:add">
   <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
@@ -120,6 +109,14 @@
       id: 'roleList',
       elem: '#roleList'
       , url: 'showRoleList'
+      ,parseData: function(res){
+        return {
+          "code": res.code,
+          "msg": res.msg,
+          "count": res.count,
+          "data": res.data
+        };
+      }
       , cols: [[
         {checkbox: true, fixed: true, width: '5%'}
         , {field: 'roleName', title: '角色名称', width: '20%', sort: true}
@@ -193,11 +190,7 @@
       }
     });
 
-    $('.layui-col-md12 .layui-btn').on('click', function () {
-      var type = $(this).data('type');
-      active[type] ? active[type].call(this) : '';
-    });
-    $('.select .layui-btn').on('click', function () {
+    $('.len-form-item .layui-btn,.layui-col-md12 .layui-btn').on('click', function () {
       var type = $(this).data('type');
       active[type] ? active[type].call(this) : '';
     });

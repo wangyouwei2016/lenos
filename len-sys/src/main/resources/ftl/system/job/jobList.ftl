@@ -8,15 +8,7 @@
 <head>
   <meta charset="UTF-8">
   <title>任务管理</title>
-  <meta name="renderer" content="webkit">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <meta name="viewport"
-        content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi"/>
-  <link rel="stylesheet" href="${re.contextPath}/plugin/layui/css/layui.css">
-  <link rel="stylesheet" href="${re.contextPath}/plugin/lenos/main.css">
-  <script type="text/javascript" src="${re.contextPath}/plugin/jquery/jquery-3.2.1.min.js"></script>
-  <script type="text/javascript" src="${re.contextPath}/plugin/layui/layui.all.js"
-          charset="utf-8"></script>
+<#include "/system/base/header.ftl">
 </head>
 
 <body>
@@ -30,35 +22,32 @@
     <div class="layui-inline">
       <input class="layui-input" height="20px" id="remark" autocomplete="off">
     </div>
-    <button class="select-on layui-btn layui-btn-sm" data-type="select"><i class="layui-icon"></i>
-    </button>
-    <button class="layui-btn layui-btn-sm icon-position-button" id="refresh" style="float: right;"
-            data-type="reload">
-      <i class="layui-icon">ဂ</i>
-    </button>
   </div>
-
+  <div class="len-form-item">
+    <button type="button" class="layui-btn layui-btn-normal layui-btn layui-btn-sm"  data-type="select">查询</button>
+    <button type="button" class="layui-btn layui-btn-normal layui-btn layui-btn-sm" data-type="reload">重置</button>
+  </div>
 </div>
-<div class="layui-col-md12" style="height:40px;margin-top:3px;">
+<div class="layui-col-md12">
   <div class="layui-btn-group">
     <@shiro.hasPermission name="job:add">
-    <button class="layui-btn layui-btn-sm" data-type="add">
+    <button class="layui-btn layui-btn-normal layui-btn-sm" data-type="add">
       <i class="layui-icon">&#xe608;</i>新增
     </button>
     </@shiro.hasPermission>
     <@shiro.hasPermission name="job:update">
-    <button class="layui-btn layui-btn-sm" data-type="update">
+    <button class="layui-btn layui-btn-normal layui-btn-sm" data-type="update">
       <i class="layui-icon">&#xe642;</i>编辑
     </button>
    </@shiro.hasPermission>
     <@shiro.hasPermission name="job:select">
-    <button class="layui-btn layui-btn-sm" data-type="detail">
+    <button class="layui-btn layui-btn-normal layui-btn-sm" data-type="detail">
       <i class="layui-icon">&#xe605;</i>查看
     </button>
     </@shiro.hasPermission>
   </div>
 </div>
-<table id="jobList" class="layui-hide" lay-filter="job"></table>
+<table id="jobList" width="100%" lay-filter="job"></table>
 <script type="text/html" id="toolBar">
   <@shiro.hasPermission name="job:add">
   <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
@@ -81,7 +70,6 @@
 </@shiro.hasPermission>
 </script>
 <script>
-  /**前端后期完美后 会进行封装 目前先不处理 精力在后端。。。*/
   layui.laytpl.toDateString = function(d, format){
     var date = new Date(d || new Date())
         ,ymd = [
@@ -130,6 +118,14 @@
       id: 'jobList',
       elem: '#jobList'
       , url: 'showJobList'
+      ,parseData: function(res){
+        return {
+          "code": res.code,
+          "msg": res.msg,
+          "count": res.count,
+          "data": res.data
+        };
+      }
       , cols: [[
         {checkbox: true, fixed: true, width: '5%'}
         , {field: 'jobName', title: '任务名称', width: '10%', sort: true}
@@ -222,11 +218,7 @@
       }
     });
 
-    $('.layui-col-md12 .layui-btn').on('click', function () {
-      var type = $(this).data('type');
-      active[type] ? active[type].call(this) : '';
-    });
-    $('.select .layui-btn').on('click', function () {
+    $('.len-form-item .layui-btn,.layui-col-md12 .layui-btn').on('click', function () {
       var type = $(this).data('type');
       active[type] ? active[type].call(this) : '';
     });

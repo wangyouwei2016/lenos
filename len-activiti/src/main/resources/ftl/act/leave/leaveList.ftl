@@ -48,7 +48,7 @@
     </div>
 </div>
 
-<table id="leaveList" class="layui-hide" lay-filter="leave"></table>
+<table id="leaveList" width="100%"  lay-filter="leave"></table>
 <script type="text/html" id="toolBar">
   <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="getProcImage"><i class="layui-icon">&#xe640;</i>查看流程图</a>
   <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="leaveDetail"><i class="layui-icon">&#xe640;</i>查看详情</a>
@@ -126,6 +126,14 @@
       id: 'leaveList',
       elem: '#leaveList'
       , url: 'showLeaveList'
+      ,parseData: function(res){
+        return {
+          "code": res.code,
+          "msg": res.msg,
+          "count": res.count,
+          "data": res.data
+        };
+      }
       , cols: [[
           {checkbox: true, fixed: true, width: '5%'}
         , {field: 'userName', title: '申请人', width: '10%', sort: true}
