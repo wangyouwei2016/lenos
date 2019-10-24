@@ -10,6 +10,7 @@
     <meta charset="UTF-8">
     <title>请假流程示例</title>
 <#include "/system/base/header.ftl">
+    <script src="${re.contextPath}/plugin/activiti.js"></script>
 </head>
 
 <body>
@@ -183,17 +184,7 @@
             if (obj.event === 'start') {
                 start(data.key);
             } else if (obj.event === 'getProcImage') {
-                layer.open({
-                    id: 'leave-image',
-                    type: 2,
-                    area: ['880px', '400px'],
-                    fix: false,
-                    maxmin: true,
-                    shadeClose: false,
-                    shade: 0.4,
-                    title: '流程图',
-                    content: '/leave/shinePics/' + data.processInstanceId
-                });
+                activiti.img(data.processInstanceId);
             } else if (obj.event === 'leaveDetail') {
                 layer.open({
                     id: 'leave-detail',

@@ -5499,7 +5499,7 @@ button.close {
 .carousel-control .glyphicon-chevron-left,
 .carousel-control .glyphicon-chevron-right {
   position: absolute;
-  top: 50%;
+  top: 0%;
   z-index: 5;
   display: inline-block;
 }

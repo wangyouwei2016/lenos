@@ -29,22 +29,22 @@
 							<thead>
 							<tr>
 								<th><input ng-if="choseAssignmentFlag=='assignees'" type="checkbox" ng-click="selectAll($event)"></th>
-								<th>工号</th>
+								<th>用户名</th>
 								<th>姓名</th>
 							</tr>
 							</thead>
 							<tbody>
-							<tr ng-repeat="account in accounts">
+							<tr ng-click="selectThis($event,account)" ng-repeat="account in accounts">
 								<td>
 									<!--<input ng-if="choseAssignmentFlag=='assignee'" type="radio"   name="accountIdinfo"  ng-value="{{account.id}}"-->
-									 <!--ng-model="cardRadio"  ng-model="$parent.cardRadio" value="{{account.id}}" ng-checked="$index==0?true:false">-->
+									<!--ng-model="cardRadio"  ng-model="$parent.cardRadio" value="{{account.id}}" ng-checked="$index==0?true:false">-->
 
 									<!--<input type="radio" ng-model="$parent.kk" name="accountIds" ne-true-value="1"  ng-false-value="false">-->
 									<!--<input type="radio" ng-model="$parent.kk" name="accountIds" ne-true-value="0"  ng-false-value="false">-->
-									<input ng-if="choseAssignmentFlag=='assignee'" type="radio" ng-model="account.checked" name="accountsIds" value="{{account.id}}"
-										  >
+									<input ng-if="choseAssignmentFlag=='assignee'" ng-click="$event.stopPropagation();"  type="radio" ng-model="account.checked" name="accountsIds" value="{{account.id}}"
+									>
 
-									<input ng-if="choseAssignmentFlag=='assignees'" type="checkbox" ng-model="account.selected" ne-true-value="{{account.id}}"
+									<input ng-if="choseAssignmentFlag=='assignees'" ng-click="$event.stopPropagation();" type="checkbox" ng-model="account.selected" ne-true-value="{{account.id}}"
 										   ng-false-value="false">
 								</td>
 								<td>{{account.code}}</td>
