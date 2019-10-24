@@ -14,7 +14,7 @@ function popup(title, url, w, h,id) {
   if (h == null || h == '') {
     h = ($(window).height() - 50);
   }
-  layer.open({
+    window.top.layer.open({
     id: id,
     type: 2,
     area: [w + 'px', h + 'px'],

@@ -151,11 +151,11 @@
       table.on('tool(task)', function (obj) {
       var data = obj.data;
       if (obj.event === 'handle') {
-        popup('办理','agent/'+data.id,700,500,'task-agent');
+        popup('办理','/leave/agent/'+data.id,700,500,'task-agent');
       }else if(obj.event === 'update'){
         popup('编辑','${re.contextPath}/leave/updateLeave/'+data.id,700,500,'task-update');
       }else if(obj.event==='leaveDetail'){
-          layer.open({
+          window.top.layer.open({
               id: 'leave-detail',
               type: 2,
               area: [ '880px', '400px'],
@@ -164,7 +164,7 @@
               shadeClose: false,
               shade: 0.4,
               title: '审核详情',
-              content: "leaveDetail?processId="+data.processInstanceId
+              content: "/leave/leaveDetail?processId="+data.processInstanceId
           });
       }
     });

@@ -150,7 +150,7 @@
         });
       },
       add: function () {
-        add('添加角色', 'showAddRole', 700, 450);
+        add('添加角色', '/role/showAddRole', 700, 450);
       },
       update: function () {
         var checkStatus = table.checkStatus('roleList')
@@ -159,7 +159,7 @@
           layer.msg('请选择一行编辑', {icon: 5});
           return false;
         }
-        update('编辑角色', 'updateRole?id=' + data[0].id, 700, 450);
+        update('编辑角色', '/role/updateRole?id=' + data[0].id, 700, 450);
       },
       detail: function () {
         var checkStatus = table.checkStatus('roleList')
@@ -168,7 +168,7 @@
           layer.msg('请选择一行查看', {icon: 5});
           return false;
         }
-        detail('查看角色信息', 'updateRole?id=' + data[0].id, 700, 450);
+        detail('查看角色信息', '/role/updateRole?id=' + data[0].id, 700, 450);
       }
     };
 
@@ -180,13 +180,13 @@
     table.on('tool(user)', function (obj) {
       var data = obj.data;
       if (obj.event === 'detail') {
-        detail('编辑角色', 'updateRole?id=' + data.id, 700, 450);
+        detail('编辑角色', '/role/updateRole?id=' + data.id, 700, 450);
       } else if (obj.event === 'del') {
         layer.confirm('确定删除角色[<label style="color: #00AA91;">' + data.roleName + '</label>]?', function(){
           del(data.id);
         });
       } else if (obj.event === 'edit') {
-        update('编辑角色', 'updateRole?id=' + data.id, 700, 450);
+        update('编辑角色', '/role/updateRole?id=' + data.id, 700, 450);
       }
     });
 
@@ -212,24 +212,19 @@
     });
   }
   function detail(title, url, w, h) {
-    var number = 1;
     if (title == null || title == '') {
       title = false;
     }
-    ;
     if (url == null || url == '') {
       url = "/error/404";
     }
-    ;
     if (w == null || w == '') {
       w = ($(window).width() * 0.9);
     }
-    ;
     if (h == null || h == '') {
       h = ($(window).height() - 50);
     }
-    ;
-    layer.open({
+      window.top.layer.open({
       id: 'user-detail',
       type: 2,
       area: [w + 'px', h + 'px'],
@@ -239,7 +234,6 @@
       shade: 0.4,
       title: title,
       content: url + '&detail=true',
-      // btn:['关闭']
     });
   }
   /**
@@ -258,7 +252,7 @@
     if (h == null || h == '') {
       h = ($(window).height() - 50);
     }
-    layer.open({
+      window.top.layer.open({
       id: 'user-update',
       type: 2,
       area: [w + 'px', h + 'px'],
@@ -284,20 +278,16 @@
     if (title == null || title == '') {
       title = false;
     }
-    ;
     if (url == null || url == '') {
       url = "/error/404";
     }
-    ;
     if (w == null || w == '') {
       w = ($(window).width() * 0.9);
     }
-    ;
     if (h == null || h == '') {
       h = ($(window).height() - 50);
     }
-    ;
-    layer.open({
+      window.top.layer.open({
       id: 'user-add',
       type: 2,
       area: [w + 'px', h + 'px'],

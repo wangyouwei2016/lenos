@@ -165,7 +165,7 @@
                 });
             }
             , createLeave: function () {
-                add("申请请假", 'addLeave', 700, 450);
+                add("申请请假", '/leave/addLeave', 700, 450);
             }
             , reload: function () {
                 $('#beginTime').val('');
@@ -186,7 +186,7 @@
             } else if (obj.event === 'getProcImage') {
                 activiti.img(data.processInstanceId);
             } else if (obj.event === 'leaveDetail') {
-                layer.open({
+                window.top.layer.open({
                     id: 'leave-detail',
                     type: 2,
                     area: ['880px', '400px'],
@@ -195,7 +195,7 @@
                     shadeClose: false,
                     shade: 0.4,
                     title: '审核详情',
-                    content: "leaveDetail?processId=" + data.processInstanceId
+                    content: "/leave/leaveDetail?processId=" + data.processInstanceId
                 });
             }
         });
@@ -207,20 +207,16 @@
         if (title == null || title == '') {
             title = false;
         }
-        ;
         if (url == null || url == '') {
             url = "404.html";
         }
-        ;
         if (w == null || w == '') {
             w = ($(window).width() * 0.9);
         }
-        ;
         if (h == null || h == '') {
             h = ($(window).height() - 50);
         }
-        ;
-        layer.open({
+        window.top.layer.open({
             id: 'leave-add',
             type: 2,
             area: [w + 'px', h + 'px'],
