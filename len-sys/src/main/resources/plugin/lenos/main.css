@@ -1,6 +1,8 @@
 .layui-input {
+  min-width: 120px;
+}
+.lenos-search .select span .layui-input{
   height: 30px;
-  width: 120px;
 }
 
 
@@ -60,4 +62,8 @@
 
 .len-button button{
   border-radius: 100px;
+}
+
+body .layui-laypage .layui-laypage-curr .layui-laypage-em{
+  background-color: #1E9FFF;
 }

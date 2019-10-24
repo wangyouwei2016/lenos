@@ -114,7 +114,7 @@
 
       ]]
       , page: true
-      ,  height: 'full-83'
+      ,height: 'full-100'
     });
 
     var $ = layui.$, active = {

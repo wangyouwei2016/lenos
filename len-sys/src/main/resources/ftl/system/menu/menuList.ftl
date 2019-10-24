@@ -10,14 +10,15 @@
 <div  class="layui-col-md12">
     <div class="layui-btn-group">
       <@shiro.hasPermission name="nemu:add">
-        <button class="layui-btn layui-btn-sm" data-type="add">
+        <button class="layui-btn layui-btn-normal layui-btn-sm" data-type="add">
             <i class="layui-icon">&#xe608;</i>新增
         </button>
       </@shiro.hasPermission>
     </div>
-    <button class="layui-btn layui-btn-sm icon-position-no-button" id="refresh" style="float: right;" onclick="javascript:location.replace(location.href);">
+    <button type="button" class="layui-btn layui-btn-normal layui-btn layui-btn-sm" style="float: right;margin-right:30px"   onclick="javascript:location.replace(location.href);">刷新</button>
+   <#-- <button class="layui-btn layui-btn-sm icon-position-no-button" id="refresh" style="float: right;" onclick="javascript:location.replace(location.href);">
       <i class="layui-icon i-icon" style="font-size: 21px">ဂ</i>
-    </button>
+    </button>-->
   </div>
 <div id="menuTree"></div>
 </body>

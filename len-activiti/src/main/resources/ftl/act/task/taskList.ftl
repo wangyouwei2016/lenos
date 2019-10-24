@@ -9,36 +9,25 @@
 <head>
   <meta charset="UTF-8">
   <title>我的任务</title>
-  <meta name="renderer" content="webkit">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <meta name="viewport"
-        content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi"/>
-  <link rel="stylesheet" href="${re.contextPath}/plugin/layui/css/layui.css">
-  <link rel="stylesheet" href="${re.contextPath}/plugin/lenos/main.css">
-  <script type="text/javascript" src="${re.contextPath}/plugin/tools/tool.js"></script>
-    <script type="text/javascript" src="${re.contextPath}/plugin/jquery/jquery-3.2.1.min.js"></script>
-  <script type="text/javascript" src="${re.contextPath}/plugin/layui/layui.all.js"
-          charset="utf-8"></script>
+<#include "/system/base/header.ftl">
 </head>
 
 <body>
 <div class="lenos-search">
   <div class="select">
     操作用户：
-    <div class="layui-inline">
+    <span class="layui-inline">
       <input class="layui-input" height="20px" id="userName" autocomplete="off">
-    </div>
+    </span>
     操作类型：
-    <div class="layui-inline">
+    <span class="layui-inline">
       <input class="layui-input" height="20px" id="type" autocomplete="off">
-    </div>
-    <button class="select-on layui-btn layui-btn-sm" data-type="select"><i class="layui-icon"></i>
-    </button>
-    <button class="layui-btn layui-btn-sm icon-position-button" id="refresh" style="float: right;"
-            data-type="reload">
-      <i class="layui-icon">ဂ</i>
-    </button>
+    </span>
   </div>
+    <div class="len-form-item">
+        <button type="button" class="layui-btn layui-btn-normal layui-btn layui-btn-sm" data-type="select">查询</button>
+        <button type="button" class="layui-btn layui-btn-normal layui-btn layui-btn-sm" data-type="reload">重置</button>
+    </div>
 </div>
 
 <table id="taskList" width="100%" lay-filter="task"></table>
@@ -180,38 +169,12 @@
       }
     });
 
-    $('.select .layui-btn').on('click', function () {
+    $('.len-form-item .layui-btn,.select .layui-btn').on('click', function () {
       var type = $(this).data('type');
       active[type] ? active[type].call(this) : '';
     });
 
   });
-  /**批量删除id*/
-  /*function del(ids) {
-    $.ajax({
-      url: "del",
-      type: "post",
-      data: {ids: ids},
-      dataType: "json", traditional: true,
-      success: function (data) {
-        layer.msg(data.msg, {icon: 6});
-        layui.table.reload('actList');
-      }
-    });
-  }*/
-  /*function start(id) {
-    $.ajax({
-      url: "start",
-      type: "post",
-      data: {key: id},
-      dataType: "json", traditional: true,
-      success: function (data) {
-        layer.msg(data.msg, {icon: 6});
-        layui.table.reload('actList');
-      }
-    });
-  }*/
-
 </script>
 </body>
 
