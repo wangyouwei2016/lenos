@@ -51,7 +51,7 @@ public class LoginController {
             return "/main/main";
         } else {
             model.addAttribute("message", "请重新登录");
-            return "/login";
+            return "/login2";
         }
     }
 
@@ -63,7 +63,7 @@ public class LoginController {
         if (flag) {
             return "/main/main";
         }
-        return "/login";
+        return "/login2";
     }
 
     /**
@@ -80,7 +80,7 @@ public class LoginController {
         String codeMsg = (String) request.getAttribute("shiroLoginFailure");
         if (CODE_ERROR.equals(codeMsg)) {
             model.addAttribute("message", "验证码错误");
-            return "/login";
+            return "/login2";
         }
         CustomUsernamePasswordToken token = new CustomUsernamePasswordToken(user.getUsername().trim(),
                 user.getPassword(), "UserLogin");
@@ -100,7 +100,7 @@ public class LoginController {
         if (msg != null) {
             model.addAttribute("message", msg);
         }
-        return "/login";
+        return "/login2";
     }
 
     @GetMapping("/main")
@@ -113,7 +113,7 @@ public class LoginController {
     public String logout() {
         Subject sub = SecurityUtils.getSubject();
         sub.logout();
-        return "/login";
+        return "/login2";
     }
 
 
@@ -132,7 +132,7 @@ public class LoginController {
             HttpSession session = request.getSession(true);
             session.setAttribute("_code", verifyCode.toLowerCase());
             //生成图片
-            int w = 146, h = 33;
+            int w = 100, h = 35;
             VerifyCodeUtils.outputImage(w, h, response.getOutputStream(), verifyCode);
         } catch (Exception e) {
             e.printStackTrace();
