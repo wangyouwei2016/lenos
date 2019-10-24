@@ -52,6 +52,7 @@
 - 19/4/30 **升级admin监控**
 **博客采用vue前后分离基于jwt鉴权，博客单独分离出一个项目地址:[len-blog-ui](https://gitee.com/bweird/len-blog-ui)**
 ## 头像说明
+
 ```
 修改 application.yml imagePath 路径 把image文件夹图片赋值进路径，即可正常展示头像
 ```
