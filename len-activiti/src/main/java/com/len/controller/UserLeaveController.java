@@ -154,7 +154,6 @@ public class UserLeaveController extends BaseController {
                 .processInstanceId(processId).singleResult();
         //保证运行ing
         List<LeaveOpinion> leaveList = null;
-        List<HistoricActivityInstance> historicActivityInstanceList = new ArrayList<>();
         if (instance != null) {
             Task task = this.taskService.createTaskQuery().processInstanceId(processId).singleResult();
             Map<String, Object> variables = taskService.getVariables(task.getId());
@@ -170,7 +169,6 @@ public class UserLeaveController extends BaseController {
             HistoricVariableUpdate variable = null;
             for (HistoricDetail historicDetail : list) {
                 variable = (HistoricVariableUpdate) historicDetail;
-                String variableName = variable.getVariableName();
                 if (leaveOpinionList.equals(variable.getVariableName())) {
                     leaveList.clear();
                     leaveList.addAll((List<LeaveOpinion>) variable.getValue());
@@ -206,7 +204,6 @@ public class UserLeaveController extends BaseController {
             leaveService.updateByPrimaryKeySelective(oldLeave);
 
             Map<String, Object> variables = taskService.getVariables(taskId);
-//            UserLeave userLeave = (UserLeave) variables.get("userLeave");
             Map<String, Object> map = new HashMap<>();
             if (flag) {
                 map.put("flag", true);
@@ -272,7 +269,7 @@ public class UserLeaveController extends BaseController {
         SysRoleUser sysRoleUser = new SysRoleUser();
         sysRoleUser.setUserId(user.getId());
         List<SysRoleUser> userRoles = roleUserService.selectByCondition(sysRoleUser);
-        List<String> roleString = new ArrayList<String>();
+        List<String> roleString = new ArrayList<>();
         for (SysRoleUser sru : userRoles) {
             roleString.add(sru.getRoleId());
         }
@@ -281,12 +278,16 @@ public class UserLeaveController extends BaseController {
         List<Task> candidateGroup = taskService.createTaskQuery().taskCandidateGroupIn(roleString).list();
         taskList.addAll(assigneeList);
         taskList.addAll(candidateGroup);
+        int count=taskList.size();
+        Integer index = (Integer.valueOf(page)-1) * Integer.valueOf(limit);
+        taskList=taskList.subList(index, taskList.size() > index + 10 ? index + 10 : taskList.size());
+
         List<com.len.entity.Task> tasks = new ArrayList<>();
-        Map<String, Object> map = new HashMap<>();
-        com.len.entity.Task taskEntity = null;
+        Map<String, Object> map;
+        com.len.entity.Task taskEntity;
 
         Map<String, Map<String, Object>> mapMap = new HashMap<>();
-        Map<String, Object> objectMap = null;
+        Map<String, Object> objectMap;
         Set<String> taskSet = new HashSet<String>();
         for (Task task1 : taskList) {
             objectMap = new HashMap<>();
@@ -302,7 +303,7 @@ public class UserLeaveController extends BaseController {
             taskEntity.setUserName(userLeave.getUserName());
             taskEntity.setReason(userLeave.getReason());
             taskEntity.setUrlpath(userLeave.getUrlpath());
-            /**如果是自己*/
+            /*如果是自己*/
             if (user.getId().equals(userLeave.getUserId())) {
                 if (map.get("flag") != null) {
                     if (!(boolean) map.get("flag")) {
@@ -320,7 +321,7 @@ public class UserLeaveController extends BaseController {
             tasks.add(taskEntity);
             taskSet.add(taskId);
         }
-        return ReType.jsonStrng(taskList.size(), tasks, mapMap, "id");
+        return ReType.jsonStrng(count, tasks, mapMap, "id");
     }
 
     @GetMapping("agent/{id}")

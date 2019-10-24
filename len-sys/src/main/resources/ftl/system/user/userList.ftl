@@ -114,7 +114,6 @@
             select: function () {
                 var uname = $('#uname').val();
                 var email = $('#email').val();
-                console.info(uname);
                 table.reload('userList', {
                     where: {
                         username: uname,
@@ -133,7 +132,7 @@
                 });
             },
             add: function () {
-                add('添加用户', 'showAddUser', 700, 450);
+                add('添加用户', '/user/showAddUser', 700, 450);
             },
             update: function () {
                 var checkStatus = table.checkStatus('userList')
@@ -142,7 +141,7 @@
                     layer.msg('请选择一行编辑,已选[' + data.length + ']行', {icon: 5});
                     return false;
                 }
-                update('编辑用户', 'updateUser?id=' + data[0].id, 700, 450);
+                update('编辑用户', '/user/updateUser?id=' + data[0].id, 700, 450);
             },
             detail: function () {
                 var checkStatus = table.checkStatus('userList')
@@ -151,7 +150,7 @@
                     layer.msg('请选择一行查看,已选[' + data.length + ']行', {icon: 5});
                     return false;
                 }
-                detail('查看用户信息', 'updateUser?id=' + data[0].id, 700, 450);
+                detail('查看用户信息', '/user/updateUser?id=' + data[0].id, 700, 450);
             },
             changePwd: function () {
                 var checkStatus = table.checkStatus('userList')
@@ -160,7 +159,7 @@
                     layer.msg('请选择一个用户,已选[' + data.length + ']行', {icon: 5});
                     return false;
                 }
-                rePwd('修改密码', 'goRePass?id=' + data[0].id, 500, 350);
+                rePwd('修改密码', '/user/goRePass?id=' + data[0].id, 500, 350);
             }
         };
 
@@ -172,7 +171,7 @@
         table.on('tool(user)', function (obj) {
             var data = obj.data;
             if (obj.event === 'detail') {
-                detail('编辑用户', 'updateUser?id=' + data.id, 700, 450);
+                detail('编辑用户', '/user/updateUser?id=' + data.id, 700, 450);
             } else if (obj.event === 'del') {
                 layer.confirm('确定删除用户[<label style="color: #00AA91;">' + data.username + '</label>]?', {
                     btn: ['逻辑删除', '物理删除']
@@ -182,7 +181,7 @@
                     toolDelByFlag(data.id, 'userList', false);
                 });
             } else if (obj.event === 'edit') {
-                update('编辑用户', 'updateUser?id=' + data.id, 700, 450);
+                update('编辑用户', '/user/updateUser?id=' + data.id, 700, 450);
             }
         });
 
@@ -206,7 +205,7 @@
         if (h == null || h === '') {
             h = ($(window).height() - 50);
         }
-        layer.open({
+        window.top.layer.open({
             id: 'user-rePwd',
             type: 2,
             area: [w + 'px', h + 'px'],
@@ -232,7 +231,7 @@
         if (h == null || h == '') {
             h = ($(window).height() - 50);
         }
-        layer.open({
+        window.top.layer.open({
             id: 'user-detail',
             type: 2,
             area: [w + 'px', h + 'px'],
@@ -261,7 +260,7 @@
         if (h == null || h == '') {
             h = ($(window).height() - 50);
         }
-        layer.open({
+        window.top.layer.open({
             id: 'user-update',
             type: 2,
             area: [w + 'px', h + 'px'],
@@ -296,7 +295,7 @@
         if (h == null || h == '') {
             h = ($(window).height() - 50);
         }
-        layer.open({
+        window.top.layer.open({
             id: 'user-add',
             type: 2,
             area: [w + 'px', h + 'px'],

@@ -162,7 +162,7 @@
         });
       },
       add: function () {
-        add('添加任务', 'showAddJob', 700, 450);
+        add('添加任务', '/job/showAddJob', 700, 450);
       },
       update: function () {
         var checkStatus = table.checkStatus('jobList')
@@ -175,7 +175,7 @@
           layer.msg('已经启动任务无法更新,请停止后更新',{icon:5,offset: 'rb',area:['200px','100px'],anim:2});
           return false;
         }
-        update('编辑任务', 'updateJob?id=' + data[0].id, 700, 450);
+        update('编辑任务', '/job/updateJob?id=' + data[0].id, 700, 450);
       },
       detail: function () {
         var checkStatus = table.checkStatus('jobList')
@@ -184,14 +184,14 @@
           layer.msg('请选择一行查看', {icon: 5});
           return false;
         }
-        detail('查看任务信息', 'updateJob?id=' + data[0].id, 700, 450);
+        detail('查看任务信息', '/job/updateJob?id=' + data[0].id, 700, 450);
       }
     };
     //监听工具条
     table.on('tool(job)', function (obj) {
       var data = obj.data;
       if (obj.event === 'detail') {
-        detail('编辑角色', 'updateJob?id=' + data.id, 700, 450);
+        detail('编辑角色', '/job/updateJob?id=' + data.id, 700, 450);
       } else if (obj.event === 'del') {
         if(!data.status) {
           layer.confirm('确定删除任务[<label style="color: #00AA91;">' + data.jobName + '</label>]?',
@@ -203,7 +203,7 @@
         }
       } else if (obj.event === 'edit') {
         if(!data.status){
-          update('编辑任务', 'updateJob?id=' + data.id, 700, 450);
+          update('编辑任务', '/job/updateJob?id=' + data.id, 700, 450);
         }else{
           layer.msg('已经启动任务无法更新,请停止后更新',{icon:5,offset: 'rb',area:['200px','100px'],anim:2});
         }
@@ -268,7 +268,7 @@
     if (h == null || h == '') {
       h = ($(window).height() - 50);
     }
-    layer.open({
+      window.top.layer.open({
       id: 'user-detail',
       type: 2,
       area: [w + 'px', h + 'px'],
@@ -297,7 +297,7 @@
     if (h == null || h == '') {
       h = ($(window).height() - 50);
     }
-    layer.open({
+      window.top.layer.open({
       id: 'user-update',
       type: 2,
       area: [w + 'px', h + 'px'],
@@ -332,7 +332,7 @@
     if (h == null || h == '') {
       h = ($(window).height() - 50);
     }
-    layer.open({
+      window.top.layer.open({
       id: 'job-add',
       type: 2,
       area: [w + 'px', h + 'px'],

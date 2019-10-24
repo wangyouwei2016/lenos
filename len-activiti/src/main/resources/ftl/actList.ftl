@@ -32,9 +32,6 @@
 <div class="layui-col-md12">
     <div class="layui-btn-group">
 <@shiro.hasPermission name="control:del">
-        <#-- <button class="layui-btn layui-btn-normal" id="processGroup" data-type="assignee">
-        <i class="layui-icon">&#xe642;</i>节点处理人设置
-      </button>-->
 </@shiro.hasPermission>
     </div>
 </div>
@@ -167,26 +164,6 @@
             }
         });
     }
-
-    /**
-     * 流程绑定节点
-     * @param id
-     */
-    /* function assignee(id,deploymentId){
-       var index =
-           layer.open({
-             id: 'assignee',
-             type: 2,
-             area: ['600px',  '350px'],
-             fix: false,
-             maxmin: true,
-             shadeClose: false,
-             shade: 0.4,
-             title: '设置流程节点',
-             content: 'goAssignee/'+deploymentId
-           });
-       layer.full(index);
-     }*/
 
 
 </script>
