@@ -10,9 +10,9 @@
   <link rel="stylesheet" href="${re.contextPath}/plugin/build/css/app.css" media="all" />
   <link rel="stylesheet" href="${re.contextPath}/plugin/build/css/themes/default.css" media="all" id="skin" kit-skin />
   <style>
-    <#--前端无聊美化ing-->
-    .layui-footer{background-color: #2F4056;}
-    .layui-side-scroll{border-right: 3px solid #009688;}
+
+
+
   </style>
 </head>
 
@@ -42,11 +42,11 @@
         </a>
         <dl class="layui-nav-child skin">
           <dd><a href="javascript:;" data-skin="default" style="color:#393D49;"><i class="layui-icon">&#xe658;</i> 默认</a></dd>
-          <dd><a href="javascript:;" data-skin="orange" style="color:#ff6700;"><i class="layui-icon">&#xe658;</i> 橘子橙</a></dd>
-          <dd><a href="javascript:;" data-skin="green" style="color:#00a65a;"><i class="layui-icon">&#xe658;</i> 春天绿</a></dd>
-          <dd><a href="javascript:;" data-skin="pink" style="color:#FA6086;"><i class="layui-icon">&#xe658;</i> 少女粉</a></dd>
-          <dd><a href="javascript:;" data-skin="blue.1" style="color:#00c0ef;"><i class="layui-icon">&#xe658;</i> 天空蓝</a></dd>
-          <dd><a href="javascript:;" data-skin="red" style="color:#dd4b39;"><i class="layui-icon">&#xe658;</i> 枫叶红</a></dd>
+          <dd><a href="javascript:;" data-skin="orange" style="color:#ff6700;"><i class="layui-icon">&#xe658;</i> 橙</a></dd>
+          <dd><a href="javascript:;" data-skin="green" style="color:#00a65a;"><i class="layui-icon">&#xe658;</i> 绿</a></dd>
+          <dd><a href="javascript:;" data-skin="pink" style="color:#FA6086;"><i class="layui-icon">&#xe658;</i> 粉</a></dd>
+          <dd><a href="javascript:;" data-skin="blue.1" style="color:#00c0ef;"><i class="layui-icon">&#xe658;</i> 蓝</a></dd>
+          <dd><a href="javascript:;" data-skin="red" style="color:#dd4b39;"><i class="layui-icon">&#xe658;</i> 红</a></dd>
         </dl>
       </li>
       <li class="layui-nav-item">
@@ -97,11 +97,7 @@
     <div style="padding: 15px;"><i class="layui-icon layui-anim layui-anim-rotate layui-anim-loop">&#xe63e;</i> 请稍等...</div>
   </div>
 
-  <div class="layui-footer">
-  <!-- 底部固定区域 -->
-  2017 &copy;
-  <a target="_blank" href="https://my.oschina.net/u/3312115/blog">开源中国博客</a> 由zxm倾心打造的一款快速开发脚手架 <#--技术交流请联系本人-154040976@qq.com-->
-</div>
+
 </div>
 <script src="${re.contextPath}/plugin/layui/layui.js"></script>
 <script src="${re.contextPath}/plugin/tools/main.js"></script>

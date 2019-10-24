@@ -8,7 +8,7 @@ import com.len.service.ArticleCategoryService;
 import com.len.service.BlogArticleService;
 import com.len.service.BlogCategoryService;
 import com.len.util.IpUtil;
-import com.len.util.JsonUtil;
+import com.len.util.LenResponse;
 import com.len.util.ReType;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,6 @@ import tk.mybatis.mapper.entity.Condition;
 
 import javax.servlet.http.HttpServletRequest;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -80,7 +79,7 @@ public class ArticleController {
      * @return
      */
     @GetMapping("/article/getDetail/{code}")
-    public JsonUtil detail(@PathVariable("code") String code, HttpServletRequest request) {
+    public LenResponse detail(@PathVariable("code") String code, HttpServletRequest request) {
         String ip = IpUtil.getIp(request);
         return articleService.detail(code, ip);
     }

@@ -12,7 +12,7 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="viewport"
-        content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi"/>
+        content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8"/>
   <link rel="stylesheet" href="${re.contextPath}/plugin/layui/css/layui.css">
   <link rel="stylesheet" href="${re.contextPath}/plugin/lenos/main.css">
   <script type="text/javascript" src="${re.contextPath}/plugin/jquery/jquery-3.2.1.min.js"></script>
@@ -25,48 +25,51 @@
 <body>
 <div class="lenos-search">
   <div class="select">
-    用户名：
-    <div class="layui-inline">
+    <span>用户名：</span>
+    <span class="layui-inline">
       <input class="layui-input" height="20px" id="uname" autocomplete="off">
-    </div>
-    邮箱：
-    <div class="layui-inline">
+    </span>
+    <span>用户名：</span>
+    <span class="layui-inline">
       <input class="layui-input" height="20px" id="email" autocomplete="off">
-    </div>
-    <button class="select-on layui-btn layui-btn-sm" data-type="select"><i class="layui-icon"></i>
+    </span>
+   <#-- <button class="select-on layui-btn layui-btn-sm" data-type="select"><i class="layui-icon"></i>
     </button>
     <button class="layui-btn layui-btn-sm icon-position-button" id="refresh" style="float: right;"
             data-type="reload">
       <i class="layui-icon">ဂ</i>
-    </button>
+    </button>-->
   </div>
-
+ <div class="len-form-item">
+    <button type="button" class="layui-btn layui-btn-normal layui-btn layui-btn-sm"  data-type="select">查询</button>
+    <button type="button" class="layui-btn layui-btn-normal layui-btn layui-btn-sm" data-type="reload">重置</button>
+    </div>
 </div>
-<div class="layui-col-md12" style="height:40px;margin-top:3px;">
+<div class="layui-col-md12 len-button">
   <div class="layui-btn-group">
       <@shiro.hasPermission name="user:select">
-      <button class="layui-btn layui-btn-normal" data-type="add">
+      <button class="layui-btn layui-btn-normal  layui-btn-sm" data-type="add">
       <i class="layui-icon">&#xe608;</i>新增
     </button>
       </@shiro.hasPermission>
     <@shiro.hasPermission name="user:select">
-    <button class="layui-btn layui-btn-normal" data-type="update">
+    <button class="layui-btn layui-btn-normal layui-btn-sm" data-type="update">
       <i class="layui-icon">&#xe642;</i>编辑
     </button>
     </@shiro.hasPermission>
 <@shiro.hasPermission name="user:del">
-    <button class="layui-btn layui-btn-normal" data-type="detail">
+    <button class="layui-btn layui-btn-normal layui-btn-sm" data-type="detail">
       <i class="layui-icon">&#xe605;</i>查看
     </button>
 </@shiro.hasPermission>
     <@shiro.hasPermission name="user:repass">
-    <button class="layui-btn layui-btn-normal" data-type="changePwd">
+    <button class="layui-btn layui-btn-normal layui-btn-sm" data-type="changePwd">
       <i class="layui-icon">&#xe605;</i>修改密码
     </button>
     </@shiro.hasPermission>
   </div>
 </div>
-<table id="userList" class="layui-hide" lay-filter="user"></table>
+<table id="userList"  width="100%"  lay-filter="user"></table>
 <script type="text/html" id="barDemo">
 <@shiro.hasPermission name="user:select">
   <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
@@ -91,11 +94,20 @@
   }
   layui.use('table', function () {
     var table = layui.table;
+
     //方法级渲染
     table.render({
       id: 'userList',
       elem: '#userList'
       , url: 'showUserList'
+      ,parseData: function(res){ //res 即为原始返回的数据
+          return {
+            "code": res.code, //解析接口状态
+            "msg": res.msg, //解析提示文本
+            "count": res.count, //解析数据长度
+            "data": res.data //解析数据列表
+          };
+        }
       , cols: [[
         {checkbox: true, fixed: true, width: '5%'}
         , {
@@ -103,7 +115,6 @@
           title: '用户名',
           width: '10%',
           sort: true,
-          style: 'background-color: #009688; color: #fff;'
         }
         , {field: 'age', title: '年龄', width: '17%', sort: true}
         , {field: 'realName', title: '真实姓名', width: '20%'}
@@ -112,7 +123,7 @@
         , {field: 'right', title: '操作', width: '20%', toolbar: "#barDemo"}
       ]]
       , page: true,
-      height: 'full-83'
+      height: 'full-100'
     });
 
     var $ = layui.$, active = {
@@ -130,6 +141,7 @@
       reload:function(){
         $('#uname').val('');
        $('#email').val('');
+       debugger
         table.reload('userList', {
           where: {
             username: null,

@@ -1,6 +1,6 @@
 package com.len.core.exception;
 
-import com.len.util.JsonUtil;
+import com.len.util.LenResponse;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.springframework.http.HttpStatus;
@@ -19,19 +19,19 @@ public class CustomException {
 
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ExceptionHandler(AuthenticationException.class)
-    public JsonUtil getAuthenticationException(AuthenticationException e) {
-        return new JsonUtil(false, e.getMessage(), 401);
+    public LenResponse getAuthenticationException(AuthenticationException e) {
+        return new LenResponse(false, e.getMessage(), 401);
     }
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(UnknownAccountException.class)
-    public JsonUtil getUnknownAccountException(UnknownAccountException e) {
-        return new JsonUtil(false, e.getMessage(), 401);
+    public LenResponse getUnknownAccountException(UnknownAccountException e) {
+        return new LenResponse(false, e.getMessage(), 401);
     }
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(UnauthorizedException.class)
-    public JsonUtil getUnauthorizedException(UnauthorizedException e) {
-        return new JsonUtil(false, e.getMessage(), 401);
+    public LenResponse getUnauthorizedException(UnauthorizedException e) {
+        return new LenResponse(false, e.getMessage(), 401);
     }
 }

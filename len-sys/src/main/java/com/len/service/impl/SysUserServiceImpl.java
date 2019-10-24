@@ -20,12 +20,11 @@ import com.len.service.RoleUserService;
 import com.len.service.SysUserService;
 import com.len.util.BeanUtil;
 import com.len.util.Checkbox;
-import com.len.util.JsonUtil;
+import com.len.util.LenResponse;
 import com.len.util.Md5Util;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -134,21 +133,21 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser, String> impleme
     }
 
     @Override
-    public JsonUtil delById(String id, boolean flag) {
+    public LenResponse delById(String id, boolean flag) {
         if (StringUtils.isEmpty(id)) {
-            return JsonUtil.error("获取数据失败");
+            return LenResponse.error("获取数据失败");
         }
-        JsonUtil j = new JsonUtil();
+        LenResponse j = new LenResponse();
         try {
             SysUser sysUser = selectByPrimaryKey(id);
             if (ADMIN.equals(sysUser.getUsername())) {
-                return JsonUtil.error("超管无法删除");
+                return LenResponse.error("超管无法删除");
             }
             SysRoleUser roleUser = new SysRoleUser();
             roleUser.setUserId(id);
             int count = roleUserService.selectCountByCondition(roleUser);
             if (count > 0) {
-                return JsonUtil.error("账户已经绑定角色，无法删除");
+                return LenResponse.error("账户已经绑定角色，无法删除");
             }
             if (flag) {
                 //逻辑

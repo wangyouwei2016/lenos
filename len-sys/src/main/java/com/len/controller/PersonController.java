@@ -7,7 +7,7 @@ import com.len.entity.SysUser;
 import com.len.service.SysUserService;
 import com.len.util.BeanUtil;
 import com.len.util.Checkbox;
-import com.len.util.JsonUtil;
+import com.len.util.LenResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,8 +51,8 @@ public class PersonController {
     @Log(desc = "更新用户", type = Log.LOG_TYPE.UPDATE)
     @PostMapping(value = "updateUser")
     @ResponseBody
-    public JsonUtil updatePerson(SysUser user) {
-        JsonUtil jsonUtil = new JsonUtil();
+    public LenResponse updatePerson(SysUser user) {
+        LenResponse jsonUtil = new LenResponse();
         jsonUtil.setFlag(false);
         if (user == null) {
             jsonUtil.setMsg("获取数据失败");

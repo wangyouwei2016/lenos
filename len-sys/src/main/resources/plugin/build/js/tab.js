@@ -91,7 +91,7 @@ layui.define(['jquery', 'element', 'nprogress', 'utils'], function(exports) {
             var tpl = [
                     '<div class="layui-tab layui-tab-card kit-tab" lay-filter="' + that._filter + '">',
                     '<ul class="layui-tab-title">',
-                    '<li class="layui-this" lay-id="-1" data-url="' + _config.mainUrl + '"><i class="layui-icon">&#xe68e;</i> 控制面板</li>',
+                    '<li class="layui-this" lay-id="-1" data-url="' + _config.mainUrl + '"><i class="layui-icon">&#xe68e;</i> 仪表盘</li>',
                     '</ul>',
                     '<div class="kit-tab-tool">操作&nbsp;<i class="fa fa-caret-down"></i></div>',
                     '<div class="kit-tab-tool-body layui-anim layui-anim-upbit">',
@@ -198,10 +198,10 @@ layui.define(['jquery', 'element', 'nprogress', 'utils'], function(exports) {
                 var currBoxHeight = $(that._parentElem).height(); //获取当前容器的高度
                 switch (_config.renderType) {
                     case renderType.page:
-                        $('.kit-tab .layui-tab-content').height(currBoxHeight - 43);
+                        $('.kit-tab .layui-tab-content').height(currBoxHeight );
                         break;
                     case renderType.iframe:
-                        $('.kit-tab .layui-tab-content iframe').height(currBoxHeight - 45);
+                        $('.kit-tab .layui-tab-content iframe').height(currBoxHeight-45);
                         break;
                 }
             }).resize();

@@ -1,2 +1,7 @@
-/** kit_admin-v1.1.0 MIT License By http://kit/zhengjinfan.cn e-mail:zheng_jinfan@126.com */
-.kit-theme .kit-layout-admin .layui-header{border-bottom:2px solid #23262E}
+
+.kit-theme .kit-layout-admin .layui-header {
+    border-bottom: 2px solid rgba(255, 255, 255, 0.08)
+}
+.kit-theme .layui-tab-card>.layui-tab-title{
+    background-color: #fbfbfb;
+}

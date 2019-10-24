@@ -8,7 +8,7 @@ import com.len.entity.SysMenu;
 import com.len.exception.MyException;
 import com.len.service.MenuService;
 import com.len.util.BeanUtil;
-import com.len.util.JsonUtil;
+import com.len.util.LenResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
@@ -61,12 +61,12 @@ public class MenuController extends BaseController {
     @ApiOperation(value = "/addMenu", httpMethod = "POST", notes = "添加菜单")
     @PostMapping(value = "addMenu")
     @ResponseBody
-    public JsonUtil addMenu(SysMenu sysMenu, Model model) {
-        JsonUtil jsonUtil = new JsonUtil();
-        jsonUtil.setFlag(false);
+    public LenResponse addMenu(SysMenu sysMenu, Model model) {
+        LenResponse lenResponse = new LenResponse();
+        lenResponse.setFlag(false);
         if (sysMenu == null) {
-            jsonUtil.setMsg("获取数据失败");
-            return jsonUtil;
+            lenResponse.setMsg("获取数据失败");
+            return lenResponse;
         }
         if (StringUtils.isEmpty(sysMenu.getPId())) {
             sysMenu.setPId(null);
@@ -83,12 +83,12 @@ public class MenuController extends BaseController {
                 sysMenu.setMenuType((byte) 0);
             }
             menuService.insertSelective(sysMenu);
-            jsonUtil.setMsg("添加成功");
+            lenResponse.setMsg("添加成功");
         } catch (MyException e) {
             e.printStackTrace();
-            jsonUtil.setMsg("添加失败");
+            lenResponse.setMsg("添加失败");
         }
-        return jsonUtil;
+        return lenResponse;
     }
 
     @GetMapping(value = "showUpdateMenu")
@@ -108,17 +108,17 @@ public class MenuController extends BaseController {
     @Log(desc = "更新菜单", type = LOG_TYPE.ADD)
     @PostMapping(value = "updateMenu")
     @ResponseBody
-    public JsonUtil updateMenu(SysMenu sysMenu) {
+    public LenResponse updateMenu(SysMenu sysMenu) {
         SysMenu oldMenu = menuService.selectByPrimaryKey(sysMenu.getId());
         BeanUtil.copyNotNullBean(sysMenu, oldMenu);
         menuService.updateByPrimaryKeySelective(oldMenu);
-        return JsonUtil.sucess("保存成功");
+        return LenResponse.sucess("保存成功");
     }
 
     @Log(desc = "删除菜单", type = LOG_TYPE.DEL)
     @PostMapping("/menu-del")
     @ResponseBody
-    public JsonUtil del(String id) {
+    public LenResponse del(String id) {
         return menuService.del(id);
     }
 

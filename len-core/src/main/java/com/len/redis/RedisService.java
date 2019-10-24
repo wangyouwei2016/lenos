@@ -16,19 +16,19 @@ import java.util.concurrent.TimeUnit;
  * @email 154040976@qq.com
  */
 @Service
-public class RedisService {
+public class RedisService<T> {
 
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
 
     @Autowired
-    private RedisTemplate<Object, Object> redisTemplate;
+    private RedisTemplate<Object, T> redisTemplate;
 
     @Resource(name = "stringRedisTemplate")
     private ValueOperations<String, String> valueOps;
 
     @Resource(name = "redisTemplate")
-    private ValueOperations<Object, Object> valOpsObj;
+    private ValueOperations<Object, T> valOpsObj;
 
     @Value("${redis.prefix}")
     private String prefix;
@@ -62,7 +62,7 @@ public class RedisService {
      * @param key obj key
      * @return obj value
      */
-    public Object getObj(Object key) {
+    public T getObj(Object key) {
         key = prefix + key.toString();
         return valOpsObj.get(key);
     }
@@ -74,7 +74,7 @@ public class RedisService {
      * @param value  obj value
      * @param second 过期时间 单位户 秒
      */
-    public void setObj(Object key, Object value, Long second) {
+    public void setObj(Object key, T value, Long second) {
         key = prefix + key.toString();
         valOpsObj.set(key, value, second,TimeUnit.SECONDS);
     }
