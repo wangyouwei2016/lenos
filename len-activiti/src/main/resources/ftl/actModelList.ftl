@@ -54,7 +54,7 @@
   </button>
 </div>
 
-<table id="actModelList" class="layui-hide" lay-filter="act"></table>
+<table id="actModelList" width="100%" lay-filter="act"></table>
 <script type="text/html" id="toolBar">
   <shiro.hasPermission name="control:del">
   <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="update"><i class="layui-icon">&#xe640;</i>编辑</a>

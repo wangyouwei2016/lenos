@@ -3,14 +3,8 @@
 
 <head>
   <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <title></title>
-  <meta name="description" content="">
-  <meta name="keywords" content="">
-  <link href="" rel="stylesheet">
-  <link rel="stylesheet" href="${re.contextPath}/plugin/layuitree/layui/css/layui.css">
-  <link rel="stylesheet" href="${re.contextPath}/plugin/lenos/main.css"/>
-    <script type="text/javascript" src="${re.contextPath}/plugin/jquery/jquery-3.2.1.min.js"></script>
+<#include "/system/base/header.ftl">
 </head>
 <body>
 <div  class="layui-col-md12">

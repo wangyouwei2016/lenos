@@ -50,7 +50,7 @@
     </div>
 </div>
 
-<table id="actList" class="layui-hide" lay-filter="act"></table>
+<table id="actList" width="100%"  lay-filter="act"></table>
 <script type="text/html" id="toolBar">
   <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i class="layui-icon">&#xe640;</i>删除</a>
 </script>
