@@ -137,7 +137,7 @@
         , {field: 'remark', title: '操作', width: '20%', toolbar: "#toolBar"}
       ]]
       , page: true
-      ,  height: 'full-83'
+      ,height: 'full-100'
     });
 
     var $ = layui.$, active = {
