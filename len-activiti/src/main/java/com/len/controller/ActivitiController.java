@@ -15,6 +15,8 @@
  */
 package com.len.controller;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -26,6 +28,7 @@ import com.len.service.ActAssigneeService;
 import com.len.service.RoleService;
 import com.len.service.RoleUserService;
 import com.len.service.SysUserService;
+import com.len.util.Base64Utils;
 import com.len.util.Checkbox;
 import com.len.util.LenResponse;
 import com.len.util.ReType;
@@ -36,7 +39,6 @@ import org.activiti.editor.language.json.converter.BpmnJsonConverter;
 import org.activiti.engine.IdentityService;
 import org.activiti.engine.RepositoryService;
 import org.activiti.engine.RuntimeService;
-import org.activiti.engine.TaskService;
 import org.activiti.engine.identity.Group;
 import org.activiti.engine.identity.User;
 import org.activiti.engine.impl.persistence.entity.GroupEntity;
@@ -46,19 +48,20 @@ import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.repository.Model;
 import org.activiti.engine.repository.ModelQuery;
 import org.activiti.engine.repository.ProcessDefinitionQuery;
+import org.activiti.rest.ActivitiService;
+import org.activiti.rest.model.ActivitiProcess;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author zhuxiaomeng
@@ -96,7 +99,7 @@ public class ActivitiController extends BaseController {
     private ActAssigneeService actAssigneeService;
 
     @Autowired
-    private TaskService taskService;
+    ActivitiService activitiService;
 
 
     /**
@@ -108,7 +111,7 @@ public class ActivitiController extends BaseController {
         LenResponse j = new LenResponse();
         try {
             List<SysUser> userList = userService.selectListByPage(new SysUser());
-            User au = null;
+            User au;
             for (SysUser user : userList) {
                 au = new UserEntity();
                 au.setId(user.getId());
@@ -118,7 +121,7 @@ public class ActivitiController extends BaseController {
                 identityService.saveUser(au);
             }
             List<SysRole> sysRoleList = roleService.selectListByPage(new SysRole());
-            Group group = null;
+            Group group;
             for (SysRole role : sysRoleList) {
                 group = new GroupEntity();
                 group.setId(role.getId());
@@ -409,6 +412,43 @@ public class ActivitiController extends BaseController {
 
     @Autowired
     ActPropertiesConfig actPropertiesConfig;
+
+    @GetMapping("shinePics/{processInstanceId}")
+    public String shinePics(org.springframework.ui.Model model, @PathVariable String processInstanceId) {
+        model.addAttribute("processInstanceId", processInstanceId);
+        return "/act/activiti/shinePics";
+    }
+
+    @GetMapping("getShineProcImage")
+    @ResponseBody
+    public JSONObject getShineProcImage(HttpServletRequest request, HttpServletResponse resp, String processInstanceId)
+            throws IOException {
+        JSONObject result = new JSONObject();
+        JSONArray shineProImages = new JSONArray();
+        InputStream imageStream = activitiService.generateStream(processInstanceId, true);
+        if (imageStream != null) {
+            String imageCurrentNode = Base64Utils.ioToBase64(imageStream);
+            if (StringUtils.isNotBlank(imageCurrentNode)) {
+                shineProImages.add(imageCurrentNode);
+            }
+        }
+        InputStream imageNoCurrentStream = activitiService.generateStream(processInstanceId, false);
+        if (imageNoCurrentStream != null) {
+            String imageNoCurrentNode = Base64Utils.ioToBase64(imageNoCurrentStream);
+            if (StringUtils.isNotBlank(imageNoCurrentNode)) {
+                shineProImages.add(imageNoCurrentNode);
+            }
+        }
+
+        List<ActivitiProcess> taskSqu = activitiService.getTaskSqu(processInstanceId);
+
+
+        result.put("id", UUID.randomUUID().toString());
+        result.put("errorNo", 0);
+        result.put("images", shineProImages);
+        result.put("taskSqu", taskSqu);
+        return result;
+    }
 
     @PostMapping("delModel")
     @ResponseBody

@@ -1,7 +1,7 @@
 /*
  * Activiti Modeler component part of the Activiti project
  * Copyright 2005-2014 Alfresco Software, Ltd. All rights reserved.
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -33,11 +33,11 @@ var KisBpmAssignmentCtrl = [ '$scope', '$modal','$http', function($scope, $modal
 }];
 
 var KisBpmAssignmentPopupCtrl = [ '$scope','$modal', function($scope, $modal) {
-    	
+
     // Put json representing assignment on scope
     if ($scope.property.value !== undefined && $scope.property.value !== null
         && $scope.property.value.assignment !== undefined
-        && $scope.property.value.assignment !== null) 
+        && $scope.property.value.assignment !== null)
     {
         $scope.assignment = $scope.property.value.assignment;
     } else {
@@ -46,7 +46,7 @@ var KisBpmAssignmentPopupCtrl = [ '$scope','$modal', function($scope, $modal) {
 
     if ($scope.assignment.candidateUsers == undefined || $scope.assignment.candidateUsers.length == 0)
     {
-    	$scope.assignment.candidateUsers = [{value: ''}];
+        $scope.assignment.candidateUsers = [{value: ''}];
     }
 
 
@@ -54,7 +54,7 @@ var KisBpmAssignmentPopupCtrl = [ '$scope','$modal', function($scope, $modal) {
     {
         $scope.assignment.assignee =  '';
     }
-    
+
     // Click handler for + button after enum value
     var userValueIndex = 1;
     $scope.addCandidateUserValue = function(index) {
@@ -65,12 +65,12 @@ var KisBpmAssignmentPopupCtrl = [ '$scope','$modal', function($scope, $modal) {
     $scope.removeCandidateUserValue = function(index) {
         $scope.assignment.candidateUsers.splice(index, 1);
     };
-    
+
     if ($scope.assignment.candidateGroups == undefined || $scope.assignment.candidateGroups.length == 0)
     {
-    	$scope.assignment.candidateGroups = [{value: ''}];
+        $scope.assignment.candidateGroups = [{value: ''}];
     }
-    
+
     var groupValueIndex = 1;
     $scope.addCandidateGroupValue = function(index) {
         $scope.assignment.candidateGroups.splice(index + 1, 0, {value: 'value ' + groupValueIndex++});
@@ -108,72 +108,72 @@ var KisBpmAssignmentPopupCtrl = [ '$scope','$modal', function($scope, $modal) {
         $scope.property.value = {};
         handleAssignmentInput($scope);
         $scope.property.value.assignment = $scope.assignment;
-        
+
         $scope.updatePropertyInModel($scope.property);
         $scope.close();
     };
 
     // Close button handler
     $scope.close = function() {
-    	handleAssignmentInput($scope);
-    	$scope.property.mode = 'read';
-    	$scope.$hide();
+        handleAssignmentInput($scope);
+        $scope.property.mode = 'read';
+        $scope.$hide();
     };
-    
+
     var handleAssignmentInput = function($scope) {
-    	if ($scope.assignment.candidateUsers)
-    	{
-	    	var emptyUsers = true;
-	    	var toRemoveIndexes = [];
-	        for (var i = 0; i < $scope.assignment.candidateUsers.length; i++)
-	        {
-	        	if ($scope.assignment.candidateUsers[i].value != '')
-	        	{
-	        		emptyUsers = false;
-	        	}
-	        	else
-	        	{
-	        		toRemoveIndexes[toRemoveIndexes.length] = i;
-	        	}
-	        }
-	        
-	        for (var i = 0; i < toRemoveIndexes.length; i++)
-	        {
-	        	$scope.assignment.candidateUsers.splice(toRemoveIndexes[i], 1);
-	        }
-	        
-	        if (emptyUsers)
-	        {
-	        	$scope.assignment.candidateUsers = undefined;
-	        }
-    	}
-        
-    	if ($scope.assignment.candidateGroups)
-    	{
-	        var emptyGroups = true;
-	        var toRemoveIndexes = [];
-	        for (var i = 0; i < $scope.assignment.candidateGroups.length; i++)
-	        {
-	        	if ($scope.assignment.candidateGroups[i].value != '')
-	        	{
-	        		emptyGroups = false;
-	        	}
-	        	else
-	        	{
-	        		toRemoveIndexes[toRemoveIndexes.length] = i;
-	        	}
-	        }
-	        
-	        for (var i = 0; i < toRemoveIndexes.length; i++)
-	        {
-	        	$scope.assignment.candidateGroups.splice(toRemoveIndexes[i], 1);
-	        }
-	        
-	        if (emptyGroups)
-	        {
-	        	$scope.assignment.candidateGroups = undefined;
-	        }
-    	}
+        if ($scope.assignment.candidateUsers)
+        {
+            var emptyUsers = true;
+            var toRemoveIndexes = [];
+            for (var i = 0; i < $scope.assignment.candidateUsers.length; i++)
+            {
+                if ($scope.assignment.candidateUsers[i].value != '')
+                {
+                    emptyUsers = false;
+                }
+                else
+                {
+                    toRemoveIndexes[toRemoveIndexes.length] = i;
+                }
+            }
+
+            for (var i = 0; i < toRemoveIndexes.length; i++)
+            {
+                $scope.assignment.candidateUsers.splice(toRemoveIndexes[i], 1);
+            }
+
+            if (emptyUsers)
+            {
+                $scope.assignment.candidateUsers = undefined;
+            }
+        }
+
+        if ($scope.assignment.candidateGroups)
+        {
+            var emptyGroups = true;
+            var toRemoveIndexes = [];
+            for (var i = 0; i < $scope.assignment.candidateGroups.length; i++)
+            {
+                if ($scope.assignment.candidateGroups[i].value != '')
+                {
+                    emptyGroups = false;
+                }
+                else
+                {
+                    toRemoveIndexes[toRemoveIndexes.length] = i;
+                }
+            }
+
+            for (var i = 0; i < toRemoveIndexes.length; i++)
+            {
+                $scope.assignment.candidateGroups.splice(toRemoveIndexes[i], 1);
+            }
+
+            if (emptyGroups)
+            {
+                $scope.assignment.candidateGroups = undefined;
+            }
+        }
     };
 
     //因新打开的界面上选定的数据要传输到当前modal中，所以使用此方式，这是angular.js中不同控制器之间传输数据的方式
@@ -181,11 +181,24 @@ var KisBpmAssignmentPopupCtrl = [ '$scope','$modal', function($scope, $modal) {
         var infos = data.split(",");
         var nameInfos =nameData.split(",");
         // $scope.assignment.candidateUsers= [];
-        for(var i=0;i<infos.length;i++)
-        {
-            $scope.assignment.candidateUsers.push({value:infos[i],nameValue:nameInfos[i]});
-            // $scope.assignment.candidateUsers[i].value = infos[i];
+        var currentArr=$scope.assignment.candidateUsers;
+        for(var i=0;i<infos.length;i++){
+            var flag=false;
+            for(var j=0;j<currentArr.length;j++){
+                if(currentArr[j].value===infos[i]){
+                    flag=true;
+                    break;
+                }
+            }
+            if(!flag){
+                currentArr.push({value:infos[i],nameValue:nameInfos[i]})
+            }
         }
+        /*for(var i=0;i<nam.length;i++)
+        {
+            $scope.assignment.candidateUsers.push({value:inf[i],nameValue:nam[i]});
+            // $scope.assignment.candidateUsers[i].value = infos[i];
+        }*/
         //清空第一个
         if( (!$scope.assignment.candidateUsers[0].value )||$scope.assignment.candidateUsers[0]=='' )
         {
@@ -205,11 +218,18 @@ var KisBpmAssignmentPopupCtrl = [ '$scope','$modal', function($scope, $modal) {
         // $scope.assignment.candidateGroups[0].value = data;
         var infos = data.split(",");
         var nameInfos =nameData.split(",");
-
-        for(var i=0;i<infos.length;i++)
-        {
-            // $scope.assignment.candidateGroups[i].value = infos[i];
-            $scope.assignment.candidateGroups.push({value:infos[i],nameValue:nameInfos[i]});
+        var currentArr=$scope.assignment.candidateGroups;
+        for(var i=0;i<infos.length;i++){
+            var flag=false;
+            for(var j=0;j<currentArr.length;j++){
+                if(currentArr[j].value===infos[i]){
+                    flag=true;
+                    break;
+                }
+            }
+            if(!flag){
+                currentArr.push({value:infos[i],nameValue:nameInfos[i]})
+            }
         }
 
         //清空第一个
@@ -355,7 +375,16 @@ var KisBpmChoseAssignmentCtrl = ['$scope', '$http', function($scope, $http) {
             }
         }
         $scope.accounts = choseAssignees;
-    }
+    };
+
+    $scope.selectThis=function($event,account){
+        if($scope.choseAssignmentFlag == "assignee"){
+            account.checked=!account.checked;
+        }else{
+            account.selected=!account.selected;
+        }
+
+    };
 }];
 
 var KisBpmChoseCandidateGroupsCtrl = ['$scope', '$http', function($scope, $http) {
@@ -413,4 +442,9 @@ var KisBpmChoseCandidateGroupsCtrl = ['$scope', '$http', function($scope, $http)
         }
         $scope.candidateGroups = candidateGroups;
     }
+
+    $scope.selectThis=function($event,candidateGroup){
+        candidateGroup.selected=!candidateGroup.selected;
+    }
+
 }];

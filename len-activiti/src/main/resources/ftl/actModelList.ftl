@@ -145,16 +145,16 @@
                     }
                 });
             }, add: function () {
-                var index = layer.open({
+                var index = window.top.layer.open({
                     id: 'act-add',
                     type: 2,
-                    area: ['600px', '350px'],
+                    area: [$(window).width()+'px',$(window).height()+'px'],
                     fix: false,
                     maxmin: true,
                     shadeClose: false,
                     shade: 0.4,
                     title: '添加流程',
-                    content: 'goActiviti'
+                    content: '/act/goActiviti'
                 });
                 layer.full(index);
             }
@@ -165,20 +165,19 @@
             if (obj.event === 'open') {
                 open(data.id);
             } else if (obj.event === 'update') {
-                var index = layer.open({
+                var index = window.top.layer.open({
                     id: 'act-update',
                     type: 2,
-                    area: ['600px', '350px'],
+                    area: [$(window).width()+'px',$(window).height()+'px'],
                     fix: false,
                     maxmin: true,
                     shadeClose: false,
                     shade: 0.4,
                     title: '编辑流程',
-                    content: 'actUpdate/' + data.id
+                    content: '/act/actUpdate/' + data.id
                 });
-                layer.full(index);
             } else if (obj.event === 'del') {
-                layer.confirm('确定删除[' + data.name + ']？', {
+                layer.confirm('确定删除[' + data.name + ']?', {
                     btn: ['确定', '取消'] //按钮
                 }, function () {
                     del(data.id);
@@ -212,13 +211,14 @@
     }
 
     function syncdata() {
+       var index= layer.load(2);
         $.ajax({
             url: "syncdata",
             type: "post",
             dataType: "json", traditional: true,
             success: function (data) {
+                layer.close(index)
                 layer.msg(data.msg, {icon: 6});
-                //layui.table.reload('actModeltList');
             }
         });
     }

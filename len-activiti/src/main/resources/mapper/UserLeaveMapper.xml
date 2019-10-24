@@ -32,5 +32,6 @@
         <![CDATA[  and DATE_FORMAT(end_time, '%Y-%m-%d') <= DATE_FORMAT(#{endTime}, '%Y-%m-%d')    ]]>
       </if>
     </where>
+    order by create_date desc
   </select>
 </mapper>
