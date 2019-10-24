@@ -16,9 +16,6 @@
       </@shiro.hasPermission>
     </div>
     <button type="button" class="layui-btn layui-btn-normal layui-btn layui-btn-sm" style="float: right;margin-right:30px"   onclick="javascript:location.replace(location.href);">刷新</button>
-   <#-- <button class="layui-btn layui-btn-sm icon-position-no-button" id="refresh" style="float: right;" onclick="javascript:location.replace(location.href);">
-      <i class="layui-icon i-icon" style="font-size: 21px">ဂ</i>
-    </button>-->
   </div>
 <div id="menuTree"></div>
 </body>
