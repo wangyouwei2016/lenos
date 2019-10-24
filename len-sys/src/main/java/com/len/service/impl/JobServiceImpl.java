@@ -8,7 +8,7 @@ import com.len.exception.MyException;
 import com.len.mapper.SysJobMapper;
 import com.len.service.JobService;
 import com.len.util.BeanUtil;
-import com.len.util.JsonUtil;
+import com.len.util.LenResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,8 +51,8 @@ public class JobServiceImpl extends BaseServiceImpl<SysJob, String> implements J
     }
 
     @Override
-    public JsonUtil del(String id) {
-        JsonUtil j = new JsonUtil();
+    public LenResponse del(String id) {
+        LenResponse j = new LenResponse();
         j.setFlag(false);
         if (StringUtils.isEmpty(id)) {
             j.setMsg("获取数据失败");

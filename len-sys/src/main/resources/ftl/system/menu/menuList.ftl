@@ -13,10 +13,10 @@
     <script type="text/javascript" src="${re.contextPath}/plugin/jquery/jquery-3.2.1.min.js"></script>
 </head>
 <body>
-<div  class="layui-col-md13">
+<div  class="layui-col-md12">
     <div class="layui-btn-group">
       <@shiro.hasPermission name="nemu:add">
-        <button class="layui-btn layui-btn-normal" data-type="add">
+        <button class="layui-btn layui-btn-sm" data-type="add">
             <i class="layui-icon">&#xe608;</i>新增
         </button>
       </@shiro.hasPermission>

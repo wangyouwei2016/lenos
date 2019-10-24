@@ -18,9 +18,8 @@ package com.len.actlistener;
 import com.len.entity.SysRole;
 import com.len.entity.SysRoleUser;
 import com.len.entity.SysUser;
-import com.len.service.ActAssigneeService;
 import com.len.service.SysUserService;
-import com.len.util.JsonUtil;
+import com.len.util.LenResponse;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -31,9 +30,7 @@ import org.activiti.engine.identity.Group;
 import org.activiti.engine.identity.User;
 import org.activiti.engine.impl.persistence.entity.GroupEntity;
 import org.activiti.engine.impl.persistence.entity.UserEntity;
-import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,7 +59,7 @@ public class ListenUserRole {
      *
      * @param joinPoint
      */
-    @Around("execution(com.len.util.JsonUtil com.len.controller.UserController.updateUser(*,String[]))")
+    @Around("execution(com.len.util.LenResponse com.len.controller.UserController.updateUser(*,String[]))")
     public Object listenerUserUpdate(ProceedingJoinPoint joinPoint) throws Throwable {
         Object o = new Object();
         //更新前拿到用户-角色数据
@@ -73,7 +70,7 @@ public class ListenUserRole {
         List<String> strings = new ArrayList<>();
         keyList.forEach(sysRoleUser1 -> strings.add(sysRoleUser1.getRoleId()));
         o = joinPoint.proceed(joinPoint.getArgs());
-        JsonUtil jsonUtil = (JsonUtil) o;
+        LenResponse jsonUtil = (LenResponse) o;
         if (jsonUtil.isFlag()) {
             changeUser(args, strings);
         }
@@ -85,12 +82,12 @@ public class ListenUserRole {
      *
      * @param joinPoint
      */
-    @Around("execution(com.len.util.JsonUtil com.len.controller.UserController.addUser(*,String[]))")
+    @Around("execution(com.len.util.LenResponse com.len.controller.UserController.addUser(*,String[]))")
     public Object listenerUserInsert(ProceedingJoinPoint joinPoint) throws Throwable {
         Object o = joinPoint.proceed(joinPoint.getArgs());
         Object[] args = joinPoint.getArgs();
         if (args.length == 2) {
-            JsonUtil jsonUtil = (JsonUtil) o;
+            LenResponse jsonUtil = (LenResponse) o;
             if (jsonUtil.isFlag()) {
                 changeUser(args, Arrays.asList((String[]) args[1]));
             }
@@ -98,10 +95,10 @@ public class ListenUserRole {
         return o;
     }
 
-    @Around("execution(com.len.util.JsonUtil com.len.controller.UserController.del(..))")
+    @Around("execution(com.len.util.LenResponse com.len.controller.UserController.del(..))")
     public Object listenDelUser(ProceedingJoinPoint point) throws Throwable {
         Object o = point.proceed(point.getArgs());
-        JsonUtil util = (JsonUtil) o;
+        LenResponse util = (LenResponse) o;
         if (util.isFlag()) {
             Object[] args = point.getArgs();
             identityService.deleteUser((String) args[0]);
@@ -140,10 +137,10 @@ public class ListenUserRole {
 
 
     /**********************角色处理begin***************************/
-    @Around("execution(com.len.util.JsonUtil com.len.controller.RoleController.addRole(*,String[]))")
+    @Around("execution(com.len.util.LenResponse com.len.controller.RoleController.addRole(*,String[]))")
     public Object listenRoleInsert(ProceedingJoinPoint joinPoint) throws Throwable {
         Object o = joinPoint.proceed(joinPoint.getArgs());
-        JsonUtil j = (JsonUtil) o;
+        LenResponse j = (LenResponse) o;
         if (j.isFlag()) {
             Object[] args = joinPoint.getArgs();
             if (args.length == 2) {
@@ -153,12 +150,12 @@ public class ListenUserRole {
         return o;
     }
 
-    @Around("execution(com.len.util.JsonUtil com.len.controller.RoleController.updateUser(*,String[]))")
+    @Around("execution(com.len.util.LenResponse com.len.controller.RoleController.updateUser(*,String[]))")
     public Object listenRoleUpdate(ProceedingJoinPoint joinPoint) throws Throwable {
         Object o = joinPoint.proceed(joinPoint.getArgs());
         Object[] args = joinPoint.getArgs();
         if (args.length == 2) {
-            if (((JsonUtil) o).isFlag()) {
+            if (((LenResponse) o).isFlag()) {
                 changeRole(args);
             }
         }
@@ -166,10 +163,10 @@ public class ListenUserRole {
         return o;
     }
 
-    @Around("execution(com.len.util.JsonUtil com.len.controller.RoleController.del(..))")
+    @Around("execution(com.len.util.LenResponse com.len.controller.RoleController.del(..))")
     public Object listenDelRole(ProceedingJoinPoint point) throws Throwable {
         Object o = point.proceed(point.getArgs());
-        JsonUtil util = (JsonUtil) o;
+        LenResponse util = (LenResponse) o;
         if (util.isFlag()) {
             Object[] args = point.getArgs();
             identityService.deleteGroup((String) args[0]);

@@ -42,17 +42,17 @@
 <div class="layui-col-md12" style="height:40px;margin-top:3px;">
   <div class="layui-btn-group">
     <@shiro.hasPermission name="job:add">
-    <button class="layui-btn layui-btn-normal" data-type="add">
+    <button class="layui-btn layui-btn-sm" data-type="add">
       <i class="layui-icon">&#xe608;</i>新增
     </button>
     </@shiro.hasPermission>
     <@shiro.hasPermission name="job:update">
-    <button class="layui-btn layui-btn-normal" data-type="update">
+    <button class="layui-btn layui-btn-sm" data-type="update">
       <i class="layui-icon">&#xe642;</i>编辑
     </button>
    </@shiro.hasPermission>
     <@shiro.hasPermission name="job:select">
-    <button class="layui-btn layui-btn-normal" data-type="detail">
+    <button class="layui-btn layui-btn-sm" data-type="detail">
       <i class="layui-icon">&#xe605;</i>查看
     </button>
     </@shiro.hasPermission>

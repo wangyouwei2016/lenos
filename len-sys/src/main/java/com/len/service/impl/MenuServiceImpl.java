@@ -9,7 +9,7 @@ import com.len.mapper.SysMenuMapper;
 import com.len.mapper.SysRoleMenuMapper;
 import com.len.service.MenuService;
 import com.len.service.RoleMenuService;
-import com.len.util.JsonUtil;
+import com.len.util.LenResponse;
 import com.len.util.TreeUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -114,8 +114,8 @@ public class MenuServiceImpl extends BaseServiceImpl<SysMenu, String> implements
     }
 
     @Override
-    public JsonUtil del(String id) {
-        JsonUtil json = new JsonUtil();
+    public LenResponse del(String id) {
+        LenResponse json = new LenResponse();
         json.setFlag(false);
         if (StringUtils.isEmpty(id)) {
             json.setMsg("获取数据失败,请刷新重试!");

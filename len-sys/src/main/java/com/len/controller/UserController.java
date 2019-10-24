@@ -95,24 +95,24 @@ public class UserController extends BaseController {
     @Log(desc = "添加用户")
     @PostMapping(value = "addUser")
     @ResponseBody
-    public JsonUtil addUser(SysUser user, String[] role) {
+    public LenResponse addUser(SysUser user, String[] role) {
         if (user == null) {
-            return JsonUtil.error("获取数据失败");
+            return LenResponse.error("获取数据失败");
         }
         if (StringUtils.isBlank(user.getUsername())) {
-            return JsonUtil.error("用户名不能为空");
+            return LenResponse.error("用户名不能为空");
         }
         if (StringUtils.isBlank(user.getPassword())) {
-            return JsonUtil.error("密码不能为空");
+            return LenResponse.error("密码不能为空");
         }
         if (role == null) {
-            return JsonUtil.error("请选择角色");
+            return LenResponse.error("请选择角色");
         }
         int result = userService.checkUser(user.getUsername());
         if (result > 0) {
-            return JsonUtil.error("用户名已存在");
+            return LenResponse.error("用户名已存在");
         }
-        JsonUtil j = new JsonUtil();
+        LenResponse j = new LenResponse();
         try {
             userService.insertSelective(user);
             SysRoleUser sysRoleUser = new SysRoleUser();
@@ -147,8 +147,8 @@ public class UserController extends BaseController {
     @Log(desc = "更新用户", type = LOG_TYPE.UPDATE)
     @PostMapping(value = "updateUser")
     @ResponseBody
-    public JsonUtil updateUser(SysUser user, String role[]) {
-        JsonUtil jsonUtil = new JsonUtil();
+    public LenResponse updateUser(SysUser user, String role[]) {
+        LenResponse jsonUtil = new LenResponse();
         jsonUtil.setFlag(false);
         if (user == null) {
             jsonUtil.setMsg("获取数据失败");
@@ -185,7 +185,7 @@ public class UserController extends BaseController {
     @PostMapping(value = "/del")
     @ResponseBody
     @RequiresPermissions("user:del")
-    public JsonUtil del(String id, boolean flag) {
+    public LenResponse del(String id, boolean flag) {
         return userService.delById(id, flag);
     }
 
@@ -211,9 +211,9 @@ public class UserController extends BaseController {
     @PostMapping(value = "rePass")
     @ResponseBody
     @RequiresPermissions("user:repass")
-    public JsonUtil rePass(String id, String pass, String newPwd) {
+    public LenResponse rePass(String id, String pass, String newPwd) {
         boolean flag = StringUtils.isEmpty(id) || StringUtils.isEmpty(pass) || StringUtils.isEmpty(newPwd);
-        JsonUtil j = new JsonUtil();
+        LenResponse j = new LenResponse();
         j.setFlag(false);
         if (flag) {
             j.setMsg("获取数据失败，修改失败");
@@ -250,10 +250,10 @@ public class UserController extends BaseController {
      */
     @PostMapping(value = "upload")
     @ResponseBody
-    public JsonUtil imgUpload(HttpServletRequest req, @RequestParam("file") MultipartFile file,
-                              ModelMap model) {
+    public LenResponse imgUpload(HttpServletRequest req, @RequestParam("file") MultipartFile file,
+                                 ModelMap model) {
         String fileName = uploadUtil.upload(file);
-        JsonUtil j = new JsonUtil();
+        LenResponse j = new LenResponse();
         j.setMsg(fileName);
         return j;
     }
@@ -263,8 +263,8 @@ public class UserController extends BaseController {
      */
     @GetMapping(value = "checkUser")
     @ResponseBody
-    public JsonUtil checkUser(String uname, HttpServletRequest req) {
-        JsonUtil j = new JsonUtil();
+    public LenResponse checkUser(String uname, HttpServletRequest req) {
+        LenResponse j = new LenResponse();
         j.setFlag(Boolean.FALSE);
         if (StringUtils.isEmpty(uname)) {
             j.setMsg("获取数据失败");

@@ -11,7 +11,7 @@ import com.len.service.RoleMenuService;
 import com.len.service.RoleService;
 import com.len.service.RoleUserService;
 import com.len.util.BeanUtil;
-import com.len.util.JsonUtil;
+import com.len.util.LenResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -71,8 +71,8 @@ public class RoleServiceImpl extends BaseServiceImpl<SysRole, String> implements
     }
 
     @Override
-    public JsonUtil addRole(SysRole sysRole, String[] menus) {
-        JsonUtil j = new JsonUtil();
+    public LenResponse addRole(SysRole sysRole, String[] menus) {
+        LenResponse j = new LenResponse();
         try {
             insertSelective(sysRole);
             //操作role-menu data
@@ -95,8 +95,8 @@ public class RoleServiceImpl extends BaseServiceImpl<SysRole, String> implements
     }
 
     @Override
-    public JsonUtil updateUser(SysRole role, String[] menus) {
-        JsonUtil jsonUtil = new JsonUtil();
+    public LenResponse updateUser(SysRole role, String[] menus) {
+        LenResponse jsonUtil = new LenResponse();
         jsonUtil.setFlag(false);
         try {
             SysRole oldRole = selectByPrimaryKey(role.getId());
@@ -124,14 +124,14 @@ public class RoleServiceImpl extends BaseServiceImpl<SysRole, String> implements
     }
 
     @Override
-    public JsonUtil del(String id) {
+    public LenResponse del(String id) {
         SysRoleUser sysRoleUser = new SysRoleUser();
         sysRoleUser.setRoleId(id);
-        JsonUtil j = new JsonUtil();
+        LenResponse j = new LenResponse();
         try {
             int count = roleUserService.selectCountByCondition(sysRoleUser);
             if (count > 0) {
-                return JsonUtil.error("已分配给用户，删除失败");
+                return LenResponse.error("已分配给用户，删除失败");
             }
             deleteByPrimaryKey(id);
             j.setMsg("删除成功");

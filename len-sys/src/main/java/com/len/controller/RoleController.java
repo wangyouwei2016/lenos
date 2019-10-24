@@ -8,7 +8,7 @@ import com.len.entity.SysRole;
 import com.len.service.MenuService;
 import com.len.service.RoleMenuService;
 import com.len.service.RoleService;
-import com.len.util.JsonUtil;
+import com.len.util.LenResponse;
 import com.len.util.ReType;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -76,9 +76,9 @@ public class RoleController extends BaseController {
     @Log(desc = "添加角色")
     @PostMapping(value = "addRole")
     @ResponseBody
-    public JsonUtil addRole(SysRole sysRole, String[] menus) {
+    public LenResponse addRole(SysRole sysRole, String[] menus) {
         if (StringUtils.isEmpty(sysRole.getRoleName())) {
-            JsonUtil.error("角色名称不能为空");
+            LenResponse.error("角色名称不能为空");
         }
         return roleService.addRole(sysRole, menus);
     }
@@ -99,9 +99,9 @@ public class RoleController extends BaseController {
     @Log(desc = "更新角色")
     @PostMapping(value = "updateRole")
     @ResponseBody
-    public JsonUtil updateUser(SysRole role, String[] menus) {
+    public LenResponse updateUser(SysRole role, String[] menus) {
         if (role == null) {
-            return JsonUtil.error("获取数据失败");
+            return LenResponse.error("获取数据失败");
         }
         return roleService.updateUser(role, menus);
     }
@@ -111,9 +111,9 @@ public class RoleController extends BaseController {
     @PostMapping(value = "del")
     @ResponseBody
     @RequiresPermissions("role:del")
-    public JsonUtil del(String id) {
+    public LenResponse del(String id) {
         if (StringUtils.isEmpty(id)) {
-            return JsonUtil.error("获取数据失败");
+            return LenResponse.error("获取数据失败");
         }
         return roleService.del(id);
     }

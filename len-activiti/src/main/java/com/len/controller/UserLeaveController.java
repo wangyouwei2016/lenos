@@ -198,8 +198,8 @@ public class UserLeaveController extends BaseController {
 
     @PostMapping("updateLeave/updateLeave/{taskId}/{id}/{flag}")
     @ResponseBody
-    public JsonUtil updateLeave(UserLeave leave, @PathVariable String taskId, @PathVariable String id, @PathVariable boolean flag) {
-        JsonUtil j = new JsonUtil();
+    public LenResponse updateLeave(UserLeave leave, @PathVariable String taskId, @PathVariable String id, @PathVariable boolean flag) {
+        LenResponse j = new LenResponse();
         try {
             UserLeave oldLeave = leaveService.selectByPrimaryKey(leave.getId());
             BeanUtil.copyNotNullBean(leave, oldLeave);
@@ -226,10 +226,10 @@ public class UserLeaveController extends BaseController {
 
     @PostMapping("addLeave")
     @ResponseBody
-    public JsonUtil addLeave(Model model, UserLeave userLeave) {
-        JsonUtil j = new JsonUtil();
+    public LenResponse addLeave(Model model, UserLeave userLeave) {
+        LenResponse j = new LenResponse();
         if (userLeave == null) {
-            return JsonUtil.error("获取数据失败");
+            return LenResponse.error("获取数据失败");
         }
         userLeave.setDays(3);
         CurrentUser user = CommonUtil.getUser();
@@ -335,14 +335,14 @@ public class UserLeaveController extends BaseController {
 
     @PostMapping("agent/complete")
     @ResponseBody
-    public JsonUtil complete(LeaveOpinion op, HttpServletRequest request) {
+    public LenResponse complete(LeaveOpinion op, HttpServletRequest request) {
         Map<String, Object> variables = taskService.getVariables(op.getTaskId());
 
         CurrentUser user = Principal.getCurrentUse();
         op.setCreateTime(new Date());
         op.setOpId(user.getId());
         op.setOpName(user.getRealName());
-        JsonUtil j = new JsonUtil();
+        LenResponse j = new LenResponse();
         Map<String, Object> map = new HashMap<>();
         map.put("flag", op.isFlag());
 

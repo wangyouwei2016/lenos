@@ -15,7 +15,6 @@
  */
 package com.len.controller;
 
-import com.alibaba.fastjson.JSON;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -28,7 +27,7 @@ import com.len.service.RoleService;
 import com.len.service.RoleUserService;
 import com.len.service.SysUserService;
 import com.len.util.Checkbox;
-import com.len.util.JsonUtil;
+import com.len.util.LenResponse;
 import com.len.util.ReType;
 import org.activiti.bpmn.converter.BpmnXMLConverter;
 import org.activiti.bpmn.model.BpmnModel;
@@ -105,8 +104,8 @@ public class ActivitiController extends BaseController {
      */
     @PostMapping(value = "syncdata")
     @ResponseBody
-    public JsonUtil syncdata() {
-        JsonUtil j = new JsonUtil();
+    public LenResponse syncdata() {
+        LenResponse j = new LenResponse();
         try {
             List<SysUser> userList = userService.selectListByPage(new SysUser());
             User au = null;
@@ -251,21 +250,21 @@ public class ActivitiController extends BaseController {
      */
     @PostMapping(value = "open")
     @ResponseBody
-    public JsonUtil open(String id) {
+    public LenResponse open(String id) {
         String msg = "发布成功";
-        JsonUtil j = new JsonUtil();
+        LenResponse j = new LenResponse();
         try {
             Model modelData = repositoryService.getModel(id);
             byte[] bytes = repositoryService.getModelEditorSource(modelData.getId());
 
             if (bytes == null) {
-                return JsonUtil.error("模型为空");
+                return LenResponse.error("模型为空");
             }
             JsonNode modelNode = null;
             modelNode = new ObjectMapper().readTree(bytes);
             BpmnModel model = new BpmnJsonConverter().convertToBpmnModel(modelNode);
             if (model.getProcesses().size() == 0) {
-                return JsonUtil.error("数据不符合要求");
+                return LenResponse.error("数据不符合要求");
             }
             byte[] bpmnBytes = new BpmnXMLConverter().convertToXML(model);
             //发布流程
@@ -348,8 +347,8 @@ public class ActivitiController extends BaseController {
      */
     @PostMapping("goAssignee/updateNode")
     @ResponseBody
-    public JsonUtil updateNode(HttpServletRequest request) {
-        JsonUtil j = new JsonUtil();
+    public LenResponse updateNode(HttpServletRequest request) {
+        LenResponse j = new LenResponse();
 
         Map<String, String[]> map = request.getParameterMap();
         List<ActAssignee> assigneeList = new ArrayList<>();
@@ -386,8 +385,8 @@ public class ActivitiController extends BaseController {
      */
     @PostMapping("delDeploy")
     @ResponseBody
-    public JsonUtil delDeploy(org.springframework.ui.Model model, String id) {
-        JsonUtil j = new JsonUtil();
+    public LenResponse delDeploy(org.springframework.ui.Model model, String id) {
+        LenResponse j = new LenResponse();
         try {
             List<ActivityImpl> activityList = actAssigneeService.getActivityList(id);
             for (ActivityImpl activity : activityList) {
@@ -413,13 +412,13 @@ public class ActivitiController extends BaseController {
 
     @PostMapping("delModel")
     @ResponseBody
-    public JsonUtil delModel(org.springframework.ui.Model model, String id) {
+    public LenResponse delModel(org.springframework.ui.Model model, String id) {
         FileInputStream inputStream = null;
         String modelId = actPropertiesConfig.getModelId();
         if (id.equals(modelId)) {
-            return JsonUtil.error("演示禁止删除");
+            return LenResponse.error("演示禁止删除");
         }
-        JsonUtil j = new JsonUtil();
+        LenResponse j = new LenResponse();
         try {
             repositoryService.deleteModel(id);
             j.setMsg("删除成功");

@@ -2,8 +2,7 @@ package com.len.service;
 
 import com.len.base.BaseService;
 import com.len.entity.SysJob;
-import com.len.entity.SysMenu;
-import com.len.util.JsonUtil;
+import com.len.util.LenResponse;
 
 /**
  * @author zhuxiaomeng
@@ -24,7 +23,7 @@ public interface JobService extends BaseService<SysJob,String> {
      * @param id
      * @return
      */
-    public JsonUtil del(String id);
+    public LenResponse del(String id);
 
     /**
      * 启动任务

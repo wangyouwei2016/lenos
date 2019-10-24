@@ -11,7 +11,7 @@ import com.len.model.SimpleArticle;
 import com.len.redis.RedisService;
 import com.len.service.*;
 import com.len.util.BeanUtil;
-import com.len.util.JsonUtil;
+import com.len.util.LenResponse;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -112,8 +112,8 @@ public class BlogArticleServiceImpl extends BaseServiceImpl<BlogArticle, String>
     }
 
     @Override
-    public JsonUtil getDetail(String code) {
-        JsonUtil json = new JsonUtil();
+    public LenResponse getDetail(String code) {
+        LenResponse json = new LenResponse();
         ArticleDetail detail = getArticleByCode(code);
         if (detail == null) {
             json.setStatus(404);
@@ -127,8 +127,8 @@ public class BlogArticleServiceImpl extends BaseServiceImpl<BlogArticle, String>
     }
 
     @Override
-    public JsonUtil detail(String code, String ip) {
-        JsonUtil json = new JsonUtil();
+    public LenResponse detail(String code, String ip) {
+        LenResponse json = new LenResponse();
         ArticleDetail detail = getArticleByCode(code);
         if (detail == null) {
             json.setStatus(404);

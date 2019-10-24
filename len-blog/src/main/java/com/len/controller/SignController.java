@@ -7,7 +7,7 @@ import com.len.service.RoleService;
 import com.len.service.RoleUserService;
 import com.len.service.SysUserService;
 import com.len.util.JWTUtil;
-import com.len.util.JsonUtil;
+import com.len.util.LenResponse;
 import com.len.util.Md5Util;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -52,7 +52,7 @@ public class SignController {
 
     @ApiOperation(value = "/blogLogin", httpMethod = "POST", notes = "登录method")
     @PostMapping(value = "/blogLogin")
-    public JsonUtil blogLogin(SysUser user) {
+    public LenResponse blogLogin(SysUser user) {
         if (StringUtils.isEmpty(user.getUsername()) || StringUtils.isEmpty(user.getPassword())) {
             throw new UnknownAccountException("用户名或密码不能为空");
         }
@@ -95,6 +95,6 @@ public class SignController {
                 .map(SysRole::getRoleName)
                 .collect(Collectors.toList());
 
-        return new JsonUtil(true, JWTUtil.sign(sysUser.getUsername(), sysUser.getId(), roleNames, sysUser.getPassword()), 200);
+        return new LenResponse(true, JWTUtil.sign(sysUser.getUsername(), sysUser.getId(), roleNames, sysUser.getPassword()), 200);
     }
 }

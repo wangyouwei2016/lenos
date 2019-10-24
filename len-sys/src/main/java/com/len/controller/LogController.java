@@ -1,20 +1,18 @@
 package com.len.controller;
 
-import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.len.base.BaseController;
 import com.len.entity.SysLog;
 import com.len.exception.MyException;
 import com.len.mapper.SysLogMapper;
-import com.len.util.JsonUtil;
+import com.len.util.LenResponse;
 import com.len.util.ReType;
 
 import java.util.List;
 
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -73,8 +71,8 @@ public class LogController extends BaseController {
      */
     @PostMapping(value = "del")
     @ResponseBody
-    public JsonUtil del(String[] ids) {
-        JsonUtil j = new JsonUtil();
+    public LenResponse del(String[] ids) {
+        LenResponse j = new LenResponse();
         String msg = "删除成功";
         try {
             for (String id : ids) {

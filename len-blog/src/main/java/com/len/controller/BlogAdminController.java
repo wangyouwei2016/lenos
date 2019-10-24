@@ -5,7 +5,7 @@ import com.len.entity.BlogArticle;
 import com.len.entity.BlogCategory;
 import com.len.model.Article;
 import com.len.service.*;
-import com.len.util.JsonUtil;
+import com.len.util.LenResponse;
 import com.len.util.ReType;
 import com.len.util.UploadUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -18,7 +18,6 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.util.Comparator;
 import java.util.List;
-import java.util.regex.Pattern;
 
 /**
  * @author zhuxiaomeng
@@ -58,13 +57,13 @@ public class BlogAdminController {
      * @return
      */
     @GetMapping("/article/getDetail/{code}")
-    public JsonUtil getDetail(@PathVariable("code") String code) {
+    public LenResponse getDetail(@PathVariable("code") String code) {
         return articleService.getDetail(code);
     }
 
     @GetMapping("/article/getCategory")
-    public JsonUtil getCategory() {
-        JsonUtil json = new JsonUtil();
+    public LenResponse getCategory() {
+        LenResponse json = new LenResponse();
         List<BlogCategory> categories = categoryService.selectAll();
         categories.sort(Comparator.comparing(BlogCategory::getSequence));
         json.setData(categories);
@@ -72,10 +71,10 @@ public class BlogAdminController {
     }
 
     @PostMapping("/article/addImage")
-    public JsonUtil addImage(MultipartHttpServletRequest request) {
+    public LenResponse addImage(MultipartHttpServletRequest request) {
         MultipartFile multipartFile = request.getFile("file");
         String path = uploadUtil.upload(multipartFile);
-        JsonUtil json = new JsonUtil();
+        LenResponse json = new LenResponse();
         StringBuffer requestURL = request.getRequestURL();
         int serverPort = request.getServerPort();
         int i = requestURL.indexOf(String.valueOf(serverPort));
@@ -86,8 +85,8 @@ public class BlogAdminController {
     }
 
     @PostMapping("/article/add")
-    public JsonUtil addArticle(@RequestBody ArticleDetail detail) {
-        JsonUtil json = new JsonUtil();
+    public LenResponse addArticle(@RequestBody ArticleDetail detail) {
+        LenResponse json = new LenResponse();
         json.setStatus(400);
         Article article = detail.getArticle();
         if (article == null) {
@@ -118,8 +117,8 @@ public class BlogAdminController {
     }
 
     @PostMapping("/article/update")
-    public JsonUtil updateArticle(@RequestBody ArticleDetail detail) {
-        JsonUtil json = new JsonUtil();
+    public LenResponse updateArticle(@RequestBody ArticleDetail detail) {
+        LenResponse json = new LenResponse();
         Article article = detail.getArticle();
         json.setFlag(false);
         json.setStatus(400);

@@ -7,7 +7,7 @@ import com.len.core.quartz.JobTask;
 import com.len.entity.SysJob;
 import com.len.exception.MyException;
 import com.len.service.JobService;
-import com.len.util.JsonUtil;
+import com.len.util.LenResponse;
 import com.len.util.ReType;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -61,8 +61,8 @@ public class JobController extends BaseController<SysJob> {
     @Log(desc = "添加任务")
     @PostMapping(value = "addJob")
     @ResponseBody
-    public JsonUtil addJob(SysJob job) {
-        JsonUtil j = new JsonUtil();
+    public LenResponse addJob(SysJob job) {
+        LenResponse j = new LenResponse();
         String msg = "保存成功";
         job.setStatus(false);
         try {
@@ -91,24 +91,24 @@ public class JobController extends BaseController<SysJob> {
     @Log(desc = "更新任务", type = LOG_TYPE.UPDATE)
     @PostMapping(value = "updateJob")
     @ResponseBody
-    public JsonUtil updateJob(SysJob job) {
-        JsonUtil j = new JsonUtil();
-        j.setFlag(false);
+    public LenResponse updateJob(SysJob job) {
+        LenResponse lenResponse = new LenResponse();
+        lenResponse.setFlag(false);
         if (job == null) {
-            j.setMsg("获取数据失败");
-            return j;
+            lenResponse.setMsg("获取数据失败");
+            return lenResponse;
         }
         if (jobTask.checkJob(job)) {
-            j.setMsg("已经启动任务无法更新,请停止后更新");
-            return j;
+            lenResponse.setMsg("已经启动任务无法更新,请停止后更新");
+            return lenResponse;
         }
         if (jobService.updateJob(job)) {
-            j.setFlag(true);
-            j.setData("更新成功");
+            lenResponse.setFlag(true);
+            lenResponse.setData("更新成功");
         } else {
-            j.setData("更新失败");
+            lenResponse.setData("更新失败");
         }
-        return j;
+        return lenResponse;
     }
 
     @Log(desc = "删除任务", type = LOG_TYPE.DEL)
@@ -116,7 +116,7 @@ public class JobController extends BaseController<SysJob> {
     @PostMapping(value = "del")
     @ResponseBody
     @RequiresPermissions("job:del")
-    public JsonUtil del(String id) {
+    public LenResponse del(String id) {
         return jobService.del(id);
     }
 
@@ -125,8 +125,8 @@ public class JobController extends BaseController<SysJob> {
     @PostMapping(value = "startJob")
     @ResponseBody
     @RequiresPermissions("job:start")
-    public JsonUtil startJob(String id) {
-        JsonUtil j = new JsonUtil();
+    public LenResponse startJob(String id) {
+        LenResponse j = new LenResponse();
         String msg = null;
         if (StringUtils.isEmpty(id)) {
             j.setMsg("获取数据失败");
@@ -146,8 +146,8 @@ public class JobController extends BaseController<SysJob> {
     @PostMapping(value = "endJob")
     @ResponseBody
     @RequiresPermissions("job:end")
-    public JsonUtil endJob(String id) {
-        JsonUtil j = new JsonUtil();
+    public LenResponse endJob(String id) {
+        LenResponse j = new LenResponse();
         String msg;
         if (StringUtils.isEmpty(id)) {
             j.setMsg("获取数据失败");
