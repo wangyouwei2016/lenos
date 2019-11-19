@@ -1,64 +1,70 @@
 package com.len.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 import java.util.Date;
-import javax.persistence.*;
 
-@Table(name = "blog_article")
+@TableName(value = "blog_article")
 @Data
 public class BlogArticle {
-    @Id
-    @Column(name = "id")
+
+    @TableId(value = "id", type = IdType.UUID)
     private String id;
 
     /**
      * code
      */
+    @TableField(value = "code")
     private String code;
 
 
     /**
      * 标题
      */
+    @TableField(value = "title")
     private String title;
 
     /**
      * 列表缩略图
      */
-    @Column(name="first_img")
+    @TableField(value="first_img")
     private String firstImg;
 
     /**
      * 阅读次数
      */
-    @Column(name = "read_number")
+    @TableField(value = "read_number")
     private Integer readNumber;
 
     /**
      * 次序(置顶功能)
      */
-    @Column(name = "top_num")
+    @TableField(value = "top_num")
     private Integer topNum;
 
-    @Column(name = "create_by")
+    @TableField(value = "create_by")
     private String createBy;
 
-    @Column(name = "update_by")
+    @TableField(value = "update_by")
     private String updateBy;
 
-    @Column(name = "create_date")
+    @TableField(value = "create_date")
     private Date createDate;
 
-    @Column(name = "update_date")
+    @TableField(value = "update_date")
     private Date updateDate;
 
     /**
      * 文章内容
      */
+    @TableField(value = "content")
     private String content;
 
-    @Column(name = "del_flag")
+    @TableField(value = "del_flag")
     private Byte delFlag;
 
 

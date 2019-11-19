@@ -1,43 +1,48 @@
 package com.len.entity;
 
-import java.util.Date;
-import javax.persistence.*;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 
-@Table(name = "blog_category")
+import java.util.Date;
+
+@TableName(value = "blog_category")
 public class BlogCategory {
-    @Id
-    @Column(name = "id")
+    @TableId(value = "id", type = IdType.UUID)
     private String id;
 
-    @Column(name="sequence")
+    @TableField(value="sequence")
     private Byte sequence;
 
     /**
      * 搜索code
      */
+    @TableField(value="code")
     private String code;
 
     /**
      * 类别名称
      */
+    @TableField(value="name")
     private String name;
 
     /**
      * 上层id(目前最多两次层)
      */
-    @Column(name = "parent_id")
+    @TableField(value = "parent_id")
     private String parentId;
 
-    @Column(name = "create_by")
+    @TableField(value = "create_by")
     private String createBy;
 
-    @Column(name = "update_by")
+    @TableField(value = "update_by")
     private String updateBy;
 
-    @Column(name = "create_date")
+    @TableField(value = "create_date")
     private Date createDate;
 
-    @Column(name = "update_date")
+    @TableField(value = "update_date")
     private Date updateDate;
 
     /**

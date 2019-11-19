@@ -114,12 +114,12 @@ public class UserController extends BaseController {
         }
         LenResponse j = new LenResponse();
         try {
-            userService.insertSelective(user);
+            userService.save(user);
             SysRoleUser sysRoleUser = new SysRoleUser();
             sysRoleUser.setUserId(user.getId());
             for (String r : role) {
                 sysRoleUser.setRoleId(r);
-                roleUserService.insertSelective(sysRoleUser);
+                roleUserService.save(sysRoleUser);
             }
             j.setMsg("保存成功");
         } catch (MyException e) {
@@ -135,7 +135,7 @@ public class UserController extends BaseController {
         if (StringUtils.isNotEmpty(id)) {
             //用户-角色
             List<Checkbox> checkboxList = userService.getUserRoleByJson(id);
-            SysUser user = userService.selectByPrimaryKey(id);
+            SysUser user = userService.getById(id);
             model.addAttribute("user", user);
             model.addAttribute("boxJson", checkboxList);
         }
@@ -155,20 +155,21 @@ public class UserController extends BaseController {
             return jsonUtil;
         }
         try {
-            SysUser oldUser = userService.selectByPrimaryKey(user.getId());
+            SysUser oldUser = userService.getById(user.getId());
             BeanUtil.copyNotNullBean(user, oldUser);
-            userService.updateByPrimaryKeySelective(oldUser);
+            userService.updateById(oldUser);
 
             SysRoleUser sysRoleUser = new SysRoleUser();
             sysRoleUser.setUserId(oldUser.getId());
             List<SysRoleUser> keyList = userService.selectByCondition(sysRoleUser);
-            for (SysRoleUser sysRoleUser1 : keyList) {
-                roleUserService.deleteByPrimaryKey(sysRoleUser1);
+            for (SysRoleUser currentRoleUser : keyList) {
+                roleUserService.removeById(currentRoleUser.getId());
             }
             if (role != null) {
                 for (String r : role) {
                     sysRoleUser.setRoleId(r);
-                    roleUserService.insert(sysRoleUser);
+                    sysRoleUser.setId(UuidUtil.getUuid());
+                    roleUserService.save(sysRoleUser);
                 }
             }
             jsonUtil.setFlag(true);
@@ -194,7 +195,7 @@ public class UserController extends BaseController {
         if (StringUtils.isEmpty(id)) {
             return "获取账户信息失败";
         }
-        SysUser user = userService.selectByPrimaryKey(id);
+        SysUser user = userService.getById(id);
         model.addAttribute("user", user);
         return "/system/user/re-pass";
     }
@@ -219,7 +220,7 @@ public class UserController extends BaseController {
             j.setMsg("获取数据失败，修改失败");
             return j;
         }
-        SysUser user = userService.selectByPrimaryKey(id);
+        SysUser user = userService.getById(id);
         newPwd = Md5Util.getMD5(newPwd, user.getUsername());
         pass = Md5Util.getMD5(pass, user.getUsername());
         if (!pass.equals(user.getPassword())) {

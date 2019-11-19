@@ -1,20 +1,21 @@
 package com.len.entity;
 
-import javax.persistence.*;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 
-@Table(name = "sys_user_depart")
+@TableName(value = "sys_user_depart")
 public class SysUserDepart {
     /**
      * 用户id
      */
-    @Id
-    @Column(name = "user_id")
+    @TableId(type = IdType.UUID, value = "user_id")
     private String userId;
 
     /**
      * 部门id
      */
-    @Column(name = "depart_id")
+    @TableId(type = IdType.UUID, value = "depart_id")
     private String departId;
 
     /**

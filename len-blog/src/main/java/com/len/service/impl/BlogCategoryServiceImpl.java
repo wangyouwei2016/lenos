@@ -16,11 +16,4 @@ import org.springframework.stereotype.Service;
 @Service
 public class BlogCategoryServiceImpl extends BaseServiceImpl<BlogCategory, String> implements BlogCategoryService {
 
-    @Autowired
-    private BlogCategoryMapper blogCategoryMapper;
-
-    @Override
-    public BaseMapper<BlogCategory, String> getMappser() {
-        return blogCategoryMapper;
-    }
 }

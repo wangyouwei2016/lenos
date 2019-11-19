@@ -42,7 +42,7 @@ public class TagController extends BaseController {
      */
     @GetMapping("/getTag")
     public JSONArray label() {
-        List<BlogTag> blogLabels = blogLabelService.selectAll();
+        List<BlogTag> blogLabels = blogLabelService.list();
         JSONArray array = JSONArray.parseArray(JSON.toJSONString(blogLabels));
         int i = 0;
         JSONObject object;

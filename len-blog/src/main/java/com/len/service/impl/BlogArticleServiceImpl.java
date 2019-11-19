@@ -1,7 +1,7 @@
 package com.len.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.github.pagehelper.PageHelper;
-import com.len.base.BaseMapper;
 import com.len.base.impl.BaseServiceImpl;
 import com.len.core.LenUser;
 import com.len.entity.*;
@@ -16,7 +16,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import tk.mybatis.mapper.entity.Condition;
 
 import java.util.*;
 import java.util.regex.Matcher;
@@ -54,16 +53,13 @@ public class BlogArticleServiceImpl extends BaseServiceImpl<BlogArticle, String>
     private static final Pattern SRC = Pattern.compile("src\\s*=\\s*\"?(.*?)(\"|>|\\s+)");
 
 
-    @Override
-    public BaseMapper<BlogArticle, String> getMappser() {
-        return blogArticleMapper;
-    }
-
     private ArticleDetail getArticleByCode(String code) {
-        Condition condition = new Condition(BlogArticle.class);
-        condition.createCriteria().andEqualTo("code", code)
-                .andEqualTo("delFlag", 0);
-        List<BlogArticle> articles = selectByExample(condition);
+
+        QueryWrapper<BlogArticle> blogArticleQueryWrapper = new QueryWrapper<>();
+        blogArticleQueryWrapper.eq("code", code).eq("delFlag", 0);
+        blogArticleMapper.selectList(blogArticleQueryWrapper);
+        List<BlogArticle> articles = blogArticleMapper.selectList(blogArticleQueryWrapper);
+        ;
         if (articles.isEmpty()) {
             return null;
         }
@@ -77,7 +73,7 @@ public class BlogArticleServiceImpl extends BaseServiceImpl<BlogArticle, String>
 
         String createBy = blogArticle.getCreateBy();
         if (!StringUtils.isEmpty(createBy)) {
-            SysUser sysUser = sysUserService.selectByPrimaryKey(createBy);
+            SysUser sysUser = sysUserService.getById(createBy);
             if (sysUser != null) {
                 article.setCreateName(sysUser.getUsername());
             }
@@ -87,18 +83,20 @@ public class BlogArticleServiceImpl extends BaseServiceImpl<BlogArticle, String>
 
         ArticleTag articleTag = new ArticleTag();
         articleTag.setArticleId(blogArticle.getId());
-        List<ArticleTag> articleTags = articleTagService.select(articleTag);
+        QueryWrapper<ArticleTag> tagQueryWrapper = new QueryWrapper<>(articleTag);
+        List<ArticleTag> articleTags = articleTagService.list(tagQueryWrapper);
         if (!articleTags.isEmpty()) {
-            condition = new Condition(BlogTag.class);
-            condition.createCriteria().andIn("id", articleTags.stream()
+            QueryWrapper<BlogTag> queryWrapper = new QueryWrapper<>();
+            queryWrapper.in("id", articleTags.stream()
                     .map(ArticleTag::getTagId).collect(Collectors.toList()));
-            List<BlogTag> blogTags = tagService.selectByExample(condition);
+            List<BlogTag> blogTags = tagService.list(queryWrapper);
 
             detail.setTags(blogTags.stream().map(BlogTag::getTagCode).collect(Collectors.toList()));
         }
         ArticleCategory articleCategory = new ArticleCategory();
         articleCategory.setArticleId(blogArticle.getId());
-        List<ArticleCategory> articleCategories = articleCategoryService.select(articleCategory);
+        QueryWrapper<ArticleCategory> blogTagQueryWrapper = new QueryWrapper<>(articleCategory);
+        List<ArticleCategory> articleCategories = articleCategoryService.list(blogTagQueryWrapper);
         if (!articleCategories.isEmpty()) {
             detail.setCategory(articleCategories.stream().map(ArticleCategory::getCategoryId)
                     .collect(Collectors.toList()));
@@ -192,7 +190,8 @@ public class BlogArticleServiceImpl extends BaseServiceImpl<BlogArticle, String>
         }
         BlogArticle article = new BlogArticle();
         article.setCode(result.toString());
-        BlogArticle blogArticle = selectOne(article);
+        QueryWrapper<BlogArticle> articleQueryWrapper = new QueryWrapper<>(article);
+        BlogArticle blogArticle = blogArticleMapper.selectOne(articleQueryWrapper);
         if (blogArticle == null) {
             return result.toString();
         } else {
@@ -227,7 +226,7 @@ public class BlogArticleServiceImpl extends BaseServiceImpl<BlogArticle, String>
         BlogArticle blogArticle = new BlogArticle();
         BeanUtil.copyNotNullBean(article, blogArticle);
 
-        int result = insert(blogArticle);
+        int result = blogArticleMapper.insert(blogArticle);
 
         List<ArticleCategory> categories = new ArrayList<>();
         for (String cateId : articleDetail.getCategory()) {
@@ -237,7 +236,7 @@ public class BlogArticleServiceImpl extends BaseServiceImpl<BlogArticle, String>
             articleCategory.setCategoryId(cateId);
             categories.add(articleCategory);
         }
-        int insertResult = articleCategoryService.insertList(categories);
+        boolean insertResult = articleCategoryService.saveBatch(categories);
 
         List<ArticleTag> articleTags = new ArrayList<>();
         List<BlogTag> blogTags = new ArrayList<>();
@@ -252,7 +251,8 @@ public class BlogArticleServiceImpl extends BaseServiceImpl<BlogArticle, String>
 
             blogTag = new BlogTag();
             blogTag.setTagCode(tag);
-            oldTag = tagService.selectOne(blogTag);
+            QueryWrapper<BlogTag> blogTagQueryWrapper = new QueryWrapper<>(blogTag);
+            oldTag = tagService.getOne(blogTagQueryWrapper);
 
             if (oldTag != null) {
                 articleTag.setTagId(oldTag.getId());
@@ -264,12 +264,12 @@ public class BlogArticleServiceImpl extends BaseServiceImpl<BlogArticle, String>
                 articleTag.setTagId(id);
             }
         }
-        articleTagService.insertList(articleTags);
+        articleTagService.saveBatch(articleTags);
         if (!blogTags.isEmpty()) {
-            tagService.insertList(blogTags);
+            tagService.saveBatch(blogTags);
         }
 
-        return result > 0 && insertResult > 0;
+        return result > 0 && insertResult;
     }
 
     @Override
@@ -292,11 +292,11 @@ public class BlogArticleServiceImpl extends BaseServiceImpl<BlogArticle, String>
         }
         BlogArticle blogArticle = new BlogArticle();
         BeanUtil.copyNotNullBean(article, blogArticle);
-        updateByPrimaryKey(blogArticle);
+        blogArticleMapper.updateById(blogArticle);
 
         ArticleTag articleTag = new ArticleTag();
         articleTag.setArticleId(article.getId());
-        articleTagService.delete(articleTag);
+        articleTagService.removeById(article.getId());
 
         List<ArticleTag> articleTags = new ArrayList<>();
         List<BlogTag> blogTags = new ArrayList<>();
@@ -307,7 +307,8 @@ public class BlogArticleServiceImpl extends BaseServiceImpl<BlogArticle, String>
             articleTag.setArticleId(article.getId());
             BlogTag blogTag = new BlogTag();
             blogTag.setTagCode(tag);
-            BlogTag tag1 = tagService.selectOne(blogTag);
+            QueryWrapper<BlogTag> blogTagQueryWrapper = new QueryWrapper<>(blogTag);
+            BlogTag tag1 = tagService.getOne(blogTagQueryWrapper);
             if (tag1 != null) {
                 articleTag.setTagId(tag1.getId());
             } else {
@@ -322,13 +323,14 @@ public class BlogArticleServiceImpl extends BaseServiceImpl<BlogArticle, String>
             }
         }
         if (!blogTags.isEmpty()) {
-            tagService.insertList(blogTags);
+            tagService.saveBatch(blogTags);
         }
 
-        articleTagService.insertList(articleTags);
+        articleTagService.saveBatch(articleTags);
         ArticleCategory articleCategory = new ArticleCategory();
         articleCategory.setArticleId(article.getId());
-        List<ArticleCategory> categories = articleCategoryService.select(articleCategory);
+        QueryWrapper<ArticleCategory> categoryQueryWrapper = new QueryWrapper<>(articleCategory);
+        List<ArticleCategory> categories = articleCategoryService.list(categoryQueryWrapper);
         if (!categories.isEmpty()) {
             List<String> cateIds = categories.stream().map(ArticleCategory::getCategoryId)
                     .collect(Collectors.toList());
@@ -353,7 +355,7 @@ public class BlogArticleServiceImpl extends BaseServiceImpl<BlogArticle, String>
                 category.setArticleId(article.getId());
                 category.setCategoryId(ca);
             }
-            articleCategoryService.insertList(articleCategories);
+            articleCategoryService.saveBatch(articleCategories);
         }
         return true;
     }
@@ -369,9 +371,9 @@ public class BlogArticleServiceImpl extends BaseServiceImpl<BlogArticle, String>
         if (!StringUtils.isBlank(str)) {
             if (StringUtils.isEmpty(redisService.get(str))) {
                 redisService.set(str, "true", 60 * 30L);
-                BlogArticle article = selectByPrimaryKey(articleId);
+                BlogArticle article = blogArticleMapper.selectById(articleId);
                 article.setReadNumber(article.getReadNumber() + 1);
-                updateByPrimaryKey(article);
+                blogArticleMapper.updateById(article);
                 return article.getReadNumber();
             }
         }

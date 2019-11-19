@@ -11,7 +11,7 @@ $(function () {
         tabAdd: function(title,url,id){
           //新增一个Tab项
           element.tabAdd('xbs_tab', {
-            title: title 
+            title: title
             ,content: '<iframe tab-id="'+id+'" frameborder="0" src="'+url+'" scrolling="yes" class="x-iframe"></iframe>'
             ,id: id
           })
@@ -19,8 +19,8 @@ $(function () {
         ,tabDelete: function(othis){
           //删除指定Tab项
           element.tabDelete('xbs_tab', '44'); //删除：“商品管理”
-          
-          
+
+
           othis.addClass('layui-btn-disabled');
         }
         ,tabChange: function(id){
@@ -44,7 +44,7 @@ $(function () {
                         $(".layui-form-checkbox").addClass('layui-form-checked');
                     }
                 }
-                
+
             });
         },
         getData:function  () {
@@ -59,7 +59,7 @@ $(function () {
 
     //开启表格多选
     tableCheck.init();
-      
+
 
     $('.container .left_open i').click(function(event) {
         if($('.left-nav').css('left')=='0px'){
@@ -117,15 +117,15 @@ $(function () {
                     return;
                 }
             };
-            
+
             tab.tabAdd(title,url,index+1);
             tab.tabChange(index+1);
         }
-        
+
         event.stopPropagation();
-         
+
     })
-    
+
 })
 
 /*弹出层*/

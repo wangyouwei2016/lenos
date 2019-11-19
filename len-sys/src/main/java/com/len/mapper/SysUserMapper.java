@@ -1,14 +1,12 @@
 package com.len.mapper;
 
 import com.len.entity.SysUser;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import tk.mybatis.mapper.common.BaseMapper;
-import tk.mybatis.mapper.common.Mapper;
 
 import java.util.List;
-import java.util.Map;
-
-public interface SysUserMapper extends com.len.base.BaseMapper<SysUser,String> {
+@Mapper
+public interface SysUserMapper extends com.len.base.BaseMapper<SysUser> {
 
     SysUser login(@Param("username") String username);
 
@@ -22,10 +20,11 @@ public interface SysUserMapper extends com.len.base.BaseMapper<SysUser,String> {
 
     /**
      * 更新密码
+     *
      * @param user
      * @return
      */
     int rePass(SysUser user);
 
-    List<SysUser> getUserByRoleId(@Param("roleId")String roleId);
+    List<SysUser> getUserByRoleId(@Param("roleId") String roleId);
 }

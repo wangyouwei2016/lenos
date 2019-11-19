@@ -3,8 +3,10 @@ package org.activiti.rest;
 import org.activiti.bpmn.model.BpmnModel;
 import org.activiti.engine.*;
 import org.activiti.engine.history.HistoricActivityInstance;
+import org.activiti.engine.history.HistoricIdentityLink;
 import org.activiti.engine.history.HistoricProcessInstance;
 import org.activiti.engine.history.HistoricTaskInstance;
+import org.activiti.engine.identity.Group;
 import org.activiti.engine.identity.User;
 import org.activiti.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.activiti.engine.impl.context.Context;
@@ -24,6 +26,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * @author zhuxiaomeng
@@ -119,12 +122,28 @@ public class ActivitiService {
         list.forEach(s -> {
             String assignee = s.getAssignee();
             ActivitiProcess activitiProcess = new ActivitiProcess();
-            activitiProcess.setUserId(assignee);
-            User user = identityService.createUserQuery().userId(assignee).singleResult();
-            activitiProcess.setUserName(user.getFirstName());
-            activitiProcess.setSid(s.getTaskDefinitionKey());
+            //组
+            List<HistoricIdentityLink> historicIdentityLinksForTask = historyService.getHistoricIdentityLinksForTask(s.getId());
+            List<String> groupName = new ArrayList<>();
+            historicIdentityLinksForTask.forEach(hist -> {
+                List<Group> groupList = identityService.createGroupQuery().groupId(hist.getGroupId()).list();
+                if (groupList.size() > 0) {
+                    List<String> groupNames = groupList.stream().map(Group::getName).collect(Collectors.toList());
+                    groupName.addAll(groupNames);
+                }
+            });
+            activitiProcess.setGroupNames(groupName);
+            if (!StringUtils.isEmpty(assignee)) {
+                activitiProcess.setUserId(assignee);
+                User user = identityService.createUserQuery().userId(assignee).singleResult();
+                activitiProcess.setUserName(user.getFirstName());
+                activitiProcess.setSid(s.getTaskDefinitionKey());
+            }
+
             activitiProcess.setTaskName(s.getName());
-            activitiProcess.setTime(simpleDateFormat.format(s.getStartTime()));
+            if(s.getEndTime()!=null){
+                activitiProcess.setTime(simpleDateFormat.format(s.getEndTime()));
+            }
             activitiProcesses.add(activitiProcess);
         });
         return activitiProcesses;

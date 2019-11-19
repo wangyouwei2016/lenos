@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
-public interface ArticleCategoryMapper extends BaseMapper<ArticleCategory, String> {
+public interface ArticleCategoryMapper extends BaseMapper<ArticleCategory> {
 
     void delByIds(@Param("ids") List<String> ids);
 }

@@ -130,7 +130,6 @@ To change this template use File | Settings | File Templates.-->
 </div>
 <script>
     var flag, msg;
-    console.info(flag);
     $(function () {
         $('#uname').on("blur", function () {
             var uname = $('#uname').val();
@@ -149,7 +148,6 @@ To change this template use File | Settings | File Templates.-->
                         if (!data.flag) {
                             msg = data.msg;
                             $('#ms').append("<span style='color: red;'>" + data.msg + "</span>");
-                            // layer.msg(msg,{icon: 5,anim: 6});
                         } else {
                             flag = true;
                             $('#ms').append("<span style='color: green;'>用户名可用</span>");
@@ -232,7 +230,6 @@ To change this template use File | Settings | File Templates.-->
             var role = [];
             for (var i = 0; i < r.length; i++) {
                 if (r[i].checked) {
-                    console.info(r[i].value);
                     role.push(r[i].value);
                 }
             }

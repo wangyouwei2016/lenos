@@ -64,7 +64,7 @@ public class BlogAdminController {
     @GetMapping("/article/getCategory")
     public LenResponse getCategory() {
         LenResponse json = new LenResponse();
-        List<BlogCategory> categories = categoryService.selectAll();
+        List<BlogCategory> categories = categoryService.list();
         categories.sort(Comparator.comparing(BlogCategory::getSequence));
         json.setData(categories);
         return json;

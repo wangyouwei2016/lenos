@@ -33,6 +33,11 @@ public class PersonController {
     @Autowired
     SysUserService userService;
 
+    @GetMapping("/index")
+    public String main(){
+        return "/main/index";
+    }
+
     @GetMapping()
     public String toPerson(Model model) {
         CurrentUser principal = Principal.getPrincipal();
@@ -42,7 +47,7 @@ public class PersonController {
         String id = principal.getId();
 
         List<Checkbox> checkboxList = userService.getUserRoleByJson(id);
-        SysUser user = userService.selectByPrimaryKey(id);
+        SysUser user = userService.getById(id);
         model.addAttribute("user", user);
         return "/system/person/me";
     }
@@ -58,9 +63,9 @@ public class PersonController {
             jsonUtil.setMsg("获取数据失败");
             return jsonUtil;
         }
-        SysUser oldUser = userService.selectByPrimaryKey(user.getId());
+        SysUser oldUser = userService.getById(user.getId());
         BeanUtil.copyNotNullBean(user, oldUser);
-        userService.updateByPrimaryKeySelective(oldUser);
+        userService.updateById(oldUser);
         jsonUtil.setFlag(true);
         jsonUtil.setMsg("修改成功");
         userService.updateCurrent(user);

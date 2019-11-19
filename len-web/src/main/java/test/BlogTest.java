@@ -82,6 +82,6 @@ public class BlogTest {
             categories.add(category);
 
         }
-        categoryService.insertList(categories);
+        categoryService.saveBatch(categories);
     }
 }

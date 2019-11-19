@@ -4,6 +4,8 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.util.List;
+
 /**
  * @author zhuxiaomeng
  * @date 2019-03-10.
@@ -21,6 +23,9 @@ public class ActivitiProcess {
 
     @ApiModelProperty("用户名")
     String userName;
+
+    @ApiModelProperty("组")
+    List<String> groupNames;
 
     @ApiModelProperty("流程线id")
     String sid;

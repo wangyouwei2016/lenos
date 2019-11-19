@@ -1,6 +1,5 @@
 package com.len.service.impl;
 
-import com.len.base.BaseMapper;
 import com.len.base.impl.BaseServiceImpl;
 import com.len.entity.ActAssignee;
 import com.len.mapper.ActAssigneeMapper;
@@ -33,11 +32,6 @@ public class ActAssigneeServiceImpl extends BaseServiceImpl<ActAssignee, String>
 
     @Autowired
     private RepositoryService repositoryService;
-
-    @Override
-    public BaseMapper<ActAssignee, String> getMappser() {
-        return actAssigneeMapper;
-    }
 
     @Override
     public int deleteByNodeId(String nodeId) {

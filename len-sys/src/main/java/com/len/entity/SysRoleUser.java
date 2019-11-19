@@ -1,44 +1,19 @@
 package com.len.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Data;
 
-@Table(name = "sys_role_user")
+@Data
+@TableName(value = "sys_role_user")
 public class SysRoleUser {
-    @Id
-    @Column(name = "user_id")
+
+    @TableId(type = IdType.UUID)
+    private String id;
+
     private String userId;
 
 
-    @Column(name = "role_id")
     private String roleId;
-
-    /**
-     * @return user_id
-     */
-    public String getUserId() {
-        return userId;
-    }
-
-    /**
-     * @param userId
-     */
-    public void setUserId(String userId) {
-        this.userId = userId == null ? null : userId.trim();
-    }
-
-    /**
-     * @return role_id
-     */
-    public String getRoleId() {
-        return roleId;
-    }
-
-    /**
-     * @param roleId
-     */
-    public void setRoleId(String roleId) {
-        this.roleId = roleId == null ? null : roleId.trim();
-    }
 }

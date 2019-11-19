@@ -1,6 +1,6 @@
 package com.len.service.impl;
 
-import com.len.base.BaseMapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.len.base.impl.BaseServiceImpl;
 import com.len.entity.SysRole;
 import com.len.entity.SysRoleMenu;
@@ -12,6 +12,7 @@ import com.len.service.RoleService;
 import com.len.service.RoleUserService;
 import com.len.util.BeanUtil;
 import com.len.util.LenResponse;
+import com.len.util.UuidUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,55 +35,27 @@ public class RoleServiceImpl extends BaseServiceImpl<SysRole, String> implements
     @Autowired
     private RoleUserService roleUserService;
 
-    @Override
-    public BaseMapper<SysRole, String> getMappser() {
-        return roleMapper;
-    }
 
-    @Override
-    public int deleteByPrimaryKey(String id) {
-        return roleMapper.deleteByPrimaryKey(id);
-    }
-
-    @Override
+    /*@Override
     public int insert(SysRole record) {
         record = super.addValue(record, true);
         return roleMapper.insert(record);
-    }
-
-    @Override
-    public SysRole selectByPrimaryKey(String id) {
-        return roleMapper.selectByPrimaryKey(id);
-    }
-
-    @Override
-    public int updateByPrimaryKeySelective(SysRole record) {
-        return roleMapper.updateByPrimaryKeySelective(record);
-    }
-
-    @Override
-    public int updateByPrimaryKey(SysRole record) {
-        return roleMapper.updateByPrimaryKey(record);
-    }
-
-    @Override
-    public List<SysRole> selectListByPage(SysRole sysRole) {
-        return roleMapper.selectListByPage(sysRole);
-    }
+    }*/
 
     @Override
     public LenResponse addRole(SysRole sysRole, String[] menus) {
         LenResponse j = new LenResponse();
         try {
-            insertSelective(sysRole);
+            roleMapper.insert(sysRole);
             //操作role-menu data
-            SysRoleMenu sysRoleMenu = new SysRoleMenu();
-            sysRoleMenu.setRoleId(sysRole.getId());
 
             if (menus != null) {
                 for (String menu : menus) {
+                    SysRoleMenu sysRoleMenu = new SysRoleMenu();
+                    sysRoleMenu.setId(UuidUtil.getUuid());
+                    sysRoleMenu.setRoleId(sysRole.getId());
                     sysRoleMenu.setMenuId(menu);
-                    roleMenuService.insert(sysRoleMenu);
+                    roleMenuService.save(sysRoleMenu);
                 }
             }
             j.setMsg("保存成功");
@@ -99,9 +72,9 @@ public class RoleServiceImpl extends BaseServiceImpl<SysRole, String> implements
         LenResponse jsonUtil = new LenResponse();
         jsonUtil.setFlag(false);
         try {
-            SysRole oldRole = selectByPrimaryKey(role.getId());
+            SysRole oldRole = roleMapper.selectById(role.getId());
             BeanUtil.copyNotNullBean(role, oldRole);
-            updateByPrimaryKeySelective(oldRole);
+            roleMapper.updateById(oldRole);
 
             SysRoleMenu sysRoleMenu = new SysRoleMenu();
             sysRoleMenu.setRoleId(role.getId());
@@ -109,11 +82,13 @@ public class RoleServiceImpl extends BaseServiceImpl<SysRole, String> implements
             for (SysRoleMenu sysRoleMenu1 : menuList) {
                 roleMenuService.deleteByPrimaryKey(sysRoleMenu1);
             }
-            if (menus != null)
+            if (menus != null) {
                 for (String menu : menus) {
+                    sysRoleMenu.setId(UuidUtil.getUuid());
                     sysRoleMenu.setMenuId(menu);
-                    roleMenuService.insert(sysRoleMenu);
+                    roleMenuService.save(sysRoleMenu);
                 }
+            }
             jsonUtil.setFlag(true);
             jsonUtil.setMsg("修改成功");
         } catch (MyException e) {
@@ -129,11 +104,12 @@ public class RoleServiceImpl extends BaseServiceImpl<SysRole, String> implements
         sysRoleUser.setRoleId(id);
         LenResponse j = new LenResponse();
         try {
-            int count = roleUserService.selectCountByCondition(sysRoleUser);
+            QueryWrapper<SysRoleUser> wrapper = new QueryWrapper<>(sysRoleUser);
+            int count = roleUserService.count(wrapper);
             if (count > 0) {
                 return LenResponse.error("已分配给用户，删除失败");
             }
-            deleteByPrimaryKey(id);
+            roleMapper.deleteById(id);
             j.setMsg("删除成功");
         } catch (MyException e) {
             j.setMsg("删除失败");

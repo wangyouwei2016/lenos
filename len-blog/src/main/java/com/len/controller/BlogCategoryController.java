@@ -28,7 +28,7 @@ public class BlogCategoryController {
 
     @GetMapping("/menu")
     public List<Map> menuList() {
-        List<BlogCategory> categories = categoryService.selectAll();
+        List<BlogCategory> categories = categoryService.list();
         categories.sort(Comparator.comparing(BlogCategory::getSequence));
         List<Map> cates = new ArrayList<>();
         for (BlogCategory category : categories) {

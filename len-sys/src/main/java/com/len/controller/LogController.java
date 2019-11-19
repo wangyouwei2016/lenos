@@ -76,7 +76,7 @@ public class LogController extends BaseController {
         String msg = "删除成功";
         try {
             for (String id : ids) {
-                logMapper.deleteByPrimaryKey(Integer.valueOf(id));
+                logMapper.deleteById(Integer.valueOf(id));
             }
         } catch (MyException e) {
             msg = "删除失败";

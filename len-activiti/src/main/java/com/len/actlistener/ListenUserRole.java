@@ -20,11 +20,6 @@ import com.len.entity.SysRoleUser;
 import com.len.entity.SysUser;
 import com.len.service.SysUserService;
 import com.len.util.LenResponse;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import org.activiti.engine.IdentityService;
 import org.activiti.engine.identity.Group;
 import org.activiti.engine.identity.User;
@@ -35,6 +30,10 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author zhuxiaomeng

@@ -1,18 +1,17 @@
 package com.len.entity;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+
 import java.util.Date;
 
-@Table(name = "sys_log")
+@TableName(value = "sys_log")
 public class SysLog {
-    @Id
-    @Column(name = "id")
+    @TableId(type = IdType.AUTO)
     private Integer id;
 
-    @Column(name = "user_name")
     private String userName;
 
     private String ip;
@@ -21,7 +20,6 @@ public class SysLog {
 
     private String text;
 
-    @Column(name = "create_time")
     private Date createTime;
 
     private String param;

@@ -112,7 +112,7 @@
     }
   }
   layui.use('table', function () {
-    var table = layui.table;
+     table = layui.table;
     //方法级渲染
     table.render({
       id: 'jobList',
