@@ -1,55 +1,42 @@
 package com.len.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.len.base.AbstractEntity;
 import com.len.validator.group.AddGroup;
 import com.len.validator.group.UpdateGroup;
 import lombok.Data;
 import lombok.ToString;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import java.util.Date;
 
-@Table(name = "sys_user")
+@TableName(value = "sys_user")
 @Data
 @ToString
-public class SysUser {
-    @Id
-    @Column(name = "id")
-    private String id;
+public class SysUser extends AbstractEntity {
+
 
     @NotEmpty(message = "用户名不能为空", groups = {AddGroup.class, UpdateGroup.class})
+    @TableField
     private String username;
 
     @NotEmpty(message = "密码不能为空", groups = {AddGroup.class, UpdateGroup.class})
+    @TableField
     private String password;
-
+    @TableField
     private Integer age;
-
+    @TableField
     private String email;
-
+    @TableField
     private String photo;
 
-    @Column(name = "real_name")
     private String realName;
-
-    @Column(name = "create_by")
-    private String createBy;
-
-    @Column(name = "update_by")
-    private String updateBy;
-
-    @Column(name = "create_date")
-    private Date createDate;
-
-    @Column(name = "update_date")
-    private Date updateDate;
 
     /**
      * 0可用1封禁
      */
-    @Column(name = "del_flag")
     private Byte delFlag;
 }

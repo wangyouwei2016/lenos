@@ -9,6 +9,7 @@ import com.len.util.IpUtil;
 
 import java.lang.reflect.Method;
 import java.util.Date;
+import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.shiro.UnavailableSecurityManagerException;

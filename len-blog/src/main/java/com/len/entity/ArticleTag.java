@@ -1,14 +1,16 @@
 package com.len.entity;
 
-import javax.persistence.*;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 
-@Table(name = "blog_article_tag")
+@TableName(value = "blog_article_tag")
 public class ArticleTag {
-    @Id
-    @Column(name = "article_id")
+
+    @TableId(value = "article_id", type = IdType.UUID)
     private String articleId;
 
-    @Column(name = "tag_id")
+    @TableId(value = "tag_id", type = IdType.UUID)
     private String tagId;
 
     /**

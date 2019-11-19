@@ -8,7 +8,7 @@ import org.apache.ibatis.annotations.Param;
 import java.util.Date;
 import java.util.List;
 
-public interface BlogArticleMapper extends BaseMapper<BlogArticle, String> {
+public interface BlogArticleMapper extends BaseMapper<BlogArticle> {
 
     List<Article> indexSelect();
 

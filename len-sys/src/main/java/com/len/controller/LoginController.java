@@ -78,10 +78,10 @@ public class LoginController {
     @PostMapping(value = "/login")
     public String login(SysUser user, Model model, String rememberMe, HttpServletRequest request) {
         String codeMsg = (String) request.getAttribute("shiroLoginFailure");
-        if (CODE_ERROR.equals(codeMsg)) {
+        /*if (CODE_ERROR.equals(codeMsg)) {
             model.addAttribute("message", "验证码错误");
             return "/login2";
-        }
+        }*/
         CustomUsernamePasswordToken token = new CustomUsernamePasswordToken(user.getUsername().trim(),
                 user.getPassword(), "UserLogin");
         Subject subject = Principal.getSubject();

@@ -20,7 +20,7 @@ layui.define(['jquery', 'element', 'nprogress', 'utils'], function(exports) {
     var Tab = function() {
         this.config = {
             elem: undefined,
-            mainUrl: 'druid/index.html',
+            mainUrl: 'person/index',
             renderType: 'iframe',
             openWait: true
         };
@@ -277,7 +277,8 @@ layui.define(['jquery', 'element', 'nprogress', 'utils'], function(exports) {
                     }));
                     break;
                 case renderType.iframe:
-                    contentHtm = contentHtm.replace('{{content}}', '<iframe src="' + url + '"></iframe>');
+                    window.layId=id;
+                    contentHtm = contentHtm.replace('{{content}}', '<iframe id="'+id+'" src="' + url + '"></iframe>');
                     break;
             }
             //追加htm

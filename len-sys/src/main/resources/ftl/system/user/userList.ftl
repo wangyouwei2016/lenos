@@ -77,8 +77,7 @@
         }
     }
     layui.use('table', function () {
-        var table = layui.table;
-
+        table= layui.table;
         //方法级渲染
         table.render({
             id: 'userList',
@@ -260,7 +259,8 @@
         if (h == null || h == '') {
             h = ($(window).height() - 50);
         }
-        window.top.layer.open({
+
+        window.parent.layer.open({
             id: 'user-update',
             type: 2,
             area: [w + 'px', h + 'px'],

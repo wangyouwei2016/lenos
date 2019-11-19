@@ -18,6 +18,7 @@ package com.len.controller;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.len.base.BaseController;
@@ -119,7 +120,7 @@ public class UserLeaveController extends BaseController {
 
     @GetMapping(value = "showLeaveList")
     @ResponseBody
-    public ReType showLeaveList(Model model, UserLeave userLeave, String page, String limit) {
+    public ReType showLeaveList(UserLeave userLeave, String page, String limit) {
         String userId = CommonUtil.getUser().getId();
         userLeave.setUserId(userId);
         List<UserLeave> tList = null;
@@ -188,7 +189,7 @@ public class UserLeaveController extends BaseController {
     public String updateLeave(Model model, @PathVariable String taskId) {
         Map<String, Object> variables = taskService.getVariables(taskId);
         BaseTask baseTask = (BaseTask) variables.get("baseTask");
-        UserLeave leave = leaveService.selectByPrimaryKey(baseTask.getId());
+        UserLeave leave = leaveService.getById(baseTask.getId());
         model.addAttribute("leave", leave);
         model.addAttribute("taskId", taskId);
         return "/act/leave/update-leave";
@@ -199,9 +200,10 @@ public class UserLeaveController extends BaseController {
     public LenResponse updateLeave(UserLeave leave, @PathVariable String taskId, @PathVariable String id, @PathVariable boolean flag) {
         LenResponse j = new LenResponse();
         try {
-            UserLeave oldLeave = leaveService.selectByPrimaryKey(leave.getId());
+            UserLeave oldLeave = leaveService.getById(leave.getId());
             BeanUtil.copyNotNullBean(leave, oldLeave);
-            leaveService.updateByPrimaryKeySelective(oldLeave);
+            QueryWrapper<UserLeave> userLeaveQueryWrapper = new QueryWrapper<>(oldLeave);
+            leaveService.update(userLeaveQueryWrapper);
 
             Map<String, Object> variables = taskService.getVariables(taskId);
             Map<String, Object> map = new HashMap<>();
@@ -223,33 +225,42 @@ public class UserLeaveController extends BaseController {
 
     @PostMapping("addLeave")
     @ResponseBody
-    public LenResponse addLeave(Model model, UserLeave userLeave) {
+    public LenResponse addLeave(UserLeave userLeave) {
         LenResponse j = new LenResponse();
         if (userLeave == null) {
             return LenResponse.error("获取数据失败");
         }
-        userLeave.setDays(3);
+        long beginTime = userLeave.getBeginTime().getTime();
+        long endTime = userLeave.getEndTime().getTime();
+        int days = 1;
+        if (endTime != beginTime) {
+            days += (int) ((endTime - beginTime) / (1000 * 60 * 60 * 24));
+        }
+        if (days <= 0) {
+            return LenResponse.error("时间输入有误");
+        }
+
+        userLeave.setDays(days);
         CurrentUser user = CommonUtil.getUser();
         userLeave.setUserId(user.getId());
         userLeave.setUserName(user.getUsername());
-        userLeave.setProcessInstanceId("2018");//模拟数据
-        leaveService.insertSelective(userLeave);
+        userLeave.setProcessInstanceId("2018");
+        leaveService.save(userLeave);
         Map<String, Object> map = new HashMap<>();
         userLeave.setUrlpath("/leave/readOnlyLeave/" + userLeave.getId());
         map.put("baseTask", userLeave);
+        map.put("day", days);
         ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process_leave", map);
         userLeave.setProcessInstanceId(processInstance.getId());
-        UserLeave userLeave1 = leaveService.selectByPrimaryKey(userLeave.getId());
-        BeanUtil.copyNotNullBean(userLeave, userLeave1);
-        userLeave1.setUrlpath("/leave/readOnlyLeave/" + userLeave.getId());
-        leaveService.updateByPrimaryKeySelective(userLeave1);
+        userLeave.setUrlpath("/leave/readOnlyLeave/" + userLeave.getId());
+        leaveService.updateById(userLeave);
         j.setMsg("请假申请成功");
         return j;
     }
 
     @GetMapping("readOnlyLeave/{billId}")
     public String readOnlyLeave(Model model, @PathVariable String billId) {
-        UserLeave leave = leaveService.selectByPrimaryKey(billId);
+        UserLeave leave = leaveService.getById(billId);
         model.addAttribute("leave", leave);
         return "/act/leave/update-leave-readonly";
     }
@@ -268,7 +279,8 @@ public class UserLeaveController extends BaseController {
         CurrentUser user = CommonUtil.getUser();
         SysRoleUser sysRoleUser = new SysRoleUser();
         sysRoleUser.setUserId(user.getId());
-        List<SysRoleUser> userRoles = roleUserService.selectByCondition(sysRoleUser);
+        QueryWrapper<SysRoleUser> queryWrapper = new QueryWrapper<>(sysRoleUser);
+        List<SysRoleUser> userRoles = roleUserService.list(queryWrapper);
         List<String> roleString = new ArrayList<>();
         for (SysRoleUser sru : userRoles) {
             roleString.add(sru.getRoleId());
@@ -278,9 +290,9 @@ public class UserLeaveController extends BaseController {
         List<Task> candidateGroup = taskService.createTaskQuery().taskCandidateGroupIn(roleString).list();
         taskList.addAll(assigneeList);
         taskList.addAll(candidateGroup);
-        int count=taskList.size();
-        Integer index = (Integer.valueOf(page)-1) * Integer.valueOf(limit);
-        taskList=taskList.subList(index, taskList.size() > index + 10 ? index + 10 : taskList.size());
+        int count = taskList.size();
+        Integer index = (Integer.valueOf(page) - 1) * Integer.valueOf(limit);
+        taskList = taskList.subList(index, taskList.size() > index + 10 ? index + 10 : taskList.size());
 
         List<com.len.entity.Task> tasks = new ArrayList<>();
         Map<String, Object> map;
@@ -365,6 +377,8 @@ public class UserLeaveController extends BaseController {
             leaveList = (List<LeaveOpinion>) o;
         }
         leaveList.add(op);
+        UserLeave userLeave=(UserLeave)variables.get("baseTask");
+        map.put("day",userLeave.getDays());
         map.put(leaveOpinionList, leaveList);
         j.setMsg("审核成功" + (op.isFlag() ? "<font style='color:green'>[通过]</font>" : "<font style='color:red'>[未通过]</font>"));
         taskService.complete(op.getTaskId(), map);

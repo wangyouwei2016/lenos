@@ -1,5 +1,6 @@
 package com.len.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.len.entity.BlogArticle;
@@ -13,7 +14,6 @@ import com.len.util.ReType;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import tk.mybatis.mapper.entity.Condition;
 
 import javax.servlet.http.HttpServletRequest;
 import java.text.SimpleDateFormat;
@@ -103,11 +103,10 @@ public class ArticleController {
 
     @GetMapping("/article/list/order/read")
     public ReType getArticleByReadNumber() {
-        Condition condition = new Condition(BlogArticle.class);
+        QueryWrapper<BlogArticle> articleQueryWrapper = new QueryWrapper<>();
+        articleQueryWrapper.orderByDesc("readNumber");
         PageHelper.startPage(1, 5);
-        condition.createCriteria();
-        condition.orderBy("readNumber").desc();
-        List<BlogArticle> articles = articleService.selectByExample(condition);
+        List<BlogArticle> articles = articleService.list(articleQueryWrapper);
         articles.forEach(s -> {
             s.setContent(null);
             String title = s.getTitle();

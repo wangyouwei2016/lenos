@@ -82,7 +82,7 @@ public class MenuController extends BaseController {
             if (sysMenu.getMenuType() == 2) {
                 sysMenu.setMenuType((byte) 0);
             }
-            menuService.insertSelective(sysMenu);
+            menuService.save(sysMenu);
             lenResponse.setMsg("添加成功");
         } catch (MyException e) {
             e.printStackTrace();
@@ -93,12 +93,12 @@ public class MenuController extends BaseController {
 
     @GetMapping(value = "showUpdateMenu")
     public String showUpdateMenu(Model model, String id) {
-        SysMenu sysMenu = menuService.selectByPrimaryKey(id);
+        SysMenu sysMenu = menuService.getById(id);
         JSONArray ja = menuService.getMenuJsonList();
         model.addAttribute("menus", ja.toJSONString());
         model.addAttribute("sysMenu", sysMenu);
         if (null != sysMenu.getPId()) {
-            SysMenu pSysMenu = menuService.selectByPrimaryKey(sysMenu.getPId());
+            SysMenu pSysMenu = menuService.getById(sysMenu.getPId());
             model.addAttribute("pName", pSysMenu.getName());
         }
         return "/system/menu/update-menu";
@@ -109,9 +109,9 @@ public class MenuController extends BaseController {
     @PostMapping(value = "updateMenu")
     @ResponseBody
     public LenResponse updateMenu(SysMenu sysMenu) {
-        SysMenu oldMenu = menuService.selectByPrimaryKey(sysMenu.getId());
+        SysMenu oldMenu = menuService.getById(sysMenu.getId());
         BeanUtil.copyNotNullBean(sysMenu, oldMenu);
-        menuService.updateByPrimaryKeySelective(oldMenu);
+        menuService.updateById(oldMenu);
         return LenResponse.sucess("保存成功");
     }
 

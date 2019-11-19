@@ -1,14 +1,15 @@
 package com.len.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
-import javax.persistence.*;
-
-@Table(name = "sys_depart")
+@TableName(value = "sys_depart")
 @Data
 public class SysDepart {
-    @Id
-    @GeneratedValue(generator = "JDBC")
+    @TableId(value = "id", type = IdType.UUID)
     private String id;
 
     /**
@@ -19,12 +20,10 @@ public class SysDepart {
     /**
      * 父级id
      */
-    @Column(name = "parent_id")
     private String parentId;
 
     /**
      * 部门名称
      */
-    @Column(name = "depart_name")
     private String departName;
 }

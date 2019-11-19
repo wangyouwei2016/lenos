@@ -17,27 +17,4 @@ import org.springframework.stereotype.Service;
 @Service
 public class RoleUserServiceImpl extends BaseServiceImpl<SysRoleUser,String> implements
     RoleUserService {
-
-  @Autowired
-  private SysRoleUserMapper sysRoleUserMapper;
-
-  @Override
-  public BaseMapper<SysRoleUser, String> getMappser() {
-    return sysRoleUserMapper;
-  }
-
-  @Override
-  public int deleteByPrimaryKey(SysRoleUser sysRoleUser) {
-    return sysRoleUserMapper.deleteByPrimaryKey(sysRoleUser);
-  }
-
-  @Override
-  public int selectCountByCondition(SysRoleUser sysRoleUser) {
-    return sysRoleUserMapper.selectCountByCondition(sysRoleUser);
-  }
-
-  @Override
-  public List<SysRoleUser> selectByCondition(SysRoleUser sysRoleUser) {
-    return sysRoleUserMapper.selectByCondition(sysRoleUser);
-  }
 }

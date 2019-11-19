@@ -1,5 +1,6 @@
 package com.len.core.BootListener;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.len.core.quartz.JobTask;
 import com.len.entity.SysJob;
 import com.len.service.JobService;
@@ -39,7 +40,8 @@ public class DataSourceJobThread extends Thread {
             JobTask jobTask = SpringUtil.getBean("jobTask");
             SysJob job = new SysJob();
             job.setStatus(true);
-            List<SysJob> jobList = jobService.selectListByPage(job);
+            QueryWrapper<SysJob> jobQueryWrapper=new QueryWrapper<>(job);
+            List<SysJob> jobList = jobService.list(jobQueryWrapper);
             //开启任务
             jobList.forEach(jobs -> {
                         log.info("---任务[" + jobs.getId() + "]系统 init--开始启动---------");
@@ -48,8 +50,9 @@ public class DataSourceJobThread extends Thread {
             );
             if (jobList.size() == 0) {
                 log.info("---数据库暂无启动的任务---------");
-            } else
+            } else {
                 System.out.println("---任务启动完毕---------");
+            }
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

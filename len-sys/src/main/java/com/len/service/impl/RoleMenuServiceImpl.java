@@ -19,10 +19,6 @@ public class RoleMenuServiceImpl extends BaseServiceImpl<SysRoleMenu,String> imp
     RoleMenuService {
     @Autowired
     private SysRoleMenuMapper roleMenuMapper;
-    @Override
-    public BaseMapper<SysRoleMenu, String> getMappser() {
-        return roleMenuMapper;
-    }
 
     @Override
     public List<SysRoleMenu> selectByCondition(SysRoleMenu sysRoleMenu) {
@@ -36,6 +32,6 @@ public class RoleMenuServiceImpl extends BaseServiceImpl<SysRoleMenu,String> imp
 
     @Override
     public int deleteByPrimaryKey(SysRoleMenu sysRoleMenu) {
-        return roleMenuMapper.deleteByPrimaryKey(sysRoleMenu);
+        return roleMenuMapper.deleteById(sysRoleMenu.getId());
     }
 }

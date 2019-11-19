@@ -43,7 +43,7 @@ function postAjaxre(url,data,tableId){
       if(data.flag){
         var index = parent.layer.getFrameIndex(window.name);
         parent.layer.close(index);
-        window.parent.layui.table.reload(tableId);
+          window.parent.document.getElementById(parent.getId()).contentWindow.table.reload(tableId);
         window.top.layer.msg(data.msg,{icon:6,offset: 'rb',area:['120px','80px'],anim:2});
       }else{
         layer.msg(data.msg,{icon:5,offset: 'rb',area:['120px','80px'],anim:2});
@@ -51,7 +51,6 @@ function postAjaxre(url,data,tableId){
     }
   });
 }
-
 function layerAjax(url,data,tableId){
   $.ajax({
     url:url,
@@ -61,8 +60,9 @@ function layerAjax(url,data,tableId){
     success:function(d){
       var index = parent.layer.getFrameIndex(window.name);
       if(d.flag){
-        parent.layer.close(index);
-        window.parent.layui.table.reload(tableId);
+          parent.layer.close(index);
+          var id=parent.getId();
+          window.parent.document.getElementById(id).contentWindow.table.reload(tableId);
         window.top.layer.msg(d.msg,{icon:6,offset: 'rb',area:['200px','80px'],anim:2});
       }else{
         layer.msg(d.msg,{icon:5});

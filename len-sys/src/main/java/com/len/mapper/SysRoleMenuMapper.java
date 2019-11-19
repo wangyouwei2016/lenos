@@ -5,7 +5,7 @@ import com.len.entity.SysRoleMenu;
 
 import java.util.List;
 
-public interface SysRoleMenuMapper extends BaseMapper<SysRoleMenu, String> {
+public interface SysRoleMenuMapper extends BaseMapper<SysRoleMenu> {
     List<SysRoleMenu> selectByCondition(SysRoleMenu sysRoleMenu);
 
     int selectCountByCondition(SysRoleMenu sysRoleMenu);

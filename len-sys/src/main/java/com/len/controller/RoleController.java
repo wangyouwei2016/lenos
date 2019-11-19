@@ -86,7 +86,7 @@ public class RoleController extends BaseController {
     @GetMapping(value = "updateRole")
     public String updateRole(String id, Model model, boolean detail) {
         if (StringUtils.isNotEmpty(id)) {
-            SysRole role = roleService.selectByPrimaryKey(id);
+            SysRole role = roleService.getById(id);
             model.addAttribute("role", role);
             JSONArray jsonArray = menuService.getTreeUtil(id);
             model.addAttribute("menus", jsonArray.toJSONString());

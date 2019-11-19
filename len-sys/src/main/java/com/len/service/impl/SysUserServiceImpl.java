@@ -1,6 +1,7 @@
 package com.len.service.impl;
 
 import com.alibaba.fastjson.JSONArray;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.len.base.BaseMapper;
 import com.len.base.CurrentMenu;
 import com.len.base.CurrentRole;
@@ -58,12 +59,9 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser, String> impleme
 
     private static final String ADMIN = "admin";
 
-    @Override
-    public BaseMapper<SysUser, String> getMappser() {
-        return sysUserMapper;
-    }
-
-
+//
+//    String pwd = Md5Util.getMD5(record.getPassword().trim(), record.getUsername().trim());
+//        record.setPassword(pwd);
     @Override
     public SysUser login(String username) {
         return sysUserMapper.login(username);
@@ -71,53 +69,10 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser, String> impleme
 
 
     @Override
-    public int deleteByPrimaryKey(String id) {
-        return sysUserMapper.deleteByPrimaryKey(id);
-    }
-
-    @Override
-    public int insert(SysUser record) {
-        return sysUserMapper.insert(record);
-    }
-
-    @Override
-    public int insertSelective(SysUser record) {
-
-        String pwd = Md5Util.getMD5(record.getPassword().trim(), record.getUsername().trim());
-        record.setPassword(pwd);
-        return super.insertSelective(record);
-    }
-
-    @Override
-    public SysUser selectByPrimaryKey(String id) {
-        return sysUserMapper.selectByPrimaryKey(id);
-    }
-
-    @Override
-    public int updateByPrimaryKeySelective(SysUser record) {
-        return super.updateByPrimaryKeySelective(record);
-    }
-
-    @Override
-    public int updateByPrimaryKey(SysUser record) {
-        return sysUserMapper.updateByPrimaryKey(record);
-    }
-
-    @Override
     public List<SysRoleUser> selectByCondition(SysRoleUser sysRoleUser) {
         return sysRoleUserMapper.selectByCondition(sysRoleUser);
     }
 
-    /**
-     * 分页查询
-     *
-     * @param
-     * @return
-     */
-    @Override
-    public List<SysUser> selectListByPage(SysUser sysUser) {
-        return sysUserMapper.selectListByPage(sysUser);
-    }
 
     @Override
     public int count() {
@@ -139,20 +94,21 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser, String> impleme
         }
         LenResponse j = new LenResponse();
         try {
-            SysUser sysUser = selectByPrimaryKey(id);
+            SysUser sysUser = sysUserMapper.selectById(id);
             if (ADMIN.equals(sysUser.getUsername())) {
                 return LenResponse.error("超管无法删除");
             }
             SysRoleUser roleUser = new SysRoleUser();
             roleUser.setUserId(id);
-            int count = roleUserService.selectCountByCondition(roleUser);
+            QueryWrapper<SysRoleUser> wrapper=new QueryWrapper<>(roleUser);
+            int count = roleUserService.count(wrapper);
             if (count > 0) {
                 return LenResponse.error("账户已经绑定角色，无法删除");
             }
             if (flag) {
                 //逻辑
                 sysUser.setDelFlag(Byte.parseByte("1"));
-                updateByPrimaryKeySelective(sysUser);
+                sysUserMapper.updateById(sysUser);
             } else {
                 //物理
                 sysUserMapper.delById(id);
@@ -174,7 +130,7 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser, String> impleme
 
     @Override
     public List<Checkbox> getUserRoleByJson(String id) {
-        List<SysRole> roleList = roleService.selectListByPage(new SysRole());
+        List<SysRole> roleList = roleService.list();
         SysRoleUser sysRoleUser = new SysRoleUser();
         sysRoleUser.setUserId(id);
         List<SysRoleUser> kList = selectByCondition(sysRoleUser);
@@ -212,7 +168,8 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser, String> impleme
     public void setMenuAndRoles(String username) {
         SysUser s = new SysUser();
         s.setUsername(username);
-        s = this.selectOne(s);
+        QueryWrapper<SysUser> userQueryWrapper=new QueryWrapper<>(s);
+        s = sysUserMapper.selectOne(userQueryWrapper);
         CurrentUser currentUser = new CurrentUser(s.getId(), s.getUsername(), s.getAge(), s.getEmail(), s.getPhoto(), s.getRealName());
         Subject subject = Principal.getSubject();
         /*角色权限封装进去*/

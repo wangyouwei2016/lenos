@@ -16,6 +16,8 @@
 package com.len.entity;
 
 import java.util.Date;
+
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -27,8 +29,7 @@ import org.activiti.engine.repository.Model;
  * @email 154040976@qq.com
  * 模型列表
  */
-@Getter
-@Setter
+@Data
 public class ActModel {
 
   private String id;

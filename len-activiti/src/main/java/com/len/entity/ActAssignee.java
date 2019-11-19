@@ -1,39 +1,44 @@
 package com.len.entity;
 
-import javax.persistence.*;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 
-@Table(name = "act_assignee")
+
+@TableName(value = "act_assignee")
 public class ActAssignee {
-    @Id
-    @Column(name = "id")
+    @TableId(value = "id", type = IdType.UUID)
     private String id;
 
     /**
      * 节点id
      */
+    @TableField(value = "sid")
     private String sid;
 
     /**
      * 办理人
      */
+    @TableField(value = "assignee")
     private String assignee;
 
     /**
      * 候选组(角色)
      */
-    @Column(name = "role_id")
+    @TableField(value = "role_id")
     private String roleId;
 
     /**
      * 办理人类型1办理人2候选人3组
      */
-    @Column(name = "assignee_type")
+    @TableField(value = "assignee_type")
     private Integer assigneeType;
 
     /**
      * 节点名称
      */
-    @Column(name = "activti_name")
+    @TableField(value = "activti_name")
     private String activtiName;
 
     /**

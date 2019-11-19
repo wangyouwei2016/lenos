@@ -33,6 +33,9 @@ layui.define(['element', 'nprogress', 'form', 'table', 'loader', 'tab', 'navbar'
             $.extend(true, that.config, options);
             return that;
         },
+        getId:function(){
+           return tab.getId();
+        },
         init: function() {
             var that = this,
                 _config = that.config;
@@ -62,7 +65,7 @@ layui.define(['element', 'nprogress', 'form', 'table', 'loader', 'tab', 'navbar'
                         return true; //返回true则关闭
                     }
                 }).render();
-                //navbar加载方式一，直接绑定已有的dom元素事件                
+                //navbar加载方式一，直接绑定已有的dom元素事件
                 navbar.bind(function(data) {
                     tab.tabAdd(data);
                 });
@@ -74,6 +77,7 @@ layui.define(['element', 'nprogress', 'form', 'table', 'loader', 'tab', 'navbar'
                     //openWait: false,
                     elem: '#container',
                     onSwitch: function(data) { //选项卡切换时触发
+                        window.layId=data.layId;
                         //console.log(data.layId); //lay-id值
                         //console.log(data.index); //得到当前Tab的所在下标
                         //console.log(data.elem); //得到当前的Tab大容器
@@ -87,7 +91,7 @@ layui.define(['element', 'nprogress', 'form', 'table', 'loader', 'tab', 'navbar'
                         return true; //返回true则关闭
                     }
                 }).render();
-                //navbar加载方式一，直接绑定已有的dom元素事件                
+                //navbar加载方式一，直接绑定已有的dom元素事件
                 navbar.bind(function(data) {
                     tab.tabAdd(data);
                 });

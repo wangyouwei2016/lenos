@@ -66,7 +66,7 @@ public class JobController extends BaseController<SysJob> {
         String msg = "保存成功";
         job.setStatus(false);
         try {
-            jobService.insertSelective(job);
+            jobService.save(job);
         } catch (MyException e) {
             msg = "保存失败";
             j.setFlag(false);
@@ -79,7 +79,7 @@ public class JobController extends BaseController<SysJob> {
     @GetMapping(value = "updateJob")
     public String updateJob(String id, Model model, boolean detail) {
         if (StringUtils.isNotEmpty(id)) {
-            SysJob job = jobService.selectByPrimaryKey(id);
+            SysJob job = jobService.getById(id);
             model.addAttribute("job", job);
         }
         model.addAttribute("detail", detail);

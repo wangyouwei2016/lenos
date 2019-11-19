@@ -1,16 +1,18 @@
 package com.len.entity;
 
-import java.io.Serializable;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.*;
 
-@Table(name = "user_leave")
+@TableName(value = "user_leave")
 public class UserLeave extends BaseTask {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO,generator = "JDBC")
+    @TableId(value = "id", type = IdType.UUID)
     protected String id;
 
     /**
@@ -31,36 +33,37 @@ public class UserLeave extends BaseTask {
 
     private Integer days;
 
-    @Column(name = "begin_time")
+    @TableField(value = "begin_time")
     private Date beginTime;
 
-    @Column(name = "end_time")
+    @TableField(value = "end_time")
     private Date endTime;
 
-    @Column(name = "process_instance_Id")
+    @TableField(value = "process_instance_Id")
     private String processInstanceId;
 
     private String status;
 
-    @Column(name = "create_date")
+    @TableField(value = "create_date")
     private Date createDate;
 
-    @Column(name = "create_by")
+    @TableField(value = "create_by")
     private String createBy;
 
-    @Column(name = "update_date")
+    @TableField(value = "update_date")
     private Date updateDate;
 
-    @Column(name = "update_by")
+    @TableField(value = "update_by")
     private String updateBy;
 
     //***实时节点信息
-    @Transient
+    @TableField(exist = false)
     private String taskName;
 
 
 
     //请假单审核信息
+    @TableField(exist = false)
     private List<LeaveOpinion> opinionList=new ArrayList<>();
 
     public void leaveOpAdd(LeaveOpinion leaveOpinion){

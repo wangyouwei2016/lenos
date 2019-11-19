@@ -1,25 +1,26 @@
 package com.len.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
-import javax.persistence.Table;
 
-@Table(name = "blog_article_category")
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+
+@TableName(value = "blog_article_category")
 public class ArticleCategory {
-    @Id
-    @Column(name = "id")
+    @TableId(value = "id", type = IdType.UUID)
     private String id;
 
     /**
      * 文章id
      */
-    @Column(name = "article_id")
+    @TableField(value = "article_id")
     private String articleId;
 
     /**
      * 标签id
      */
-    @Column(name = "category_id")
+    @TableField(value = "category_id")
     private String categoryId;
 
     /**

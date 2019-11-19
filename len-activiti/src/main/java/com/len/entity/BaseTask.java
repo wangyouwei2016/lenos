@@ -1,17 +1,13 @@
 package com.len.entity;
 
-import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by kingdee-001 on 2018/6/30.
  */
-@MappedSuperclass
-public abstract class BaseTask implements Serializable{
+public abstract class BaseTask implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO,generator = "JDBC")
     protected String id;
 
     /**
@@ -28,29 +24,22 @@ public abstract class BaseTask implements Serializable{
         this.id = id == null ? null : id.trim();
     }
 
-    @Column(name = "user_id")
+
     protected String userId;
 
-    @Column(name = "user_name")
     protected String userName;
 
 
-
-    @Column(name = "process_instance_Id")
     protected String processInstanceId;
 
     protected String status;
 
-    @Column(name = "create_date")
     protected Date createDate;
 
-    @Column(name = "create_by")
     protected String createBy;
 
-    @Column(name = "update_date")
     protected Date updateDate;
 
-    @Column(name = "update_by")
     protected String updateBy;
 
 
@@ -65,8 +54,6 @@ public abstract class BaseTask implements Serializable{
 
 
     private Integer submittimes;
-
-
 
 
     /**

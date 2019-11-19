@@ -61,49 +61,11 @@
 </@shiro.hasPermission>
 </script>
 <script>
-  layui.laytpl.toDateString = function(d, format){
-    var date = new Date(d || new Date())
-        ,ymd = [
-      this.digit(date.getFullYear(), 4)
-      ,this.digit(date.getMonth() + 1)
-      ,this.digit(date.getDate())
-    ]
-        ,hms = [
-      this.digit(date.getHours())
-      ,this.digit(date.getMinutes())
-      ,this.digit(date.getSeconds())
-    ];
 
-    format = format || 'yyyy-MM-dd HH:mm:ss';
 
-    return format.replace(/yyyy/g, ymd[0])
-    .replace(/MM/g, ymd[1])
-    .replace(/dd/g, ymd[2])
-    .replace(/HH/g, hms[0])
-    .replace(/mm/g, hms[1])
-    .replace(/ss/g, hms[2]);
-  };
 
-  //数字前置补零
-  layui.laytpl.digit = function(num, length, end){
-    var str = '';
-    num = String(num);
-    length = length || 2;
-    for(var i = num.length; i < length; i++){
-      str += '0';
-    }
-    return num < Math.pow(10, length) ? str + (num|0) : num;
-  };
-
-  document.onkeydown = function (e) { // 回车提交表单
-    var theEvent = window.event || e;
-    var code = theEvent.keyCode || theEvent.which;
-    if (code == 13) {
-      $(".select .select-on").click();
-    }
-  }
   layui.use('table', function () {
-    var table = layui.table;
+      table = layui.table;
     //方法级渲染
     table.render({
       id: 'roleList',
@@ -171,6 +133,14 @@
         detail('查看角色信息', '/role/updateRole?id=' + data[0].id, 700, 450);
       }
     };
+
+      document.onkeydown = function (e) {
+          var theEvent = window.event || e;
+          var code = theEvent.keyCode || theEvent.which;
+          if (code === 13) {
+              active.select();
+          }
+      }
 
     //监听表格复选框选择
     table.on('checkbox(user)', function (obj) {

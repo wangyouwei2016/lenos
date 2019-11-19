@@ -1,6 +1,5 @@
 package com.len.service.impl;
 
-import com.len.base.BaseMapper;
 import com.len.base.impl.BaseServiceImpl;
 import com.len.core.quartz.JobTask;
 import com.len.entity.SysJob;
@@ -29,20 +28,16 @@ public class JobServiceImpl extends BaseServiceImpl<SysJob, String> implements J
     @Autowired
     JobTask jobTask;
 
-    @Autowired
-    JobService jobService;
+   /* @Autowired
+    JobService jobService;*/
 
-    @Override
-    public BaseMapper<SysJob, String> getMappser() {
-        return jobMapper;
-    }
 
     @Override
     public boolean updateJob(SysJob job) {
         try {
-            SysJob oldJob = selectByPrimaryKey(job.getId());
+            SysJob oldJob = getById(job.getId());
             BeanUtil.copyNotNullBean(job, oldJob);
-            updateByPrimaryKey(oldJob);
+            updateById(oldJob);
             return true;
         } catch (MyException e) {
             log.error(e.getMessage());
@@ -59,7 +54,7 @@ public class JobServiceImpl extends BaseServiceImpl<SysJob, String> implements J
             return j;
         }
         try {
-            SysJob job = selectByPrimaryKey(id);
+            SysJob job = getById(id);
             boolean flag = jobTask.checkJob(job);
             if ((flag && !job.getStatus()) || !flag && job.getStatus()) {
                 j.setMsg("您任务表状态和web任务状态不一致,无法删除");
@@ -69,7 +64,7 @@ public class JobServiceImpl extends BaseServiceImpl<SysJob, String> implements J
                 j.setMsg("该任务处于启动中，无法删除");
                 return j;
             }
-            jobService.deleteByPrimaryKey(id);
+            removeById(id);
             j.setFlag(true);
             j.setMsg("任务删除成功");
         } catch (MyException e) {
@@ -82,10 +77,10 @@ public class JobServiceImpl extends BaseServiceImpl<SysJob, String> implements J
     @Override
     public boolean startJob(String id) {
         try {
-            SysJob job = jobService.selectByPrimaryKey(id);
+            SysJob job = getById(id);
             jobTask.startJob(job);
             job.setStatus(true);
-            jobService.updateByPrimaryKey(job);
+            updateById(job);
             return true;
         } catch (MyException e) {
             log.error(e.getMessage());
@@ -97,10 +92,10 @@ public class JobServiceImpl extends BaseServiceImpl<SysJob, String> implements J
     @Override
     public boolean stopJob(String id) {
         try {
-            SysJob job = jobService.selectByPrimaryKey(id);
+            SysJob job = getById(id);
             jobTask.remove(job);
             job.setStatus(false);
-            jobService.updateByPrimaryKey(job);
+            updateById(job);
             return true;
         } catch (MyException e) {
             e.printStackTrace();

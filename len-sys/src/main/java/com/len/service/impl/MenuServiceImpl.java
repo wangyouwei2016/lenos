@@ -1,7 +1,7 @@
 package com.len.service.impl;
 
 import com.alibaba.fastjson.JSONArray;
-import com.len.base.BaseMapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.len.base.impl.BaseServiceImpl;
 import com.len.entity.SysMenu;
 import com.len.entity.SysRoleMenu;
@@ -37,19 +37,10 @@ public class MenuServiceImpl extends BaseServiceImpl<SysMenu, String> implements
     @Autowired
     private RoleMenuService roleMenuService;
 
-    @Override
-    public BaseMapper<SysMenu, String> getMappser() {
-        return menuDao;
-    }
 
     @Override
     public List<SysMenu> getMenuNotSuper() {
         return menuDao.getMenuNotSuper();
-    }
-
-    @Override
-    public int insert(SysMenu menu) {
-        return menuDao.insert(menu);
     }
 
 
@@ -73,7 +64,7 @@ public class MenuServiceImpl extends BaseServiceImpl<SysMenu, String> implements
 
     @Override
     public JSONArray getMenuJsonList() {
-        List<SysMenu> sysMenus = selectAll();
+        List<SysMenu> sysMenus = list();
         List<SysMenu> supers = sysMenus.stream().filter(sysMenu ->
                 StringUtils.isEmpty(sysMenu.getPId()))
                 .collect(Collectors.toList());
@@ -123,7 +114,8 @@ public class MenuServiceImpl extends BaseServiceImpl<SysMenu, String> implements
         }
         SysRoleMenu sysRoleMenu = new SysRoleMenu();
         sysRoleMenu.setMenuId(id);
-        int count = roleMenuService.selectCount(sysRoleMenu);
+        QueryWrapper<SysRoleMenu> sysRoleMenuQueryWrapper = new QueryWrapper<>(sysRoleMenu);
+        int count = roleMenuService.count(sysRoleMenuQueryWrapper);
         //存在角色绑定不能删除
         if (count > 0) {
             json.setMsg("本菜单存在绑定角色,请先解除绑定!");
@@ -132,11 +124,12 @@ public class MenuServiceImpl extends BaseServiceImpl<SysMenu, String> implements
         //存在下级菜单 不能解除
         SysMenu sysMenu = new SysMenu();
         sysMenu.setPId(id);
-        if (selectCount(sysMenu) > 0) {
+        QueryWrapper<SysMenu> sysRoleMenuQueryWrapperTwo = new QueryWrapper<>(sysMenu);
+        if (menuDao.selectCount(sysRoleMenuQueryWrapperTwo) > 0) {
             json.setMsg("存在子菜单,请先删除子菜单!");
             return json;
         }
-        boolean isDel = deleteByPrimaryKey(id) > 0;
+        boolean isDel = removeById(id);
         if (isDel) {
             json.setMsg("删除成功");
             json.setFlag(true);
@@ -168,7 +161,7 @@ public class MenuServiceImpl extends BaseServiceImpl<SysMenu, String> implements
     @Override
     public JSONArray getTreeUtil(String roleId) {
         TreeUtil treeUtil = null;
-        List<SysMenu> sysMenus = selectAll();
+        List<SysMenu> sysMenus = list();
         List<SysMenu> supers = sysMenus.stream().filter(sysMenu ->
                 StringUtils.isEmpty(sysMenu.getPId()))
                 .collect(Collectors.toList());
@@ -204,8 +197,9 @@ public class MenuServiceImpl extends BaseServiceImpl<SysMenu, String> implements
             sysRoleMenu.setMenuId(sysMenu.getId());
             sysRoleMenu.setRoleId(roleId);
             int count = roleMenuMapper.selectCountByCondition(sysRoleMenu);
-            if (count > 0)
+            if (count > 0) {
                 treeUtil.setChecked(true);
+            }
         }
         for (SysMenu menu : childSysMenu) {
             TreeUtil m = getChildByTree(menu, sysMenus, layer, menu.getId(), roleId);

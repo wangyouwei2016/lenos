@@ -15,6 +15,7 @@
  */
 package com.len.actlistener;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.len.entity.ActAssignee;
 import com.len.service.ActAssigneeService;
 import com.len.service.impl.ActAssigneeServiceImpl;
@@ -40,7 +41,7 @@ public class ActNodeListener implements TaskListener {
         //KEY
         String nodeId = delegateTask.getTaskDefinitionKey();
         ActAssigneeService actAssigneeService = SpringUtil.getBean(ActAssigneeServiceImpl.class);
-        List<ActAssignee> assigneeList = actAssigneeService.selectListByPage(new ActAssignee(nodeId));
+        List<ActAssignee> assigneeList = actAssigneeService.list(new QueryWrapper<>(new ActAssignee(nodeId)));
         for (ActAssignee assignee : assigneeList) {
             switch (assignee.getAssigneeType()) {
                 case AssigneeType.GROUP_TYPE:

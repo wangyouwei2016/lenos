@@ -33,7 +33,7 @@ public class JobDemo3 implements Job{
   public void run(){
     ApplicationContext applicationContext=SpringUtil.getApplicationContext();
     SysUserService sys=SpringUtil.getBean(SysUserServiceImpl.class);
-    List<SysUser> userList=sys.selectListByPage(new SysUser());
+    List<SysUser> userList=sys.list();
     System.out.println(userList.get(0).getUsername());;
     System.out.println("JobDemo3：执行完毕=======================");
 

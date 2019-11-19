@@ -17,6 +17,8 @@ package com.len.controller;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.service.additional.query.impl.QueryChainWrapper;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -110,7 +112,7 @@ public class ActivitiController extends BaseController {
     public LenResponse syncdata() {
         LenResponse j = new LenResponse();
         try {
-            List<SysUser> userList = userService.selectListByPage(new SysUser());
+            List<SysUser> userList = userService.list();
             User au;
             for (SysUser user : userList) {
                 au = new UserEntity();
@@ -120,7 +122,7 @@ public class ActivitiController extends BaseController {
                 identityService.deleteUser(au.getId());
                 identityService.saveUser(au);
             }
-            List<SysRole> sysRoleList = roleService.selectListByPage(new SysRole());
+            List<SysRole> sysRoleList = roleService.list();
             Group group;
             for (SysRole role : sysRoleList) {
                 group = new GroupEntity();
@@ -129,7 +131,7 @@ public class ActivitiController extends BaseController {
                 identityService.deleteGroup(group.getId());
                 identityService.saveGroup(group);
             }
-            List<SysRoleUser> roleUserList = roleUserService.selectByCondition(new SysRoleUser());
+            List<SysRoleUser> roleUserList = roleUserService.list();
 
             for (SysRoleUser sysRoleUser : roleUserList) {
                 identityService.deleteMembership(sysRoleUser.getUserId(), sysRoleUser.getRoleId());
@@ -305,7 +307,7 @@ public class ActivitiController extends BaseController {
         /**根据流程实例id查询出所有流程节点*/
         List<ActivityImpl> activityList = actAssigneeService.getActivityList(deploymentId);
         /**角色和节点关系封装成list*/
-        List<SysRole> roleList = roleService.selectListByPage(new SysRole());
+        List<SysRole> roleList = roleService.list();
         Checkbox checkbox = null;
         Map<String, Object> map = null;
         List<Map<String, Object>> mapList = new ArrayList<>();
@@ -319,7 +321,7 @@ public class ActivitiController extends BaseController {
             }
             //节点id 、name、节点目前关联的角色 封装成进map
             String nodeId = activiti.getId();
-            assigneeList = actAssigneeService.select(new ActAssignee(nodeId));
+            assigneeList = actAssigneeService.list(new QueryWrapper<>(new ActAssignee(nodeId)));
             List<String> strings = new ArrayList<>();
             assigneeList.forEach(actAssignee1 -> strings.add(actAssignee1.getRoleId()));
             map.put("id", nodeId);
@@ -373,7 +375,7 @@ public class ActivitiController extends BaseController {
         }
         //后添加 在map循环里添加 多角色会导致添加了的再次被删除 so 要拿出来
         for (ActAssignee actAssignee : assigneeList) {
-            actAssigneeService.insertSelective(actAssignee);
+            actAssigneeService.save(actAssignee);
         }
         j.setMsg("更新成功");
         return j;

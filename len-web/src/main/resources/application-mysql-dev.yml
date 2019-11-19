@@ -77,12 +77,12 @@ mybatis:
     mapper-locations: classpath*:mapper/*.xml
     check-config-location: true
 
-mapper:
-    mappers:
-        - com.len.base.BaseMapper
-        - tk.mybatis.mapper.common.Mapper
-    not-empty: true
-    identity: mysql
+#mapper:
+#    mappers:
+#        - com.len.base.BaseMapper
+#        - tk.mybatis.mapper.common.Mapper
+#    not-empty: true
+#    identity: mysql
 
 
 # PageHelperConfig 可以替代此方案

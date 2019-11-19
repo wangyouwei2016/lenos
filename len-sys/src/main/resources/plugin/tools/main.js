@@ -3,7 +3,8 @@
  * 统一处理js方法
  */
 /**框架*/
-var message;
+var message,table;
+window.cLayuiTable={};
 layui.config({
   base: 'plugin/build/js/',
   version: '1.0.1'
@@ -41,3 +42,7 @@ layui.config({
         switchSkin(skin === undefined ? 'default' : skin);
       }();
 });
+
+function getId(){
+    return window.layId;
+}

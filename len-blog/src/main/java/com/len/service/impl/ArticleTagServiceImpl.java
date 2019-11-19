@@ -18,9 +18,4 @@ public class ArticleTagServiceImpl extends BaseServiceImpl<ArticleTag, String> i
 
     @Autowired
     private ArticleTagMapper articleTagMapper;
-
-    @Override
-    public BaseMapper<ArticleTag, String> getMappser() {
-        return articleTagMapper;
-    }
 }

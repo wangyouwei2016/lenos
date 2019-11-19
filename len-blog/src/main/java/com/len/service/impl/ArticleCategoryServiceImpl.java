@@ -23,11 +23,6 @@ public class ArticleCategoryServiceImpl extends BaseServiceImpl<ArticleCategory,
     private ArticleCategoryMapper articleCategoryMapper;
 
     @Override
-    public BaseMapper<ArticleCategory, String> getMappser() {
-        return articleCategoryMapper;
-    }
-
-    @Override
     public void delByIds(List<String> ids) {
         articleCategoryMapper.delByIds(ids);
     }

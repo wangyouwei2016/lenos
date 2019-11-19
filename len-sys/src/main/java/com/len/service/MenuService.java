@@ -16,10 +16,6 @@ public interface MenuService extends BaseService<SysMenu,String> {
 
   List<SysMenu> getMenuNotSuper();
 
-  @Override
-  int insert(SysMenu menu);
-
-
   List<SysMenu> getMenuChildren(String id);
 
   public JSONArray getMenuJsonList();

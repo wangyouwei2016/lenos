@@ -87,10 +87,22 @@
             msg+=`</h3>
                             <p>
                                 <br>审批人：`;
-            msg+=t.userName;
+            if(t.userName!==null){
+                msg+=t.userName;
+            }
+            msg+=`<br>审批组：`;
+            if(t.groupNames){
+                t.groupNames.push('aaa');
+                t.groupNames.forEach(function(v,index){
+                    msg+=v;
+                    msg+=(index===t.groupNames.length-1?'':'/');
+                });
+            }
             msg+=`
                                 <br>审批时间：`;
-            msg+=t.time;
+            if(t.time!==null) {
+                msg += t.time;
+            }
             msg+=`
                             </p>
                         </div>

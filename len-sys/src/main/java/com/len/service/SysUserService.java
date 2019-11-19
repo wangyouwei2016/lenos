@@ -6,6 +6,7 @@ import com.len.entity.SysRoleUser;
 import com.len.entity.SysUser;
 import com.len.util.Checkbox;
 import com.len.util.LenResponse;
+
 import java.util.List;
 
 /**
@@ -13,59 +14,45 @@ import java.util.List;
  * @date 2017/12/4.
  * @email 154040976@qq.com
  */
-public interface SysUserService extends BaseService<SysUser,String> {
+public interface SysUserService extends BaseService<SysUser, String> {
 
-  SysUser login(String username);
+    SysUser login(String username);
 
+    /**
+     * 新增
+     *
+     * @param user
+     * @return
+     */
+    int add(SysUser user);
 
-  SysUser selectByPrimaryKey(String id);
+    /**
+     * 删除
+     *
+     * @param id
+     * @return
+     */
+    LenResponse delById(String id, boolean flag);
 
-  /**
-   * 分页查询
-   * @param
-   * @return
-   */
-  @Override
-  List<SysUser> selectListByPage(SysUser sysUser);
-
-  int count();
-
-  /**
-   * 新增
-   * @param user
-   * @return
-   */
-  int add(SysUser user);
-
-  /**
-   * 删除
-   * @param id
-   * @return
-   */
-  LenResponse delById(String id, boolean flag);
-
-  int checkUser(String username);
+    int checkUser(String username);
 
 
+    List<SysRoleUser> selectByCondition(SysRoleUser sysRoleUser);
 
-  @Override
-  int updateByPrimaryKey(SysUser sysUser);
+    List<Checkbox> getUserRoleByJson(String id);
 
-  List<SysRoleUser> selectByCondition(SysRoleUser sysRoleUser);
-
-  public List<Checkbox> getUserRoleByJson(String id);
-
-  /**
-   * 更新密码
-   * @param user
-   * @return
-   */
-  int rePass(SysUser user);
+    /**
+     * 更新密码
+     *
+     * @param user
+     * @return
+     */
+    int rePass(SysUser user);
 
 
-  List<SysUser> getUserByRoleId(String roleId);
+    List<SysUser> getUserByRoleId(String roleId);
 
-  public void setMenuAndRoles(String username);
+    void setMenuAndRoles(String username);
 
-  public void updateCurrent(SysUser user);
+    void updateCurrent(SysUser user);
 }

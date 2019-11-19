@@ -95,7 +95,7 @@
     }
 
     layui.use('table', function () {
-        var table = layui.table, laydate = layui.laydate;
+        table = layui.table, laydate = layui.laydate;
         var a = laydate.render({
             elem: '#beginTime',
             done: function (value, date, endDate) {
@@ -200,22 +200,9 @@
             }
         });
         eleClick(active, '.len-form-item .layui-btn,.layui-col-md12 .layui-btn');
-
     });
 
     function add(title, url, w, h) {
-        if (title == null || title == '') {
-            title = false;
-        }
-        if (url == null || url == '') {
-            url = "404.html";
-        }
-        if (w == null || w == '') {
-            w = ($(window).width() * 0.9);
-        }
-        if (h == null || h == '') {
-            h = ($(window).height() - 50);
-        }
         window.top.layer.open({
             id: 'leave-add',
             type: 2,

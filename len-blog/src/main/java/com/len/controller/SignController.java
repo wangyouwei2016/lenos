@@ -1,5 +1,6 @@
 package com.len.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.len.entity.SysRole;
 import com.len.entity.SysRoleUser;
 import com.len.entity.SysUser;
@@ -19,7 +20,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import tk.mybatis.mapper.entity.Condition;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -58,7 +58,8 @@ public class SignController {
         }
         String pass = user.getPassword();
         user.setPassword(null);
-        SysUser sysUser = sysUserService.selectOne(user);
+        QueryWrapper<SysUser> userQueryWrapper = new QueryWrapper<>(user);
+        SysUser sysUser = sysUserService.getOne(userQueryWrapper);
         if (sysUser == null) {
             throw new UnknownAccountException("用户名或密码错误");
         }
@@ -67,9 +68,9 @@ public class SignController {
             throw new UnknownAccountException("用户名或密码错误");
         }
 
-        Condition condition = new Condition(SysRoleUser.class);
-        condition.createCriteria().andEqualTo("userId", sysUser.getId());
-        List<SysRoleUser> sysRoleUsers = roleUserService.selectByExample(condition);
+        QueryWrapper<SysRoleUser> roleUserQueryWrapper = new QueryWrapper<>();
+        roleUserQueryWrapper.eq("userId", sysUser.getId());
+        List<SysRoleUser> sysRoleUsers = roleUserService.list(roleUserQueryWrapper);
 
         if (sysRoleUsers.isEmpty()) {
             throw new UnknownAccountException("权限不足");
@@ -79,9 +80,9 @@ public class SignController {
                 .map(SysRoleUser::getRoleId)
                 .collect(Collectors.toList());
 
-        condition = new Condition(SysRole.class);
-        condition.createCriteria().andIn("id", roleList);
-        List<SysRole> sysRoles = roleService.selectByExample(condition);
+        QueryWrapper<SysRole> roleQueryWrapper = new QueryWrapper<>();
+        roleQueryWrapper.in("id", roleList);
+        List<SysRole> sysRoles = roleService.list(roleQueryWrapper);
         if (roles == null || roles.isEmpty()) {
             log.error("not init blog roles!");
             roles.add(INIT_BLOG_ROLE);

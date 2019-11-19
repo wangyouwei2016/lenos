@@ -1,27 +1,25 @@
 package com.len.entity;
 
-import org.apache.ibatis.type.JdbcType;
-import tk.mybatis.mapper.annotation.ColumnType;
-import tk.mybatis.mapper.annotation.KeySql;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 
-import javax.persistence.*;
-
-@Table(name = "blog_tag")
+@TableName(value = "blog_tag")
 public class BlogTag {
-    @Id
-    @Column(name = "id")
+    @TableId(value = "id", type = IdType.UUID)
     private String id;
 
     /**
      * 标签code
      */
-    @Column(name = "tag_code")
+    @TableField(value = "tag_code")
     private String tagCode;
 
     /**
      * 标签name
      */
-    @Column(name = "tag_name")
+    @TableField(value = "tag_name")
     private String tagName;
 
     /**

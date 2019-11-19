@@ -1,34 +1,27 @@
 package com.len.entity;
 
-import com.len.validator.group.AddGroup;
-import com.len.validator.group.UpdateGroup;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.len.base.AbstractEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
-import org.hibernate.validator.constraints.Length;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.validation.constraints.NotEmpty;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@Table(name = "sys_menu")
+@TableName("sys_menu")
 @Data
 @ToString
 @EqualsAndHashCode
-public class SysMenu {
-    @Id
-    @Column(name = "id")
-    private String id;
+public class SysMenu extends AbstractEntity {
 
-    @NotEmpty(message = "菜单名称不能为空", groups = {AddGroup.class, UpdateGroup.class})
+
     private String name;
 
-    @Column(name = "p_id")
     private String pId;
 
     private String url;
@@ -36,26 +29,12 @@ public class SysMenu {
     /**
      * 排序字段
      */
-    @Length(min = 1,max = 4, message = "序号长度不对")
-    @Column(name = "order_num")
     private Integer orderNum;
 
     /**
      * 图标
      */
     private String icon;
-
-    @Column(name = "create_by")
-    private String createBy;
-
-    @Column(name = "create_date")
-    private Date createDate;
-
-    @Column(name = "update_by")
-    private String updateBy;
-
-    @Column(name = "update_date")
-    private Date updateDate;
 
     /**
      * 权限
@@ -65,18 +44,20 @@ public class SysMenu {
     /**
      * 1栏目2菜单
      */
-    @Column(name = "menu_type")
     private Byte menuType;
 
+    @TableField(exist = false)
     private int num;
 
+    @TableField(exist = false)
     private List<SysRole> roleList;
 
     private static final long serialVersionUID = 1L;
 
-    private List<SysMenu> children=new ArrayList<SysMenu>();
+    @TableField(exist = false)
+    private List<SysMenu> children = new ArrayList<SysMenu>();
 
-    public void addChild(SysMenu sysMenu){
+    public void addChild(SysMenu sysMenu) {
         children.add(sysMenu);
     }
 }
