@@ -10,10 +10,8 @@ import lombok.Data;
 public class SysRoleMenu {
 
     @TableId(type = IdType.UUID)
-    private String id;
-
     private String roleId;
 
-
+    @TableId(type = IdType.UUID)
     private String menuId;
 }

@@ -454,8 +454,7 @@ public class ActivitiController extends BaseController {
 
     @PostMapping("delModel")
     @ResponseBody
-    public LenResponse delModel(org.springframework.ui.Model model, String id) {
-        FileInputStream inputStream = null;
+    public LenResponse delModel(String id) {
         String modelId = actPropertiesConfig.getModelId();
         if (id.equals(modelId)) {
             return LenResponse.error("演示禁止删除");

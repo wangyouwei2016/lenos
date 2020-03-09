@@ -52,7 +52,6 @@ public class RoleServiceImpl extends BaseServiceImpl<SysRole, String> implements
             if (menus != null) {
                 for (String menu : menus) {
                     SysRoleMenu sysRoleMenu = new SysRoleMenu();
-                    sysRoleMenu.setId(UuidUtil.getUuid());
                     sysRoleMenu.setRoleId(sysRole.getId());
                     sysRoleMenu.setMenuId(menu);
                     roleMenuService.save(sysRoleMenu);
@@ -84,7 +83,6 @@ public class RoleServiceImpl extends BaseServiceImpl<SysRole, String> implements
             }
             if (menus != null) {
                 for (String menu : menus) {
-                    sysRoleMenu.setId(UuidUtil.getUuid());
                     sysRoleMenu.setMenuId(menu);
                     roleMenuService.save(sysRoleMenu);
                 }
