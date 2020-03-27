@@ -115,6 +115,7 @@ public class UserController extends BaseController {
         }
         LenResponse j = new LenResponse();
         try {
+            user.setPassword(Md5Util.getMD5(user.getPassword(),user.getUsername()));
             userService.save(user);
             SysRoleUser sysRoleUser = new SysRoleUser();
             sysRoleUser.setUserId(user.getId());
