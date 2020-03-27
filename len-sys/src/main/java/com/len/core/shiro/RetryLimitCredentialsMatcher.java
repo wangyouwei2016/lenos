@@ -53,7 +53,6 @@ public class RetryLimitCredentialsMatcher extends HashedCredentialsMatcher {
                 ? new AtomicInteger(0) : loginRetryCache.get(username);
         log.info("retryCount:{}, username:{}",retryCount,username);
         if (retryCount.incrementAndGet() > this.maxRetryCount) {
-            log.warn("username: {} tried to login more than {} times in perid", username,this.maxRetryCount);
             throw new ExcessiveAttemptsException(StrUtil.format("username: {} tried to login more than {} times in perid", username,this.maxRetryCount));
         }
         boolean matches = super.doCredentialsMatch(token, info);

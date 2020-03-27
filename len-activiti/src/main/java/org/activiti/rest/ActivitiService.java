@@ -126,17 +126,21 @@ public class ActivitiService {
             List<HistoricIdentityLink> historicIdentityLinksForTask = historyService.getHistoricIdentityLinksForTask(s.getId());
             List<String> groupName = new ArrayList<>();
             historicIdentityLinksForTask.forEach(hist -> {
-                List<Group> groupList = identityService.createGroupQuery().groupId(hist.getGroupId()).list();
-                if (groupList.size() > 0) {
-                    List<String> groupNames = groupList.stream().map(Group::getName).collect(Collectors.toList());
-                    groupName.addAll(groupNames);
+                if(!StringUtils.isEmpty(hist.getGroupId())){
+                    List<Group> groupList = identityService.createGroupQuery().groupId(hist.getGroupId()).list();
+                    if (groupList.size() > 0) {
+                        List<String> groupNames = groupList.stream().map(Group::getName).collect(Collectors.toList());
+                        groupName.addAll(groupNames);
+                    }
                 }
             });
             activitiProcess.setGroupNames(groupName);
             if (!StringUtils.isEmpty(assignee)) {
                 activitiProcess.setUserId(assignee);
                 User user = identityService.createUserQuery().userId(assignee).singleResult();
-                activitiProcess.setUserName(user.getFirstName());
+                if(user!=null){
+                    activitiProcess.setUserName(user.getFirstName());
+                }
                 activitiProcess.setSid(s.getTaskDefinitionKey());
             }
 
