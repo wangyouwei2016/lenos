@@ -53,53 +53,38 @@ public class JobServiceImpl extends BaseServiceImpl<SysJob, String> implements J
             j.setMsg("获取数据失败");
             return j;
         }
-        try {
-            SysJob job = getById(id);
-            boolean flag = jobTask.checkJob(job);
-            if ((flag && !job.getStatus()) || !flag && job.getStatus()) {
-                j.setMsg("您任务表状态和web任务状态不一致,无法删除");
-                return j;
-            }
-            if (flag) {
-                j.setMsg("该任务处于启动中，无法删除");
-                return j;
-            }
-            removeById(id);
-            j.setFlag(true);
-            j.setMsg("任务删除成功");
-        } catch (MyException e) {
-            j.setMsg("任务删除异常");
-            e.printStackTrace();
+        SysJob job = getById(id);
+        boolean flag = jobTask.checkJob(job);
+        if ((flag && !job.getStatus()) || !flag && job.getStatus()) {
+            j.setMsg("您任务表状态和web任务状态不一致,无法删除");
+            return j;
         }
+        if (flag) {
+            j.setMsg("该任务处于启动中，无法删除");
+            return j;
+        }
+        removeById(id);
+        j.setFlag(true);
+        j.setMsg("任务删除成功");
+
         return j;
     }
 
     @Override
     public boolean startJob(String id) {
-        try {
-            SysJob job = getById(id);
-            jobTask.startJob(job);
-            job.setStatus(true);
-            updateById(job);
-            return true;
-        } catch (MyException e) {
-            log.error(e.getMessage());
-            e.printStackTrace();
-        }
-        return false;
+        SysJob job = getById(id);
+        jobTask.startJob(job);
+        job.setStatus(true);
+        updateById(job);
+        return true;
     }
 
     @Override
     public boolean stopJob(String id) {
-        try {
-            SysJob job = getById(id);
-            jobTask.remove(job);
-            job.setStatus(false);
-            updateById(job);
-            return true;
-        } catch (MyException e) {
-            e.printStackTrace();
-        }
-        return false;
+        SysJob job = getById(id);
+        jobTask.remove(job);
+        job.setStatus(false);
+        updateById(job);
+        return true;
     }
 }

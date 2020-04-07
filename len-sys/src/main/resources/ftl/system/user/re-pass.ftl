@@ -23,16 +23,6 @@ To change this template use File | Settings | File Templates.-->
       </fieldset>
     </div>
     <div class="layui-form-item">
-      <label for="pass" class="layui-form-label">
-        <span class="x-red">*</span>原密码
-      </label>
-      <div class="layui-input-inline">
-        <input type="hidden" value="${user.id}" name="id">
-        <input type="password"  id="pass" name="pass"  lay-verify="pass"
-               autocomplete="off" class="layui-input">
-      </div>
-    </div>
-    <div class="layui-form-item">
       <label for="newPass" class="layui-form-label">
         <span class="x-red">*</span>新密码
       </label>
@@ -72,12 +62,7 @@ To change this template use File | Settings | File Templates.-->
         ,layer = layui.layer;
     //自定义验证规则
     form.verify({
-      pass: function(value){
-        if(value.trim()==""){
-          return "密码不能为空";
-        }
-      }
-      ,newPass: [/(.+){6,12}$/, '密码必须6到12位']
+      newPass: [/(.+){6,12}$/, '密码必须6到12位']
       ,reNewPass: function(value){
         if($('#newPass').val()!=$('#reNewPass').val()){
           return '两次密码不一致';

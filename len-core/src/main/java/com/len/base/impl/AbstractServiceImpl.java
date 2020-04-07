@@ -17,7 +17,7 @@ import java.util.List;
  * @author zhuxiaomeng
  * @date 2017/12/13.
  * @email 154040976@qq.com
- * update by 2019/11/12 tkmapper替换成mybatisplus
+ * update by 2019/11/12 mybatisplus
  */
 @Slf4j
 public class AbstractServiceImpl<T, E extends Serializable> extends ServiceImpl<BaseMapper<T>, T> implements BaseService<T, E> {
@@ -45,7 +45,7 @@ public class AbstractServiceImpl<T, E extends Serializable> extends ServiceImpl<
     }
 
     @Override
-    public String showAll(T t) {
+    public List<T> showAll(T t) {
         List<T> tList = null;
         try {
             tList = getBaseMapper().selectListByPage(t);
@@ -53,7 +53,7 @@ public class AbstractServiceImpl<T, E extends Serializable> extends ServiceImpl<
             log.error("class:BaseServiceImpl ->method:show->message:" + e.getMessage());
             e.printStackTrace();
         }
-        return JSON.toJSONString(tList);
+        return tList;
     }
 
     @Override

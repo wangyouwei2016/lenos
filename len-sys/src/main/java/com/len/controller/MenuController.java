@@ -5,7 +5,6 @@ import com.len.base.BaseController;
 import com.len.core.annotation.Log;
 import com.len.core.annotation.Log.LOG_TYPE;
 import com.len.entity.SysMenu;
-import com.len.exception.MyException;
 import com.len.service.MenuService;
 import com.len.util.BeanUtil;
 import com.len.util.LenResponse;
@@ -29,7 +28,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 @RequestMapping("/menu")
 @Controller
-@Api(value = "菜单管理",tags="菜单业务处理")
+@Api(value = "菜单管理", tags = "菜单业务处理")
 public class MenuController extends BaseController {
 
     @Autowired
@@ -61,12 +60,9 @@ public class MenuController extends BaseController {
     @ApiOperation(value = "/addMenu", httpMethod = "POST", notes = "添加菜单")
     @PostMapping(value = "addMenu")
     @ResponseBody
-    public LenResponse addMenu(SysMenu sysMenu, Model model) {
-        LenResponse lenResponse = new LenResponse();
-        lenResponse.setFlag(false);
+    public LenResponse addMenu(SysMenu sysMenu) {
         if (sysMenu == null) {
-            lenResponse.setMsg("获取数据失败");
-            return lenResponse;
+            return error("获取数据失败");
         }
         if (StringUtils.isEmpty(sysMenu.getPId())) {
             sysMenu.setPId(null);
@@ -77,18 +73,11 @@ public class MenuController extends BaseController {
         if (StringUtils.isEmpty(sysMenu.getPermission())) {
             sysMenu.setPermission(null);
         }
-
-        try {
-            if (sysMenu.getMenuType() == 2) {
-                sysMenu.setMenuType((byte) 0);
-            }
-            menuService.save(sysMenu);
-            lenResponse.setMsg("添加成功");
-        } catch (MyException e) {
-            e.printStackTrace();
-            lenResponse.setMsg("添加失败");
+        if (sysMenu.getMenuType() == 2) {
+            sysMenu.setMenuType((byte) 0);
         }
-        return lenResponse;
+        menuService.save(sysMenu);
+        return succ("添加成功");
     }
 
     @GetMapping(value = "showUpdateMenu")
@@ -112,7 +101,7 @@ public class MenuController extends BaseController {
         SysMenu oldMenu = menuService.getById(sysMenu.getId());
         BeanUtil.copyNotNullBean(sysMenu, oldMenu);
         menuService.updateById(oldMenu);
-        return LenResponse.sucess("保存成功");
+        return succ("保存成功");
     }
 
     @Log(desc = "删除菜单", type = LOG_TYPE.DEL)

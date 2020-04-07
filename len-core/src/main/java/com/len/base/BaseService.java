@@ -19,5 +19,5 @@ public interface BaseService<T,E extends Serializable> extends IService<T> {
 
     public ReType getList(T t, int page, int limit);
 
-    public String showAll(T t);
+    public List<T> showAll(T t);
 }

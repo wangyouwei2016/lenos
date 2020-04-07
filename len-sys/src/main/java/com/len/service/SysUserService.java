@@ -19,12 +19,21 @@ public interface SysUserService extends BaseService<SysUser, String> {
     SysUser login(String username);
 
     /**
-     * 新增
+     * 新增用户和用户角色信息
      *
-     * @param user
+     * @param user 用户对象
+     * @param role 角色列表
      * @return
      */
-    int add(SysUser user);
+    boolean add(SysUser user, List<String> role);
+
+    /**
+     * 更新用户和用户角色信息
+     * @param user
+     * @param role
+     * @return
+     */
+    boolean updateUser(SysUser user, List<String> role);
 
     /**
      * 删除
@@ -55,4 +64,6 @@ public interface SysUserService extends BaseService<SysUser, String> {
     void setMenuAndRoles(String username);
 
     void updateCurrent(SysUser user);
+
+    boolean updatePerson(SysUser user);
 }

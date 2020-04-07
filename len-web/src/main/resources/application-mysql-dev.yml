@@ -23,28 +23,18 @@ spring:
           max-lifetime: 1800000
           connection-timeout: 30000
           connection-test-query: SELECT 1
-
-#          如果你喜欢druid 可以放开pom注释 DruidConfig 注释 使用此数据源
-#    datasource:
-#          url: jdbc:mysql://localhost:3306/lenos?useUnicode=true&characterEncoding=UTF-8
-#          username: root
-#          password: 123456
-#          # 使用druid数据源
-#          type: com.alibaba.druid.pool.DruidDataSource
-#          driver-class-name: com.mysql.jdbc.Driver
-#          filters: stat
-#          maxActive: 20
-#          initialSize: 1
-#          maxWait: 60000
-#          minIdle: 1
-#          timeBetweenEvictionRunsMillis: 60000
-#          minEvictableIdleTimeMillis: 300000
-#          validationQuery: select 'x'
-#          testWhileIdle: true
-#          testOnBorrow: false
-#          testOnReturn: false
-#          poolPreparedStatements: true
-#          maxOpenPreparedStatements: 20
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    timeout: 3000
+    maxRetryCount: 10
+    second: 300
+  session:
+    store-type: redis
+  data:
+    redis:
+      repositories:
+        enabled: false
   http:
       encoding:
         force: true
@@ -55,14 +45,14 @@ spring:
         url: http://localhost:8082
 
 
-management:
+#management:
   endpoints:
     web:
       exposure:
         include: "*"
   endpoint:
       health:
-        show-details: ALWAYS
+          show-details: ALWAYS
 eureka:
   client:
     fetch-registry: false
@@ -77,15 +67,8 @@ mybatis:
     mapper-locations: classpath*:mapper/*.xml
     check-config-location: true
 
-#mapper:
-#    mappers:
-#        - com.len.base.BaseMapper
-#        - tk.mybatis.mapper.common.Mapper
-#    not-empty: true
-#    identity: mysql
 
-
-# PageHelperConfig 可以替代此方案
+# PageHelperConfig
 pagehelper:
     helperDialect: mysql
     reasonable: true

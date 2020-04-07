@@ -18,6 +18,7 @@ import java.util.List;
 @Service
 public class RoleMenuServiceImpl extends BaseServiceImpl<SysRoleMenu, String> implements
         RoleMenuService {
+
     @Autowired
     private SysRoleMenuMapper roleMenuMapper;
 
