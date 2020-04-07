@@ -32,7 +32,7 @@ import javax.servlet.http.HttpSession;
  */
 @Controller
 @Slf4j
-@Api(value = "登录业务",description="登录校验处理")
+@Api(value = "登录业务",tags="登录校验处理")
 public class LoginController {
 
     @Autowired

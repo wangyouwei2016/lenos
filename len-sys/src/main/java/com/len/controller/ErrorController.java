@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 @RequestMapping(value = "/error")
-@Api(value = "异常", description = "异常业务类")
+@Api(value = "异常", tags = "异常业务类")
 public class ErrorController {
 
     @GetMapping(value = "404")
