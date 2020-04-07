@@ -5,7 +5,6 @@ import com.len.core.annotation.Log;
 import com.len.core.annotation.Log.LOG_TYPE;
 import com.len.core.quartz.JobTask;
 import com.len.entity.SysJob;
-import com.len.exception.MyException;
 import com.len.service.JobService;
 import com.len.util.LenResponse;
 import com.len.util.ReType;
@@ -30,7 +29,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 @Controller
 @RequestMapping("/job")
-@Api(value = "定时任务",tags="定时任务")
+@Api(value = "定时任务", tags = "定时任务")
 public class JobController extends BaseController<SysJob> {
 
     @Autowired
@@ -62,18 +61,9 @@ public class JobController extends BaseController<SysJob> {
     @PostMapping(value = "addJob")
     @ResponseBody
     public LenResponse addJob(SysJob job) {
-        LenResponse j = new LenResponse();
-        String msg = "保存成功";
         job.setStatus(false);
-        try {
-            jobService.save(job);
-        } catch (MyException e) {
-            msg = "保存失败";
-            j.setFlag(false);
-            e.printStackTrace();
-        }
-        j.setMsg(msg);
-        return j;
+        jobService.save(job);
+        return succ("保存成功");
     }
 
     @GetMapping(value = "updateJob")
@@ -92,23 +82,17 @@ public class JobController extends BaseController<SysJob> {
     @PostMapping(value = "updateJob")
     @ResponseBody
     public LenResponse updateJob(SysJob job) {
-        LenResponse lenResponse = new LenResponse();
-        lenResponse.setFlag(false);
         if (job == null) {
-            lenResponse.setMsg("获取数据失败");
-            return lenResponse;
+            return error("获取数据失败");
         }
         if (jobTask.checkJob(job)) {
-            lenResponse.setMsg("已经启动任务无法更新,请停止后更新");
-            return lenResponse;
+            return error("已经启动任务无法更新,请停止后更新");
         }
         if (jobService.updateJob(job)) {
-            lenResponse.setFlag(true);
-            lenResponse.setData("更新成功");
+            return succ("更新成功");
         } else {
-            lenResponse.setData("更新失败");
+            return error("更新失败");
         }
-        return lenResponse;
     }
 
     @Log(desc = "删除任务", type = LOG_TYPE.DEL)
@@ -126,20 +110,16 @@ public class JobController extends BaseController<SysJob> {
     @ResponseBody
     @RequiresPermissions("job:start")
     public LenResponse startJob(String id) {
-        LenResponse j = new LenResponse();
-        String msg = null;
+        String msg;
         if (StringUtils.isEmpty(id)) {
-            j.setMsg("获取数据失败");
-            j.setFlag(false);
-            return j;
+            return error("获取数据失败");
         }
         if (jobService.startJob(id)) {
             msg = "启动成功";
         } else {
             msg = "启动失败";
         }
-        j.setMsg(msg);
-        return j;
+        return succ(msg);
     }
 
     @Log(desc = "停止任务")
@@ -147,20 +127,16 @@ public class JobController extends BaseController<SysJob> {
     @ResponseBody
     @RequiresPermissions("job:end")
     public LenResponse endJob(String id) {
-        LenResponse j = new LenResponse();
         String msg;
         if (StringUtils.isEmpty(id)) {
-            j.setMsg("获取数据失败");
-            j.setFlag(false);
-            return j;
+            return error("获取数据失败");
         }
         if (jobService.stopJob(id)) {
             msg = "停止成功";
         } else {
             msg = "停止失败";
         }
-        j.setMsg(msg);
-        return j;
+        return succ(msg);
     }
 
 }

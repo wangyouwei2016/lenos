@@ -49,14 +49,13 @@ public class MenuServiceImpl extends BaseServiceImpl<SysMenu, String> implements
         return menuDao.getMenuChildren(id);
     }
 
-    public SysMenu child(SysMenu sysMenu, List<SysMenu> sysMenus, Integer pNum, Integer num) {
+    public SysMenu child(SysMenu sysMenu, List<SysMenu> sysMenus, Integer num) {
         List<SysMenu> childSysMenu = sysMenus.stream().filter(s ->
                 s.getPId().equals(sysMenu.getId())).collect(Collectors.toList());
         sysMenus.removeAll(childSysMenu);
-        SysMenu m;
         for (SysMenu menu : childSysMenu) {
             ++num;
-            m = child(menu, sysMenus, pNum, num);
+            child(menu, sysMenus, num);
             sysMenu.addChild(menu);
         }
         return sysMenu;
@@ -72,7 +71,7 @@ public class MenuServiceImpl extends BaseServiceImpl<SysMenu, String> implements
         supers.sort(Comparator.comparingInt(SysMenu::getOrderNum));
         JSONArray jsonArr = new JSONArray();
         for (SysMenu sysMenu : supers) {
-            SysMenu child = child(sysMenu, sysMenus, 0, 0);
+            SysMenu child = child(sysMenu, sysMenus,  0);
             jsonArr.add(child);
         }
         return jsonArr;
@@ -81,7 +80,7 @@ public class MenuServiceImpl extends BaseServiceImpl<SysMenu, String> implements
     @Override
     public JSONArray getMenuJsonByUser(List<SysMenu> menuList) {
         JSONArray jsonArr = new JSONArray();
-        Collections.sort(menuList, (o1, o2) -> {
+        menuList.sort((o1, o2) -> {
             if (o1.getOrderNum() == null || o2.getOrderNum() == null) {
                 return -1;
             }
@@ -160,7 +159,7 @@ public class MenuServiceImpl extends BaseServiceImpl<SysMenu, String> implements
 
     @Override
     public JSONArray getTreeUtil(String roleId) {
-        TreeUtil treeUtil = null;
+        TreeUtil treeUtil;
         List<SysMenu> sysMenus = list();
         List<SysMenu> supers = sysMenus.stream().filter(sysMenu ->
                 StringUtils.isEmpty(sysMenu.getPId()))
@@ -181,7 +180,7 @@ public class MenuServiceImpl extends BaseServiceImpl<SysMenu, String> implements
         return menuDao.getUserMenu(id);
     }
 
-    public TreeUtil getChildByTree(SysMenu sysMenu, List<SysMenu> sysMenus, int layer, String pId, String roleId) {
+    private TreeUtil getChildByTree(SysMenu sysMenu, List<SysMenu> sysMenus, int layer, String pId, String roleId) {
         layer++;
         List<SysMenu> childSysMenu = sysMenus.stream().filter(s ->
                 s.getPId().equals(sysMenu.getId())).collect(Collectors.toList());
@@ -191,7 +190,7 @@ public class MenuServiceImpl extends BaseServiceImpl<SysMenu, String> implements
         treeUtil.setName(sysMenu.getName());
         treeUtil.setLayer(layer);
         treeUtil.setPId(pId);
-        /**判断是否存在*/
+        /*判断是否存在*/
         if (!StringUtils.isEmpty(roleId)) {
             SysRoleMenu sysRoleMenu = new SysRoleMenu();
             sysRoleMenu.setMenuId(sysMenu.getId());

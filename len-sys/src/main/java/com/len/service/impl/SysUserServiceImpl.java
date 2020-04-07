@@ -2,7 +2,6 @@ package com.len.service.impl;
 
 import com.alibaba.fastjson.JSONArray;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.len.base.BaseMapper;
 import com.len.base.CurrentMenu;
 import com.len.base.CurrentRole;
 import com.len.base.CurrentUser;
@@ -12,7 +11,6 @@ import com.len.entity.SysMenu;
 import com.len.entity.SysRole;
 import com.len.entity.SysRoleUser;
 import com.len.entity.SysUser;
-import com.len.exception.MyException;
 import com.len.mapper.SysRoleUserMapper;
 import com.len.mapper.SysUserMapper;
 import com.len.service.MenuService;
@@ -23,15 +21,15 @@ import com.len.util.BeanUtil;
 import com.len.util.Checkbox;
 import com.len.util.LenResponse;
 import com.len.util.Md5Util;
-import java.util.ArrayList;
-import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -59,9 +57,6 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser, String> impleme
 
     private static final String ADMIN = "admin";
 
-//
-//    String pwd = Md5Util.getMD5(record.getPassword().trim(), record.getUsername().trim());
-//        record.setPassword(pwd);
     @Override
     public SysUser login(String username) {
         return sysUserMapper.login(username);
@@ -80,11 +75,41 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser, String> impleme
     }
 
     @Override
-    public int add(SysUser user) {
+    public boolean add(SysUser user, List<String> role) {
         //密码加密
-        String pwd = Md5Util.getMD5(user.getPassword().trim(), user.getUsername().trim());
-        user.setPassword(pwd);
-        return sysUserMapper.add(user);
+        user.setPassword(Md5Util.getMD5(user.getPassword(), user.getUsername()));
+        boolean save = save(user);
+        SysRoleUser sysRoleUser = new SysRoleUser();
+        sysRoleUser.setUserId(user.getId());
+        for (String r : role) {
+            sysRoleUser.setRoleId(r);
+            roleUserService.save(sysRoleUser);
+        }
+        return save;
+    }
+
+    @Override
+    public boolean updateUser(SysUser user, List<String> role) {
+        SysUser oldUser = getById(user.getId());
+        BeanUtil.copyNotNullBean(user, oldUser);
+        updateById(oldUser);
+
+        SysRoleUser sysRoleUser = new SysRoleUser();
+        sysRoleUser.setUserId(oldUser.getId());
+        List<SysRoleUser> keyList = selectByCondition(sysRoleUser);
+        for (SysRoleUser currentRoleUser : keyList) {
+            QueryWrapper<SysRoleUser> queryWrapper = new QueryWrapper<>(currentRoleUser);
+            roleUserService.remove(queryWrapper);
+        }
+
+        if (role != null) {
+            for (String r : role) {
+                sysRoleUser.setRoleId(r);
+                roleUserService.save(sysRoleUser);
+            }
+        }
+        updateCurrent(user);
+        return true;
     }
 
     @Override
@@ -93,32 +118,27 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser, String> impleme
             return LenResponse.error("获取数据失败");
         }
         LenResponse j = new LenResponse();
-        try {
-            SysUser sysUser = sysUserMapper.selectById(id);
-            if (ADMIN.equals(sysUser.getUsername())) {
-                return LenResponse.error("超管无法删除");
-            }
-            SysRoleUser roleUser = new SysRoleUser();
-            roleUser.setUserId(id);
-            QueryWrapper<SysRoleUser> wrapper=new QueryWrapper<>(roleUser);
-            int count = roleUserService.count(wrapper);
-            if (count > 0) {
-                return LenResponse.error("账户已经绑定角色，无法删除");
-            }
-            if (flag) {
-                //逻辑
-                sysUser.setDelFlag(Byte.parseByte("1"));
-                sysUserMapper.updateById(sysUser);
-            } else {
-                //物理
-                sysUserMapper.delById(id);
-            }
-            j.setMsg("删除成功");
-        } catch (MyException e) {
-            j.setMsg("删除失败");
-            j.setFlag(false);
-            e.printStackTrace();
+        SysUser sysUser = sysUserMapper.selectById(id);
+        if (ADMIN.equals(sysUser.getUsername())) {
+            return LenResponse.error("超管无法删除");
         }
+        SysRoleUser roleUser = new SysRoleUser();
+        roleUser.setUserId(id);
+        QueryWrapper<SysRoleUser> wrapper = new QueryWrapper<>(roleUser);
+        int count = roleUserService.count(wrapper);
+        if (count > 0) {
+            return LenResponse.error("账户已经绑定角色，无法删除");
+        }
+        if (flag) {
+            //逻辑
+            sysUser.setDelFlag(Byte.parseByte("1"));
+            sysUserMapper.updateById(sysUser);
+        } else {
+            //物理
+            sysUserMapper.delById(id);
+        }
+        int i = 1 / 0;
+        j.setMsg("删除成功");
         return j;
 
     }
@@ -163,12 +183,11 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser, String> impleme
     }
 
 
-
     @Override
     public void setMenuAndRoles(String username) {
         SysUser s = new SysUser();
         s.setUsername(username);
-        QueryWrapper<SysUser> userQueryWrapper=new QueryWrapper<>(s);
+        QueryWrapper<SysUser> userQueryWrapper = new QueryWrapper<>(s);
         s = sysUserMapper.selectOne(userQueryWrapper);
         CurrentUser currentUser = new CurrentUser(s.getId(), s.getUsername(), s.getAge(), s.getEmail(), s.getPhoto(), s.getRealName());
         Subject subject = Principal.getSubject();
@@ -178,7 +197,7 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser, String> impleme
 
         List<SysMenu> menuList = menuService.getUserMenu(s.getId());
         JSONArray json = menuService.getMenuJsonByUser(menuList);
-        session.setAttribute("menu", json);
+        session.setAttribute("menu", json.toJSONString());
 
 
         List<CurrentMenu> currentMenuList = new ArrayList<>();
@@ -208,13 +227,21 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser, String> impleme
     @Override
     public void updateCurrent(SysUser sysUser) {
         CurrentUser principal = Principal.getPrincipal();
-        if(principal.getId().equals(sysUser.getId())){
+        if (principal.getId().equals(sysUser.getId())) {
             //当前用户
             CurrentUser currentUse = Principal.getCurrentUse();
-            Session session=Principal.getSession();
+            Session session = Principal.getSession();
             currentUse.setPhoto(sysUser.getPhoto());
-            session.setAttribute("currentPrincipal",currentUse);
-
+            session.setAttribute("currentPrincipal", currentUse);
         }
+    }
+
+    @Override
+    public boolean updatePerson(SysUser user) {
+        SysUser oldUser = getById(user.getId());
+        BeanUtil.copyNotNullBean(user, oldUser);
+        updateById(oldUser);
+        updateCurrent(user);
+        return true;
     }
 }

@@ -1,11 +1,11 @@
 package com.len.controller;
 
+import com.len.base.BaseController;
 import com.len.base.CurrentUser;
 import com.len.core.annotation.Log;
 import com.len.core.shiro.Principal;
 import com.len.entity.SysUser;
 import com.len.service.SysUserService;
-import com.len.util.BeanUtil;
 import com.len.util.Checkbox;
 import com.len.util.LenResponse;
 import io.swagger.annotations.Api;
@@ -27,14 +27,14 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/person")
-@Api(value = "个人业务",tags="个人业务处理")
-public class PersonController {
+@Api(value = "个人业务", tags = "个人业务处理")
+public class PersonController extends BaseController {
 
     @Autowired
     SysUserService userService;
 
     @GetMapping("/index")
-    public String main(){
+    public String main() {
         return "/main/index";
     }
 
@@ -57,18 +57,10 @@ public class PersonController {
     @PostMapping(value = "updateUser")
     @ResponseBody
     public LenResponse updatePerson(SysUser user) {
-        LenResponse jsonUtil = new LenResponse();
-        jsonUtil.setFlag(false);
         if (user == null) {
-            jsonUtil.setMsg("获取数据失败");
-            return jsonUtil;
+            return error("获取数据失败");
         }
-        SysUser oldUser = userService.getById(user.getId());
-        BeanUtil.copyNotNullBean(user, oldUser);
-        userService.updateById(oldUser);
-        jsonUtil.setFlag(true);
-        jsonUtil.setMsg("修改成功");
-        userService.updateCurrent(user);
-        return jsonUtil;
+        userService.updatePerson(user);
+        return succ("修改成功");
     }
 }

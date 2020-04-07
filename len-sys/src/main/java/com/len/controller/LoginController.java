@@ -32,7 +32,7 @@ import javax.servlet.http.HttpSession;
  */
 @Controller
 @Slf4j
-@Api(value = "登录业务",tags="登录校验处理")
+@Api(value = "登录业务", tags = "登录校验处理")
 public class LoginController {
 
     @Autowired
@@ -58,9 +58,7 @@ public class LoginController {
     @GetMapping(value = "/login")
     public String loginCheck() {
         Subject sub = SecurityUtils.getSubject();
-        Boolean flag2 = sub.isRemembered();
-        boolean flag = sub.isAuthenticated() || flag2;
-        if (flag) {
+        if (sub.isAuthenticated() || sub.isRemembered()) {
             return "/main/main";
         }
         return "/login2";
@@ -83,7 +81,7 @@ public class LoginController {
             return "/login2";
         }*/
         CustomUsernamePasswordToken token = new CustomUsernamePasswordToken(user.getUsername().trim(),
-                user.getPassword(), "UserLogin");
+            user.getPassword(), "UserLogin");
         Subject subject = Principal.getSubject();
         String msg = null;
         try {

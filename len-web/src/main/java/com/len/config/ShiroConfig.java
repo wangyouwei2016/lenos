@@ -7,7 +7,6 @@ import com.len.core.filter.VerfityCodeFilter;
 import com.len.core.shiro.LoginRealm;
 import com.len.core.shiro.RetryLimitCredentialsMatcher;
 import org.apache.shiro.authc.pam.AtLeastOneSuccessfulStrategy;
-import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.realm.Realm;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
@@ -15,15 +14,24 @@ import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSource
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
+import org.crazycake.shiro.RedisCacheManager;
+import org.crazycake.shiro.RedisManager;
+import org.crazycake.shiro.RedisSessionDAO;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.web.filter.DelegatingFilterProxy;
 
 import javax.servlet.Filter;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author zhuxiaomeng
@@ -35,24 +43,18 @@ import java.util.*;
 @Configuration
 public class ShiroConfig {
 
+    @Autowired
+    RConfig redisConfig;
+
+
     @Bean
     public RetryLimitCredentialsMatcher getRetryLimitCredentialsMatcher() {
-//    RetryLimitCredentialsMatcher rm = new RetryLimitCredentialsMatcher(getCacheManager(),2);
-        RetryLimitCredentialsMatcher rm = new RetryLimitCredentialsMatcher(getCacheManager());
+        RetryLimitCredentialsMatcher rm = new RetryLimitCredentialsMatcher(cacheManager());
         rm.setHashAlgorithmName("md5");
         rm.setHashIterations(4);
         return rm;
 
     }
-
-   /* @Bean
-    public BlogRetryLimitCredentialsMatcher getBlogRetryLimitCredentialsMatcher() {
-        BlogRetryLimitCredentialsMatcher rm = new BlogRetryLimitCredentialsMatcher(getCacheManager());
-        rm.setHashAlgorithmName("md5");
-        rm.setHashIterations(4);
-        return rm;
-
-    }*/
 
     @Bean(name = "userLoginRealm")
     public LoginRealm getLoginRealm() {
@@ -66,12 +68,12 @@ public class ShiroConfig {
         return new BlogRealm();
     }
 
-    @Bean
+    /*@Bean
     public EhCacheManager getCacheManager() {
         EhCacheManager ehCacheManager = new EhCacheManager();
         ehCacheManager.setCacheManagerConfigFile("classpath:ehcache/ehcache.xml");
         return ehCacheManager;
-    }
+    }*/
 
     @Bean
     public LifecycleBeanPostProcessor getLifecycleBeanPostProcessor() {
@@ -101,8 +103,8 @@ public class ShiroConfig {
         loginRealms.add(loginRealm);
         loginRealms.add(blogLoginRealm);
         dwm.setRealms(loginRealms);
-        dwm.setCacheManager(getCacheManager());
-        dwm.setSessionManager(defaultWebSessionManager());
+        dwm.setCacheManager(cacheManager());
+        dwm.setSessionManager(sessionManager());
         return dwm;
     }
 
@@ -167,26 +169,55 @@ public class ShiroConfig {
         return as;
     }
 
+    /* @Bean
+     public DefaultWebSessionManager defaultWebSessionManager() {
+         DefaultWebSessionManager defaultWebSessionManager = new DefaultWebSessionManager();
+         defaultWebSessionManager.setSessionIdCookieEnabled(true);
+         defaultWebSessionManager.setGlobalSessionTimeout(21600000);
+         defaultWebSessionManager.setDeleteInvalidSessions(true);
+         defaultWebSessionManager.setSessionValidationSchedulerEnabled(true);
+         defaultWebSessionManager.setSessionIdUrlRewritingEnabled(false);
+         return defaultWebSessionManager;
+     }*/
     @Bean
-    public DefaultWebSessionManager defaultWebSessionManager() {
-        DefaultWebSessionManager defaultWebSessionManager = new DefaultWebSessionManager();
-        defaultWebSessionManager.setSessionIdCookieEnabled(true);
-        defaultWebSessionManager.setGlobalSessionTimeout(21600000);
-        defaultWebSessionManager.setDeleteInvalidSessions(true);
-        defaultWebSessionManager.setSessionValidationSchedulerEnabled(true);
-        defaultWebSessionManager.setSessionIdUrlRewritingEnabled(false);
-        return defaultWebSessionManager;
-    }
-  @Bean
-  public FilterRegistrationBean delegatingFilterProxy(){
-    FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean();
-    DelegatingFilterProxy proxy = new DelegatingFilterProxy();
-    proxy.setTargetFilterLifecycle(true);
-    proxy.setTargetBeanName("shiroFilter");
+    public FilterRegistrationBean delegatingFilterProxy() {
+        FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean();
+        DelegatingFilterProxy proxy = new DelegatingFilterProxy();
+        proxy.setTargetFilterLifecycle(true);
+        proxy.setTargetBeanName("shiroFilter");
 
-    filterRegistrationBean.setFilter(proxy);
-    return filterRegistrationBean;
-  }
+        filterRegistrationBean.setFilter(proxy);
+        return filterRegistrationBean;
+    }
+
+    public RedisCacheManager cacheManager() {
+        RedisCacheManager redisCacheManager = new RedisCacheManager();
+        redisCacheManager.setRedisManager(redisManager());
+        return redisCacheManager;
+    }
+    private RedisManager redisManager() {
+        RedisManager redisManager = new RedisManager();
+//        redisManager.setHost(redisConfig.getHost());
+//        redisManager.setPort(redisConfig.getPort());
+        redisManager.setExpire(1800);
+//        redisManager.setTimeout(redisConfig.getTimeout());
+        return redisManager;
+    }
+
+    @Bean
+    public RedisSessionDAO redisSessionDAO() {
+        RedisSessionDAO redisSessionDAO = new RedisSessionDAO();
+        redisSessionDAO.setRedisManager(redisManager());
+        return redisSessionDAO;
+    }
+
+
+    @Bean
+    public DefaultWebSessionManager sessionManager() {
+        DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
+        sessionManager.setSessionDAO(redisSessionDAO());
+        return sessionManager;
+    }
 
 
 }

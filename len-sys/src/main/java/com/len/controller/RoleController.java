@@ -22,6 +22,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.List;
+
 /**
  * @author zhuxiaomeng
  * @date 2017/12/19.
@@ -30,7 +32,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 @Controller
 @RequestMapping(value = "/role")
-@Api(value = "用户角色管理",tags="角色业务处理")
+@Api(value = "用户角色管理", tags = "角色业务处理")
 public class RoleController extends BaseController {
 
     @Autowired
@@ -44,7 +46,7 @@ public class RoleController extends BaseController {
 
     @GetMapping(value = "showRole")
     @RequiresPermissions(value = "role:show")
-    public String showRole(Model model) {
+    public String showRole() {
         return "/system/role/roleList";
     }
 
@@ -52,7 +54,7 @@ public class RoleController extends BaseController {
     @GetMapping(value = "showRoleList")
     @ResponseBody
     @RequiresPermissions("role:show")
-    public ReType showRoleList(SysRole role, Model model, String page, String limit) {
+    public ReType showRoleList(SysRole role, String page, String limit) {
         return roleService.show(role, Integer.valueOf(page), Integer.valueOf(limit));
     }
 
@@ -60,7 +62,7 @@ public class RoleController extends BaseController {
     @GetMapping(value = "showaLLRoleList")
     @ResponseBody
     @RequiresPermissions("role:show")
-    public String showRoleList(SysRole role, Model model) {
+    public List<SysRole> showRoleList(SysRole role) {
         return roleService.showAll(role);
     }
 
@@ -78,7 +80,7 @@ public class RoleController extends BaseController {
     @ResponseBody
     public LenResponse addRole(SysRole sysRole, String[] menus) {
         if (StringUtils.isEmpty(sysRole.getRoleName())) {
-            LenResponse.error("角色名称不能为空");
+            return error("角色名称不能为空");
         }
         return roleService.addRole(sysRole, menus);
     }
@@ -101,7 +103,7 @@ public class RoleController extends BaseController {
     @ResponseBody
     public LenResponse updateUser(SysRole role, String[] menus) {
         if (role == null) {
-            return LenResponse.error("获取数据失败");
+            return error("获取数据失败");
         }
         return roleService.updateUser(role, menus);
     }
@@ -113,7 +115,7 @@ public class RoleController extends BaseController {
     @RequiresPermissions("role:del")
     public LenResponse del(String id) {
         if (StringUtils.isEmpty(id)) {
-            return LenResponse.error("获取数据失败");
+            return error("获取数据失败");
         }
         return roleService.del(id);
     }
