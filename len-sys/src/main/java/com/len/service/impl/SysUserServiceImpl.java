@@ -197,7 +197,7 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser, String> impleme
 
         List<SysMenu> menuList = menuService.getUserMenu(s.getId());
         JSONArray json = menuService.getMenuJsonByUser(menuList);
-        session.setAttribute("menu", json.toJSONString());
+        session.setAttribute("menu",json );
 
 
         List<CurrentMenu> currentMenuList = new ArrayList<>();

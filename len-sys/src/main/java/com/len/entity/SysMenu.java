@@ -1,23 +1,19 @@
 package com.len.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.len.base.AbstractEntity;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
+import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @TableName("sys_menu")
 @Data
 @ToString
-@EqualsAndHashCode
-public class SysMenu extends AbstractEntity {
+public class SysMenu extends AbstractEntity implements Serializable {
 
 
     private String name;
