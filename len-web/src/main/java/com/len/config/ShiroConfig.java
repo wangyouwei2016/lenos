@@ -23,15 +23,10 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.annotation.Order;
 import org.springframework.web.filter.DelegatingFilterProxy;
 
 import javax.servlet.Filter;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author zhuxiaomeng
@@ -39,6 +34,8 @@ import java.util.Map;
  * @email 154040976@qq.com
  * spring shiro
  * 元旦快乐：code everybody
+ * <p>
+ * 2020/4/19 添加redis缓存，支持集群 默认redis缓存，如果单机配置可放开下面 ehcache
  */
 @Configuration
 public class ShiroConfig {
@@ -67,13 +64,25 @@ public class ShiroConfig {
     public BlogRealm blogLoginRealm() {
         return new BlogRealm();
     }
-
+    /*==========ehcache 缓存 begin============*/
     /*@Bean
     public EhCacheManager getCacheManager() {
         EhCacheManager ehCacheManager = new EhCacheManager();
         ehCacheManager.setCacheManagerConfigFile("classpath:ehcache/ehcache.xml");
         return ehCacheManager;
     }*/
+
+    /* @Bean
+     public DefaultWebSessionManager defaultWebSessionManager() {
+         DefaultWebSessionManager defaultWebSessionManager = new DefaultWebSessionManager();
+         defaultWebSessionManager.setSessionIdCookieEnabled(true);
+         defaultWebSessionManager.setGlobalSessionTimeout(21600000);
+         defaultWebSessionManager.setDeleteInvalidSessions(true);
+         defaultWebSessionManager.setSessionValidationSchedulerEnabled(true);
+         defaultWebSessionManager.setSessionIdUrlRewritingEnabled(false);
+         return defaultWebSessionManager;
+     }*/
+    /*==========ehcache 缓存 end============*/
 
     @Bean
     public LifecycleBeanPostProcessor getLifecycleBeanPostProcessor() {
@@ -169,16 +178,6 @@ public class ShiroConfig {
         return as;
     }
 
-    /* @Bean
-     public DefaultWebSessionManager defaultWebSessionManager() {
-         DefaultWebSessionManager defaultWebSessionManager = new DefaultWebSessionManager();
-         defaultWebSessionManager.setSessionIdCookieEnabled(true);
-         defaultWebSessionManager.setGlobalSessionTimeout(21600000);
-         defaultWebSessionManager.setDeleteInvalidSessions(true);
-         defaultWebSessionManager.setSessionValidationSchedulerEnabled(true);
-         defaultWebSessionManager.setSessionIdUrlRewritingEnabled(false);
-         return defaultWebSessionManager;
-     }*/
     @Bean
     public FilterRegistrationBean delegatingFilterProxy() {
         FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean();
@@ -193,13 +192,15 @@ public class ShiroConfig {
     public RedisCacheManager cacheManager() {
         RedisCacheManager redisCacheManager = new RedisCacheManager();
         redisCacheManager.setRedisManager(redisManager());
+        redisCacheManager.setPrincipalIdFieldName("id");
         return redisCacheManager;
     }
+
     private RedisManager redisManager() {
         RedisManager redisManager = new RedisManager();
 //        redisManager.setHost(redisConfig.getHost());
 //        redisManager.setPort(redisConfig.getPort());
-        redisManager.setExpire(1800);
+//        redisManager.setExpire(1800);
 //        redisManager.setTimeout(redisConfig.getTimeout());
         return redisManager;
     }
