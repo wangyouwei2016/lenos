@@ -1,5 +1,6 @@
 package com.len.util;
 
+import com.len.menu.LoginType;
 import org.apache.shiro.authc.UsernamePasswordToken;
 
 /**
@@ -9,21 +10,21 @@ import org.apache.shiro.authc.UsernamePasswordToken;
  */
 public class CustomUsernamePasswordToken extends UsernamePasswordToken {
 
-    private String type;
+    private LoginType type;
 
 
 
-    public CustomUsernamePasswordToken(final String username, final String password, String loginType) {
+    public CustomUsernamePasswordToken(final String username, final String password, LoginType loginType) {
         super(username,password);
         this.type = loginType;
     }
 
 
-    public String getType() {
+    public LoginType getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(LoginType type) {
         this.type = type;
     }
 }

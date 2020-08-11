@@ -1,12 +1,10 @@
 package com.len.core;
 
-import com.len.core.exception.UnauthorizedException;
+import com.len.menu.LoginType;
 import com.len.util.JwtToken;
-import org.apache.shiro.util.StringUtils;
 import org.apache.shiro.web.filter.authc.BasicHttpAuthenticationFilter;
 import org.apache.shiro.web.util.WebUtils;
 
-import javax.security.auth.Subject;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
@@ -35,7 +33,7 @@ public class MyBasicHttpAuthenticationFilter extends BasicHttpAuthenticationFilt
     protected boolean executeLogin(ServletRequest request, ServletResponse response) throws Exception {
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
         String token = httpServletRequest.getHeader("Authorization");
-        JwtToken jwtToken = new JwtToken(token, "BlogLogin");
+        JwtToken jwtToken = new JwtToken(token, LoginType.BLOG);
         getSubject(request, response).login(jwtToken);
         return true;
     }

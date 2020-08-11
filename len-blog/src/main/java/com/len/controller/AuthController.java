@@ -33,7 +33,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/")
 @Slf4j
-public class SignController {
+public class AuthController {
 
     private static final String INIT_BLOG_ROLE = "blogAdmin";
 
@@ -69,7 +69,7 @@ public class SignController {
         }
 
         QueryWrapper<SysRoleUser> roleUserQueryWrapper = new QueryWrapper<>();
-        roleUserQueryWrapper.eq("userId", sysUser.getId());
+        roleUserQueryWrapper.eq("user_id", sysUser.getId());
         List<SysRoleUser> sysRoleUsers = roleUserService.list(roleUserQueryWrapper);
 
         if (sysRoleUsers.isEmpty()) {

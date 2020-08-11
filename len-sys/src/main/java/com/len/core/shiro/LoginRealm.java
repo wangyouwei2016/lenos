@@ -4,6 +4,7 @@ import com.len.base.CurrentMenu;
 import com.len.base.CurrentRole;
 import com.len.base.CurrentUser;
 import com.len.entity.SysUser;
+import com.len.menu.LoginType;
 import com.len.service.SysUserService;
 import com.len.util.BeanUtil;
 import com.len.util.JWTUtil;
@@ -45,7 +46,7 @@ public class LoginRealm extends AuthorizingRealm {
         CurrentUser user = (CurrentUser) principalCollection.getPrimaryPrincipal();
         Set<String> realmNames = principalCollection.getRealmNames();
         List<String> realmNameList = new ArrayList<>(realmNames);
-        if ("BlogLogin".equals(realmNameList.get(0))) {
+        if (LoginType.BLOG.toString().equals(realmNameList.get(0))) {
             String[] roles = JWTUtil.getRoles(user.getUsername());
             assert roles != null;
             for (String role : roles) {

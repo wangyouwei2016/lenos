@@ -1,8 +1,6 @@
 package com.len.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.len.base.AbstractEntity;
 import com.len.validator.group.AddGroup;
@@ -11,7 +9,6 @@ import lombok.Data;
 import lombok.ToString;
 
 import javax.validation.constraints.NotEmpty;
-import java.util.Date;
 
 @TableName(value = "sys_user")
 @Data

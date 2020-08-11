@@ -1,5 +1,6 @@
 package com.len.util;
 
+import com.len.menu.LoginType;
 import org.apache.shiro.authc.AuthenticationToken;
 
 /**
@@ -10,9 +11,9 @@ import org.apache.shiro.authc.AuthenticationToken;
 public class JwtToken implements AuthenticationToken {
 
     private String token;
-    private String type;
+    private LoginType type;
 
-    public JwtToken(String token,String type) {
+    public JwtToken(String token,LoginType type) {
         this.token = token;
         this.type=type;
     }
@@ -35,11 +36,11 @@ public class JwtToken implements AuthenticationToken {
         this.token = token;
     }
 
-    public String getType() {
+    public LoginType getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(LoginType type) {
         this.type = type;
     }
 }
