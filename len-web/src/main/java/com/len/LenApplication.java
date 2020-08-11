@@ -30,6 +30,11 @@ public class LenApplication {
     public static void main(String[] args) {
         SpringApplication.run(LenApplication.class, args);
         System.out.println("Server start succ");
+        after();
+    }
+
+    public static void after(){
+
     }
 
 
