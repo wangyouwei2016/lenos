@@ -1,4 +1,4 @@
-package com.len.core.BootListener;
+package com.len.core.listener;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
  * @email 154040976@qq.com
  */
 @Component
-public class MyServletContextListener implements ServletContextListener {
+public class CustomServletContextListener implements ServletContextListener {
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
