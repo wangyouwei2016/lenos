@@ -104,7 +104,7 @@ public class ArticleController {
     @GetMapping("/article/list/order/read")
     public ReType getArticleByReadNumber() {
         QueryWrapper<BlogArticle> articleQueryWrapper = new QueryWrapper<>();
-        articleQueryWrapper.orderByDesc("readNumber");
+        articleQueryWrapper.orderByDesc("read_number");
         PageHelper.startPage(1, 5);
         List<BlogArticle> articles = articleService.list(articleQueryWrapper);
         articles.forEach(s -> {

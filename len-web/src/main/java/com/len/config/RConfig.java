@@ -3,7 +3,7 @@ package com.len.config;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-//@Component
+@Component
 public class RConfig {
     @Value("${spring.redis.port}")
     private String host;

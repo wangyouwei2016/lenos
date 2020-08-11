@@ -3,6 +3,7 @@ package com.len.controller;
 import com.len.core.annotation.Log;
 import com.len.core.shiro.Principal;
 import com.len.entity.SysUser;
+import com.len.menu.LoginType;
 import com.len.service.SysUserService;
 import com.len.util.CustomUsernamePasswordToken;
 import com.len.util.VerifyCodeUtils;
@@ -40,8 +41,8 @@ public class LoginController {
     private static final String CODE_ERROR = "code.error";
 
     @GetMapping(value = "")
-    public String loginInit() {
-        return loginCheck();
+    public String login() {
+        return toLogin();
     }
 
     @GetMapping(value = "goLogin")
@@ -56,7 +57,7 @@ public class LoginController {
     }
 
     @GetMapping(value = "/login")
-    public String loginCheck() {
+    public String toLogin() {
         Subject sub = SecurityUtils.getSubject();
         if (sub.isAuthenticated() || sub.isRemembered()) {
             return "/main/main";
@@ -73,7 +74,7 @@ public class LoginController {
      * @return
      */
     @ApiOperation(value = "/login", httpMethod = "POST", notes = "登录method")
-    @PostMapping(value = "/login")
+    @PostMapping("/login")
     public String login(SysUser user, Model model, String rememberMe, HttpServletRequest request) {
         String codeMsg = (String) request.getAttribute("shiroLoginFailure");
         /*if (CODE_ERROR.equals(codeMsg)) {
@@ -81,7 +82,7 @@ public class LoginController {
             return "/login2";
         }*/
         CustomUsernamePasswordToken token = new CustomUsernamePasswordToken(user.getUsername().trim(),
-            user.getPassword(), "UserLogin");
+                user.getPassword(), LoginType.SYS);
         Subject subject = Principal.getSubject();
         String msg = null;
         try {

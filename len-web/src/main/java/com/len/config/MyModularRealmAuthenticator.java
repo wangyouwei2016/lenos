@@ -1,8 +1,8 @@
 package com.len.config;
 
+import com.len.menu.LoginType;
 import com.len.util.CustomUsernamePasswordToken;
 import com.len.util.JwtToken;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -24,7 +24,7 @@ public class MyModularRealmAuthenticator extends ModularRealmAuthenticator {
     @Override
     protected AuthenticationInfo doAuthenticate(AuthenticationToken authenticationToken) throws AuthenticationException {
         assertRealmsConfigured();
-        String type;
+        LoginType type;
         AuthenticationToken token;
         if (authenticationToken instanceof JwtToken) {
             JwtToken token1 = (JwtToken) authenticationToken;
@@ -35,13 +35,13 @@ public class MyModularRealmAuthenticator extends ModularRealmAuthenticator {
             token = token1;
             type = token1.getType();
         }
-        if (StringUtils.isEmpty(type)) {
+        if (type==null) {
             throw new RuntimeException("登录认证授权类型不能为空");
         }
         Collection<Realm> realms = getRealms();
         Collection<Realm> realmsList = new ArrayList<>();
         for (Realm realm : realms) {
-            if (realm.getName().contains(type)) {
+            if (realm.getName().contains(type.toString())) {
                 realmsList.add(realm);
             }
         }

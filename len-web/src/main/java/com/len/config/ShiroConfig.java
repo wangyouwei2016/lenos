@@ -6,6 +6,7 @@ import com.len.core.filter.PermissionFilter;
 import com.len.core.filter.VerfityCodeFilter;
 import com.len.core.shiro.LoginRealm;
 import com.len.core.shiro.RetryLimitCredentialsMatcher;
+import com.len.menu.LoginType;
 import org.apache.shiro.authc.pam.AtLeastOneSuccessfulStrategy;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.realm.Realm;
@@ -107,8 +108,8 @@ public class ShiroConfig {
         DefaultWebSecurityManager dwm = new DefaultWebSecurityManager();
         List<Realm> loginRealms = new ArrayList<>();
         dwm.setAuthenticator(getMyModularRealmAuthenticator());
-        loginRealm.setName("UserLogin");
-        blogLoginRealm.setName("BlogLogin");
+        loginRealm.setName(LoginType.SYS.toString());
+        blogLoginRealm.setName(LoginType.BLOG.toString());
         loginRealms.add(loginRealm);
         loginRealms.add(blogLoginRealm);
         dwm.setRealms(loginRealms);

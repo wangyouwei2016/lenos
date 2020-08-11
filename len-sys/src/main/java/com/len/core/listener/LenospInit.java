@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
  * @date 2018/1/6.
  * @email 154040976@qq.com
  * <p>
- * 开辟线程，执行定时任务 当然 也可以执行其他
+ * lenosp 初始化类
  */
 @Component
 public class LenospInit implements ApplicationListener<ContextRefreshedEvent> {

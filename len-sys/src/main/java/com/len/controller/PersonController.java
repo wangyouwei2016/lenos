@@ -46,7 +46,7 @@ public class PersonController extends BaseController {
         }
         String id = principal.getId();
 
-        List<Checkbox> checkboxList = userService.getUserRoleByJson(id);
+        //List<Checkbox> checkboxList = userService.getUserRoleByJson(id);
         SysUser user = userService.getById(id);
         model.addAttribute("user", user);
         return "/system/person/me";

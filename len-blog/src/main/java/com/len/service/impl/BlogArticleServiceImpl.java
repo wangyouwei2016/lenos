@@ -56,7 +56,7 @@ public class BlogArticleServiceImpl extends BaseServiceImpl<BlogArticle, String>
     private ArticleDetail getArticleByCode(String code) {
 
         QueryWrapper<BlogArticle> blogArticleQueryWrapper = new QueryWrapper<>();
-        blogArticleQueryWrapper.eq("code", code).eq("delFlag", 0);
+        blogArticleQueryWrapper.eq("code", code).eq("del_flag", 0);
         blogArticleMapper.selectList(blogArticleQueryWrapper);
         List<BlogArticle> articles = blogArticleMapper.selectList(blogArticleQueryWrapper);
         ;

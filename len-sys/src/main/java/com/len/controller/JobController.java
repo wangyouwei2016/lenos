@@ -47,12 +47,12 @@ public class JobController extends BaseController<SysJob> {
     @GetMapping(value = "showJobList")
     @ResponseBody
     @RequiresPermissions("job:show")
-    public ReType showUser(Model model, SysJob job, String page, String limit) {
+    public ReType showUser( SysJob job, String page, String limit) {
         return jobService.show(job, Integer.valueOf(page), Integer.valueOf(limit));
     }
 
     @GetMapping(value = "showAddJob")
-    public String addJob(Model model) {
+    public String addJob() {
         return "/system/job/add-job";
     }
 
