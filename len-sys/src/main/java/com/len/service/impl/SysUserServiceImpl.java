@@ -137,7 +137,7 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser, String> impleme
             //物理
             sysUserMapper.delById(id);
         }
-        int i = 1 / 0;
+
         j.setMsg("删除成功");
         return j;
 

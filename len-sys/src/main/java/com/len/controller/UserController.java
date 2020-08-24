@@ -31,6 +31,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -145,7 +146,11 @@ public class UserController extends BaseController {
         if (user == null) {
             return error("获取数据失败");
         }
-        userService.updateUser(user, Arrays.asList(role));
+        List<String> roles = new ArrayList<>();
+        if (role != null) {
+            roles = Arrays.asList(role);
+        }
+        userService.updateUser(user, roles);
         return succ("修改成功");
     }
 
