@@ -45,10 +45,10 @@ To change this template use File | Settings | File Templates.-->
   position: fixed;bottom: 1px;margin-left:-20px;">
     <div class="layui-form-item" style=" float: right;margin-right: 30px;margin-top: 8px">
 
-      <button  class="layui-btn layui-btn-normal" lay-filter="add" lay-submit="">
+      <button type="submit" name="save"  class="layui-btn layui-btn-normal" lay-filter="add" lay-submit="">
         修改
       </button>
-      <button  class="layui-btn layui-btn-primary" id="close">
+      <button type="button"  class="layui-btn layui-btn-primary" id="close">
         取消
       </button>
     </div>
@@ -56,6 +56,12 @@ To change this template use File | Settings | File Templates.-->
   </form>
 </div>
 <script>
+  $(document).ready(function () {
+    $('#close').click(function(){
+      var index = parent.layer.getFrameIndex(window.name);
+      parent.layer.close(index);
+    });
+  });
   layui.use(['form','layer'], function(){
     $ = layui.jquery;
     var form = layui.form
@@ -70,10 +76,6 @@ To change this template use File | Settings | File Templates.-->
       }
     });
 
-   $('#close').click(function(){
-     var index = parent.layer.getFrameIndex(window.name);
-     parent.layer.close(index);
-   });
     //监听提交
     form.on('submit(add)', function(data){
       $.ajax({

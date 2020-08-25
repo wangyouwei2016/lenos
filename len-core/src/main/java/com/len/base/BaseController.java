@@ -88,7 +88,7 @@ public abstract class BaseController<T> {
     }
 
     public LenResponse error(String msg) {
-        return resp(false, null);
+        return resp(false, msg);
     }
 
     public LenResponse error() {

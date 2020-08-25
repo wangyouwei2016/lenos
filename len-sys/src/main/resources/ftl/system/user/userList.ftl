@@ -19,7 +19,7 @@
         <span class="layui-inline">
       <input class="layui-input" height="20px" id="uname" autocomplete="off">
     </span>
-        <span>用户名：</span>
+        <span>邮箱：</span>
         <span class="layui-inline">
       <input class="layui-input" height="20px" id="email" autocomplete="off">
     </span>

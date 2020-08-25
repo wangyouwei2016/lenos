@@ -118,10 +118,10 @@ To change this template use File | Settings | File Templates.-->
   position: fixed;bottom: 1px;margin-left:-20px;">
             <div class="layui-form-item" style=" float: right;margin-right: 30px;margin-top: 8px">
 
-                <button class="layui-btn layui-btn-normal" lay-filter="add" lay-submit="">
+                <button type="submit" class="layui-btn layui-btn-normal" lay-filter="add" lay-submit="">
                     增加
                 </button>
-                <button class="layui-btn layui-btn-primary" id="close">
+                <button type="button" class="layui-btn layui-btn-primary" id="close">
                     取消
                 </button>
             </div>
