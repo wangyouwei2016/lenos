@@ -19,8 +19,8 @@ import org.crazycake.shiro.RedisCacheManager;
 import org.crazycake.shiro.RedisManager;
 import org.crazycake.shiro.RedisSessionDAO;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -41,8 +41,12 @@ import java.util.*;
 @Configuration
 public class ShiroConfig {
 
-    @Autowired
-    RConfig redisConfig;
+    @Value("${spring.redis.host}")
+    private String host;
+    @Value("${spring.redis.port}")
+    private int port;
+    @Value("${spring.redis.timeout}")
+    private int timeout;
 
 
     @Bean
@@ -86,7 +90,7 @@ public class ShiroConfig {
     /*==========ehcache 缓存 end============*/
 
     @Bean
-    public LifecycleBeanPostProcessor getLifecycleBeanPostProcessor() {
+    public static LifecycleBeanPostProcessor getLifecycleBeanPostProcessor() {
         return new LifecycleBeanPostProcessor();
     }
 
@@ -152,6 +156,7 @@ public class ShiroConfig {
         filterMap.put("/login", "verCode,anon");
         filterMap.put("/blogLogin", "verCode,anon");
         filterMap.put("/getCode", "anon");
+        filterMap.put("/oauth", "anon");
         filterMap.put("/actuator/**", "anon");
         filterMap.put("/eureka/**", "anon");
         filterMap.put("/img/**", "anon");
@@ -192,24 +197,23 @@ public class ShiroConfig {
 
     public RedisCacheManager cacheManager() {
         RedisCacheManager redisCacheManager = new RedisCacheManager();
-        redisCacheManager.setRedisManager(redisManager());
+        redisCacheManager.setRedisManager(getRedisManager());
         redisCacheManager.setPrincipalIdFieldName("id");
         return redisCacheManager;
     }
 
-    private RedisManager redisManager() {
+    //    @Bean
+    public RedisManager getRedisManager() {
         RedisManager redisManager = new RedisManager();
-//        redisManager.setHost(redisConfig.getHost());
-//        redisManager.setPort(redisConfig.getPort());
-//        redisManager.setExpire(1800);
-//        redisManager.setTimeout(redisConfig.getTimeout());
+        redisManager.setHost(host + ":" + port);
+        redisManager.setTimeout(timeout);
         return redisManager;
     }
 
     @Bean
     public RedisSessionDAO redisSessionDAO() {
         RedisSessionDAO redisSessionDAO = new RedisSessionDAO();
-        redisSessionDAO.setRedisManager(redisManager());
+        redisSessionDAO.setRedisManager(getRedisManager());
         return redisSessionDAO;
     }
 
@@ -217,6 +221,7 @@ public class ShiroConfig {
     @Bean
     public DefaultWebSessionManager sessionManager() {
         DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
+        sessionManager.setSessionIdUrlRewritingEnabled(false);
         sessionManager.setSessionDAO(redisSessionDAO());
         return sessionManager;
     }

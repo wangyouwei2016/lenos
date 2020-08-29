@@ -10,6 +10,7 @@ import com.len.util.VerifyCodeUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.ExcessiveAttemptsException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
@@ -39,6 +40,7 @@ public class LoginController {
     @Autowired
     SysUserService userService;
     private static final String CODE_ERROR = "code.error";
+    private static final Long TWO_WEEK = 1000 * 60 * 60 * 24 * 14L;
 
     @GetMapping(value = "")
     public String login() {
@@ -77,10 +79,10 @@ public class LoginController {
     @PostMapping("/login")
     public String login(SysUser user, Model model, String rememberMe, HttpServletRequest request) {
         String codeMsg = (String) request.getAttribute("shiroLoginFailure");
-        /*if (CODE_ERROR.equals(codeMsg)) {
+        if (CODE_ERROR.equals(codeMsg)) {
             model.addAttribute("message", "验证码错误");
             return "/login2";
-        }*/
+        }
         CustomUsernamePasswordToken token = new CustomUsernamePasswordToken(user.getUsername().trim(),
                 user.getPassword(), LoginType.SYS);
         Subject subject = Principal.getSubject();
@@ -88,7 +90,13 @@ public class LoginController {
         try {
             subject.login(token);
             if (subject.isAuthenticated()) {
-                token.getUsername();
+                String isRemember = request.getParameter("isRemember");
+                if (!StringUtils.isEmpty(isRemember)) {
+                    if ("true".equals(isRemember)) {
+                        subject.getSession().setTimeout(TWO_WEEK);
+                    }
+                }
+
                 return "redirect:/main";
             }
         } catch (UnknownAccountException | IncorrectCredentialsException e) {
