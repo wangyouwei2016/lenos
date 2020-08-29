@@ -78,10 +78,14 @@
   layui.use('table', function () {
     var table = layui.table;
     //方法级渲染
+    var arr=[];
+    if(${leaveDetail}){
+      arr=${leaveDetail};
+    }
     table.render({
       id: 'leaveDetail',
       elem: '#leaveDetail'
-      , data: ${leaveDetail}
+      , data:arr
       , cols: [[
         {field: 'taskId', title: '任务编码', width: '20%'}
         ,{field: 'opName', title: '审批人', width: '20%'}

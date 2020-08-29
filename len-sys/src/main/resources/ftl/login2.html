@@ -11,7 +11,6 @@
     <link rel="stylesheet" href="/plugin/layui/css/layui.css" media="all">
 
 </head>
-<script src="/plugin/login/hawkEye.min.js"></script>
 <script type="text/javascript" src="/plugin/login/jquery-core.min.js"></script>
 <script type="text/javascript" src="/plugin/login/jquery-ui-core.min.js"></script>
 <script type="text/javascript" src="/plugin/login/fai.min.js"></script>
@@ -55,6 +54,7 @@
                     <span class="icon icon-3"></span>
                     <input name="password" lay-verify="password"  type="password"  id="loginPwd" placeholder="请输入密码" maxlength="20">
                     <input type="text" id="loginPwdText" placeholder="请输入密码" maxlength="20" class="hide">
+                    <input type="hidden" id="isRemember" name="isRemember" value="false"/>
                     <span class="icon icon-4"></span>
                 </div>
                 <div id="validatePanel" class="item" style="width: 137px;">
@@ -66,11 +66,8 @@
             <div class="tip">
                 <span class="icon-nocheck" id="autoLogin"></span>
                 <span class="login-tip">两周内自动登录</span>
-                <a href="javascript:" onclick="openPassword()" class="no-pwd">忘记密码？</a>
+<!--                <a href="javascript:" onclick="openPassword()" class="no-pwd">忘记密码？</a>-->
             </div>
-            <!--<div id="loginBtn"  lay-filter="login" lay-submit class="deal" >
-                立即登录
-            </div>-->
             <div style="width: 300px;height: 50px;text-align: center;margin: 24px auto 0;">
            <input id="loginBtn" class="deal"  value="立即登录" lay-submit lay-filter="login"  type="submit">
             </div>
@@ -88,9 +85,16 @@
 
 
         // 是否两周内自动登录
-       /* $('.icon-nocheck, .login-tip').click(function () {
+        $('.icon-nocheck, .login-tip').click(function () {
             $('.icon-nocheck').toggleClass('icon-check');
-        });*/
+            var isRemember=$('#isRemember').val();
+            if(isRemember==='false'){
+                isRemember='true';
+            }else{
+                isRemember='false'
+            }
+            $('#isRemember').val(isRemember);
+        });
         layui.use(['form','layer'], function(){
             var form = layui.form;
             form.verify({
