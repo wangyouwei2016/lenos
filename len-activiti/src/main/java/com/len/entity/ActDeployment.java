@@ -24,7 +24,7 @@ import org.activiti.engine.repository.Deployment;
 /**
  * @author zhuxiaomeng
  * @date 2018/1/15.
- * @email 154040976@qq.com
+ * @email lenospmiller@gmail.com
  * 流程部署表
  */
 @Getter

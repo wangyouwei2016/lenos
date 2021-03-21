@@ -222,7 +222,6 @@ button.btn.btn-danger {
 }
 
 .content.split {
-    background: transparent url('../../images/line-1px.png') repeat-y 60% 0;
 }
 
 .content .split-left {
@@ -1478,7 +1477,6 @@ button.selection:active, button.selection:focus {
 .modal-backdrop {
     background-color: #999999; /** Non alpha-supporting browser fallback */
     background-color: rgba(100, 100, 100, .75);
-    background-image: url('../../images/glasspane.png');
 }
 .modal-content {
     -webkit-border-radius: 0;

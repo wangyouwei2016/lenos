@@ -21,7 +21,7 @@ import java.util.UUID;
 /**
  * @author zhuxiaomeng
  * @date 2018/7/28.
- * @email 154040976@qq.com
+ * @email lenospmiller@gmail.com
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = LenApplication.class)

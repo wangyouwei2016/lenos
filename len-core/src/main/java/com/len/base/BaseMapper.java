@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * @author zhuxiaomeng
  * @date 2017/12/12.
- * @email 154040976@qq.com
+ * @email lenospmiller@gmail.com
  * mapper封装 crud
  */
 public interface BaseMapper<T> extends com.baomidou.mybatisplus.core.mapper.BaseMapper<T> {

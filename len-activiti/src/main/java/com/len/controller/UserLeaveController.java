@@ -28,7 +28,7 @@ import com.len.entity.BaseTask;
 import com.len.entity.LeaveOpinion;
 import com.len.entity.SysRoleUser;
 import com.len.entity.UserLeave;
-import com.len.exception.MyException;
+import com.len.exception.LenException;
 import com.len.service.RoleUserService;
 import com.len.service.UserLeaveService;
 import com.len.util.*;
@@ -67,7 +67,7 @@ import java.util.List;
 /**
  * @author zhuxiaomeng
  * @date 2018/1/21.
- * @email 154040976@qq.com
+ * @email lenospmiller@gmail.com
  * <p>
  * 请假流程示例
  */
@@ -136,7 +136,7 @@ public class UserLeaveController extends BaseController {
                     leave.setTaskName(task.getName());
                 }
             }
-        } catch (MyException e) {
+        } catch (LenException e) {
             e.printStackTrace();
         }
         return new ReType(tPage.getTotal(), tList);
@@ -214,7 +214,7 @@ public class UserLeaveController extends BaseController {
             }
             taskService.complete(taskId, map);
             j.setMsg("保存成功");
-        } catch (MyException e) {
+        } catch (LenException e) {
             j.setMsg("保存失败");
             j.setFlag(false);
             e.printStackTrace();

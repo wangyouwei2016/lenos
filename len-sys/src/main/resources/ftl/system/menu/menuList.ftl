@@ -1,144 +1,111 @@
-<!DOCTYPE html>
-<html>
+<#--公共文件-->
+<#include "/system/base/head.ftl">
 
-<head>
-  <meta charset="utf-8">
-  <title></title>
-<#include "/system/base/header.ftl">
-</head>
-<body>
-<div  class="layui-col-md12">
-    <div class="layui-btn-group">
-      <@shiro.hasPermission name="nemu:add">
-        <button class="layui-btn layui-btn-normal layui-btn-sm" data-type="add">
-            <i class="layui-icon">&#xe608;</i>新增
-        </button>
-      </@shiro.hasPermission>
+<#--搜索-->
+<div class="lenos-search">
+    <div class="select">
+        <@lenInclude path="/system/base/queryBox.ftl" name="菜单名称" id="name" ></@lenInclude>
     </div>
-    <button type="button" class="layui-btn layui-btn-normal layui-btn layui-btn-sm" style="float: right;margin-right:30px"   onclick="javascript:location.replace(location.href);">刷新</button>
-  </div>
-<div id="menuTree"></div>
-</body>
-<script type="text/javascript" src="${re.contextPath}/plugin/layuitree/layui/layui.js" charset="utf-8"></script>
-<script type="text/javascript">
-  function select(nodeId) {
-    console.info(nodeId);
-    alert(nodeId)
-  }
-  function del(nodeId) {
-      layer.confirm('确定删除?', function(){
-          delMenu(nodeId);
-      });
-  }
-  function update(nodeId){
-      console.log(nodeId);
-    add('编辑菜单', 'showUpdateMenu?id='+nodeId, 700, 550);
-  }
-
-  var layout = [
-    { name: '菜单名称', treeNodes: true, headerClass: 'value_col', colClass: 'value_col', style: 'width: 10%'
-    },
-    { name: 'url',headerClass: 'value_col', colClass: 'value_col', style: 'width: 10%',
-      render: function(row) {
-        return '<div class="layui-table-cell laytable-cell-1-username">'+(typeof(row.url)=="undefined"?'':row.url)+'</div>'; //列渲染
-      }
-    }, { name: '类型',headerClass: 'value_col', colClass: 'value_col', style: 'width: 10%',
-      render: function(row) {
-        return '<div class="layui-table-cell laytable-cell-1-username">'+(row.menuType=="1"?'按钮':'菜单')+'</div>'; //列渲染
-      }
-    }, { name: '权限',headerClass: 'value_col', colClass: 'value_col', style: 'width: 10%',
-      render: function(row) {
-        return '<div class="layui-table-cell laytable-cell-1-username">'+(typeof(row.permission)=="undefined"?'':row.permission)+'</div>'; //列渲染
-      }
-    },{ name: '图标',headerClass: 'value_col', colClass: 'value_col', style: 'width: 5%',
-      render: function(row) {
-        return '<div class="layui-table-cell laytable-cell-1-username"><i class="layui-icon">'+(typeof(row.icon)=="undefined"?'':row.icon)+'</i></div>'; //列渲染
-      }
-    },{ name: '序号',headerClass: 'value_col', colClass: 'value_col', style: 'width: 5%',
-          render: function(row) {
-              return '<div class="layui-table-cell laytable-cell-1-username"><i class="layui-icon">'+(typeof(row.orderNum)=="undefined"?'':row.orderNum)+'</i></div>'; //列渲染
-          }
-      },
-
-    {
-      name: '操作',
-      headerClass: 'value_col',
-      colClass: 'value_col',
-      style: 'width: 20%',
-      render: function(row) {
-        var chil_len=row.children.length;
-        var str= '<a class="layui-btn layui-btn-primary layui-btn-xs" onclick="select(\'' + row.id + '\')"><i class="layui-icon">&#xe615;</i> 查看</a>' +
-            '<a class="layui-btn layui-btn-xs  layui-btn-normal" onclick="update(\'' + row.id + '\')"><i class="layui-icon">&#xe642;</i> 编辑</a>'; //列渲染
-        if(chil_len==0){
-          str+='<a class="layui-btn layui-btn-danger layui-btn-xs" onclick="del(\'' + row.id + '\')"><i class="layui-icon">&#xe640;</i> 删除</a>';
-        }
-        return str;
-      }
-    },
-  ];
-
-  layui.use(['tree', 'layer'], function() {
-    var layer = layui.layer;
-
-    layui.treeGird({
-      elem: '#menuTree',
-      nodes:${menus},
-      layout: layout
-    });
-    var $ = layui.$, active = {
-        add: function () {
-            add('添加菜单', 'showAddMenu', 700, 550);
-        }
-    }
-    $('.layui-btn-group .layui-btn').on('click', function () {
-        var type = $(this).data('type');
-        active[type] ? active[type].call(this) : '';
-    });
-  });
-  function add(title, url, w, h) {
-      if (title == null || title == '') {
-          title = false;
-      }
-
-      if (url == null || url == '') {
-          url = "/error/404";
-      }
-
-      if (w == null || w == '') {
-          w = ($(window).width() * 0.9);
-      }
-
-      if (h == null || h == '') {
-          h = ($(window).height() - 50);
-      }
-
-      layer.open({
-          id: 'user-add',
-          type: 2,
-          area: [w + 'px', h + 'px'],
-          fix: false,
-          maxmin: true,
-          shadeClose: false,
-          shade: 0.4,
-          title: title,
-          content: url
-      });
-  }
-  function delMenu(id) {
-      $.ajax({
-          url: "menu-del",
-          type: "post",
-          data: {id: id},
-          success: function (d) {
-              if(d.msg){
-                  location.replace(location.href);
-                  parent.layer.msg(d.msg,{icon:6,offset: 'rb',area:['120px','80px'],anim:2});
-              }else{
-                  parent.layer.msg(d.msg,{icon:5,offset: 'rb',area:['120px','80px'],anim:2});
-              }
-          }
-      });
-  }
+    <#include "/system/base/searth.ftl">
+</div>
+<hr class="layui-bg-gray">
+<#--按钮-->
+<div class="layui-btn-container">
+    <div class="layui-btn-group">
+        <@lenInclude path="/system/base/btn.ftl" type="add" name="新增" icon="&#xe608;"></@lenInclude>
+    </div>
+</div>
+<#--表格-->
+<table id="treeList" width="100%"></table>
+<!-- 表格操作列 -->
+<script type="text/html" id="tbBar">
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit">修改</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 </script>
+<script type="text/javascript">
+    /*加载treetable 模块*/
+    layui.config({
+        base: '${re.contextPath}/plugin/layui/modules/'
+    }).extend({
+        treeTable: 'treeTable'
+    });
+    /*渲染tree table*/
+    layui.use(['treeTable'], function () {
+        var $ = layui.jquery;
+        var treeTable = layui.treeTable;
+        // $('body').removeClass('layui-hide');
 
-</html>
+        // 渲染表格
+        table = treeTable.render({
+            elem: '#treeList',
+            url: 'showMenuList',
+            tree: {
+                iconIndex: 2,
+                isPidData: true,
+                idName: 'id',
+                pidName: 'pid'
+            },
+            cols: [[
+                {type: 'numbers'},
+                {type: 'checkbox'},
+                {field: 'name', title: '菜单名称', minWidth: 165},
+                {
+                    title: '图标',
+                    templet: function (d) {
+                        if (typeof (d.icon) != "undefined") {
+                            return '<i class="layui-icon">' + d.icon + '</i>';
+                        }
+                    },
+                },
+                {title: '类型', templet: '<p>{{d.menuType=="1"?"按钮":"菜单"}}</p>', align: 'center', width: 60},
+                {field: 'url', title: '菜单地址'},
+                {field: 'permission', title: '权限标识'},
+                {title: '创建时间', templet: '<div>{{ moment(+d.createDate).format(\'YYYY-MM-DD\') }}</div>'},
+                {align: 'center', toolbar: '#tbBar', title: '操作', width: 120}
+            ]],
+            style: 'margin-top:0;'
+        });
+        var active = {
+
+            /*查询*/
+            select: function () {
+                table.reload({
+                    where: {
+                        name: $('#name').val(),
+                    }
+                });
+            },
+            /*重置*/
+            reload: function () {
+                $('#name').val('');
+                table.reload({
+                    where: {
+                        name: '',
+                    }
+                });
+            },
+
+            /*添加*/
+            add: function () {
+                Len.add('menu/showAddMenu');
+            },
+        };
+
+        treeTable.on('tool(treeList)', function (obj) {
+            var event = obj.event, data = obj.data;
+            switch (event) {
+                case "edit":
+                    Len.update('menu/showUpdateMenu?id=' + data.id);
+                    break;
+                case "del":
+                    Len.delete('del', data.id, function () {
+                        Len.rbSuccess("删除成功");
+                        active.reload();
+                    });
+                    break;
+            }
+        });
+        Len.btnBind(active);
+        Len.keydown(active);
+    });
+</script>

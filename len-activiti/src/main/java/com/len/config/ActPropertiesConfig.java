@@ -23,7 +23,7 @@ import org.springframework.context.annotation.PropertySource;
 /**
  * @author zhuxiaomeng
  * @date 2018/1/28.
- * @email 154040976@qq.com
+ * @email lenospmiller@gmail.com
  *
  * 可以自定义一些配置类
  */

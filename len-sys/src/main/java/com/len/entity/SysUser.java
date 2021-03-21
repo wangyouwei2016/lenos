@@ -12,7 +12,6 @@ import javax.validation.constraints.NotEmpty;
 
 @TableName(value = "sys_user")
 @Data
-@ToString
 public class SysUser extends AbstractEntity {
 
 

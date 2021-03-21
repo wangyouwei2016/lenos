@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 /**
  * @author zhuxiaomeng
  * @date 2017/12/12.
- * @email 154040976@qq.com
+ * @email lenospmiller@gmail.com
  */
 @Service
 public class MenuServiceImpl extends BaseServiceImpl<SysMenu, String> implements MenuService {

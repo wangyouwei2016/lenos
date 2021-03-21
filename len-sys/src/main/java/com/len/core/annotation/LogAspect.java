@@ -29,7 +29,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 /**
  * @author zhuxiaomeng
  * @date 2017/12/28.
- * @email 154040976@qq.com
+ * @email lenospmiller@gmail.com
  * <p>
  * 为增删改添加监控
  */
@@ -86,7 +86,9 @@ public class LogAspect {
         log.setParam(buffer.toString());
         try {
             CurrentUser currentUser = Principal.getCurrentUse();
-            log.setUserName(currentUser.getUsername());
+            if(currentUser!=null){
+                log.setUserName(currentUser.getUsername());
+            }
         } catch (UnavailableSecurityManagerException e) {
 
         }

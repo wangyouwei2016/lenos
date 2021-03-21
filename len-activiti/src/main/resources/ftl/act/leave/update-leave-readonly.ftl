@@ -130,10 +130,10 @@ To change this template use File | Settings | File Templates.-->
    })
     //监听提交
     form.on('submit(add)', function(data){
-      layerAjax('updateLeave/${taskId}/${leave.id}/true',data.field,'taskList');
+      Len.layerAjax('updateLeave/${taskId}/${leave.id}/true',data.field,'taskList');
       return false;
     }); form.on('submit(closeLeave)', function(data){
-      layerAjax('updateLeave/${taskId}/${leave.id}/false',data.field,'taskList');
+      Len.layerAjax('updateLeave/${taskId}/${leave.id}/false',data.field,'taskList');
       return false;
     });
   });

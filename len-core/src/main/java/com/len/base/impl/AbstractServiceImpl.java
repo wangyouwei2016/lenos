@@ -1,12 +1,11 @@
 package com.len.base.impl;
 
-import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.len.base.BaseMapper;
 import com.len.base.BaseService;
-import com.len.exception.MyException;
+import com.len.exception.LenException;
 import com.len.util.ReType;
 import lombok.extern.slf4j.Slf4j;
 
@@ -16,7 +15,7 @@ import java.util.List;
 /**
  * @author zhuxiaomeng
  * @date 2017/12/13.
- * @email 154040976@qq.com
+ * @email lenospmiller@gmail.com
  * update by 2019/11/12 mybatisplus
  */
 @Slf4j
@@ -37,7 +36,7 @@ public class AbstractServiceImpl<T, E extends Serializable> extends ServiceImpl<
         Page<T> tPage = PageHelper.startPage(page, limit);
         try {
             tList = getBaseMapper().selectListByPage(t);
-        } catch (MyException e) {
+        } catch (LenException e) {
             log.error("class:BaseServiceImpl ->method:show->message:" + e.getMessage());
             e.printStackTrace();
         }
@@ -49,7 +48,7 @@ public class AbstractServiceImpl<T, E extends Serializable> extends ServiceImpl<
         List<T> tList = null;
         try {
             tList = getBaseMapper().selectListByPage(t);
-        } catch (MyException e) {
+        } catch (LenException e) {
             log.error("class:BaseServiceImpl ->method:show->message:" + e.getMessage());
             e.printStackTrace();
         }
@@ -62,7 +61,7 @@ public class AbstractServiceImpl<T, E extends Serializable> extends ServiceImpl<
         Page<T> tPage = PageHelper.startPage(page, limit);
         try {
             tList = getBaseMapper().selectListByPage(t);
-        } catch (MyException e) {
+        } catch (LenException e) {
             log.error("class:BaseServiceImpl ->method:getList->message:" + e.getMessage());
             e.printStackTrace();
         }

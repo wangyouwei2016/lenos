@@ -1,6 +1,7 @@
 package com.len.controller;
 
 import com.alibaba.fastjson.JSONArray;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.len.base.BaseController;
 import com.len.core.annotation.Log;
 import com.len.core.annotation.Log.LOG_TYPE;
@@ -8,10 +9,10 @@ import com.len.entity.SysMenu;
 import com.len.service.MenuService;
 import com.len.util.BeanUtil;
 import com.len.util.LenResponse;
+import com.len.util.ReType;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,7 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 /**
  * @author zhuxiaomeng
  * @date 2017/12/13.
- * @email 154040976@qq.com
+ * @email lenospmiller@gmail.com
  * 菜单
  */
 @RequestMapping("/menu")
@@ -34,26 +35,26 @@ public class MenuController extends BaseController {
     @Autowired
     private MenuService menuService;
 
-    /**
-     * 展示tree
-     *
-     * @param model
-     * @return
-     */
-    @ApiOperation(value = "/showMenu", httpMethod = "GET", notes = "展示菜单")
     @GetMapping(value = "showMenu")
-    @RequiresPermissions("menu:show")
-    public String showMenu(Model model) {
-        JSONArray ja = menuService.getMenuJsonList();
-        model.addAttribute("menus", ja.toJSONString());
+    public String showUser() {
         return "/system/menu/menuList";
+    }
+
+    @GetMapping(value = "showMenuList")
+    @ResponseBody
+    public ReType showUser(String name) {
+        SysMenu sysMenu = new SysMenu();
+        if (!StringUtils.isEmpty(name)) {
+            sysMenu.setName(name);
+        }
+        return new ReType(10, menuService.list(new QueryWrapper<>(sysMenu)));
     }
 
     @GetMapping(value = "showAddMenu")
     public String addMenu(Model model) {
         JSONArray ja = menuService.getMenuJsonList();
         model.addAttribute("menus", ja.toJSONString());
-        return "/system/menu/add-menu";
+        return "/system/menu/add";
     }
 
     @Log(desc = "添加菜单", type = LOG_TYPE.UPDATE)
@@ -90,7 +91,7 @@ public class MenuController extends BaseController {
             SysMenu pSysMenu = menuService.getById(sysMenu.getPId());
             model.addAttribute("pName", pSysMenu.getName());
         }
-        return "/system/menu/update-menu";
+        return "/system/menu/update";
     }
 
 
@@ -105,7 +106,7 @@ public class MenuController extends BaseController {
     }
 
     @Log(desc = "删除菜单", type = LOG_TYPE.DEL)
-    @PostMapping("/menu-del")
+    @PostMapping("del")
     @ResponseBody
     public LenResponse del(String id) {
         return menuService.del(id);

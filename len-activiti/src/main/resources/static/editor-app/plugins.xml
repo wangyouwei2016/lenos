@@ -39,7 +39,7 @@
     
     <!-- Begin: BPMN2.0 specific plugins -->
     <plugin source="bpmn2.0/bpmn2.0.js" name="ORYX.Plugins.BPMN2_0">
-      <requires namespace="http://b3mn.org/stencilset/bpmn2.0#" />
+      <requires namespace="http://lenosp.cn#" />
     </plugin> 
     
     <!-- End: BPMN2.0 specific plugins -->

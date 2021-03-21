@@ -24,7 +24,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 /**
  * @author zhuxiaomeng
  * @date 2018/1/20.
- * @email 154040976@qq.com
+ * @email lenospmiller@gmail.com
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = LenApplication.class)

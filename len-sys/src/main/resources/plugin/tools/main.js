@@ -1,4 +1,4 @@
-/**by zxm 154040976@qq.com*/
+/**by zxm lenospmiller@gmail.com*/
 /**
  * 统一处理js方法
  */

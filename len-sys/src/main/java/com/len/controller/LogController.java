@@ -4,7 +4,6 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.len.base.BaseController;
 import com.len.entity.SysLog;
-import com.len.exception.MyException;
 import com.len.mapper.SysLogMapper;
 import com.len.util.LenResponse;
 import com.len.util.ReType;
@@ -18,12 +17,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.List;
-
 /**
  * @author zhuxiaomeng
  * @date 2017/12/29.
- * @email 154040976@qq.com
+ * @email lenospmiller@gmail.com
  * <p>
  * 日志监控
  */
@@ -51,15 +48,8 @@ public class LogController extends BaseController {
     @GetMapping(value = "showLogList")
     @ResponseBody
     public ReType showLog(SysLog sysLog, String page, String limit) {
-        List<SysLog> tList = null;
         Page<SysLog> tPage = PageHelper.startPage(Integer.valueOf(page), Integer.valueOf(limit));
-        try {
-            tList = logMapper.selectListByPage(sysLog);
-        } catch (MyException e) {
-            log.error("class:LogController ->method:showLog->message:" + e.getMessage());
-            e.printStackTrace();
-        }
-        return new ReType(tPage.getTotal(), tList);
+        return new ReType(tPage.getTotal(), logMapper.selectListByPage(sysLog));
     }
 
     /**

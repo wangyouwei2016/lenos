@@ -5,7 +5,7 @@ import org.apache.shiro.crypto.hash.Md5Hash;
 /**
  * @author zhuxiaomeng
  * @date 2017/12/7.
- * @email 154040976@qq.com
+ * @email lenospmiller@gmail.com
  * 采用md5加密 确保数据安全性
  */
 public class Md5Util {

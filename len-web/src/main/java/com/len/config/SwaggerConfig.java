@@ -14,7 +14,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 /**
  * @author zhuxiaomeng
  * @date 2017/12/31.
- * @email 154040976@qq.com
+ * @email lenospmiller@gmail.com
  */
 @Configuration
 @EnableSwagger2
@@ -34,7 +34,7 @@ public class SwaggerConfig {
                 .title("Swagger接口列表")
                 .description("接口")
                 .termsOfServiceUrl("http://localhost:8081/swagger-ui.html")
-                .contact(new Contact("zxm", "http://www.lenosp.cn", "154040976@qq.com"))
+                .contact(new Contact("zxm", "http://www.lenosp.cn", "lenospmiller@gmail.com"))
                 .version("1.1.0")
                 .build();
     }

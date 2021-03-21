@@ -10,7 +10,7 @@ import org.springframework.core.ResolvableType;
 /**
  * @author zhuxiaomeng
  * @date 2018/1/31.
- * @email 154040976@qq.com
+ * @email lenospmiller@gmail.com
  */
 @Configuration
 public class BeanFactoryImpl implements BeanFactoryAware {

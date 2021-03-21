@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * @author zhuxiaomeng
  * @date 2018/9/9.
- * @email 154040976@qq.com
+ * @email lenospmiller@gmail.com
  */
 public interface BlogArticleService extends BaseService<BlogArticle, String> {
 

@@ -11,15 +11,15 @@ import java.util.Map;
 /**
  * @author zhuxiaomeng
  * @date 2018/5/6.
- * @email 154040976@qq.com
+ * @email lenospmiller@gmail.com
  */
 @ControllerAdvice
 public class CustomErrorViewResolver implements ErrorViewResolver {
 
-    static final String PAGE_500 = "/error/500";
-    static final String PAGE_404 = "/error/404";
-    static final String PAGE_403 = "/error/403";
-    static final String OTHER_ERROR = "/error/error";
+    private static final String PAGE_500 = "/error/500";
+    private static final String PAGE_404 = "/error/404";
+    private static final String PAGE_403 = "/error/403";
+    private static final String OTHER_ERROR = "/error/error";
 
     @Override
     public ModelAndView resolveErrorView(HttpServletRequest request,

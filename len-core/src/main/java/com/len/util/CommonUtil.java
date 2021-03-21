@@ -8,7 +8,7 @@ import org.apache.shiro.session.Session;
 /**
  * @author zhuxiaomeng
  * @date 2017/12/4.
- * @email 154040976@qq.com
+ * @email lenospmiller@gmail.com
  *
  * 管理工具类
  */

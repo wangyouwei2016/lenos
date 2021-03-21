@@ -7,7 +7,7 @@ import com.len.util.LenResponse;
 /**
  * @author zhuxiaomeng
  * @date 2018/1/6.
- * @email 154040976@qq.com
+ * @email lenospmiller@gmail.com
  */
 public interface JobService extends BaseService<SysJob,String> {
 

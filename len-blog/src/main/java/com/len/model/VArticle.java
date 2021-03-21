@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * @author zhuxiaomeng
  * @date 2018/10/14.
- * @email 154040976@qq.com
+ * @email lenospmiller@gmail.com
  */
 @Data
 public class VArticle {

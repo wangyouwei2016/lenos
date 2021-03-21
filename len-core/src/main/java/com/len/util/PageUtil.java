@@ -3,7 +3,7 @@ package com.len.util;
 /**
  * @author zhuxiaomeng
  * @date 2017/12/6.
- * @email 154040976@qq.com
+ * @email lenospmiller@gmail.com
  * 分页工具
  */
 public class PageUtil <T>{

@@ -6,7 +6,7 @@ import com.len.entity.BlogTag;
 /**
  * @author zhuxiaomeng
  * @date 2018/7/28.
- * @email 154040976@qq.com
+ * @email lenospmiller@gmail.com
  */
 public interface BlogTagService extends BaseService<BlogTag,String> {
 }

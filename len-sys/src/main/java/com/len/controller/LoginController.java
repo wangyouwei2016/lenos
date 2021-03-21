@@ -29,7 +29,7 @@ import javax.servlet.http.HttpSession;
 /**
  * @author zhuxiaomeng
  * @date 2017/12/4.
- * @email 154040976@qq.com
+ * @email lenospmiller@gmail.com
  * 登录、退出页面
  */
 @Controller
@@ -40,6 +40,7 @@ public class LoginController {
     @Autowired
     SysUserService userService;
     private static final String CODE_ERROR = "code.error";
+    private static final String CODE_TIMEOUT = "code.timeout";
     private static final Long TWO_WEEK = 1000 * 60 * 60 * 24 * 14L;
 
     @GetMapping(value = "")
@@ -78,11 +79,14 @@ public class LoginController {
     @ApiOperation(value = "/login", httpMethod = "POST", notes = "登录method")
     @PostMapping("/login")
     public String login(SysUser user, Model model, String rememberMe, HttpServletRequest request) {
-        String codeMsg = (String) request.getAttribute("shiroLoginFailure");
+       /* String codeMsg = (String) request.getAttribute("shiroLoginFailure");
         if (CODE_ERROR.equals(codeMsg)) {
             model.addAttribute("message", "验证码错误");
             return "/login2";
-        }
+        } else if (CODE_TIMEOUT.equals(codeMsg)) {
+            model.addAttribute("message", "验证码过期");
+            return "/login2";
+        }*/
         CustomUsernamePasswordToken token = new CustomUsernamePasswordToken(user.getUsername().trim(),
                 user.getPassword(), LoginType.SYS);
         Subject subject = Principal.getSubject();
@@ -137,7 +141,7 @@ public class LoginController {
             log.info("verifyCode:{}", verifyCode);
             //存入会话session
             HttpSession session = request.getSession(true);
-            session.setAttribute("_code", verifyCode.toLowerCase());
+            session.setAttribute("code", verifyCode.toLowerCase());
             //生成图片
             int w = 100, h = 35;
             VerifyCodeUtils.outputImage(w, h, response.getOutputStream(), verifyCode);

@@ -8,7 +8,7 @@ import org.apache.shiro.subject.Subject;
 /**
  * @author zhuxiaomeng
  * @date 2017/12/28.
- * @email 154040976@qq.com
+ * @email lenospmiller@gmail.com
  */
 public class Principal {
 

@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * @author zhuxiaomeng
  * @date 2017/12/4.
- * @email 154040976@qq.com
+ * @email lenospmiller@gmail.com
  */
 public interface SysUserService extends BaseService<SysUser, String> {
 

@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * @author zhuxiaomeng
  * @date 2017/12/28.
- * @email 154040976@qq.com
+ * @email lenospmiller@gmail.com
  */
 public interface RoleMenuService extends BaseService<SysRoleMenu,String>{
 

@@ -7,7 +7,7 @@ import java.util.Date;
 /**
  * @author zhuxiaomeng
  * @date 2018/10/1.
- * @email 154040976@qq.com
+ * @email lenospmiller@gmail.com
  */
 @Data
 public class ArticleList {

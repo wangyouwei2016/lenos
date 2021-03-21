@@ -3,7 +3,7 @@ package com.len.config;
 /**
  * @author zhuxiaomeng
  * @date 2018/1/2.
- * @email 154040976@qq.com
+ * @email lenospmiller@gmail.com
  * <p>
  * 此方案可替代 application.yml中 pagehelper配置
  */

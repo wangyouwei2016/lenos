@@ -9,7 +9,7 @@
 <head>
   <meta charset="UTF-8">
   <title>我的任务</title>
-<#include "/system/base/header.ftl">
+<#include "/system/base/head.ftl">
 </head>
 
 <body>
@@ -151,9 +151,9 @@
       table.on('tool(task)', function (obj) {
       var data = obj.data;
       if (obj.event === 'handle') {
-        popup('办理','/leave/agent/'+data.id,700,500,'task-agent');
+        Len.popup('办理','/leave/agent/'+data.id,700,500,'task-agent');
       }else if(obj.event === 'update'){
-        popup('编辑','${re.contextPath}/leave/updateLeave/'+data.id,700,500,'task-update');
+        Len.popup('编辑','${re.contextPath}/leave/updateLeave/'+data.id,700,500,'task-update');
       }else if(obj.event==='leaveDetail'){
           window.top.layer.open({
               id: 'leave-detail',
