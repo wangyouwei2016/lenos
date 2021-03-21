@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>部门管理</title>
-<#include "/system/base/header.ftl">
+<#include "/system/base/head.ftl">
 </head>
 
 <body>
@@ -170,9 +170,9 @@
                 layer.confirm('确定删除用户[<label style="color: #00AA91;">' + data.username + '</label>]?', {
                     btn: ['逻辑删除', '物理删除']
                 }, function () {
-                    toolDelByFlag(data.id, 'userList', true);
+                    Len.toolDelByFlag(data.id, 'userList', true);
                 }, function () {
-                    toolDelByFlag(data.id, 'userList', false);
+                    Len.toolDelByFlag(data.id, 'userList', false);
                 });
             } else if (obj.event === 'edit') {
                 update('编辑用户', '/user/updateUser?id=' + data.id, 700, 450);

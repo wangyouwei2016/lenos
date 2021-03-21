@@ -27,7 +27,7 @@ import java.util.List;
 /**
  * @author zhuxiaomeng
  * @date 2017/12/19.
- * @email 154040976@qq.com
+ * @email lenospmiller@gmail.com
  * 角色业务
  */
 @Controller
@@ -71,7 +71,7 @@ public class RoleController extends BaseController {
     public String goAddRole(Model model) {
         JSONArray jsonArray = menuService.getTreeUtil(null);
         model.addAttribute("menus", jsonArray.toJSONString());
-        return "/system/role/add-role";
+        return "/system/role/add";
     }
 
     @ApiOperation(value = "/addRole", httpMethod = "POST", notes = "添加角色")
@@ -94,7 +94,7 @@ public class RoleController extends BaseController {
             model.addAttribute("menus", jsonArray.toJSONString());
         }
         model.addAttribute("detail", detail);
-        return "system/role/update-role";
+        return "system/role/update";
     }
 
     @ApiOperation(value = "/updateRole", httpMethod = "POST", notes = "更新角色")

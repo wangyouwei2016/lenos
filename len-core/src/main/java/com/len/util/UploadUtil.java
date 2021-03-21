@@ -1,6 +1,6 @@
 package com.len.util;
 
-import com.len.exception.MyException;
+import com.len.exception.LenException;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -48,14 +48,15 @@ public class UploadUtil {
 
     public String upload(MultipartFile multipartFile) {
         if (isNull(multipartFile)) {
-            throw new MyException("上传数据/地址获取异常");
+            throw new LenException("上传数据/地址获取异常");
         }
 
-        LoadType loadType = fileNameStyle(multipartFile);
+        LoadType loadType = getFileMessage(multipartFile);
         try {
             FileUtils.copyInputStreamToFile(multipartFile.getInputStream(), loadType.getCurrentFile());
         } catch (IOException e) {
             e.printStackTrace();
+            throw new RuntimeException(e);
         }
         return loadType.getFileName();
     }
@@ -65,23 +66,25 @@ public class UploadUtil {
      *
      * @return
      */
-    public LoadType fileNameStyle(MultipartFile multipartFile) {
+    public LoadType getFileMessage(MultipartFile multipartFile) {
         String curr = multipartFile.getOriginalFilename();
-        int suffixLen = curr.lastIndexOf(".");
-        boolean flag=false;
-        int index=-1;
-        if("blob".equals(curr)){
-            flag=true;
-            index=0;
-            curr=UUID.randomUUID() + ".png";
-        } else if (suffixLen == -1) {
-            throw new MyException("文件获取异常");
+        if(StringUtils.isEmpty(curr)){
+            throw new LenException("文件获取异常");
         }
-        if(!flag){
-            String suffix = curr.substring(suffixLen, curr.length());
+        int suffixLen = curr.lastIndexOf(".");
+        boolean flag = false;
+        int index = -1;
+        if ("blob".equals(curr)) {
+            flag = true;
+            index = 0;
+            curr = UUID.randomUUID() + ".png";
+        } else if (suffixLen == -1) {
+            throw new LenException("文件获取异常");
+        }
+        if (!flag) {
+            String suffix = curr.substring(suffixLen);
             index = Arrays.binarySearch(IMAGE_SUFFIX.split(","),
                     suffix.replace(".", ""));
-
             curr = UUID.randomUUID() + suffix;
         }
         LoadType loadType = new LoadType();
@@ -94,10 +97,7 @@ public class UploadUtil {
     }
 
     private boolean isNull(MultipartFile multipartFile) {
-        if (null != multipartFile) {
-            return false;
-        }
-        return true;
+        return null == multipartFile;
     }
 
 }

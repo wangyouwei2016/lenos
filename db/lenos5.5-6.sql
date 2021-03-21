@@ -453,7 +453,7 @@ CREATE TABLE `act_id_user` (
 -- Records of act_id_user
 -- ----------------------------
 INSERT INTO `act_id_user` VALUES ('1ec421975ffe45229b48d4b9d712ff4f', '1', '33', null, '', null, null);
-INSERT INTO `act_id_user` VALUES ('2211fec3e17c11e795ed201a068c6482', '1', 'Tom Curise', null, '154040976@qq.com', null, null);
+INSERT INTO `act_id_user` VALUES ('2211fec3e17c11e795ed201a068c6482', '1', 'Tom Curise', null, 'lenospmiller@gmail.com', null, null);
 INSERT INTO `act_id_user` VALUES ('3c14c2f8316741e9aaeb29d78d03e958', '1', '222', null, '', null, null);
 INSERT INTO `act_id_user` VALUES ('a4a743bffe9711e7b472201a068c6482', '1', 'zxm', null, '1544040976@qq.com', null, null);
 INSERT INTO `act_id_user` VALUES ('acfc0e9232f54732a5d9ffe9071bf572', '1', '管理员', null, '', null, null);
@@ -1224,7 +1224,7 @@ CREATE TABLE `sys_user` (
 -- Records of sys_user
 -- ----------------------------
 INSERT INTO `sys_user` VALUES ('1ec421975ffe45229b48d4b9d712ff4f', '33333', '533add1dc96c02469d50ca0ffdcb493a', '26', null, null, '33', 'acfc0e9232f54732a5d9ffe9071bf572', 'acfc0e9232f54732a5d9ffe9071bf572', '2018-08-20 23:52:47', '2018-12-11 22:57:16', '0');
-INSERT INTO `sys_user` VALUES ('2211fec3e17c11e795ed201a068c6482', 'tom', '11ac200620f90acd1fdae53716fd3de2', '41', '154040976@qq.com', 'bd214483-7c5e-49d6-862d-de97e9de50b5.jpeg', 'Tom Curise', null, 'acfc0e9232f54732a5d9ffe9071bf572', '2018-01-03 15:49:48', '2018-06-19 21:15:49', '0');
+INSERT INTO `sys_user` VALUES ('2211fec3e17c11e795ed201a068c6482', 'tom', '11ac200620f90acd1fdae53716fd3de2', '41', 'lenospmiller@gmail.com', 'bd214483-7c5e-49d6-862d-de97e9de50b5.jpeg', 'Tom Curise', null, 'acfc0e9232f54732a5d9ffe9071bf572', '2018-01-03 15:49:48', '2018-06-19 21:15:49', '0');
 INSERT INTO `sys_user` VALUES ('2bf2d2db774247b99f27efb1dda29c34', '12', '123456', '10', '2345', null, '123', null, null, null, null, '0');
 INSERT INTO `sys_user` VALUES ('3c14c2f8316741e9aaeb29d78d03e958', '22222', '2b8aae82f069cc838dfe8afc945f8045', '222', null, null, '222', 'acfc0e9232f54732a5d9ffe9071bf572', null, '2018-08-19 22:00:27', null, '0');
 INSERT INTO `sys_user` VALUES ('a4a743bffe9711e7b472201a068c6482', 'zxm', 'f8880ebbdbc37a936245657fa9084198', '25', '1544040976@qq.com', '662d5a3b-56aa-4bbb-bd47-194e24db1d60.jpeg', 'zxm', 'acfc0e9232f54732a5d9ffe9071bf572', 'acfc0e9232f54732a5d9ffe9071bf572', '2018-01-21 18:41:32', '2018-11-25 15:00:41', '0');

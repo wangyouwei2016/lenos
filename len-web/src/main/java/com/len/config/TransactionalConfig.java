@@ -12,7 +12,7 @@ import java.util.Properties;
 /**
  * @author zhuxiaomeng
  * @date 2018/1/30.
- * @email 154040976@qq.com
+ * @email lenospmiller@gmail.com
  * 事务管理
  */
 @Configuration

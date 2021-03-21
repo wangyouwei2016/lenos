@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 /**
  * @author zhuxiaomeng
  * @date 2018/1/6.
- * @email 154040976@qq.com
+ * @email lenospmiller@gmail.com
  * <p>
  * lenosp 初始化类
  */

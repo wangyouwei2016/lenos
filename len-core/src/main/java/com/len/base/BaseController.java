@@ -2,6 +2,7 @@ package com.len.base;
 
 import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Maps;
+import com.len.exception.ServiceException;
 import com.len.util.LenResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.AuthorizationException;
@@ -23,7 +24,7 @@ import java.util.Map;
 /**
  * @author zhuxiaomeng
  * @date 2017/12/19.
- * @email 154040976@qq.com
+ * @email lenospmiller@gmail.com
  */
 @Slf4j
 public abstract class BaseController<T> {
@@ -31,12 +32,12 @@ public abstract class BaseController<T> {
     @InitBinder
     protected void initBinder(WebDataBinder binder) {
         binder.registerCustomEditor(Date.class, new CustomDateEditor(
-            new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"), true));
+                new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"), true));
         binder.registerCustomEditor(Date.class, new CustomDateEditor(
-            new SimpleDateFormat("yyyy-MM-dd"), true));
+                new SimpleDateFormat("yyyy-MM-dd"), true));
     }
 
-    @ExceptionHandler( {UnauthorizedException.class, AuthorizationException.class})
+    @ExceptionHandler({UnauthorizedException.class, AuthorizationException.class})
     public String authorizationException(HttpServletRequest request, HttpServletResponse response) {
         if (isAjaxRequest(request)) {
             Map<String, Object> map = Maps.newHashMap();
@@ -55,14 +56,28 @@ public abstract class BaseController<T> {
         }
     }
 
-    @ExceptionHandler( {Exception.class})
-    public void runTimeException(HttpServletRequest request, HttpServletResponse response) {
+    @ExceptionHandler({Exception.class})
+    public void runTimeException(Exception e, HttpServletResponse response) {
         response.setContentType("application/json");
         try {
-            LenResponse lenResponse = new LenResponse(false, "处理错误");
+            log.error(String.format("Unknown exception information :%s", e.getMessage()));
+            LenResponse lenResponse = new LenResponse(false, "系统处理错误");
             response.getWriter().write(JSON.toJSONString(lenResponse));
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+    }
+
+    @ExceptionHandler({ServiceException.class})
+    public void serviceException(ServiceException e, HttpServletResponse response) {
+        response.setContentType("application/json");
+        try {
+            log.error(String.format("serviceException :%s", e.getMessage()));
+            String message = e.getMessage();
+            LenResponse lenResponse = new LenResponse(false, message);
+            response.getWriter().write(JSON.toJSONString(lenResponse));
+        } catch (IOException e1) {
+            e1.printStackTrace();
         }
     }
 

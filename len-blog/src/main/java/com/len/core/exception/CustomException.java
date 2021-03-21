@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 /**
  * @author zhuxiaomeng
  * @date 2018/8/19.
- * @email 154040976@qq.com
+ * @email lenospmiller@gmail.com
  */
 @RestControllerAdvice
 public class CustomException {

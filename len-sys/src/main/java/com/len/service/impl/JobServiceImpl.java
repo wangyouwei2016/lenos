@@ -3,7 +3,7 @@ package com.len.service.impl;
 import com.len.base.impl.BaseServiceImpl;
 import com.len.core.quartz.JobTask;
 import com.len.entity.SysJob;
-import com.len.exception.MyException;
+import com.len.exception.LenException;
 import com.len.mapper.SysJobMapper;
 import com.len.service.JobService;
 import com.len.util.BeanUtil;
@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 /**
  * @author zhuxiaomeng
  * @date 2018/1/6.
- * @email 154040976@qq.com
+ * @email lenospmiller@gmail.com
  */
 @Service
 @Slf4j
@@ -39,7 +39,7 @@ public class JobServiceImpl extends BaseServiceImpl<SysJob, String> implements J
             BeanUtil.copyNotNullBean(job, oldJob);
             updateById(oldJob);
             return true;
-        } catch (MyException e) {
+        } catch (LenException e) {
             log.error(e.getMessage());
             return false;
         }

@@ -2,7 +2,7 @@
 <head>
     <meta charset="UTF-8">
     <title>个人信息</title>
-<#include "/system/base/header.ftl">
+    <#include "/system/base/head.ftl">
     <script type="text/javascript" src="/plugin/tools/update-setting.js"></script>
 </head>
 <body>
@@ -118,8 +118,8 @@
     layui.use(['form', 'layer', 'upload'], function () {
         $ = layui.jquery;
         var form = layui.form
-                , layer = layui.layer,
-                upload = layui.upload;
+            , layer = layui.layer,
+            upload = layui.upload;
         upload.render({
             elem: '#test10'
             , url: '/user/upload'
@@ -141,7 +141,7 @@
         //自定义验证规则
         form.verify({
             username: function (value) {
-                if (value.trim() == "") {
+                if (Len.isEmpty(value)) {
                     return "用户名不能为空";
                 }
                 if (value.match(/[\u4e00-\u9fa5]/)) {
@@ -158,7 +158,7 @@
                 }
             }
             , email: function (value) {
-                if (value != "") {
+                if (!Len.isEmpty(value)) {
                     if (!/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/.test(value)) {
                         return "邮箱格式不正确";
                     }
@@ -174,11 +174,8 @@
                 data: data.field,
                 traditional: true,
                 success: function (d) {
-                    if (d.flag) {
-                        window.top.layer.msg(d.msg, {icon: 6, offset: 'rb', area: ['200px', '80px'], anim: 2});
-                    } else {
-                        layer.msg(d.msg, {icon: 5});
-                    }
+                    window.top.layer.msg(d.msg, {icon: 6, offset: 'rb', area: ['200px', '80px'], anim: 2});
+
                 }, error: function (e) {
                     layer.msg('发生错误', {icon: 6});
                 }

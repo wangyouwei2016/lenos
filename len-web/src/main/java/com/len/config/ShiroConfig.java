@@ -32,7 +32,7 @@ import java.util.*;
 /**
  * @author zhuxiaomeng
  * @date 2018/1/1.
- * @email 154040976@qq.com
+ * @email lenospmiller@gmail.com
  * spring shiro
  * 元旦快乐：code everybody
  * <p>
@@ -222,6 +222,11 @@ public class ShiroConfig {
     public DefaultWebSessionManager sessionManager() {
         DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
         sessionManager.setSessionIdUrlRewritingEnabled(false);
+        sessionManager.setSessionIdCookieEnabled(true);
+        sessionManager.setDeleteInvalidSessions(true);
+        //默认半小时过期
+//        sessionManager.setGlobalSessionTimeout(10000L);
+        sessionManager.setSessionValidationSchedulerEnabled(true);
         sessionManager.setSessionDAO(redisSessionDAO());
         return sessionManager;
     }

@@ -24,7 +24,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.len.base.BaseController;
 import com.len.config.ActPropertiesConfig;
 import com.len.entity.*;
-import com.len.exception.MyException;
+import com.len.exception.LenException;
 import com.len.service.ActAssigneeService;
 import com.len.service.RoleService;
 import com.len.service.RoleUserService;
@@ -39,7 +39,6 @@ import org.activiti.editor.constants.ModelDataJsonConstants;
 import org.activiti.editor.language.json.converter.BpmnJsonConverter;
 import org.activiti.engine.IdentityService;
 import org.activiti.engine.RepositoryService;
-import org.activiti.engine.RuntimeService;
 import org.activiti.engine.identity.Group;
 import org.activiti.engine.identity.User;
 import org.activiti.engine.impl.persistence.entity.GroupEntity;
@@ -58,16 +57,16 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 /**
  * @author zhuxiaomeng
  * @date 2018/1/13.
- * @email 154040976@qq.com
+ * @email lenospmiller@gmail.com
  * <p>
  * 流程管理 流程创建、发布 流程节点绑定角色/用户(绑定用户 开始ing)
  */
@@ -80,9 +79,6 @@ public class ActivitiController extends BaseController {
 
     @Autowired
     private ObjectMapper objectMapper;
-
-    @Autowired
-    private RuntimeService runtimeService;
 
     @Autowired
     private IdentityService identityService;
@@ -137,7 +133,7 @@ public class ActivitiController extends BaseController {
                 identityService.createMembership(sysRoleUser.getUserId(), sysRoleUser.getRoleId());
             }
             j.setMsg("同步成功");
-        } catch (MyException e) {
+        } catch (LenException e) {
             j.setFlag(false);
             j.setMsg("同步失败");
             e.printStackTrace();
@@ -170,14 +166,13 @@ public class ActivitiController extends BaseController {
         String id = model.getId();
 
         //完善ModelEditorSource
-        ObjectNode editorNode = objectMapper.createObjectNode();
-        editorNode.put("id", "canvas");
-        editorNode.put("resourceId", "canvas");
-        ObjectNode stencilSetNode = objectMapper.createObjectNode();
-        stencilSetNode.put("namespace",
-                "http://b3mn.org/stencilset/bpmn2.0#");
-        editorNode.put("stencilset", stencilSetNode);
-        repositoryService.addModelEditorSource(id, editorNode.toString().getBytes("utf-8"));
+        JSONObject editor = new JSONObject();
+        editor.put("id", "canvas");
+        editor.put("resourceId", "canvas");
+        JSONObject stencil = new JSONObject();
+        stencil.put("namespace", "http://lenosp.cn#");
+        editor.put("stencilset", stencil);
+        repositoryService.addModelEditorSource(id, editor.toString().getBytes(StandardCharsets.UTF_8));
         return "redirect:/static/modeler.html?modelId=" + id;
     }
 
@@ -282,7 +277,7 @@ public class ActivitiController extends BaseController {
                     .deploy();
             modelData.setDeploymentId(deployment.getId());
             repositoryService.saveModel(modelData);
-        } catch (MyException e) {
+        } catch (LenException e) {
             msg = "发布数失败";
             j.setFlag(false);
         } catch (IOException e) {
@@ -403,7 +398,7 @@ public class ActivitiController extends BaseController {
             }
             repositoryService.deleteDeployment(id, true);
             j.setMsg("删除成功");
-        } catch (MyException e) {
+        } catch (LenException e) {
             j.setMsg("删除失败");
             j.setFlag(false);
             e.printStackTrace();
@@ -462,7 +457,7 @@ public class ActivitiController extends BaseController {
         try {
             repositoryService.deleteModel(id);
             j.setMsg("删除成功");
-        } catch (MyException e) {
+        } catch (LenException e) {
             j.setMsg("删除失败");
             j.setFlag(false);
             e.printStackTrace();

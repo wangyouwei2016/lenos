@@ -9,7 +9,7 @@
 <head>
     <meta charset="UTF-8">
     <title>请假流程示例</title>
-<#include "/system/base/header.ftl">
+<#include "/system/base/head.ftl">
     <script src="${re.contextPath}/plugin/activiti.js"></script>
 </head>
 
@@ -199,7 +199,7 @@
                 });
             }
         });
-        eleClick(active, '.len-form-item .layui-btn,.layui-col-md12 .layui-btn');
+        Len.eleClick(active, '.len-form-item .layui-btn,.layui-col-md12 .layui-btn');
     });
 
     function add(title, url, w, h) {

@@ -144,7 +144,7 @@ To change this template use File | Settings | File Templates.-->
         })
         //监听提交
         form.on('submit(add)', function (data) {
-            layerAjax('addLeave', data.field, 'leaveList');
+            Len.layerAjax('addLeave', data.field, 'leaveList');
             return false;
         });
     });

@@ -6,7 +6,7 @@ import org.apache.shiro.authc.AuthenticationToken;
 /**
  * @author zhuxiaomeng
  * @date 2018/8/19.
- * @email 154040976@qq.com
+ * @email lenospmiller@gmail.com
  */
 public class JwtToken implements AuthenticationToken {
 

@@ -35,7 +35,7 @@ import java.util.Set;
 /**
  * @author zhuxiaomeng
  * @date 2017/12/4.
- * @email 154040976@qq.com
+ * @email lenospmiller@gmail.com
  */
 @Service
 public class SysUserServiceImpl extends BaseServiceImpl<SysUser, String> implements SysUserService {
@@ -113,7 +113,7 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser, String> impleme
     }
 
     @Override
-    public LenResponse delById(String id, boolean flag) {
+    public LenResponse delById(String id, boolean realDel) {
         if (StringUtils.isEmpty(id)) {
             return LenResponse.error("获取数据失败");
         }
@@ -129,7 +129,7 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser, String> impleme
         if (count > 0) {
             return LenResponse.error("账户已经绑定角色，无法删除");
         }
-        if (flag) {
+        if (!realDel) {
             //逻辑
             sysUser.setDelFlag(Byte.parseByte("1"));
             sysUserMapper.updateById(sysUser);

@@ -6,7 +6,7 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 /**
  * @author zhuxiaomeng
  * @date 2018/8/18.
- * @email 154040976@qq.com
+ * @email lenospmiller@gmail.com
  */
 public class CustomUsernamePasswordToken extends UsernamePasswordToken {
 

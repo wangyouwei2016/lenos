@@ -9,7 +9,7 @@
 <head>
     <meta charset="UTF-8">
     <title>模型列表</title>
-<#include "/system/base/header.ftl">
+<#include "/system/base/head.ftl">
 </head>
 
 <body>

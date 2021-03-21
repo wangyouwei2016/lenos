@@ -7,7 +7,7 @@ import com.len.util.LenResponse;
 /**
  * @author zhuxiaomeng
  * @date 2017/12/19.
- * @email 154040976@qq.com
+ * @email lenospmiller@gmail.com
  */
 public interface RoleService extends BaseService<SysRole, String> {
 

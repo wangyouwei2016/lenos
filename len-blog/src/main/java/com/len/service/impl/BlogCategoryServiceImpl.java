@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 /**
  * @author zhuxiaomeng
  * @date 2018/7/22.
- * @email 154040976@qq.com
+ * @email lenospmiller@gmail.com
  */
 @Service
 public class BlogCategoryServiceImpl extends BaseServiceImpl<BlogCategory, String> implements BlogCategoryService {

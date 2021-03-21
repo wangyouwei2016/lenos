@@ -9,7 +9,7 @@ import org.apache.shiro.subject.Subject;
 /**
  * @author zhuxiaomeng
  * @date 2018/11/22.
- * @email 154040976@qq.com
+ * @email lenospmiller@gmail.com
  */
 public class LenUser {
     public static Principal getPrincipal() {

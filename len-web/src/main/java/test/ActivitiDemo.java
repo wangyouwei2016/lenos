@@ -38,7 +38,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 /**
  * @author zhuxiaomeng
  * @date 2018/1/11.
- * @email 154040976@qq.com
+ * @email lenospmiller@gmail.com
  *
  * 本demo 根据官网doc教程 address：http://www.mossle.com/docs/activiti/index.html
  */

@@ -31,7 +31,7 @@ import java.util.stream.Collectors;
 /**
  * @author zhuxiaomeng
  * @date 2019-03-10.
- * @email 154040976@qq.com
+ * @email lenospmiller@gmail.com
  */
 @Service
 public class ActivitiService {

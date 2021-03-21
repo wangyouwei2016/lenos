@@ -30,7 +30,7 @@ import org.activiti.engine.delegate.TaskListener;
 /**
  * @author zhuxiaomeng
  * @date 2018/1/20.
- * @email 154040976@qq.com
+ * @email lenospmiller@gmail.com
  * <p>
  * 流程监听器 动态注入节点办理人
  */

@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
 /**
  * @author zhuxiaomeng
  * @date 2018/1/4.
- * @email 154040976@qq.com
+ * @email lenospmiller@gmail.com
  * <p>
  * ApplicationContext会自动检查是否在定义文件中有实现了BeanPostProcessor接口的类，
  * 如果有的话，Spring容器会在每个Bean(其他的Bean)被初始化之前和初始化之后，

@@ -3,7 +3,7 @@ package com.len.util;
 /**
  * @author zhuxiaomeng
  * @date 2018/1/24.
- * @email 154040976@qq.com
+ * @email lenospmiller@gmail.com
  *
  * 工作流节点绑定类型
  */

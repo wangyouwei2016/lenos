@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * @author zhuxiaomeng
  * @date 2018/11/24.
- * @email 154040976@qq.com
+ * @email lenospmiller@gmail.com
  */
 @Service
 public class RedisService<T> {

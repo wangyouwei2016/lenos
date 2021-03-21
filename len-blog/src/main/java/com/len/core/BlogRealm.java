@@ -20,7 +20,7 @@ import org.springframework.stereotype.Service;
 /**
  * @author zhuxiaomeng
  * @date 2017/12/4.
- * @email 154040976@qq.com
+ * @email lenospmiller@gmail.com
  */
 @Service
 public class BlogRealm extends AuthorizingRealm {

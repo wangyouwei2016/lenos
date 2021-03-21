@@ -13,7 +13,7 @@ import java.util.Properties;
 /**
  * @author zhuxiaomeng
  * @date 2018/1/2.
- * @email 154040976@qq.com
+ * @email lenospmiller@gmail.com
  */
 @Configuration
 public class FreeMarkerConfig{

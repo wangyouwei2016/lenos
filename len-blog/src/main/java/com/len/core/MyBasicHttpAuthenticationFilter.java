@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author zhuxiaomeng
  * @date 2018/8/19.
- * @email 154040976@qq.com
+ * @email lenospmiller@gmail.com
  */
 public class MyBasicHttpAuthenticationFilter extends BasicHttpAuthenticationFilter {
 

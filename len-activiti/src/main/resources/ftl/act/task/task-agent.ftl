@@ -98,17 +98,17 @@ To change this template use File | Settings | File Templates.-->
         parent.layer.close(index);
       }
     }
-    eleClick(active,'.layui-form-item .layui-btn');
+    Len.eleClick(active,'.layui-form-item .layui-btn');
 
     form.on('submit(no)',function(data){
       data.field.flag=false;
-      layerAjax('complete',data.field,'taskList');
+      Len.layerAjax('complete',data.field,'taskList');
       return false;
     });
 
     form.on('submit(ok)', function(data){
       data.field.flag=true;
-      layerAjax('complete',data.field,'taskList');
+      Len.layerAjax('complete',data.field,'taskList');
       return false;
     });
     form.render();

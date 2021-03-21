@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * @author zhuxiaomeng
  * @date 2018/1/23.
- * @email 154040976@qq.com
+ * @email lenospmiller@gmail.com
  */
 public interface ActAssigneeService extends BaseService<ActAssignee,String> {
   int deleteByNodeId(String nodeId);

@@ -7,7 +7,7 @@ import lombok.Data;
 /**
  * @author zhuxiaomeng
  * @date 2017/12/15.
- * @email 154040976@qq.com
+ * @email lenospmiller@gmail.com
  * ajax 回执
  */
 @Data

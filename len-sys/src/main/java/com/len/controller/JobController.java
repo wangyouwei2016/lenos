@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 /**
  * @author zhuxiaomeng
  * @date 2018/1/6.
- * @email 154040976@qq.com
+ * @email lenospmiller@gmail.com
  * <p>
  * 定时任务 controller
  */
@@ -53,7 +53,7 @@ public class JobController extends BaseController<SysJob> {
 
     @GetMapping(value = "showAddJob")
     public String addJob() {
-        return "/system/job/add-job";
+        return "/system/job/add";
     }
 
     @ApiOperation(value = "/addJob", httpMethod = "POST", notes = "添加任务类")
@@ -73,7 +73,7 @@ public class JobController extends BaseController<SysJob> {
             model.addAttribute("job", job);
         }
         model.addAttribute("detail", detail);
-        return "system/job/update-job";
+        return "system/job/update";
     }
 
 

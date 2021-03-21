@@ -6,7 +6,7 @@ import com.len.entity.BlogCategory;
 /**
  * @author zhuxiaomeng
  * @date 2018/7/22.
- * @email 154040976@qq.com
+ * @email lenospmiller@gmail.com
  */
 public interface BlogCategoryService extends BaseService<BlogCategory, String> {
 }

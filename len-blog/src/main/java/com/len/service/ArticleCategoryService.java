@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * @author zhuxiaomeng
  * @date 2018/10/11.
- * @email 154040976@qq.com
+ * @email lenospmiller@gmail.com
  */
 public interface ArticleCategoryService extends BaseService<ArticleCategory, String> {
 

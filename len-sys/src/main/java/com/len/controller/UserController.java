@@ -9,13 +9,10 @@ import com.len.core.annotation.Log;
 import com.len.core.annotation.Log.LOG_TYPE;
 import com.len.core.quartz.JobTask;
 import com.len.entity.SysUser;
+import com.len.exception.ServiceException;
 import com.len.service.RoleUserService;
 import com.len.service.SysUserService;
-import com.len.util.Checkbox;
-import com.len.util.LenResponse;
-import com.len.util.Md5Util;
-import com.len.util.ReType;
-import com.len.util.UploadUtil;
+import com.len.util.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
@@ -23,14 +20,10 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -38,7 +31,7 @@ import java.util.List;
 /**
  * @author zhuxiaomeng
  * @date 2017/12/6.
- * @email 154040976@qq.com
+ * @email lenospmiller@gmail.com
  * 用户管理
  */
 //@Api(value="user")
@@ -73,7 +66,7 @@ public class UserController extends BaseController {
     @GetMapping(value = "showUserList")
     @ResponseBody
     @RequiresPermissions("user:show")
-    public ReType showUser(SysUser user, String page, String limit) {
+    public ReType showUser(SysUser user, String page, String limit, Principal principal) {
         return userService.show(user, Integer.valueOf(page), Integer.valueOf(limit));
     }
 
@@ -95,7 +88,7 @@ public class UserController extends BaseController {
     public String goAddUser(Model model) {
         List<Checkbox> checkboxList = userService.getUserRoleByJson(null);
         model.addAttribute("boxJson", checkboxList);
-        return "/system/user/add-user";
+        return "/system/user/add";
     }
 
     @ApiOperation(value = "/addUser", httpMethod = "POST", notes = "添加用户")
@@ -117,10 +110,9 @@ public class UserController extends BaseController {
         }
         int result = userService.checkUser(user.getUsername());
         if (result > 0) {
-            return error("用户名已存在");
+            throw new ServiceException("用户名已存在");
         }
         userService.add(user, Arrays.asList(role));
-
         return succ();
     }
 
@@ -134,7 +126,15 @@ public class UserController extends BaseController {
             model.addAttribute("boxJson", checkboxList);
         }
         model.addAttribute("detail", detail);
-        return "system/user/update-user";
+        return "system/user/update";
+    }
+
+    public String userDetail(String id, Model model) {
+        List<Checkbox> checkboxList = userService.getUserRoleByJson(id);
+        SysUser user = userService.getById(id);
+        model.addAttribute("user", user);
+        model.addAttribute("boxJson", checkboxList);
+        return "system/user/update";
     }
 
 
@@ -159,8 +159,8 @@ public class UserController extends BaseController {
     @PostMapping(value = "/del")
     @ResponseBody
     @RequiresPermissions("user:del")
-    public LenResponse del(String id, boolean flag) {
-        return userService.delById(id, flag);
+    public LenResponse del(String id, boolean realDel) {
+        return userService.delById(id, realDel);
     }
 
     @GetMapping(value = "goRePass")
@@ -170,7 +170,7 @@ public class UserController extends BaseController {
         }
         SysUser user = userService.getById(id);
         model.addAttribute("user", user);
-        return "/system/user/re-pass";
+        return "/system/user/resetPassword";
     }
 
     /**
@@ -208,11 +208,8 @@ public class UserController extends BaseController {
      */
     @PostMapping(value = "upload")
     @ResponseBody
-    public LenResponse imgUpload(HttpServletRequest req, @RequestParam("file") MultipartFile file) {
-        String fileName = uploadUtil.upload(file);
-        LenResponse j = new LenResponse();
-        j.setMsg(fileName);
-        return j;
+    public LenResponse imgUpload(@RequestParam("file") MultipartFile file) {
+        return succ(uploadUtil.upload(file));
     }
 
     /**
@@ -224,8 +221,7 @@ public class UserController extends BaseController {
         if (StringUtils.isEmpty(uname)) {
             return error("获取数据失败");
         }
-        int result = userService.checkUser(uname);
-        if (result > 0) {
+        if (userService.checkUser(uname) > 0) {
             return error("用户名已存在");
         }
         return succ();

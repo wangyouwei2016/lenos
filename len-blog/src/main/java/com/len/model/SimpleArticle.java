@@ -6,7 +6,7 @@ import lombok.Data;
 /**
  * @author zhuxiaomeng
  * @date 2018/11/23.
- * @email 154040976@qq.com
+ * @email lenospmiller@gmail.com
  */
 @Data
 @ApiModel("简单文章")

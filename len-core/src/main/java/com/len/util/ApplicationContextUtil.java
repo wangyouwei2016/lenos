@@ -7,7 +7,7 @@ import org.springframework.context.ApplicationContextAware;
 /**
  * @author zhuxiaomeng
  * @date 2018/1/5.
- * @email 154040976@qq.com
+ * @email lenospmiller@gmail.com
  */
 public class ApplicationContextUtil implements ApplicationContextAware {
 
