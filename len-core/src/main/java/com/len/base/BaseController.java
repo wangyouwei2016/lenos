@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Maps;
 import com.len.exception.ServiceException;
 import com.len.util.LenResponse;
+import com.len.util.MsHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.AuthorizationException;
 import org.apache.shiro.authz.UnauthorizedException;
@@ -61,7 +62,7 @@ public abstract class BaseController<T> {
         response.setContentType("application/json");
         try {
             log.error(String.format("Unknown exception information :%s", e.getMessage()));
-            LenResponse lenResponse = new LenResponse(false, "系统处理错误");
+            LenResponse lenResponse = new LenResponse(false, MsHelper.getMsg("system.error"));
             response.getWriter().write(JSON.toJSONString(lenResponse));
         } catch (IOException e1) {
             e1.printStackTrace();

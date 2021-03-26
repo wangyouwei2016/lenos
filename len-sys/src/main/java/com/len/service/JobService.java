@@ -23,7 +23,7 @@ public interface JobService extends BaseService<SysJob,String> {
      * @param id
      * @return
      */
-    public LenResponse del(String id);
+    public boolean del(String id);
 
     /**
      * 启动任务

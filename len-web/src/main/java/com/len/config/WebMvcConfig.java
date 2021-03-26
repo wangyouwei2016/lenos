@@ -49,8 +49,8 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
         registry.addResourceHandler("/**").addResourceLocations("classpath:/META-INF/resources/").setCachePeriod(0);
         registry.addResourceHandler("/plugin/**", "/static/**")
                 .addResourceLocations("classpath:/plugin/", "classpath:/static/");
-        registry.addResourceHandler("/ftl/**").addResourceLocations("classpath:/ftl/");
-        registry.addResourceHandler("/images/**").addResourceLocations("file:" + imagePath);
+        registry.addResourceHandler("/ftl/**").addResourceLocations("classpath:/ftl/", "classpath:/freemarker/");
+        registry.addResourceHandler("/images/**").addResourceLocations("file:" + imagePath, "classpath:/plugin/lenos/img/");
         registry.addResourceHandler("/img/**").addResourceLocations("file:" + imagePath);
         registry.addResourceHandler("/file/**").addResourceLocations("file:" + imagePath);
         super.addResourceHandlers(registry);

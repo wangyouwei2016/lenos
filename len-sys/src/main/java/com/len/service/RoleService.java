@@ -13,9 +13,9 @@ public interface RoleService extends BaseService<SysRole, String> {
 
 
 
-    LenResponse addRole(SysRole sysRole, String[] menus);
+    void addRole(SysRole sysRole, String[] menus);
 
-    LenResponse updateUser(SysRole role, String[] menus);
+    void updateUser(SysRole role, String[] menus);
 
-    LenResponse del(String id);
+    void del(String id);
 }

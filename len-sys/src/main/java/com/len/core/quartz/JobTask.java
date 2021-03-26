@@ -52,28 +52,25 @@ public class JobTask {
      * 开启
      */
     @Log(desc = "开启定时任务")
-    public boolean startJob(SysJob job) {
+    public boolean startJob(SysJob job) throws ClassNotFoundException, SchedulerException {
         Scheduler scheduler = schedulerFactoryBean.getScheduler();
-        try {
-            Class clazz = Class.forName(job.getClazzPath());
-            JobDetail jobDetail = JobBuilder.newJob(clazz).build();
-            // 触发器
-            TriggerKey triggerKey = TriggerKey.triggerKey(job.getId(), Scheduler.DEFAULT_GROUP);
-            CronTrigger trigger = TriggerBuilder.newTrigger()
-                    .withIdentity(triggerKey)
-                    .withSchedule(CronScheduleBuilder.cronSchedule(job.getCron())).build();
-            scheduler.scheduleJob(jobDetail, trigger);
-            // 启动
-            if (!scheduler.isShutdown()) {
-                scheduler.start();
-                log.info("---任务[" + triggerKey.getName() + "]启动成功-------");
-                return true;
-            } else {
-                log.info("---任务[" + triggerKey.getName() + "]已经运行，请勿再次启动-------");
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        Class clazz = Class.forName(job.getClazzPath());
+        JobDetail jobDetail = JobBuilder.newJob(clazz).build();
+        // 触发器
+        TriggerKey triggerKey = TriggerKey.triggerKey(job.getId(), Scheduler.DEFAULT_GROUP);
+        CronTrigger trigger = TriggerBuilder.newTrigger()
+                .withIdentity(triggerKey)
+                .withSchedule(CronScheduleBuilder.cronSchedule(job.getCron())).build();
+        scheduler.scheduleJob(jobDetail, trigger);
+        // 启动
+        if (!scheduler.isShutdown()) {
+            scheduler.start();
+            log.info("---任务[" + triggerKey.getName() + "]启动成功-------");
+            return true;
+        } else {
+            log.info("---任务[" + triggerKey.getName() + "]已经运行，请勿再次启动-------");
         }
+
         return false;
     }
 

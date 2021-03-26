@@ -8,6 +8,7 @@ import com.len.entity.SysUser;
 import com.len.service.SysUserService;
 import com.len.util.Checkbox;
 import com.len.util.LenResponse;
+import com.len.util.MsHelper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,8 +46,6 @@ public class PersonController extends BaseController {
             return "/login";
         }
         String id = principal.getId();
-
-        //List<Checkbox> checkboxList = userService.getUserRoleByJson(id);
         SysUser user = userService.getById(id);
         model.addAttribute("user", user);
         return "/system/person/me";
@@ -57,10 +56,7 @@ public class PersonController extends BaseController {
     @PostMapping(value = "updateUser")
     @ResponseBody
     public LenResponse updatePerson(SysUser user) {
-        if (user == null) {
-            return error("获取数据失败");
-        }
         userService.updatePerson(user);
-        return succ("修改成功");
+        return succ(MsHelper.getMsg("update.success"));
     }
 }

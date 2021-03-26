@@ -6,6 +6,7 @@ import com.len.entity.SysUser;
 import com.len.menu.LoginType;
 import com.len.service.SysUserService;
 import com.len.util.CustomUsernamePasswordToken;
+import com.len.util.MsHelper;
 import com.len.util.VerifyCodeUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -54,7 +55,7 @@ public class LoginController {
         if (sub.isAuthenticated()) {
             return "/main/main";
         } else {
-            model.addAttribute("message", "请重新登录");
+            model.addAttribute("message", MsHelper.getMsg("login.again"));
             return "/login2";
         }
     }
@@ -104,9 +105,9 @@ public class LoginController {
                 return "redirect:/main";
             }
         } catch (UnknownAccountException | IncorrectCredentialsException e) {
-            msg = "用户名/密码错误";
+            msg = MsHelper.getMsg("login.error");
         } catch (ExcessiveAttemptsException e) {
-            msg = "登录失败多次，账户锁定10分钟";
+            msg = MsHelper.getMsg("locking");
         }
         if (msg != null) {
             model.addAttribute("message", msg);

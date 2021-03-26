@@ -9,6 +9,7 @@ import com.len.entity.SysMenu;
 import com.len.service.MenuService;
 import com.len.util.BeanUtil;
 import com.len.util.LenResponse;
+import com.len.util.MsHelper;
 import com.len.util.ReType;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -62,9 +63,6 @@ public class MenuController extends BaseController {
     @PostMapping(value = "addMenu")
     @ResponseBody
     public LenResponse addMenu(SysMenu sysMenu) {
-        if (sysMenu == null) {
-            return error("获取数据失败");
-        }
         if (StringUtils.isEmpty(sysMenu.getPId())) {
             sysMenu.setPId(null);
         }
@@ -78,7 +76,7 @@ public class MenuController extends BaseController {
             sysMenu.setMenuType((byte) 0);
         }
         menuService.save(sysMenu);
-        return succ("添加成功");
+        return succ(MsHelper.getMsg("insert.success"));
     }
 
     @GetMapping(value = "showUpdateMenu")
@@ -102,14 +100,15 @@ public class MenuController extends BaseController {
         SysMenu oldMenu = menuService.getById(sysMenu.getId());
         BeanUtil.copyNotNullBean(sysMenu, oldMenu);
         menuService.updateById(oldMenu);
-        return succ("保存成功");
+        return succ(MsHelper.getMsg("update.success"));
     }
 
     @Log(desc = "删除菜单", type = LOG_TYPE.DEL)
     @PostMapping("del")
     @ResponseBody
     public LenResponse del(String id) {
-        return menuService.del(id);
+        menuService.del(id);
+        return succ(MsHelper.getMsg("del.success"));
     }
 
 }

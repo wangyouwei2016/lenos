@@ -4,14 +4,14 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.len.core.quartz.JobTask;
 import com.len.entity.SysJob;
 import com.len.service.JobService;
-import com.len.util.SpringUtil;
 import com.len.service.RoleService;
-
-import java.util.List;
-
+import com.len.util.SpringUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.quartz.SchedulerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+
+import java.util.List;
 
 /**
  * @author zhuxiaomeng
@@ -38,12 +38,16 @@ public class DataSourceJobThread extends Thread {
             JobTask jobTask = SpringUtil.getBean("jobTask");
             SysJob job = new SysJob();
             job.setStatus(true);
-            QueryWrapper<SysJob> jobQueryWrapper=new QueryWrapper<>(job);
+            QueryWrapper<SysJob> jobQueryWrapper = new QueryWrapper<>(job);
             List<SysJob> jobList = jobService.list(jobQueryWrapper);
             //开启任务
             jobList.forEach(jobs -> {
                         log.info("---任务[" + jobs.getId() + "]系统 init--开始启动---------");
-                        jobTask.startJob(jobs);
+                        try {
+                            jobTask.startJob(jobs);
+                        } catch (ClassNotFoundException | SchedulerException e) {
+                            e.printStackTrace();
+                        }
                     }
             );
             if (jobList.size() == 0) {
@@ -51,7 +55,7 @@ public class DataSourceJobThread extends Thread {
             } else {
                 System.out.println("---任务启动完毕---------");
             }
-        } catch (InterruptedException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

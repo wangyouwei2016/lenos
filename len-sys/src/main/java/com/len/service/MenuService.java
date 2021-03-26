@@ -28,6 +28,6 @@ public interface MenuService extends BaseService<SysMenu,String> {
 
   public JSONArray getMenuJsonByUser(List<SysMenu> menuList);
 
-  public LenResponse del(String id);
+  public boolean del(String id);
 
 }

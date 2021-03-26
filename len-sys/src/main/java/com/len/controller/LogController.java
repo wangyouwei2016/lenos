@@ -6,6 +6,7 @@ import com.len.base.BaseController;
 import com.len.entity.SysLog;
 import com.len.mapper.SysLogMapper;
 import com.len.util.LenResponse;
+import com.len.util.MsHelper;
 import com.len.util.ReType;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
@@ -64,7 +65,7 @@ public class LogController extends BaseController {
         for (String id : ids) {
             logMapper.deleteById(Integer.valueOf(id));
         }
-        return succ("删除成功");
+        return succ(MsHelper.getMsg("del.success"));
     }
 
 

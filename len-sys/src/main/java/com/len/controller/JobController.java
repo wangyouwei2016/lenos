@@ -5,8 +5,10 @@ import com.len.core.annotation.Log;
 import com.len.core.annotation.Log.LOG_TYPE;
 import com.len.core.quartz.JobTask;
 import com.len.entity.SysJob;
+import com.len.exception.ServiceException;
 import com.len.service.JobService;
 import com.len.util.LenResponse;
+import com.len.util.MsHelper;
 import com.len.util.ReType;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -47,7 +49,7 @@ public class JobController extends BaseController<SysJob> {
     @GetMapping(value = "showJobList")
     @ResponseBody
     @RequiresPermissions("job:show")
-    public ReType showUser( SysJob job, String page, String limit) {
+    public ReType showUser(SysJob job, String page, String limit) {
         return jobService.show(job, Integer.valueOf(page), Integer.valueOf(limit));
     }
 
@@ -63,7 +65,7 @@ public class JobController extends BaseController<SysJob> {
     public LenResponse addJob(SysJob job) {
         job.setStatus(false);
         jobService.save(job);
-        return succ("保存成功");
+        return succ(MsHelper.getMsg("insert.success"));
     }
 
     @GetMapping(value = "updateJob")
@@ -82,17 +84,12 @@ public class JobController extends BaseController<SysJob> {
     @PostMapping(value = "updateJob")
     @ResponseBody
     public LenResponse updateJob(SysJob job) {
-        if (job == null) {
-            return error("获取数据失败");
-        }
         if (jobTask.checkJob(job)) {
-            return error("已经启动任务无法更新,请停止后更新");
+            throw new ServiceException(MsHelper.getMsg("job.started"));
         }
-        if (jobService.updateJob(job)) {
-            return succ("更新成功");
-        } else {
-            return error("更新失败");
-        }
+        jobService.updateJob(job);
+        return succ(MsHelper.getMsg("update.success"));
+
     }
 
     @Log(desc = "删除任务", type = LOG_TYPE.DEL)
@@ -101,7 +98,8 @@ public class JobController extends BaseController<SysJob> {
     @ResponseBody
     @RequiresPermissions("job:del")
     public LenResponse del(String id) {
-        return jobService.del(id);
+        jobService.del(id);
+        return succ(MsHelper.getMsg("del.success"));
     }
 
 
@@ -110,16 +108,8 @@ public class JobController extends BaseController<SysJob> {
     @ResponseBody
     @RequiresPermissions("job:start")
     public LenResponse startJob(String id) {
-        String msg;
-        if (StringUtils.isEmpty(id)) {
-            return error("获取数据失败");
-        }
-        if (jobService.startJob(id)) {
-            msg = "启动成功";
-        } else {
-            msg = "启动失败";
-        }
-        return succ(msg);
+        jobService.startJob(id);
+        return succ("job.start");
     }
 
     @Log(desc = "停止任务")
@@ -127,16 +117,8 @@ public class JobController extends BaseController<SysJob> {
     @ResponseBody
     @RequiresPermissions("job:end")
     public LenResponse endJob(String id) {
-        String msg;
-        if (StringUtils.isEmpty(id)) {
-            return error("获取数据失败");
-        }
-        if (jobService.stopJob(id)) {
-            msg = "停止成功";
-        } else {
-            msg = "停止失败";
-        }
-        return succ(msg);
+        jobService.stopJob(id);
+        return succ(MsHelper.getMsg("job.stop"));
     }
 
 }

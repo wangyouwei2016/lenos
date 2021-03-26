@@ -1,6 +1,7 @@
 package com.len.util;
 
 import com.len.exception.LenException;
+import com.len.exception.ServiceException;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -48,7 +49,7 @@ public class UploadUtil {
 
     public String upload(MultipartFile multipartFile) {
         if (isNull(multipartFile)) {
-            throw new LenException("上传数据/地址获取异常");
+            throw new ServiceException(MsHelper.getMsg("upload.error"));
         }
 
         LoadType loadType = getFileMessage(multipartFile);
@@ -68,8 +69,8 @@ public class UploadUtil {
      */
     public LoadType getFileMessage(MultipartFile multipartFile) {
         String curr = multipartFile.getOriginalFilename();
-        if(StringUtils.isEmpty(curr)){
-            throw new LenException("文件获取异常");
+        if (StringUtils.isEmpty(curr)) {
+            throw new ServiceException(MsHelper.getMsg("file.not.exists"));
         }
         int suffixLen = curr.lastIndexOf(".");
         boolean flag = false;
@@ -79,7 +80,7 @@ public class UploadUtil {
             index = 0;
             curr = UUID.randomUUID() + ".png";
         } else if (suffixLen == -1) {
-            throw new LenException("文件获取异常");
+            throw new ServiceException(MsHelper.getMsg("file.not.exists"));
         }
         if (!flag) {
             String suffix = curr.substring(suffixLen);

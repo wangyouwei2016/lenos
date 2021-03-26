@@ -16,7 +16,7 @@
         <@lenInclude path="/system/base/btn.ftl"
         type="update" name="编辑" icon="&#xe642;"></@lenInclude>
         <@lenInclude path="/system/base/btn.ftl" hasPermission="role:select"
-        type="detail" name="编辑" icon="&#xe605;"></@lenInclude>
+        type="detail" name="查看" icon="&#xe605;"></@lenInclude>
     </div>
 </div>
 <table id="roleList" width="100%" lay-filter="user"></table>

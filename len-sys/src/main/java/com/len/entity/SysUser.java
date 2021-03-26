@@ -22,10 +22,13 @@ public class SysUser extends AbstractEntity {
     @NotEmpty(message = "密码不能为空", groups = {AddGroup.class, UpdateGroup.class})
     @TableField
     private String password;
+
     @TableField
     private Integer age;
+
     @TableField
     private String email;
+
     @TableField
     private String photo;
 

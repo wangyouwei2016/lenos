@@ -43,9 +43,12 @@ spring:
     admin:
       client:
         url: http://localhost:8082
+#国际化 多语言配置文件放在 resources/i18n 文件夹下
+  messages:
+    basename: i18n.message
+    encoding: UTF-8
 
-
-#management:
+  #management:
   endpoints:
     web:
       exposure:
@@ -75,10 +78,10 @@ pagehelper:
     supportMethodsArguments: true
     params: count=countSql
 
+#文件储存路径配置
 lenosp:
   uploadPath: ./file/
   isDayType: false
-
   imagePath: ./image/
 
 logging:

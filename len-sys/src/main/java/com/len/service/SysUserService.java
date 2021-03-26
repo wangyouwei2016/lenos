@@ -41,22 +41,22 @@ public interface SysUserService extends BaseService<SysUser, String> {
      * @param id
      * @return
      */
-    LenResponse delById(String id, boolean flag);
+    boolean delById(String id, boolean flag);
 
     int checkUser(String username);
 
 
     List<SysRoleUser> selectByCondition(SysRoleUser sysRoleUser);
 
-    List<Checkbox> getUserRoleByJson(String id);
+    List<Checkbox> getUserRoleList(String id);
 
     /**
      * 更新密码
-     *
-     * @param user
+     * @param id 用户id
+     * @param newPwd 新密码
      * @return
      */
-    int rePass(SysUser user);
+    int rePass(String id, String newPwd);
 
 
     List<SysUser> getUserByRoleId(String roleId);

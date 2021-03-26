@@ -13,6 +13,8 @@ import com.len.exception.ServiceException;
 import com.len.service.RoleUserService;
 import com.len.service.SysUserService;
 import com.len.util.*;
+import com.len.validator.ValidatorUtils;
+import com.len.validator.group.AddGroup;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
@@ -86,7 +88,7 @@ public class UserController extends BaseController {
 
     @GetMapping(value = "showAddUser")
     public String goAddUser(Model model) {
-        List<Checkbox> checkboxList = userService.getUserRoleByJson(null);
+        List<Checkbox> checkboxList = userService.getUserRoleList(null);
         model.addAttribute("boxJson", checkboxList);
         return "/system/user/add";
     }
@@ -96,21 +98,9 @@ public class UserController extends BaseController {
     @PostMapping(value = "addUser")
     @ResponseBody
     public LenResponse addUser(SysUser user, String[] role) {
-        if (user == null) {
-            return error("获取数据失败");
-        }
-        if (StringUtils.isBlank(user.getUsername())) {
-            return error("用户名不能为空");
-        }
-        if (StringUtils.isBlank(user.getPassword())) {
-            return error("密码不能为空");
-        }
+        ValidatorUtils.validateEntity(user, AddGroup.class);
         if (role == null) {
-            return error("请选择角色");
-        }
-        int result = userService.checkUser(user.getUsername());
-        if (result > 0) {
-            throw new ServiceException("用户名已存在");
+            return error(MsHelper.getMsg("user.select.role"));
         }
         userService.add(user, Arrays.asList(role));
         return succ();
@@ -118,19 +108,23 @@ public class UserController extends BaseController {
 
     @GetMapping(value = "updateUser")
     public String goUpdateUser(String id, Model model, boolean detail) {
-        if (StringUtils.isNotEmpty(id)) {
-            //用户-角色
-            List<Checkbox> checkboxList = userService.getUserRoleByJson(id);
-            SysUser user = userService.getById(id);
-            model.addAttribute("user", user);
-            model.addAttribute("boxJson", checkboxList);
+        ValidatorUtils.notEmpty(id, "failed.get.data");
+        //用户-角色
+        SysUser user = userService.getById(id);
+        if (user != null) {
+            String photo = user.getPhoto();
+            if (StringUtils.isEmpty(photo)) {
+                user.setPhoto(FileUtil.defaultPhoto);
+            }
         }
+        model.addAttribute("user", user);
+        model.addAttribute("boxJson", userService.getUserRoleList(id));
         model.addAttribute("detail", detail);
         return "system/user/update";
     }
 
     public String userDetail(String id, Model model) {
-        List<Checkbox> checkboxList = userService.getUserRoleByJson(id);
+        List<Checkbox> checkboxList = userService.getUserRoleList(id);
         SysUser user = userService.getById(id);
         model.addAttribute("user", user);
         model.addAttribute("boxJson", checkboxList);
@@ -143,15 +137,12 @@ public class UserController extends BaseController {
     @PostMapping(value = "updateUser")
     @ResponseBody
     public LenResponse updateUser(SysUser user, String[] role) {
-        if (user == null) {
-            return error("获取数据失败");
-        }
         List<String> roles = new ArrayList<>();
         if (role != null) {
             roles = Arrays.asList(role);
         }
         userService.updateUser(user, roles);
-        return succ("修改成功");
+        return succ(MsHelper.getMsg("update.success"));
     }
 
     @Log(desc = "删除用户", type = LOG_TYPE.DEL)
@@ -160,16 +151,14 @@ public class UserController extends BaseController {
     @ResponseBody
     @RequiresPermissions("user:del")
     public LenResponse del(String id, boolean realDel) {
-        return userService.delById(id, realDel);
+        userService.delById(id, realDel);
+        return succ(MsHelper.getMsg("del.success"));
     }
 
     @GetMapping(value = "goRePass")
     public String goRePass(String id, Model model) {
-        if (StringUtils.isEmpty(id)) {
-            return "获取账户信息失败";
-        }
-        SysUser user = userService.getById(id);
-        model.addAttribute("user", user);
+        ValidatorUtils.notEmpty(id, "failed.get.data1", "id");
+        model.addAttribute("user", userService.getById(id));
         return "/system/user/resetPassword";
     }
 
@@ -185,19 +174,8 @@ public class UserController extends BaseController {
     @ResponseBody
     @RequiresPermissions("user:repass")
     public LenResponse rePass(String id, String newPwd) {
-        boolean flag = StringUtils.isEmpty(id) || StringUtils.isEmpty(newPwd);
-        if (flag) {
-            return error("获取数据失败，修改失败");
-        }
-        SysUser user = userService.getById(id);
-        newPwd = Md5Util.getMD5(newPwd, user.getUsername());
-        if (newPwd.equals(user.getPassword())) {
-            return resp(false, "新密码不能与旧密码相同");
-        }
-        user.setPassword(newPwd);
-        userService.rePass(user);
-
-        return succ("修改成功");
+        userService.rePass(id, newPwd);
+        return succ(MsHelper.getMsg("update.success"));
     }
 
     @Autowired
@@ -219,10 +197,10 @@ public class UserController extends BaseController {
     @ResponseBody
     public LenResponse checkUser(String uname) {
         if (StringUtils.isEmpty(uname)) {
-            return error("获取数据失败");
+            throw new ServiceException(MsHelper.getMsg("failed.get.data"));
         }
         if (userService.checkUser(uname) > 0) {
-            return error("用户名已存在");
+            throw new ServiceException(MsHelper.getMsg("user.exists"));
         }
         return succ();
     }
