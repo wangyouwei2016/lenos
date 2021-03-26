@@ -9,6 +9,7 @@ import org.springframework.context.NoSuchMessageException;
  * @date 2021/3/23 21:35
  * <p>
  * Message Source 帮助类
+ * 统一获取资源化 资源化配置在 resources/i18n目录下
  */
 
 

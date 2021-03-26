@@ -16,6 +16,14 @@ public class LenFilter implements Filter {
     @Autowired
     SysUserService sysUserService;
 
+    /**
+     * 支持语言 扩展语言可直接在此添加
+     */
+    private static Locale[] supportLocales = {
+            Locale.SIMPLIFIED_CHINESE,
+            Locale.US
+    };
+
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
         System.out.println("FirstFilter init");
@@ -26,12 +34,24 @@ public class LenFilter implements Filter {
             throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         Locale locale = request.getLocale();
-        if (locale.toString().contains("zh")) {
-            LocalLocale.setLocale(Locale.SIMPLIFIED_CHINESE);
-        } else {
-            LocalLocale.setLocale(Locale.US);
-        }
+        LocalLocale.setLocale(getLocale(locale));
         filterChain.doFilter(servletRequest, servletResponse);
+    }
+
+    /**
+     * 获取支持语言
+     *
+     * @param locale
+     * @return
+     */
+    private Locale getLocale(Locale locale) {
+        String reqLanguage = locale.getLanguage();
+        for (Locale support : supportLocales) {
+            if (reqLanguage.equals(support.getLanguage())) {
+                return support;
+            }
+        }
+        return Locale.US;
     }
 
 
