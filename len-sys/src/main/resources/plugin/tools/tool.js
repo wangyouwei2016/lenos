@@ -169,11 +169,14 @@ var Len = {
             success: function (d) {
                 parent.layer.close(parent.layer.getFrameIndex(window.name));
                 window.parent.document.getElementById(parent.getId()).contentWindow.table.reload(tableId);
-                window.top.layer.msg(d.msg, {icon: 6, offset: 'rb', area: ['200px', '80px'], anim: 2});
+                var msg = d.msg;
+                if (Len.isEmpty(d.msg)) {
+                    msg = "成功";
+                }
+                window.top.layer.msg(msg, {icon: 6, offset: 'rb', area: ['200px', '80px'], anim: 2});
             }, error: function (e) {
                 layer.alert("发生错误", {icon: 6}, function () {
-                    var index = parent.layer.getFrameIndex(window.name);
-                    parent.layer.close(index);
+                    parent.layer.close(parent.layer.getFrameIndex(window.name));
                 });
             }
         });

@@ -4,12 +4,13 @@ import com.len.base.impl.BaseServiceImpl;
 import com.len.core.quartz.JobTask;
 import com.len.entity.SysJob;
 import com.len.exception.LenException;
+import com.len.exception.ServiceException;
 import com.len.mapper.SysJobMapper;
 import com.len.service.JobService;
 import com.len.util.BeanUtil;
-import com.len.util.LenResponse;
+import com.len.util.MsHelper;
+import com.len.validator.ValidatorUtils;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,9 +29,6 @@ public class JobServiceImpl extends BaseServiceImpl<SysJob, String> implements J
     @Autowired
     JobTask jobTask;
 
-   /* @Autowired
-    JobService jobService;*/
-
 
     @Override
     public boolean updateJob(SysJob job) {
@@ -46,34 +44,32 @@ public class JobServiceImpl extends BaseServiceImpl<SysJob, String> implements J
     }
 
     @Override
-    public LenResponse del(String id) {
-        LenResponse j = new LenResponse();
-        j.setFlag(false);
-        if (StringUtils.isEmpty(id)) {
-            j.setMsg("获取数据失败");
-            return j;
-        }
+    public boolean del(String id) {
+        ValidatorUtils.notEmpty(id, "failed.get.data");
         SysJob job = getById(id);
         boolean flag = jobTask.checkJob(job);
         if ((flag && !job.getStatus()) || !flag && job.getStatus()) {
-            j.setMsg("您任务表状态和web任务状态不一致,无法删除");
-            return j;
+            throw new ServiceException(MsHelper.getMsg("job.status.error"));
         }
         if (flag) {
-            j.setMsg("该任务处于启动中，无法删除");
-            return j;
+            throw new ServiceException(MsHelper.getMsg("job.started"));
         }
-        removeById(id);
-        j.setFlag(true);
-        j.setMsg("任务删除成功");
-
-        return j;
+        return removeById(id);
     }
 
     @Override
     public boolean startJob(String id) {
         SysJob job = getById(id);
-        jobTask.startJob(job);
+        try {
+            jobTask.startJob(job);
+        } catch (Exception e) {
+            e.printStackTrace();
+            String errorMsg = MsHelper.getMsg("system.error");
+            if (e instanceof ClassNotFoundException) {
+                errorMsg = String.format(MsHelper.getMsg("job.notfound.class"), job.getClazzPath());
+            }
+            throw new ServiceException(errorMsg);
+        }
         job.setStatus(true);
         updateById(job);
         return true;

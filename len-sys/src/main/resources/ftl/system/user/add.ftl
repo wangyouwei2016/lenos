@@ -129,11 +129,7 @@
             name: 'realName',
             display: "真实姓名不能为空",
             rules: 'required'
-        }, {
-            name: 'age',
-            display: "年龄不能为空",
-            rules: 'required'
-        },
+        }
     ], function (obj) {
         if (obj.errors) {
             layer.msg(obj.errors[0].display, {icon: 5, anim: 6, offset: 't'});

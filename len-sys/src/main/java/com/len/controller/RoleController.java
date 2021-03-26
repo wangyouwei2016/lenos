@@ -9,6 +9,7 @@ import com.len.service.MenuService;
 import com.len.service.RoleMenuService;
 import com.len.service.RoleService;
 import com.len.util.LenResponse;
+import com.len.util.MsHelper;
 import com.len.util.ReType;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -79,10 +80,8 @@ public class RoleController extends BaseController {
     @PostMapping(value = "addRole")
     @ResponseBody
     public LenResponse addRole(SysRole sysRole, String[] menus) {
-        if (StringUtils.isEmpty(sysRole.getRoleName())) {
-            return error("角色名称不能为空");
-        }
-        return roleService.addRole(sysRole, menus);
+        roleService.addRole(sysRole, menus);
+        return succ(MsHelper.getMsg("insert.success"));
     }
 
     @GetMapping(value = "updateRole")
@@ -102,10 +101,8 @@ public class RoleController extends BaseController {
     @PostMapping(value = "updateRole")
     @ResponseBody
     public LenResponse updateUser(SysRole role, String[] menus) {
-        if (role == null) {
-            return error("获取数据失败");
-        }
-        return roleService.updateUser(role, menus);
+        roleService.updateUser(role, menus);
+        return succ(MsHelper.getMsg("update.success"));
     }
 
     @ApiOperation(value = "/del", httpMethod = "POST", notes = "删除角色")
@@ -114,10 +111,8 @@ public class RoleController extends BaseController {
     @ResponseBody
     @RequiresPermissions("role:del")
     public LenResponse del(String id) {
-        if (StringUtils.isEmpty(id)) {
-            return error("获取数据失败");
-        }
-        return roleService.del(id);
+        roleService.del(id);
+        return succ(MsHelper.getMsg("del.success"));
     }
 
 }

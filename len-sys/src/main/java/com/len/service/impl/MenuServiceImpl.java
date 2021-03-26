@@ -5,17 +5,18 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.len.base.impl.BaseServiceImpl;
 import com.len.entity.SysMenu;
 import com.len.entity.SysRoleMenu;
+import com.len.exception.ServiceException;
 import com.len.mapper.SysMenuMapper;
 import com.len.mapper.SysRoleMenuMapper;
 import com.len.service.MenuService;
 import com.len.service.RoleMenuService;
-import com.len.util.LenResponse;
+import com.len.util.MsHelper;
 import com.len.util.TreeUtil;
+import com.len.validator.ValidatorUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -71,7 +72,7 @@ public class MenuServiceImpl extends BaseServiceImpl<SysMenu, String> implements
         supers.sort(Comparator.comparingInt(SysMenu::getOrderNum));
         JSONArray jsonArr = new JSONArray();
         for (SysMenu sysMenu : supers) {
-            SysMenu child = child(sysMenu, sysMenus,  0);
+            SysMenu child = child(sysMenu, sysMenus, 0);
             jsonArr.add(child);
         }
         return jsonArr;
@@ -104,38 +105,24 @@ public class MenuServiceImpl extends BaseServiceImpl<SysMenu, String> implements
     }
 
     @Override
-    public LenResponse del(String id) {
-        LenResponse json = new LenResponse();
-        json.setFlag(false);
-        if (StringUtils.isEmpty(id)) {
-            json.setMsg("获取数据失败,请刷新重试!");
-            return json;
-        }
+    public boolean del(String id) {
+        ValidatorUtils.notEmpty(id, "failed.get.data");
         SysRoleMenu sysRoleMenu = new SysRoleMenu();
         sysRoleMenu.setMenuId(id);
         QueryWrapper<SysRoleMenu> sysRoleMenuQueryWrapper = new QueryWrapper<>(sysRoleMenu);
         int count = roleMenuService.count(sysRoleMenuQueryWrapper);
         //存在角色绑定不能删除
         if (count > 0) {
-            json.setMsg("本菜单存在绑定角色,请先解除绑定!");
-            return json;
+            throw new ServiceException(MsHelper.getMsg("menu.bind.role"));
         }
         //存在下级菜单 不能解除
         SysMenu sysMenu = new SysMenu();
         sysMenu.setPId(id);
         QueryWrapper<SysMenu> sysRoleMenuQueryWrapperTwo = new QueryWrapper<>(sysMenu);
         if (menuDao.selectCount(sysRoleMenuQueryWrapperTwo) > 0) {
-            json.setMsg("存在子菜单,请先删除子菜单!");
-            return json;
+            throw new ServiceException(MsHelper.getMsg("menu.exists.children"));
         }
-        boolean isDel = removeById(id);
-        if (isDel) {
-            json.setMsg("删除成功");
-            json.setFlag(true);
-        } else {
-            json.setMsg("删除失败");
-        }
-        return json;
+        return removeById(id);
     }
 
     public SysMenu getChilds(SysMenu menu, int pNum, int num, List<SysMenu> menuList) {

@@ -9,6 +9,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 /**
@@ -16,9 +17,8 @@ import org.springframework.test.context.web.WebAppConfiguration;
  * @date 2018/1/5.
  * @email lenospmiller@gmail.com
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringBootTest(classes = LenApplication.class)
-@WebAppConfiguration
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = LenApplication.class,webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class BootTest {
 
     @Autowired
@@ -36,11 +36,8 @@ public class BootTest {
 
     @Test
     public void redisTest() throws InterruptedException {
-        redisService.set("str", "你好 世界", 10L);
-        String str = redisService.get("str");
-        System.out.println("value:" + str);
-        Thread.sleep(1000 * 10L);
-        System.out.println("value:" + redisService.get("str"));
+        SysUser user=new SysUser();
+        userService.add(user,null);
 
     }
 

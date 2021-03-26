@@ -11,17 +11,16 @@ import com.len.entity.SysMenu;
 import com.len.entity.SysRole;
 import com.len.entity.SysRoleUser;
 import com.len.entity.SysUser;
+import com.len.exception.ServiceException;
 import com.len.mapper.SysRoleUserMapper;
 import com.len.mapper.SysUserMapper;
 import com.len.service.MenuService;
 import com.len.service.RoleService;
 import com.len.service.RoleUserService;
 import com.len.service.SysUserService;
-import com.len.util.BeanUtil;
-import com.len.util.Checkbox;
-import com.len.util.LenResponse;
-import com.len.util.Md5Util;
-import org.apache.commons.lang3.StringUtils;
+import com.len.util.*;
+import com.len.validator.ValidatorUtils;
+import com.len.validator.group.AddGroup;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +30,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import static com.len.validator.ValidatorUtils.*;
 
 /**
  * @author zhuxiaomeng
@@ -76,6 +77,12 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser, String> impleme
 
     @Override
     public boolean add(SysUser user, List<String> role) {
+        validateEntity(user, AddGroup.class);
+        notNull(role, "role.not.null");
+        int result = checkUser(user.getUsername());
+        if (result > 0) {
+            throw new ServiceException(MsHelper.getMsg("user.exists"));
+        }
         //密码加密
         user.setPassword(Md5Util.getMD5(user.getPassword(), user.getUsername()));
         boolean save = save(user);
@@ -113,21 +120,19 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser, String> impleme
     }
 
     @Override
-    public LenResponse delById(String id, boolean realDel) {
-        if (StringUtils.isEmpty(id)) {
-            return LenResponse.error("获取数据失败");
-        }
+    public boolean delById(String id, boolean realDel) {
+        notEmpty(id, "failed.get.data");
         LenResponse j = new LenResponse();
         SysUser sysUser = sysUserMapper.selectById(id);
         if (ADMIN.equals(sysUser.getUsername())) {
-            return LenResponse.error("超管无法删除");
+            throw new ServiceException(MsHelper.getMsg("user.del.admin"));
         }
         SysRoleUser roleUser = new SysRoleUser();
         roleUser.setUserId(id);
         QueryWrapper<SysRoleUser> wrapper = new QueryWrapper<>(roleUser);
         int count = roleUserService.count(wrapper);
         if (count > 0) {
-            return LenResponse.error("账户已经绑定角色，无法删除");
+            throw new ServiceException(MsHelper.getMsg("user.bind.role"));
         }
         if (!realDel) {
             //逻辑
@@ -137,10 +142,7 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser, String> impleme
             //物理
             sysUserMapper.delById(id);
         }
-
-        j.setMsg("删除成功");
-        return j;
-
+        return true;
     }
 
     @Override
@@ -149,7 +151,7 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser, String> impleme
     }
 
     @Override
-    public List<Checkbox> getUserRoleByJson(String id) {
+    public List<Checkbox> getUserRoleList(String id) {
         List<SysRole> roleList = roleService.list();
         SysRoleUser sysRoleUser = new SysRoleUser();
         sysRoleUser.setUserId(id);
@@ -173,7 +175,15 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser, String> impleme
     }
 
     @Override
-    public int rePass(SysUser user) {
+    public int rePass(String id, String newPwd) {
+        ValidatorUtils.notEmpty(id, "failed.get.data");
+        ValidatorUtils.notEmpty(newPwd, "failed.get.data");
+        SysUser user = getById(id);
+        newPwd = Md5Util.getMD5(newPwd, user.getUsername());
+        if (newPwd.equals(user.getPassword())) {
+            throw new ServiceException("newpass.not.eq.oldpass");
+        }
+        user.setPassword(newPwd);
         return sysUserMapper.rePass(user);
     }
 
@@ -197,7 +207,7 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser, String> impleme
 
         List<SysMenu> menuList = menuService.getUserMenu(s.getId());
         JSONArray json = menuService.getMenuJsonByUser(menuList);
-        session.setAttribute("menu",json );
+        session.setAttribute("menu", json);
 
 
         List<CurrentMenu> currentMenuList = new ArrayList<>();
