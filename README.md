@@ -6,8 +6,8 @@
 ![图片说明](https://images.gitee.com/uploads/images/2019/1017/214009_9f295d89_907437.jpeg "图片说明")
 
 ## 交流群
-* lenos开源脚手架群① 137738503 您有疑问，我们解答，您有建议，我们吸取，您有idea 我们欢迎
-- 群<a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=2c71822be7b8c061087a94647663a742a274626a846b76647743ed556a24cabc"><img border="0" src="//pub.idqqimg.com/wpa/images/group.png" alt="开源脚手架lenos交流群" title="开源脚手架lenos交流群①"></a>
+* lenos开源脚手架群(2) 792761216 您有疑问，我们解答，您有建议，我们吸取，您有idea 我们欢迎
+- 群<a target="_blank" href="https://qm.qq.com/cgi-bin/qm/qr?k=PMMjgvvLbW2oph3nZStmRU8zs95uwHsJ&jump_from=webapi"><img border="0" src="//pub.idqqimg.com/wpa/images/group.png" alt="lenos开源脚手架群②" title="lenos开源脚手架群②"></a>
 
 
 ## 普通版
