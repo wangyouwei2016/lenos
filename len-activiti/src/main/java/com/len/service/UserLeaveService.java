@@ -10,7 +10,7 @@ import java.util.List;
  * @date 2018/1/21.
  * @email lenospmiller@gmail.com
  */
-public interface UserLeaveService extends BaseService<UserLeave,String> {
+public interface UserLeaveService extends BaseService<UserLeave> {
 
     public List<UserLeave> selectListByPage(UserLeave record);
 }

@@ -1,10 +1,9 @@
-
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
     <title>部门管理</title>
-<#include "/system/base/head.ftl">
+    <#include "/system/base/head.ftl">
 </head>
 
 <body>
@@ -26,43 +25,45 @@
 </div>
 <div class="layui-col-md12 len-button">
     <div class="layui-btn-group">
-<@shiro.hasPermission name="user:select">
-    <button class="layui-btn layui-btn-normal  layui-btn-sm" data-type="add">
-        <i class="layui-icon">&#xe608;</i>新增
-    </button>
-</@shiro.hasPermission>
-<@shiro.hasPermission name="user:select">
-    <button class="layui-btn layui-btn-normal layui-btn-sm" data-type="update">
-        <i class="layui-icon">&#xe642;</i>编辑
-    </button>
-</@shiro.hasPermission>
-<@shiro.hasPermission name="user:del">
-    <button class="layui-btn layui-btn-normal layui-btn-sm" data-type="detail">
-        <i class="layui-icon">&#xe605;</i>查看
-    </button>
-</@shiro.hasPermission>
-<@shiro.hasPermission name="user:repass">
-    <button class="layui-btn layui-btn-normal layui-btn-sm" data-type="changePwd">
-        <i class="layui-icon">&#xe605;</i>修改密码
-    </button>
-</@shiro.hasPermission>
+        <@shiro.hasPermission name="user:select">
+            <button class="layui-btn layui-btn-normal  layui-btn-sm" data-type="add">
+                <i class="layui-icon">&#xe608;</i>新增
+            </button>
+        </@shiro.hasPermission>
+        <@shiro.hasPermission name="user:select">
+            <button class="layui-btn layui-btn-normal layui-btn-sm" data-type="update">
+                <i class="layui-icon">&#xe642;</i>编辑
+            </button>
+        </@shiro.hasPermission>
+        <@shiro.hasPermission name="user:del">
+            <button class="layui-btn layui-btn-normal layui-btn-sm" data-type="detail">
+                <i class="layui-icon">&#xe605;</i>查看
+            </button>
+        </@shiro.hasPermission>
+        <@shiro.hasPermission name="user:repass">
+            <button class="layui-btn layui-btn-normal layui-btn-sm" data-type="changePwd">
+                <i class="layui-icon">&#xe605;</i>修改密码
+            </button>
+        </@shiro.hasPermission>
     </div>
 </div>
 <table id="userList" width="100%" lay-filter="user"></table>
 <script type="text/html" id="bar">
-<@shiro.hasPermission name="user:select">
-<a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
-</@shiro.hasPermission>
-<@shiro.hasPermission name="user:update">
-<a class="layui-btn layui-btn-xs  layui-btn-normal" lay-event="edit">编辑</a>
-</@shiro.hasPermission>
-<@shiro.hasPermission name="user:del">
-<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
-</@shiro.hasPermission>
+    <@shiro.hasPermission name="user:select">
+        <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
+    </@shiro.hasPermission>
+    <@shiro.hasPermission name="user:update">
+        <a class="layui-btn layui-btn-xs  layui-btn-normal" lay-event="edit">编辑</a>
+    </@shiro.hasPermission>
+    <@shiro.hasPermission name="user:del">
+        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+    </@shiro.hasPermission>
 </script>
+
 <script type="text/html" id="switchTpl">
     <input type="checkbox" name="sex" lay-skin="switch" lay-text="女|男" lay-filter="sexDemo">
 </script>
+
 <script>
     document.onkeydown = function (e) { // 回车提交表单
         var theEvent = window.event || e;
@@ -71,8 +72,9 @@
             $(".select .select-on").click();
         }
     }
+
     layui.use('table', function () {
-        table= layui.table;
+        table = layui.table;
         //方法级渲染
         table.render({
             id: 'userList',
@@ -130,7 +132,7 @@
             },
             update: function () {
                 var checkStatus = table.checkStatus('userList')
-                        , data = checkStatus.data;
+                    , data = checkStatus.data;
                 if (data.length !== 1) {
                     layer.msg('请选择一行编辑,已选[' + data.length + ']行', {icon: 5});
                     return false;
@@ -139,7 +141,7 @@
             },
             detail: function () {
                 var checkStatus = table.checkStatus('userList')
-                        , data = checkStatus.data;
+                    , data = checkStatus.data;
                 if (data.length !== 1) {
                     layer.msg('请选择一行查看,已选[' + data.length + ']行', {icon: 5});
                     return false;
@@ -148,11 +150,12 @@
             },
             changePwd: function () {
                 var checkStatus = table.checkStatus('userList')
-                        , data = checkStatus.data;
+                    , data = checkStatus.data;
                 if (data.length !== 1) {
                     layer.msg('请选择一个用户,已选[' + data.length + ']行', {icon: 5});
                     return false;
                 }
+
                 rePwd('修改密码', '/user/goRePass?id=' + data[0].id, 500, 350);
             }
         };

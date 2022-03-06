@@ -10,8 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 /**
  * @author zhuxiaomeng
  * @date 2017/12/19.
- * @email lenospmiller@gmail.com
- * 404 403 500
+ * @email lenospmiller@gmail.com 404 403 500
  */
 @Controller
 @RequestMapping(value = "/error")

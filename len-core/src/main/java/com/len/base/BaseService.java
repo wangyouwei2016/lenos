@@ -3,7 +3,6 @@ package com.len.base;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.len.util.ReType;
 
-import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -12,7 +11,7 @@ import java.util.List;
  * @email lenospmiller@gmail.com
  * 通用service层
  */
-public interface BaseService<T,E extends Serializable> extends IService<T> {
+public interface BaseService<T> extends IService<T> {
 
 
     public ReType show(T t, int page, int limit);

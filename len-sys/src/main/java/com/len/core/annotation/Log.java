@@ -11,15 +11,17 @@ import java.lang.annotation.Target;
  * @author zhuxiaomeng
  * @date 2017/12/28.
  * @email lenospmiller@gmail.com
- * <p>
- * 记录日志
+ *        <p>
+ *        记录日志
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.METHOD})
 @Documented
 @Inherited
 public @interface Log {
-    public enum LOG_TYPE {ADD, UPDATE, DEL, SELECT, ATHOR}
+    public enum LOG_TYPE {
+        ADD, UPDATE, DEL, SELECT, ATHOR
+    }
 
     ;
 

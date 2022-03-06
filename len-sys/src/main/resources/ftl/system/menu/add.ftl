@@ -7,6 +7,7 @@
     <#include "/system/base/head.ftl">
 </head>
 
+<#--body-->
 <body>
 <div class="x-body">
     <form class="layui-form layui-form-pane" style="margin-left: 20px;">
@@ -116,6 +117,8 @@
         </div>
     </form>
 </div>
+
+<#--js-->
 <script>
     layui.use(['form', 'layer', 'tree'], function () {
         $ = layui.jquery;
@@ -154,55 +157,51 @@
                 shade: 0.4,
                 zIndex: layer.zIndex,
                 title: '图标',
-                content: '../plugin/html/icon.html'
+                content: '../plugin/html/icon.html?param.parentname=' + window.name,
             });
         });
+
         //自定义验证规则
         var type = $('#menuType');
         form.verify({
             menuType: function (v) {
-                console.info(v == '')
-                if (v == '') {
+                if (Len.isEmpty(v)) {
                     return '类型不能为空';
                 }
-            }
-            , pName: function (v) {
-                if (type.val() != '2' && v.trim() == '') {
+            }, pName: function (v) {
+                if (type.val() !== '2' && v.trim() === '') {
                     return '父菜单不能为空';
                 }
-            }
-            , name: function (v) {
-                if (v.trim() == '') {
+            }, name: function (v) {
+                if (Len.isEmpty(v)) {
                     return '名称不能为空';
                 }
-            }
-            , url: function (v) {
-                if (type.val() == '1') {
+            }, url: function (v) {
+                if (type.val() === '1') {
                     $('#url').val('');
                 }
-                if (type.val() == '0' && v.trim() == '') {
+                if (type.val() === '0' && Len.isEmpty(v)) {
                     return 'url不能为空';
                 }
-            }
-            , permission: function (v) {
-                if ((type.val() == '1' || type.val() == '0') && v.trim() == '') {
+            }, permission: function (v) {
+                if ((type.val() === '1' || type.val() === '0') && v.trim() === '') {
                     return '权限不能为空';
                 }
-            }
-            , orderNum: [/^[0-9]*[1-9][0-9]*$/, '请填写序号(正整数)']
+            }, orderNum: [/^[0-9]*[1-9][0-9]*$/, '请填写序号(正整数)']
         });
 
         form.on('select(menuType)', function (data) {
-            if (data.value == '2') {
+            if (data.value === '2') {
                 $('#pId').val('');
                 dOs('pName', true);
                 dOs('permission', true);
                 dOs('url', false);
-            } else if (data.value == '1') {//按钮
+            } else if (data.value === '1') {
+                //按钮
                 dOs('url', true);
                 dOs('pName', false);
                 dOs('permission', false);
-            } else if (data.value == '0') {
+            } else if (data.value === '0') {
                 dOs('url', false);
                 dOs('pName', false);
                 dOs('permission', false);
@@ -235,6 +234,7 @@
         form.render();
     });
 
+
     function showTree() {
         var p = $('#pName');
         var cityObj = p;
@@ -250,15 +250,21 @@
         $('#treeNode').css('display', 'inline');
     }
 
+
     function hideMenu() {
         $('#treeNode').fadeOut('fast');
         $('body').unbind('blur', onBodyDown);
     }
 
+
     function onBodyDown(event) {
         if (!(event.target.id == 'treeNode' || $(event.target).parents('#treeNode').length > 0)) {
             hideMenu();
         }
+    }
+
+    function callback(id) {
+        $('#layui-layer-iframe1').contents().find('#menu-icon').val(id);
     }
 </script>
 </body>

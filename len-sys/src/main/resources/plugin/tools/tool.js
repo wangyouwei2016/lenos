@@ -135,6 +135,14 @@ var Len = {
     },
 
     /**
+     * 关闭弹框
+     */
+    close: function () {
+        var index = parent.layer.getFrameIndex(window.name);
+        parent.layer.close(index);
+    },
+
+    /**
      * 通用弹框
      * @param url 请求url
      * @param title 弹框标题

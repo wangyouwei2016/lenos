@@ -1,6 +1,5 @@
 package com.len.service.impl;
 
-import com.len.base.BaseMapper;
 import com.len.base.impl.BaseServiceImpl;
 import com.len.entity.ArticleCategory;
 import com.len.mapper.ArticleCategoryMapper;
@@ -16,7 +15,7 @@ import java.util.List;
  * @email lenospmiller@gmail.com
  */
 @Service
-public class ArticleCategoryServiceImpl extends BaseServiceImpl<ArticleCategory, String>
+public class ArticleCategoryServiceImpl extends BaseServiceImpl<ArticleCategoryMapper, ArticleCategory>
         implements ArticleCategoryService {
 
     @Autowired

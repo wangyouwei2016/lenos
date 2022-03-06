@@ -16,7 +16,7 @@ import java.util.List;
  * @email lenospmiller@gmail.com
  */
 @Service
-public class RoleMenuServiceImpl extends BaseServiceImpl<SysRoleMenu, String> implements
+public class RoleMenuServiceImpl extends BaseServiceImpl<SysRoleMenuMapper, SysRoleMenu> implements
         RoleMenuService {
 
     @Autowired

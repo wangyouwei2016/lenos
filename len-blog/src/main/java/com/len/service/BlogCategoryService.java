@@ -8,5 +8,5 @@ import com.len.entity.BlogCategory;
  * @date 2018/7/22.
  * @email lenospmiller@gmail.com
  */
-public interface BlogCategoryService extends BaseService<BlogCategory, String> {
+public interface BlogCategoryService extends BaseService<BlogCategory> {
 }

@@ -21,7 +21,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 @Slf4j
-public class JobServiceImpl extends BaseServiceImpl<SysJob, String> implements JobService {
+public class JobServiceImpl extends BaseServiceImpl<SysJobMapper, SysJob> implements JobService {
 
     @Autowired
     SysJobMapper jobMapper;

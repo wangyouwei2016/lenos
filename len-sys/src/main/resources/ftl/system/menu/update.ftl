@@ -1,18 +1,13 @@
-<#--Created by IntelliJ IDEA.
-User: Administrator
-Date: 2018/3/5
-Time: 12:40
-To change this template use File | Settings | File Templates.-->
-
 <!DOCTYPE html>
 <html>
 
 <head>
     <meta charset="UTF-8">
     <title>菜单管理</title>
-<#include "/system/base/head.ftl">
+    <#include "/system/base/head.ftl">
 </head>
 
+<#--body-->
 <body>
 <div class="x-body">
     <form class="layui-form layui-form-pane" style="margin-left: 20px;">
@@ -31,9 +26,10 @@ To change this template use File | Settings | File Templates.-->
                         <select disabled id="menuType" lay-verify="menuType" lay-filter="menuType">
                             <option value=""></option>
                             <option <#if (sysMenu.PId)??==null>selected</#if> value="2">一级菜单</option>
-                                <option <#if sysMenu.menuType='0'&&(sysMenu.PId)??>selected</#if> value="0">
-                                    二级菜单</option>
-                                    <option <#if sysMenu.menuType=='1'>selected</#if> value="1">按钮</option>
+                            <option <#if sysMenu.menuType='0'&&(sysMenu.PId)??>selected</#if> value="0">
+                                二级菜单
+                            </option>
+                            <option <#if sysMenu.menuType=='1'>selected</#if> value="1">按钮</option>
                         </select>
                     </div>
                 </div>
@@ -42,8 +38,8 @@ To change this template use File | Settings | File Templates.-->
                         父级菜单
                     </label>
                     <div class="layui-input-inline">
-<#-- <input type="hidden"  id="pId" value="${sysMenu.PId}">-->
-<#--保留 但不做更新-->
+                        <#-- <input type="hidden"  id="pId" value="${sysMenu.PId}">-->
+                        <#--保留 但不做更新-->
                         <input type="text" id="pName" disabled value="${pName}" onclick="showTree();" lay-verify="pName"
                                class="layui-input">
                     </div>
@@ -126,11 +122,13 @@ To change this template use File | Settings | File Templates.-->
         </div>
     </form>
 </div>
+
+<#--js-->
 <script>
     layui.use(['form', 'layer', 'tree'], function () {
         $ = layui.jquery;
         var form = layui.form
-                , layer = layui.layer, tree = layui.tree;
+            , layer = layui.layer, tree = layui.tree;
         var menus =${menus};
         /*过滤掉按钮和兼容新版layui*/
         var convert = function (menus) {
@@ -172,31 +170,30 @@ To change this template use File | Settings | File Templates.-->
         var type = $('#menuType');
         form.verify({
             menuType: function (v) {
-                console.info(v == '')
-                if (v == '') {
+                if (Len.isEmpty(v)) {
                     return '类型不能为空';
                 }
             }
             , pName: function (v) {
-                if (type.val() != '2' && v.trim() == '') {
+                if (type.val() !== '2' && v.trim() === '') {
                     return '父菜单不能为空';
                 }
             }
             , name: function (v) {
-                if (v.trim() == '') {
+                if (Len.isEmpty(v.trim())) {
                     return '名称不能为空';
                 }
             }
             , urls: function (v) {
-                if (type.val() == '1') {
+                if (type.val() === '1') {
                     $('#url').val('');
                 }
-                if (type.val() == '0' && v.trim() == '') {
+                if (type.val() === '0' && v.trim() === '') {
                     return 'url不能为空';
                 }
             }
             , permission: function (v) {
-                if ((type.val() == '1' || type.val() == '0') && v.trim() == '') {
+                if ((type.val() === '1' || type.val() === '0') && v.trim() === '') {
                     return '权限不能为空';
                 }
             }
@@ -204,16 +201,16 @@ To change this template use File | Settings | File Templates.-->
         });
 
         form.on('select(menuType)', function (data) {
-            if (data.value == '2') {
+            if (data.value === '2') {
                 $('#pId').val('');
                 dOs('pName', true);
                 dOs('permission', true);
                 dOs('url', false);
-            } else if (data.value == '1') {//按钮
+            } else if (data.value === '1') {//按钮
                 dOs('url', true);
                 dOs('pName', false);
                 dOs('permission', false);
-            } else if (data.value == '0') {
+            } else if (data.value === '0') {
                 dOs('url', false);
                 dOs('pName', false);
                 dOs('permission', false);
@@ -241,7 +238,7 @@ To change this template use File | Settings | File Templates.-->
         form.on('submit(add)', function (data) {
             data.field['icon'] = $('#icon').text();
             data.field['id'] = '${sysMenu.id}';
-            Len.layerAjax('updateMenu',data.field,'treeList');
+            Len.layerAjax('updateMenu', data.field, 'treeList');
             return false;
         });
         form.render();

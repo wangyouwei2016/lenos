@@ -10,20 +10,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 /**
  * @author zhuxiaomeng
  * @date 2017/12/13.
- * @email lenospmiller@gmail.com
- * 自定义拦截器 暂时不用
+ * @email lenospmiller@gmail.com 自定义拦截器 暂时不用
  */
 public class CustomAdvicFilter extends FormAuthenticationFilter {
 
-  @Autowired
-  private SysUserService userService;
+    @Autowired
+    private SysUserService userService;
 
-  @Autowired
-  private MenuService menuService;
+    @Autowired
+    private MenuService menuService;
 
-
-  @Override
-  protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws Exception {
-      return true;
-  }
+    @Override
+    protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws Exception {
+        return true;
+    }
 }

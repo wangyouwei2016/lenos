@@ -2,14 +2,13 @@ package com.len.service;
 
 import com.len.base.BaseService;
 import com.len.entity.SysJob;
-import com.len.util.LenResponse;
 
 /**
  * @author zhuxiaomeng
  * @date 2018/1/6.
  * @email lenospmiller@gmail.com
  */
-public interface JobService extends BaseService<SysJob,String> {
+public interface JobService extends BaseService<SysJob> {
 
     /**
      * 更新

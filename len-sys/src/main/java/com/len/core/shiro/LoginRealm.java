@@ -33,7 +33,6 @@ public class LoginRealm extends AuthorizingRealm {
     @Autowired
     private SysUserService userService;
 
-
     /**
      * 获取授权
      *
@@ -43,7 +42,7 @@ public class LoginRealm extends AuthorizingRealm {
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-        CurrentUser user = (CurrentUser) principalCollection.getPrimaryPrincipal();
+        CurrentUser user = (CurrentUser)principalCollection.getPrimaryPrincipal();
         Set<String> realmNames = principalCollection.getRealmNames();
         List<String> realmNameList = new ArrayList<>(realmNames);
         if (LoginType.BLOG.toString().equals(realmNameList.get(0))) {
@@ -53,8 +52,8 @@ public class LoginRealm extends AuthorizingRealm {
                 info.addRole(role);
             }
         } else {
-            //根据用户获取角色 根据角色获取所有按钮权限
-            CurrentUser cUser = (CurrentUser) Principal.getSession().getAttribute("currentPrincipal");
+            // 根据用户获取角色 根据角色获取所有按钮权限
+            CurrentUser cUser = (CurrentUser)Principal.getSession().getAttribute("currentPrincipal");
             for (CurrentRole cRole : cUser.getCurrentRoleList()) {
                 info.addRole(cRole.getId());
             }
@@ -77,8 +76,8 @@ public class LoginRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken)
-            throws AuthenticationException {
-        String username = (String) authenticationToken.getPrincipal();
+        throws AuthenticationException {
+        String username = (String)authenticationToken.getPrincipal();
         SysUser s = null;
         try {
             s = userService.login(username);
@@ -88,8 +87,8 @@ public class LoginRealm extends AuthorizingRealm {
         if (s == null) {
             throw new UnknownAccountException("账户密码不正确");
         }
-        CurrentUser user=new CurrentUser();
-        BeanUtil.copyNotNullBean(s,user);
+        CurrentUser user = new CurrentUser();
+        BeanUtil.copyNotNullBean(s, user);
         user.setPassword(null);
         userService.setMenuAndRoles(username);
         ByteSource byteSource = ByteSource.Util.bytes(username);

@@ -1,17 +1,5 @@
 package com.len.controller;
 
-import com.len.base.BaseController;
-import com.len.core.annotation.Log;
-import com.len.core.annotation.Log.LOG_TYPE;
-import com.len.core.quartz.JobTask;
-import com.len.entity.SysJob;
-import com.len.exception.ServiceException;
-import com.len.service.JobService;
-import com.len.util.LenResponse;
-import com.len.util.MsHelper;
-import com.len.util.ReType;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,12 +10,26 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.len.base.BaseController;
+import com.len.core.annotation.Log;
+import com.len.core.annotation.Log.LOG_TYPE;
+import com.len.core.quartz.JobTask;
+import com.len.entity.SysJob;
+import com.len.exception.ServiceException;
+import com.len.service.JobService;
+import com.len.util.LenResponse;
+import com.len.util.MsHelper;
+import com.len.util.ReType;
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
 /**
  * @author zhuxiaomeng
  * @date 2018/1/6.
  * @email lenospmiller@gmail.com
- * <p>
- * 定时任务 controller
+ *        <p>
+ *        定时任务 controller
  */
 @Controller
 @RequestMapping("/job")
@@ -78,7 +80,6 @@ public class JobController extends BaseController<SysJob> {
         return "system/job/update";
     }
 
-
     @ApiOperation(value = "/updateJob", httpMethod = "POST", notes = "更新任务")
     @Log(desc = "更新任务", type = LOG_TYPE.UPDATE)
     @PostMapping(value = "updateJob")
@@ -101,7 +102,6 @@ public class JobController extends BaseController<SysJob> {
         jobService.del(id);
         return succ(MsHelper.getMsg("del.success"));
     }
-
 
     @Log(desc = "启动任务")
     @PostMapping(value = "startJob")

@@ -1,16 +1,9 @@
 package com.len.controller;
 
-import com.len.core.annotation.Log;
-import com.len.core.shiro.Principal;
-import com.len.entity.SysUser;
-import com.len.menu.LoginType;
-import com.len.service.SysUserService;
-import com.len.util.CustomUsernamePasswordToken;
-import com.len.util.MsHelper;
-import com.len.util.VerifyCodeUtils;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import lombok.extern.slf4j.Slf4j;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.ExcessiveAttemptsException;
@@ -23,15 +16,23 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import com.len.core.annotation.Log;
+import com.len.core.shiro.Principal;
+import com.len.entity.SysUser;
+import com.len.menu.LoginType;
+import com.len.service.SysUserService;
+import com.len.util.CustomUsernamePasswordToken;
+import com.len.util.MsHelper;
+import com.len.util.VerifyCodeUtils;
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * @author zhuxiaomeng
  * @date 2017/12/4.
- * @email lenospmiller@gmail.com
- * 登录、退出页面
+ * @email lenospmiller@gmail.com 登录、退出页面
  */
 @Controller
 @Slf4j
@@ -80,7 +81,7 @@ public class LoginController {
     @ApiOperation(value = "/login", httpMethod = "POST", notes = "登录method")
     @PostMapping("/login")
     public String login(SysUser user, Model model, String rememberMe, HttpServletRequest request) {
-       /* String codeMsg = (String) request.getAttribute("shiroLoginFailure");
+        /* String codeMsg = (String) request.getAttribute("shiroLoginFailure");
         if (CODE_ERROR.equals(codeMsg)) {
             model.addAttribute("message", "验证码错误");
             return "/login2";
@@ -88,8 +89,8 @@ public class LoginController {
             model.addAttribute("message", "验证码过期");
             return "/login2";
         }*/
-        CustomUsernamePasswordToken token = new CustomUsernamePasswordToken(user.getUsername().trim(),
-                user.getPassword(), LoginType.SYS);
+        CustomUsernamePasswordToken token =
+            new CustomUsernamePasswordToken(user.getUsername().trim(), user.getPassword(), LoginType.SYS);
         Subject subject = Principal.getSubject();
         String msg = null;
         try {
@@ -128,7 +129,6 @@ public class LoginController {
         return "/login2";
     }
 
-
     @GetMapping(value = "/getCode")
     public void getYzm(HttpServletResponse response, HttpServletRequest request) {
         try {
@@ -137,13 +137,13 @@ public class LoginController {
             response.setDateHeader("Expires", 0);
             response.setContentType("image/jpg");
 
-            //生成随机字串
+            // 生成随机字串
             String verifyCode = VerifyCodeUtils.generateVerifyCode(4);
             log.info("verifyCode:{}", verifyCode);
-            //存入会话session
+            // 存入会话session
             HttpSession session = request.getSession(true);
             session.setAttribute("code", verifyCode.toLowerCase());
-            //生成图片
+            // 生成图片
             int w = 100, h = 35;
             VerifyCodeUtils.outputImage(w, h, response.getOutputStream(), verifyCode);
         } catch (Exception e) {

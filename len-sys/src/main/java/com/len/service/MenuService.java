@@ -3,7 +3,6 @@ package com.len.service;
 import com.alibaba.fastjson.JSONArray;
 import com.len.base.BaseService;
 import com.len.entity.SysMenu;
-import com.len.util.LenResponse;
 
 import java.util.List;
 
@@ -12,7 +11,7 @@ import java.util.List;
  * @date 2017/12/12.
  * @email lenospmiller@gmail.com
  */
-public interface MenuService extends BaseService<SysMenu,String> {
+public interface MenuService extends BaseService<SysMenu> {
 
   List<SysMenu> getMenuNotSuper();
 

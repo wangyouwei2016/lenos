@@ -8,5 +8,5 @@ import com.len.entity.ArticleTag;
  * @date 2018/11/19.
  * @email lenospmiller@gmail.com
  */
-public interface ArticleTagService extends BaseService<ArticleTag, String> {
+public interface ArticleTagService extends BaseService<ArticleTag> {
 }

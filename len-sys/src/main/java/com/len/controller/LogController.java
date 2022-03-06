@@ -22,8 +22,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @author zhuxiaomeng
  * @date 2017/12/29.
  * @email lenospmiller@gmail.com
- * <p>
- * 日志监控
+ * 
+ *        日志监控
  */
 @Controller
 @RequestMapping(value = "/log")
@@ -67,6 +67,5 @@ public class LogController extends BaseController {
         }
         return succ(MsHelper.getMsg("del.success"));
     }
-
 
 }

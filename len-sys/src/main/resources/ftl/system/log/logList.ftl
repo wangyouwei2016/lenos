@@ -26,8 +26,9 @@
 <script type="text/html" id="toolBar">
     <@lenInclude  path="/system/base/bar.ftl" hasPermission="control:del"   name="删除" event="del"/>
 </script>
-<script>
 
+<#--js-->
+<script>
     layui.use('table', function () {
         var table = layui.table;
         //方法级渲染
@@ -101,7 +102,7 @@
             var data = obj.data;
             if (obj.event === 'del') {
                 var ids = [];
-                ids.push(data.id)
+                ids.push(data.id);
                 del(ids);
             }
         });

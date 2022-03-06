@@ -9,7 +9,7 @@ import lombok.Data;
 @TableName(value = "sys_depart")
 @Data
 public class SysDepart {
-    
+
     @TableId(value = "id", type = IdType.UUID)
     private String id;
 

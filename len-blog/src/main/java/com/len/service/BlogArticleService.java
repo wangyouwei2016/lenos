@@ -14,7 +14,7 @@ import java.util.List;
  * @date 2018/9/9.
  * @email lenospmiller@gmail.com
  */
-public interface BlogArticleService extends BaseService<BlogArticle, String> {
+public interface BlogArticleService extends BaseService<BlogArticle> {
 
     List<Article> indexSelect();
 
@@ -32,6 +32,6 @@ public interface BlogArticleService extends BaseService<BlogArticle, String> {
 
     boolean addArticle(ArticleDetail articleDetail);
 
-    boolean updateArticle(Article article,List<String> categoryIds,List<String> tags);
+    boolean updateArticle(Article article, List<String> categoryIds, List<String> tags);
 
 }

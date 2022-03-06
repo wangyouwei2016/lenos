@@ -2,6 +2,7 @@ package com.len.service.impl;
 
 import com.len.base.impl.BaseServiceImpl;
 import com.len.entity.BlogTag;
+import com.len.mapper.BlogTagMapper;
 import com.len.service.BlogTagService;
 import org.springframework.stereotype.Service;
 
@@ -11,5 +12,5 @@ import org.springframework.stereotype.Service;
  * @email lenospmiller@gmail.com
  */
 @Service
-public class BlogTagServiceImpl extends BaseServiceImpl<BlogTag, String> implements BlogTagService {
+public class BlogTagServiceImpl extends BaseServiceImpl<BlogTagMapper, BlogTag> implements BlogTagService {
 }

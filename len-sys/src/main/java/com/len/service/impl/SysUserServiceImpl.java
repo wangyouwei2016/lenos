@@ -39,7 +39,7 @@ import static com.len.validator.ValidatorUtils.*;
  * @email lenospmiller@gmail.com
  */
 @Service
-public class SysUserServiceImpl extends BaseServiceImpl<SysUser, String> implements SysUserService {
+public class SysUserServiceImpl extends BaseServiceImpl<SysUserMapper, SysUser> implements SysUserService {
 
     @Autowired
     SysUserMapper sysUserMapper;

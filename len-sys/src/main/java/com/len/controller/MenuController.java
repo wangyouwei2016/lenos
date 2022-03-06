@@ -1,5 +1,14 @@
 package com.len.controller;
 
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 import com.alibaba.fastjson.JSONArray;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.len.base.BaseController;
@@ -11,22 +20,14 @@ import com.len.util.BeanUtil;
 import com.len.util.LenResponse;
 import com.len.util.MsHelper;
 import com.len.util.ReType;
+
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * @author zhuxiaomeng
  * @date 2017/12/13.
- * @email lenospmiller@gmail.com
- * 菜单
+ * @email lenospmiller@gmail.com 菜单
  */
 @RequestMapping("/menu")
 @Controller
@@ -73,7 +74,7 @@ public class MenuController extends BaseController {
             sysMenu.setPermission(null);
         }
         if (sysMenu.getMenuType() == 2) {
-            sysMenu.setMenuType((byte) 0);
+            sysMenu.setMenuType((byte)0);
         }
         menuService.save(sysMenu);
         return succ(MsHelper.getMsg("insert.success"));
@@ -91,7 +92,6 @@ public class MenuController extends BaseController {
         }
         return "/system/menu/update";
     }
-
 
     @Log(desc = "更新菜单", type = LOG_TYPE.ADD)
     @PostMapping(value = "updateMenu")

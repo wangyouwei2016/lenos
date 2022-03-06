@@ -15,7 +15,7 @@ import java.util.List;
  * @email lenospmiller@gmail.com
  */
 @Service
-public class UserLeaveServiceImpl extends BaseServiceImpl<UserLeave, String> implements
+public class UserLeaveServiceImpl extends BaseServiceImpl<UserLeaveMapper, UserLeave> implements
         UserLeaveService {
 
     @Autowired

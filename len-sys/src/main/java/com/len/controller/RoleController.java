@@ -67,7 +67,6 @@ public class RoleController extends BaseController {
         return roleService.showAll(role);
     }
 
-
     @GetMapping(value = "showAddRole")
     public String goAddRole(Model model) {
         JSONArray jsonArray = menuService.getTreeUtil(null);
