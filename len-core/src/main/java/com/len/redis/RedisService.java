@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit;
  * @date 2018/11/24.
  * @email lenospmiller@gmail.com
  */
-@Service
+// @Service
 public class RedisService<T> {
 
     @Autowired
@@ -45,15 +45,15 @@ public class RedisService<T> {
     }
 
     /**
-     * set value and  cache timeout by str key
+     * set value and cache timeout by str key
      *
-     * @param key    字符串key
-     * @param value  字符串value
+     * @param key 字符串key
+     * @param value 字符串value
      * @param second 过期时间 单位 秒
      */
     public void set(String key, String value, Long second) {
         key = prefix + key;
-        valueOps.set(key, value, second,TimeUnit.SECONDS);
+        valueOps.set(key, value, second, TimeUnit.SECONDS);
     }
 
     /**
@@ -70,13 +70,13 @@ public class RedisService<T> {
     /**
      * set value by key
      *
-     * @param key    obj key
-     * @param value  obj value
+     * @param key obj key
+     * @param value obj value
      * @param second 过期时间 单位户 秒
      */
     public void setObj(Object key, T value, Long second) {
         key = prefix + key.toString();
-        valOpsObj.set(key, value, second,TimeUnit.SECONDS);
+        valOpsObj.set(key, value, second, TimeUnit.SECONDS);
     }
 
     /**

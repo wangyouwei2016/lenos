@@ -4,6 +4,7 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -16,12 +17,13 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
  */
 
 @EnableWebMvc
-@SpringBootApplication
+@SpringBootApplication()
 @EnableTransactionManagement
 @ComponentScan({"com.len", "org.activiti"})
 @MapperScan(basePackages = {"com.len.mapper"})
 @EnableDiscoveryClient
 @EnableAutoConfiguration(exclude = {
+//        RedisAutoConfiguration.class,
         org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration.class,
         org.springframework.boot.actuate.autoconfigure.security.servlet.ManagementWebSecurityAutoConfiguration.class
 })

@@ -10,10 +10,14 @@ import com.len.model.Article;
 import com.len.model.SimpleArticle;
 import com.len.redis.RedisService;
 import com.len.service.*;
+import com.len.util.ApplicationContextUtil;
 import com.len.util.BeanUtil;
 import com.len.util.LenResponse;
+import freemarker.core.LocalContext;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -41,9 +45,6 @@ public class BlogArticleServiceImpl extends BaseServiceImpl<BlogArticleMapper, B
 
     @Autowired
     private BlogTagService tagService;
-
-    @Autowired
-    private RedisService redisService;
 
     @Autowired
     private SysUserService sysUserService;
@@ -368,6 +369,7 @@ public class BlogArticleServiceImpl extends BaseServiceImpl<BlogArticleMapper, B
      */
     private int addArticleReadNum(String ip, String articleId) {
         String str = ip + "_" + articleId;
+        RedisService redisService = ApplicationContextUtil.getBean(RedisService.class);
         if (!StringUtils.isBlank(str)) {
             if (StringUtils.isEmpty(redisService.get(str))) {
                 redisService.set(str, "true", 60 * 30L);

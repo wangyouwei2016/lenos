@@ -1,12 +1,9 @@
 package com.len.config;
 
-import com.len.core.BlogRealm;
-import com.len.core.MyBasicHttpAuthenticationFilter;
-import com.len.core.filter.PermissionFilter;
-import com.len.core.filter.VerfityCodeFilter;
-import com.len.core.shiro.LoginRealm;
-import com.len.core.shiro.RetryLimitCredentialsMatcher;
-import com.len.menu.LoginType;
+import java.util.*;
+
+import javax.servlet.Filter;
+
 import org.apache.shiro.authc.pam.AtLeastOneSuccessfulStrategy;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.realm.Realm;
@@ -15,43 +12,43 @@ import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSource
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
-import org.crazycake.shiro.RedisCacheManager;
-import org.crazycake.shiro.RedisManager;
 import org.crazycake.shiro.RedisSessionDAO;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.filter.DelegatingFilterProxy;
 
-import javax.servlet.Filter;
-import java.util.*;
+import com.len.cache.CacheManagerFactory;
+import com.len.cache.impl.config.LenProp;
+import com.len.core.BlogRealm;
+import com.len.core.MyBasicHttpAuthenticationFilter;
+import com.len.core.filter.PermissionFilter;
+import com.len.core.filter.VerfityCodeFilter;
+import com.len.core.shiro.LoginRealm;
+import com.len.core.shiro.RetryLimitCredentialsMatcher;
+import com.len.menu.LoginType;
 
 /**
  * @author zhuxiaomeng
  * @date 2018/1/1.
- * @email lenospmiller@gmail.com
- * spring shiro
- * 元旦快乐：code everybody
- * <p>
- * 2020/4/19 添加redis缓存，支持集群 默认redis缓存，如果单机配置可放开下面 ehcache
+ * @email lenospmiller@gmail.com spring shiro 元旦快乐：code everybody
+ *        <p>
+ *        2020/4/19 添加redis缓存，支持集群 默认redis缓存，如果单机配置可放开下面 ehcache
  */
 @Configuration
 public class ShiroConfig {
 
-    @Value("${spring.redis.host}")
-    private String host;
-    @Value("${spring.redis.port}")
-    private int port;
-    @Value("${spring.redis.timeout}")
-    private int timeout;
+    private static String provider;
+
+    static {
+        provider = LenProp.getCache();
+    }
 
 
-    @Bean
     public RetryLimitCredentialsMatcher getRetryLimitCredentialsMatcher() {
-        RetryLimitCredentialsMatcher rm = new RetryLimitCredentialsMatcher(cacheManager());
+        RetryLimitCredentialsMatcher rm = new RetryLimitCredentialsMatcher(CacheManagerFactory.getCacheManager());
         rm.setHashAlgorithmName("md5");
         rm.setHashIterations(4);
         return rm;
@@ -69,25 +66,6 @@ public class ShiroConfig {
     public BlogRealm blogLoginRealm() {
         return new BlogRealm();
     }
-    /*==========ehcache 缓存 begin============*/
-    /*@Bean
-    public EhCacheManager getCacheManager() {
-        EhCacheManager ehCacheManager = new EhCacheManager();
-        ehCacheManager.setCacheManagerConfigFile("classpath:ehcache/ehcache.xml");
-        return ehCacheManager;
-    }*/
-
-    /* @Bean
-     public DefaultWebSessionManager defaultWebSessionManager() {
-         DefaultWebSessionManager defaultWebSessionManager = new DefaultWebSessionManager();
-         defaultWebSessionManager.setSessionIdCookieEnabled(true);
-         defaultWebSessionManager.setGlobalSessionTimeout(21600000);
-         defaultWebSessionManager.setDeleteInvalidSessions(true);
-         defaultWebSessionManager.setSessionValidationSchedulerEnabled(true);
-         defaultWebSessionManager.setSessionIdUrlRewritingEnabled(false);
-         return defaultWebSessionManager;
-     }*/
-    /*==========ehcache 缓存 end============*/
 
     @Bean
     public static LifecycleBeanPostProcessor getLifecycleBeanPostProcessor() {
@@ -106,9 +84,29 @@ public class ShiroConfig {
         return authenticator;
     }
 
+    private static RedisSessionDAO redisSessionDAO() {
+        RedisSessionDAO redisSessionDAO = new RedisSessionDAO();
+        redisSessionDAO.setRedisManager(CacheManagerFactory.getRedisManager());
+        return redisSessionDAO;
+    }
+
+    public static DefaultWebSessionManager getDefaultWebSessionManager() {
+        DefaultWebSessionManager defaultWebSessionManager = new DefaultWebSessionManager();
+        defaultWebSessionManager.setSessionIdCookieEnabled(true);
+        defaultWebSessionManager.setGlobalSessionTimeout(21600000);
+        // defaultWebSessionManager.setGlobalSessionTimeout(10000L);
+        defaultWebSessionManager.setDeleteInvalidSessions(true);
+        defaultWebSessionManager.setSessionValidationSchedulerEnabled(true);
+        defaultWebSessionManager.setSessionIdUrlRewritingEnabled(false);
+        if (provider.equals("redis")) {
+            defaultWebSessionManager.setSessionDAO(redisSessionDAO());
+        }
+        return defaultWebSessionManager;
+    }
+
     @Bean(name = "securityManager")
     public SecurityManager getSecurityManager(@Qualifier("userLoginRealm") LoginRealm loginRealm,
-                                              @Qualifier("blogLoginRealm") BlogRealm blogLoginRealm) {
+        @Qualifier("blogLoginRealm") BlogRealm blogLoginRealm) {
         DefaultWebSecurityManager dwm = new DefaultWebSecurityManager();
         List<Realm> loginRealms = new ArrayList<>();
         dwm.setAuthenticator(getMyModularRealmAuthenticator());
@@ -117,8 +115,8 @@ public class ShiroConfig {
         loginRealms.add(loginRealm);
         loginRealms.add(blogLoginRealm);
         dwm.setRealms(loginRealms);
-        dwm.setCacheManager(cacheManager());
-        dwm.setSessionManager(sessionManager());
+        dwm.setCacheManager(CacheManagerFactory.getCacheManager());
+        dwm.setSessionManager(getDefaultWebSessionManager());
         return dwm;
     }
 
@@ -142,7 +140,8 @@ public class ShiroConfig {
     }
 
     @Bean(name = "shiroFilter")
-    public ShiroFilterFactoryBean getShiroFilterFactoryBean(@Qualifier("securityManager") SecurityManager securityManager) {
+    public ShiroFilterFactoryBean
+        getShiroFilterFactoryBean(@Qualifier("securityManager") SecurityManager securityManager) {
         ShiroFilterFactoryBean sfb = new ShiroFilterFactoryBean();
         sfb.setSecurityManager(securityManager);
         sfb.setLoginUrl("/login");
@@ -178,7 +177,8 @@ public class ShiroConfig {
     }
 
     @Bean
-    public AuthorizationAttributeSourceAdvisor getAuthorizationAttributeSourceAdvisor(@Qualifier("securityManager") SecurityManager securityManager) {
+    public AuthorizationAttributeSourceAdvisor
+        getAuthorizationAttributeSourceAdvisor(@Qualifier("securityManager") SecurityManager securityManager) {
         AuthorizationAttributeSourceAdvisor as = new AuthorizationAttributeSourceAdvisor();
         as.setSecurityManager(securityManager);
         return as;
@@ -190,46 +190,8 @@ public class ShiroConfig {
         DelegatingFilterProxy proxy = new DelegatingFilterProxy();
         proxy.setTargetFilterLifecycle(true);
         proxy.setTargetBeanName("shiroFilter");
-
         filterRegistrationBean.setFilter(proxy);
         return filterRegistrationBean;
     }
-
-    public RedisCacheManager cacheManager() {
-        RedisCacheManager redisCacheManager = new RedisCacheManager();
-        redisCacheManager.setRedisManager(getRedisManager());
-        redisCacheManager.setPrincipalIdFieldName("id");
-        return redisCacheManager;
-    }
-
-    //    @Bean
-    public RedisManager getRedisManager() {
-        RedisManager redisManager = new RedisManager();
-        redisManager.setHost(host + ":" + port);
-        redisManager.setTimeout(timeout);
-        return redisManager;
-    }
-
-    @Bean
-    public RedisSessionDAO redisSessionDAO() {
-        RedisSessionDAO redisSessionDAO = new RedisSessionDAO();
-        redisSessionDAO.setRedisManager(getRedisManager());
-        return redisSessionDAO;
-    }
-
-
-    @Bean
-    public DefaultWebSessionManager sessionManager() {
-        DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
-        sessionManager.setSessionIdUrlRewritingEnabled(false);
-        sessionManager.setSessionIdCookieEnabled(true);
-        sessionManager.setDeleteInvalidSessions(true);
-        //默认半小时过期
-//        sessionManager.setGlobalSessionTimeout(10000L);
-        sessionManager.setSessionValidationSchedulerEnabled(true);
-        sessionManager.setSessionDAO(redisSessionDAO());
-        return sessionManager;
-    }
-
 
 }

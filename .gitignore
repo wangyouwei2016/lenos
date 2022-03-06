@@ -43,6 +43,7 @@ selenium-debug.log
 logs/*
 */logs/*
 image/*
+/len-web/src/main/resources/application-mysql-dev.yml
 
 .vscode
 *.suo
