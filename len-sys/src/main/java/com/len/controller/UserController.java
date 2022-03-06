@@ -42,7 +42,7 @@ import java.util.List;
 @Api(value = "用户管理", tags = "用户管理业务")
 public class UserController extends BaseController {
 
-    //private static final Logger
+    // private static final Logger
 
     @Autowired
     SysUserService userService;
@@ -85,7 +85,6 @@ public class UserController extends BaseController {
         return JSON.toJSONString(returnValue);
     }
 
-
     @GetMapping(value = "showAddUser")
     public String goAddUser(Model model) {
         List<Checkbox> checkboxList = userService.getUserRoleList(null);
@@ -109,7 +108,7 @@ public class UserController extends BaseController {
     @GetMapping(value = "updateUser")
     public String goUpdateUser(String id, Model model, boolean detail) {
         ValidatorUtils.notEmpty(id, "failed.get.data");
-        //用户-角色
+        // 用户-角色
         SysUser user = userService.getById(id);
         if (user != null) {
             String photo = user.getPhoto();
@@ -130,7 +129,6 @@ public class UserController extends BaseController {
         model.addAttribute("boxJson", checkboxList);
         return "system/user/update";
     }
-
 
     @ApiOperation(value = "/updateUser", httpMethod = "POST", notes = "更新用户")
     @Log(desc = "更新用户", type = LOG_TYPE.UPDATE)
@@ -204,6 +202,5 @@ public class UserController extends BaseController {
         }
         return succ();
     }
-
 
 }

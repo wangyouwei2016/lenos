@@ -11,7 +11,7 @@ import java.util.List;
  * @date 2018/1/23.
  * @email lenospmiller@gmail.com
  */
-public interface ActAssigneeService extends BaseService<ActAssignee,String> {
+public interface ActAssigneeService extends BaseService<ActAssignee> {
   int deleteByNodeId(String nodeId);
 
   public List<ActivityImpl> getActivityList(String deploymentId);

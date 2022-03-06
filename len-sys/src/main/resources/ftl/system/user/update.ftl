@@ -91,10 +91,12 @@
             <div style="height: 60px"></div>
         </div>
         <#if !detail>
-           <@lenInclude path="system/base/formBtn.ftl"></@lenInclude>
+            <@lenInclude path="system/base/formBtn.ftl"></@lenInclude>
         </#if>
     </form>
 </div>
+
+
 <script>
     var flag, msg;
     $(function () {
@@ -109,7 +111,7 @@
             if (!/(.+){3,12}$/.test(uname)) {
                 return;
             }
-            if (uname != '' && uname != name) {
+            if (!Len.isEmpty(uname) && uname != name) {
                 $.ajax({
                     url: 'checkUser?uname=' + uname, async: false, type: 'get', success: function (data) {
                         flag = data.flag;

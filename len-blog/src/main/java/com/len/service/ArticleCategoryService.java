@@ -10,7 +10,7 @@ import java.util.List;
  * @date 2018/10/11.
  * @email lenospmiller@gmail.com
  */
-public interface ArticleCategoryService extends BaseService<ArticleCategory, String> {
+public interface ArticleCategoryService extends BaseService<ArticleCategory> {
 
     void delByIds(List<String> ids);
 }

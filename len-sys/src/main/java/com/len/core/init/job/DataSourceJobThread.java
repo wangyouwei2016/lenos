@@ -17,8 +17,8 @@ import java.util.List;
  * @author zhuxiaomeng
  * @date 2018/1/6.
  * @email lenospmiller@gmail.com
- * <p>
- * 启动数据库中已经设定为 启动状态(status:true)的任务 项目启动时init
+ *        <p>
+ *        启动数据库中已经设定为 启动状态(status:true)的任务 项目启动时init
  */
 @Configuration
 @Slf4j
@@ -40,16 +40,15 @@ public class DataSourceJobThread extends Thread {
             job.setStatus(true);
             QueryWrapper<SysJob> jobQueryWrapper = new QueryWrapper<>(job);
             List<SysJob> jobList = jobService.list(jobQueryWrapper);
-            //开启任务
+            // 开启任务
             jobList.forEach(jobs -> {
-                        log.info("---任务[" + jobs.getId() + "]系统 init--开始启动---------");
-                        try {
-                            jobTask.startJob(jobs);
-                        } catch (ClassNotFoundException | SchedulerException e) {
-                            e.printStackTrace();
-                        }
-                    }
-            );
+                log.info("---任务[" + jobs.getId() + "]系统 init--开始启动---------");
+                try {
+                    jobTask.startJob(jobs);
+                } catch (ClassNotFoundException | SchedulerException e) {
+                    e.printStackTrace();
+                }
+            });
             if (jobList.size() == 0) {
                 log.info("---数据库暂无启动的任务---------");
             } else {

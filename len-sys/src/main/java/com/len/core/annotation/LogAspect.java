@@ -30,8 +30,8 @@ import org.springframework.web.context.request.ServletRequestAttributes;
  * @author zhuxiaomeng
  * @date 2017/12/28.
  * @email lenospmiller@gmail.com
- * <p>
- * 为增删改添加监控
+ *        <p>
+ *        为增删改添加监控
  */
 @Aspect
 @Component
@@ -54,9 +54,10 @@ public class LogAspect {
         Log.LOG_TYPE type = getType(jp);
         SysLog log = new SysLog();
         RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
-        //一些系统监控
+        // 一些系统监控
         if (requestAttributes != null) {
-            HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+            HttpServletRequest request =
+                ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest();
             String ip = IpUtil.getIp(request);
             log.setIp(ip);
         }
@@ -70,13 +71,13 @@ public class LogAspect {
             for (int i = 0; i < obj.length; i++) {
                 buffer.append("[参数" + (i + 1) + ":");
                 Object o = obj[i];
-                if(o instanceof Model){
+                if (o instanceof Model) {
                     continue;
                 }
-                String parameter=null;
+                String parameter = null;
                 try {
-                    parameter=JSON.toJSONString(o);
-                }catch (Exception e){
+                    parameter = JSON.toJSONString(o);
+                } catch (Exception e) {
                     continue;
                 }
                 buffer.append(parameter);
@@ -86,7 +87,7 @@ public class LogAspect {
         log.setParam(buffer.toString());
         try {
             CurrentUser currentUser = Principal.getCurrentUse();
-            if(currentUser!=null){
+            if (currentUser != null) {
                 log.setUserName(currentUser.getUsername());
             }
         } catch (UnavailableSecurityManagerException e) {
@@ -107,17 +108,15 @@ public class LogAspect {
         addLog(joinPoint, getDesc(joinPoint) + e.getMessage());
     }
 
-
     private String getDesc(JoinPoint joinPoint) {
-        MethodSignature methodName = (MethodSignature) joinPoint.getSignature();
+        MethodSignature methodName = (MethodSignature)joinPoint.getSignature();
         Method method = methodName.getMethod();
         return method.getAnnotation(Log.class).desc();
     }
 
     private Log.LOG_TYPE getType(JoinPoint joinPoint) {
-        MethodSignature methodName = (MethodSignature) joinPoint.getSignature();
+        MethodSignature methodName = (MethodSignature)joinPoint.getSignature();
         Method method = methodName.getMethod();
         return method.getAnnotation(Log.class).type();
     }
 }
-

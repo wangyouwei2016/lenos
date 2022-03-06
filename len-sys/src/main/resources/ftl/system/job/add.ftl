@@ -66,6 +66,8 @@
         <#include "/system/base/formBtn.ftl">
     </form>
 </div>
+
+
 <script>
     layui.use(['form', 'layer'], function () {
         $ = layui.jquery;
@@ -92,8 +94,7 @@
         });
 
         $('#close').click(function () {
-            var index = parent.layer.getFrameIndex(window.name);
-            parent.layer.close(index);
+            Len.close();
         });
         //监听提交
         form.on('submit(add)', function (data) {

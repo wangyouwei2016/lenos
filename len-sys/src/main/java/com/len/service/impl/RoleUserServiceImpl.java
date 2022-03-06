@@ -1,12 +1,9 @@
 package com.len.service.impl;
 
-import com.len.base.BaseMapper;
 import com.len.base.impl.BaseServiceImpl;
 import com.len.entity.SysRoleUser;
 import com.len.mapper.SysRoleUserMapper;
 import com.len.service.RoleUserService;
-import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -15,6 +12,6 @@ import org.springframework.stereotype.Service;
  * @email lenospmiller@gmail.com
  */
 @Service
-public class RoleUserServiceImpl extends BaseServiceImpl<SysRoleUser,String> implements
-    RoleUserService {
+public class RoleUserServiceImpl extends BaseServiceImpl<SysRoleUserMapper, SysRoleUser> implements
+        RoleUserService {
 }

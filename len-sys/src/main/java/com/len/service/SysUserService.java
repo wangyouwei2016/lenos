@@ -5,7 +5,6 @@ import com.len.base.BaseService;
 import com.len.entity.SysRoleUser;
 import com.len.entity.SysUser;
 import com.len.util.Checkbox;
-import com.len.util.LenResponse;
 
 import java.util.List;
 
@@ -14,7 +13,7 @@ import java.util.List;
  * @date 2017/12/4.
  * @email lenospmiller@gmail.com
  */
-public interface SysUserService extends BaseService<SysUser, String> {
+public interface SysUserService extends BaseService<SysUser> {
 
     SysUser login(String username);
 
@@ -29,6 +28,7 @@ public interface SysUserService extends BaseService<SysUser, String> {
 
     /**
      * 更新用户和用户角色信息
+     *
      * @param user
      * @param role
      * @return
@@ -52,7 +52,8 @@ public interface SysUserService extends BaseService<SysUser, String> {
 
     /**
      * 更新密码
-     * @param id 用户id
+     *
+     * @param id     用户id
      * @param newPwd 新密码
      * @return
      */

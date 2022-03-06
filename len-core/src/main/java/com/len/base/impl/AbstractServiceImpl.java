@@ -9,7 +9,6 @@ import com.len.exception.LenException;
 import com.len.util.ReType;
 import lombok.extern.slf4j.Slf4j;
 
-import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -19,7 +18,7 @@ import java.util.List;
  * update by 2019/11/12 mybatisplus
  */
 @Slf4j
-public class AbstractServiceImpl<T, E extends Serializable> extends ServiceImpl<BaseMapper<T>, T> implements BaseService<T, E> {
+public class AbstractServiceImpl<E extends com.baomidou.mybatisplus.core.mapper.BaseMapper, T> extends ServiceImpl<BaseMapper<T>, T> implements BaseService<T> {
 
 
     /**

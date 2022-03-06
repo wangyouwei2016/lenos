@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
  * @email lenospmiller@gmail.com
  */
 @Service
-public class MenuServiceImpl extends BaseServiceImpl<SysMenu, String> implements MenuService {
+public class MenuServiceImpl extends BaseServiceImpl<SysMenuMapper, SysMenu> implements MenuService {
 
     @Autowired
     private SysMenuMapper menuDao;

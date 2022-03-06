@@ -1,11 +1,9 @@
 package com.len.service.impl;
 
-import com.len.base.BaseMapper;
 import com.len.base.impl.BaseServiceImpl;
 import com.len.entity.BlogCategory;
 import com.len.mapper.BlogCategoryMapper;
 import com.len.service.BlogCategoryService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -14,6 +12,6 @@ import org.springframework.stereotype.Service;
  * @email lenospmiller@gmail.com
  */
 @Service
-public class BlogCategoryServiceImpl extends BaseServiceImpl<BlogCategory, String> implements BlogCategoryService {
+public class BlogCategoryServiceImpl extends BaseServiceImpl<BlogCategoryMapper, BlogCategory> implements BlogCategoryService {
 
 }

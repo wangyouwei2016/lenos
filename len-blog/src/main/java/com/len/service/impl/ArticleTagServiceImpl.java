@@ -1,6 +1,5 @@
 package com.len.service.impl;
 
-import com.len.base.BaseMapper;
 import com.len.base.impl.BaseServiceImpl;
 import com.len.entity.ArticleTag;
 import com.len.mapper.ArticleTagMapper;
@@ -14,8 +13,9 @@ import org.springframework.stereotype.Service;
  * @email lenospmiller@gmail.com
  */
 @Service
-public class ArticleTagServiceImpl extends BaseServiceImpl<ArticleTag, String> implements ArticleTagService {
+public class ArticleTagServiceImpl extends BaseServiceImpl<ArticleTagMapper, ArticleTag> implements ArticleTagService {
 
     @Autowired
     private ArticleTagMapper articleTagMapper;
+
 }

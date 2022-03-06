@@ -28,7 +28,7 @@ import java.util.stream.Collectors;
  * @email lenospmiller@gmail.com
  */
 @Service
-public class BlogArticleServiceImpl extends BaseServiceImpl<BlogArticle, String> implements BlogArticleService {
+public class BlogArticleServiceImpl extends BaseServiceImpl<BlogArticleMapper, BlogArticle> implements BlogArticleService {
 
     @Autowired
     private BlogArticleMapper blogArticleMapper;

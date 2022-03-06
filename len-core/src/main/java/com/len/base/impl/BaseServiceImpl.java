@@ -1,8 +1,7 @@
 package com.len.base.impl;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import lombok.extern.slf4j.Slf4j;
-
-import java.io.Serializable;
 
 /**
  * @author zhuxiaomeng
@@ -11,6 +10,6 @@ import java.io.Serializable;
  * update by 2019/11/12 tkmapper替换成mybatisplus
  */
 @Slf4j
-public class BaseServiceImpl<T, E extends Serializable> extends AbstractServiceImpl<T, E> {
+public class BaseServiceImpl<E extends BaseMapper, T> extends AbstractServiceImpl<E, T> {
 
 }

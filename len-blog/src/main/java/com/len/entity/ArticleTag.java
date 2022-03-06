@@ -1,6 +1,7 @@
 package com.len.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
@@ -10,7 +11,7 @@ public class ArticleTag {
     @TableId(value = "article_id", type = IdType.UUID)
     private String articleId;
 
-    @TableId(value = "tag_id", type = IdType.UUID)
+    @TableField(value = "tag_id")
     private String tagId;
 
     /**

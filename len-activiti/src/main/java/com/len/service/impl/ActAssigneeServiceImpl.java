@@ -24,7 +24,7 @@ import java.util.List;
  * @email lenospmiller@gmail.com
  */
 @Service
-public class ActAssigneeServiceImpl extends BaseServiceImpl<ActAssignee, String> implements
+public class ActAssigneeServiceImpl extends BaseServiceImpl<ActAssigneeMapper, ActAssignee> implements
         ActAssigneeService {
 
     @Autowired

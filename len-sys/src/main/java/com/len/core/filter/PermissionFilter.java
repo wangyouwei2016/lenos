@@ -17,38 +17,36 @@ import org.springframework.beans.factory.annotation.Autowired;
 /**
  * @author zhuxiaomeng
  * @date 2017/12/11.
- * @email lenospmiller@gmail.com
- * 拦截器 校验用户是否已授权 未授权返回到登录界面
+ * @email lenospmiller@gmail.com 拦截器 校验用户是否已授权 未授权返回到登录界面
  */
 @Slf4j
 public class PermissionFilter extends AuthorizationFilter {
 
-  @Autowired
-  private SysUserService userService;
+    @Autowired
+    private SysUserService userService;
 
-  @Autowired
-  private MenuService menuService;
+    @Autowired
+    private MenuService menuService;
 
-  @Override
-  protected boolean isAccessAllowed(ServletRequest servletRequest, ServletResponse servletResponse,
-      Object o) throws Exception {
-    String[] roles=(String[])o;
+    @Override
+    protected boolean isAccessAllowed(ServletRequest servletRequest, ServletResponse servletResponse, Object o)
+        throws Exception {
+        String[] roles = (String[])o;
 
-    Subject sub = getSubject(servletRequest, servletResponse);
-    Session session= sub.getSession();
-    CurrentUser user= (CurrentUser) session.getAttribute("currentPrincipal");
-    log.info("user:{}",user);
-    if(user==null) {
-      return false;
+        Subject sub = getSubject(servletRequest, servletResponse);
+        Session session = sub.getSession();
+        CurrentUser user = (CurrentUser)session.getAttribute("currentPrincipal");
+        log.info("user:{}", user);
+        if (user == null) {
+            return false;
+        }
+        return true;
     }
-    return true;
-  }
 
-  @Override
-  protected boolean onAccessDenied(ServletRequest request, ServletResponse response)
-      throws IOException {
-      saveRequest(request);
-      WebUtils.issueRedirect(request, response, "/goLogin");
-    return false;
-  }
+    @Override
+    protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws IOException {
+        saveRequest(request);
+        WebUtils.issueRedirect(request, response, "/goLogin");
+        return false;
+    }
 }

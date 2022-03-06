@@ -26,7 +26,7 @@ import java.util.List;
  * @email lenospmiller@gmail.com
  */
 @Service
-public class RoleServiceImpl extends BaseServiceImpl<SysRole, String> implements RoleService {
+public class RoleServiceImpl extends BaseServiceImpl<SysRoleMapper, SysRole> implements RoleService {
 
     @Autowired
     private SysRoleMapper roleMapper;
@@ -77,7 +77,7 @@ public class RoleServiceImpl extends BaseServiceImpl<SysRole, String> implements
 
     @Override
     public void del(String id) {
-        ValidatorUtils.notEmpty(id,"failed.get.data");
+        ValidatorUtils.notEmpty(id, "failed.get.data");
         SysRoleUser sysRoleUser = new SysRoleUser();
         sysRoleUser.setRoleId(id);
         QueryWrapper<SysRoleUser> wrapper = new QueryWrapper<>(sysRoleUser);

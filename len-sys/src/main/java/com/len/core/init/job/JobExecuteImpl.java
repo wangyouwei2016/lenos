@@ -8,7 +8,6 @@ import org.springframework.context.event.ContextRefreshedEvent;
  * @date 2020/8/11 22:02
  */
 
-
 public class JobExecuteImpl implements ExecuteContext {
 
     @Override
@@ -16,8 +15,7 @@ public class JobExecuteImpl implements ExecuteContext {
         /*
          * 通过线程开启数据库中已经开启的定时任务
          */
-        DataSourceJobThread myThread = event.getApplicationContext().getBean(
-                DataSourceJobThread.class);
+        DataSourceJobThread myThread = event.getApplicationContext().getBean(DataSourceJobThread.class);
         myThread.start();
     }
 }

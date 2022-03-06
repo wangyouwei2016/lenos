@@ -1,9 +1,3 @@
-<#--Created by IntelliJ IDEA.
-User: Administrator
-Date: 2017/12/7
-Time: 12:40
-To change this template use File | Settings | File Templates.-->
-
 <!DOCTYPE html>
 <html>
 
@@ -55,6 +49,8 @@ To change this template use File | Settings | File Templates.-->
   </div>
   </form>
 </div>
+
+
 <script>
   $(document).ready(function () {
     $('#close').click(function(){

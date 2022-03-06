@@ -69,8 +69,7 @@
 <script>
     layui.use(['form','layer'], function(){
     $ = layui.jquery;
-    var form = layui.form
-        ,layer = layui.layer;
+    var form = layui.form;
 
     //自定义验证规则
     form.verify({
@@ -92,8 +91,7 @@
     });
 
    $('#close').click(function(){
-     var index = parent.layer.getFrameIndex(window.name);
-     parent.layer.close(index);
+     Len.close();
    });
     //监听提交
     form.on('submit(add)', function(data){

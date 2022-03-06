@@ -33,7 +33,6 @@
     layui.use(['treeTable'], function () {
         var $ = layui.jquery;
         var treeTable = layui.treeTable;
-        // $('body').removeClass('layui-hide');
 
         // 渲染表格
         table = treeTable.render({
@@ -87,7 +86,7 @@
 
             /*添加*/
             add: function () {
-                Len.add('menu/showAddMenu');
+                Len.add('menu/showAddMenu','','menu');
             },
         };
 
