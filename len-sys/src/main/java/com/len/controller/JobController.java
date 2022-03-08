@@ -2,7 +2,6 @@ package com.len.controller;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,11 +35,17 @@ import io.swagger.annotations.ApiOperation;
 @Api(value = "定时任务", tags = "定时任务")
 public class JobController extends BaseController<SysJob> {
 
-    @Autowired
-    JobService jobService;
 
-    @Autowired
-    JobTask jobTask;
+    private final JobService jobService;
+
+
+    private final JobTask jobTask;
+
+    public JobController(JobService jobService,
+                         JobTask jobTask) {
+        this.jobService = jobService;
+        this.jobTask = jobTask;
+    }
 
     @GetMapping(value = "showJob")
     @RequiresPermissions("job:show")
@@ -52,7 +57,7 @@ public class JobController extends BaseController<SysJob> {
     @ResponseBody
     @RequiresPermissions("job:show")
     public ReType showUser(SysJob job, String page, String limit) {
-        return jobService.show(job, Integer.valueOf(page), Integer.valueOf(limit));
+        return jobService.show(job, Integer.parseInt(page), Integer.parseInt(limit));
     }
 
     @GetMapping(value = "showAddJob")
