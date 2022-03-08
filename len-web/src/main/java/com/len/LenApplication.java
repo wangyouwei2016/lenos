@@ -23,7 +23,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @MapperScan(basePackages = {"com.len.mapper"})
 @EnableDiscoveryClient
 @EnableAutoConfiguration(exclude = {
-//        RedisAutoConfiguration.class,
+        RedisAutoConfiguration.class,
         org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration.class,
         org.springframework.boot.actuate.autoconfigure.security.servlet.ManagementWebSecurityAutoConfiguration.class
 })
