@@ -36,18 +36,19 @@ layui.config({
 
         /**
          * 创建一个 快捷方式
-         * @param id 菜单code
+         * @param id 快捷菜单id
+         * @param code 菜单code
          * @param name name
          * @param icon 图标
          */
-        createShortCuts: function (id, name, icon) {
+        createShortCuts: function (id, code, name, icon) {
             var shortCuts =
                 "<li class=\"layui-col-xs3 len-main-menu\">" +
-                "   <a len-shortcut-id=\"" + id + "\">" +
+                "   <a  len-shortcut-id = \"" + id + "\" len-shortcut-code=\"" + code + "\">" +
                 "      <i class=\"layui-icon \">" + icon + "</i>" +
                 "      <cite>" + name + "</cite>" +
                 "    </a>" +
-                "    <i len-shortcut-id=\"" + id + "\" class=\"admin-shortcut-remove\" title=\"删除快捷菜单\">" +
+                "    <i len-shortcut-code=\"" + code + "\" class=\"admin-shortcut-remove\" title=\"删除快捷菜单\">" +
                 "      <i class=\"layui-icon layui-icon-close\"></i>" +
                 "    </i>" +
                 " </li>";
@@ -91,7 +92,7 @@ layui.config({
                 var data = resp.data;
                 var shortCutsBody = $('#admin-shortcut-content');
                 data.forEach(function (shortCut) {
-                    var $shortCut = dashboard.createShortCuts(shortCut.code, shortCut.name, shortCut.icon);
+                    var $shortCut = dashboard.createShortCuts(shortCut.id, shortCut.code, shortCut.name, shortCut.icon);
                     shortCutsBody.append($shortCut);
                 });
                 _dashboard.dragShortCuts();
@@ -126,7 +127,7 @@ layui.config({
 
                     var exists = false;
                     $.each(children, function (index, el) {
-                        var id = $(el).find('a').attr('len-shortcut-id');
+                        var id = $(el).find('a').attr('len-shortcut-code');
                         if (cId === id) {
                             exists = true;
                             return false;
@@ -156,8 +157,18 @@ layui.config({
                     var item = evt.item;
                     var sBody = $(item).parent();
                     var children = sBody.children();
-                    //重新保存顺序
-                    debugger
+                    var shortCutsIds = [];
+                    $.each(children, function (index, el) {
+                        shortCutsIds.push($(el).find('a').attr('len-shortcut-id'));
+                    });
+
+                    //重新排序保存
+                    $.post('dashboard/shortCuts/sort', {
+                        shortCutsIds: shortCutsIds.join()
+                    }, function (resp, textStatus) {
+                    });
+
+
                 },
 
 
@@ -170,7 +181,7 @@ layui.config({
          */
         shortcutBind: function () {
             var shortcutsBody = $('div.admin-shortcut-content');
-            shortcutsBody.find('a[len-shortcut-id]').each(function () {
+            shortcutsBody.find('a[len-shortcut-code]').each(function () {
                 var $that = $(this);
                 _dashboard.singleShortcutBind($that);
             });
@@ -183,7 +194,7 @@ layui.config({
 
         singleShortcutBind: function ($that) {
             $that.off('click').on('click', function () {
-                var menuId = $that.attr('len-shortcut-id');
+                var menuId = $that.attr('len-shortcut-code');
                 var menu = $('div.layui-nav-tree').find('a[len-id=' + menuId + ']');
                 if (menu.length > 0) {
                     var cMenu = menu[0];
@@ -195,7 +206,7 @@ layui.config({
         delSingleShortcutBind: function ($that) {
             $that.off('click').on('click', function () {
                 layer.confirm('确定删除快捷菜单？', function () {
-                    var code = $that.attr('len-shortcut-id');
+                    var code = $that.attr('len-shortcut-code');
                     dashboard.removeShortcuts(code, function (resp) {
                         //删除当前快捷方式
                         $that.parent().remove();

@@ -12,6 +12,11 @@ import lombok.EqualsAndHashCode;
 public class SysShortcuts extends BaseEntity {
 
     /**
+     * 序号
+     */
+    private int shortcutsNum;
+
+    /**
      * 用户id
      */
     private String shortcutsUserid;

@@ -38,14 +38,14 @@ public interface MenuService extends BaseService<SysMenu> {
     boolean del(String id);
 
     /**
-     * 获取用户快捷菜单列表
+     * 快捷菜单 获取用户列表
      * 
      * @return
      */
     List<SysMenu> getShortCuts();
 
     /**
-     * 添加快捷菜单
+     * 快捷菜单 添加
      * 
      * @param code 菜单编码
      * @return
@@ -53,10 +53,17 @@ public interface MenuService extends BaseService<SysMenu> {
     SysMenu addShortCuts(String code);
 
     /**
-     * 删除当前员工快捷菜单
+     * 快捷菜单 根据当前员工删除
      * 
      * @param code 菜单编码
      */
     void delShortcuts(String code);
+
+    /**
+     * 快捷菜单 重排序
+     * 
+     * @param codeList
+     */
+    void sortShortCuts(List<String> codeList);
 
 }

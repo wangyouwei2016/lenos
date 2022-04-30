@@ -64,8 +64,8 @@
   </select>
     <!--获取用户快捷菜单-->
     <select id="getUserShortCuts" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select m.name,m.code,m.icon from sys_shortcuts s left join sys_menu m on s.shortcuts_menuid = m.id
-    where s.shortcuts_userid =#{userId,jdbcType=VARCHAR} order by s.create_date asc
+    select s.id,m.name,m.code,m.icon from sys_shortcuts s left join sys_menu m on s.shortcuts_menuid = m.id
+    where s.shortcuts_userid =#{userId,jdbcType=VARCHAR} order by s.shortcuts_num asc
   </select>
 
     <sql id="shortcutsColumn">
