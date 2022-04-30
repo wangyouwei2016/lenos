@@ -1,11 +1,5 @@
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>个人信息</title>
-    <#include "/system/base/head.ftl">
-    <script type="text/javascript" src="/plugin/tools/update-setting.js"></script>
-</head>
-<body>
+<script type="text/javascript" src="/plugin/tools/update-setting.js"></script>
+
 <form class="layui-form layui-form-pane" style="margin-left: 20px;">
     <div class="layui-form-item">
         <fieldset class="layui-elem-field layui-field-title" style="margin-top: 10px;">
@@ -184,4 +178,3 @@
         });
     });
 </script>
-</html>

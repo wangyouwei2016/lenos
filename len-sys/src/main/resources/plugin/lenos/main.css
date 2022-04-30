@@ -1,69 +1,125 @@
-.layui-input {
-  min-width: 120px;
+html {
+    background-color: #fff;
 }
-.lenos-search .select span .layui-input{
-  height: 30px;
+
+.layui-input {
+    min-width: 120px;
+}
+
+.lenos-search .select {
+    height: auto;
+    background-color: #f8f8f8;
+}
+
+.lenos-search .select .search-div {
+    margin: 0 0 10px 20px;
+}
+
+.lenos-search .select .search-div .search-div-label {
+    width: 100px;
+    padding-top: 3px
+}
+
+.lenos-search .select .search-div span {
+    color: #707070;
+}
+
+.lenos-search .select span .layui-input {
+    height: 25px;
 }
 
 
 .lenos-search {
-  padding: 3px 10px;
-  position: relative;
-  top:2px;
-  z-index: 99;
-  height: 30px;
-  overflow: hidden;
+    padding: 10px 0;
+    position: relative;
+    z-index: 99;
+    height: auto;
+    background-color: #f8f8f8;
 }
 
-.layui-col-md12{
-  height:34px;
-  padding-top:4px;
-  margin-top:4px;
-  border-top: 1px solid #e5e5e5;
-}
-.icon-position-button{
-  padding-right: 8px;
-  padding-left: 10px;
+.layui-col-md12 {
+    height: 34px;
+    padding-top: 4px;
+    margin-top: 4px;
+    border-top: 1px solid #e5e5e5;
 }
 
-.layui-col-md13{
-  height:41px;margin-top:2px;
-  padding-top:3px;
-  border-top: 1px solid #e5e5e5;
-  border-bottom: 1px solid #e5e5e5;
+.icon-position-button {
+    padding-right: 8px;
+    padding-left: 10px;
 }
 
-.icon-position-no-button{
-  padding:1px 9px;
-  padding-left:12px;
-  height:36px;
-  margin-left:9px;
-  float: right;
-  margin-right: 10px;
+.layui-col-md13 {
+    height: 41px;
+    margin-top: 2px;
+    padding-top: 3px;
+    border-top: 1px solid #e5e5e5;
+    border-bottom: 1px solid #e5e5e5;
 }
+
+.icon-position-no-button {
+    padding: 1px 9px;
+    padding-left: 12px;
+    height: 36px;
+    margin-left: 9px;
+    float: right;
+    margin-right: 10px;
+}
+
 .icon-position-no-button i {
-  font-size: 21px!important;
+    font-size: 21px !important;
 }
 
-.layui-inline input{
-  width:100%
-}
-.lenos-search div{
-  float: left;
-}
-.lenos-search .len-form-item{
-  float: right;
-  margin-right:5%;
+.layui-inline input {
+    width: 100%
 }
 
-.len-button div{
-  margin-left: 10px;
+.lenos-search div {
+    float: left;
 }
 
-.len-button button{
-  border-radius: 100px;
+
+/*列表按鈕*/
+.len-button button {
+    border-radius: 100px;
 }
 
-body .layui-laypage .layui-laypage-curr .layui-laypage-em{
-  background-color: #1E9FFF;
+.len-button .layui-btn-group span {
+    margin-left: 10px;
+}
+
+.len-button .layui-btn-group .len-button-query {
+    float: right;
+    padding-right: 85px;
+}
+
+body .layui-laypage .layui-laypage-curr .layui-laypage-em {
+    background-color: #1E9FFF;
+}
+
+body .x-red {
+    color: red;
+}
+
+body .layui-table-view {
+    margin: 0 0;
+}
+
+body .layui-col-md12 {
+    margin-top: 0;
+    height: 34px;
+    padding-top: 4px;
+    border-top: 1px solid #e5e5e5;
+}
+
+
+.layer-footer {
+    background-color: #F8F8F8;
+    padding-top: 10px;
+    border-top: 1px solid #eee;
+    position: fixed;
+    text-align: center;
+    bottom: 0;
+    width: 100%;
+    height: 50px
 }

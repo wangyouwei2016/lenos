@@ -1,10 +1,10 @@
 package com.len.service;
 
+import java.util.List;
+
 import com.alibaba.fastjson.JSONArray;
 import com.len.base.BaseService;
 import com.len.entity.SysMenu;
-
-import java.util.List;
 
 /**
  * @author zhuxiaomeng
@@ -13,20 +13,50 @@ import java.util.List;
  */
 public interface MenuService extends BaseService<SysMenu> {
 
-  List<SysMenu> getMenuNotSuper();
+    /**
+     * 添加菜单
+     * 
+     * @param menu
+     * @return
+     */
+    String addMenu(SysMenu menu);
 
-  List<SysMenu> getMenuChildren(String id);
+    List<SysMenu> getMenuNotSuper();
 
-  public JSONArray getMenuJsonList();
+    List<SysMenu> getMenuChildren(String id);
 
-  List<SysMenu> getMenuChildrenAll(String id);
+    JSONArray getMenuJsonList();
 
-  public JSONArray getTreeUtil(String roleId);
+    List<SysMenu> getMenuChildrenAll(String id);
 
-  List<SysMenu> getUserMenu(String id);
+    JSONArray getTreeUtil(String roleId);
 
-  public JSONArray getMenuJsonByUser(List<SysMenu> menuList);
+    List<SysMenu> getUserMenu(String id);
 
-  public boolean del(String id);
+    JSONArray getMenuJsonByUser(List<SysMenu> menuList);
+
+    boolean del(String id);
+
+    /**
+     * 获取用户快捷菜单列表
+     * 
+     * @return
+     */
+    List<SysMenu> getShortCuts();
+
+    /**
+     * 添加快捷菜单
+     * 
+     * @param code 菜单编码
+     * @return
+     */
+    SysMenu addShortCuts(String code);
+
+    /**
+     * 删除当前员工快捷菜单
+     * 
+     * @param code 菜单编码
+     */
+    void delShortcuts(String code);
 
 }

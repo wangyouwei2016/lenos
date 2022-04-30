@@ -2,9 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.len.mapper.SysRoleMenuMapper">
   <resultMap id="BaseResultMap" type="com.len.entity.SysRoleMenu">
-    <!--
-      WARNING - @mbg.generated
-    -->
+
     <id column="role_id" jdbcType="VARCHAR" property="roleId" />
     <id column="menu_id" jdbcType="VARCHAR" property="menuId" />
   </resultMap>

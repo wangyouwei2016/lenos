@@ -1,7 +1,4 @@
 
-<#include "/system/base/head.ftl">
-<body>
-
 <#--搜索-->
 <div class="lenos-search">
     <div class="select">
@@ -24,7 +21,7 @@
 
 <#--toolbar-->
 <script type="text/html" id="toolBar">
-    <@lenInclude  path="/system/base/bar.ftl" hasPermission="control:del"   name="删除" event="del"/>
+    <@lenInclude  path="/system/base/bar.ftl" code="del" hasPermission="control:del"   name="删除" event="del"/>
 </script>
 
 <#--js-->
@@ -35,7 +32,7 @@
         table.render({
             id: 'logList',
             elem: '#logList'
-            , url: 'showLogList'
+            , url: 'log/showLogList'
             , parseData: function (res) {
                 return {
                     "code": res.code,
@@ -113,7 +110,7 @@
     /**批量删除id*/
     function del(ids) {
         $.ajax({
-            url: "del",
+            url: "log/del",
             type: "post",
             data: {ids: ids},
             dataType: "json", traditional: true,

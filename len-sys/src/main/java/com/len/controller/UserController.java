@@ -1,5 +1,6 @@
 package com.len.controller;
 
+import cn.hutool.core.util.NumberUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.Page;
@@ -33,16 +34,13 @@ import java.util.List;
 /**
  * @author zhuxiaomeng
  * @date 2017/12/6.
- * @email lenospmiller@gmail.com
- * 用户管理
+ * @email lenospmiller@gmail.com 用户管理
  */
-//@Api(value="user")
+// @Api(value="user")
 @Controller
 @RequestMapping(value = "/user")
 @Api(value = "用户管理", tags = "用户管理业务")
 public class UserController extends BaseController {
-
-    // private static final Logger
 
     @Autowired
     SysUserService userService;
@@ -68,8 +66,17 @@ public class UserController extends BaseController {
     @GetMapping(value = "showUserList")
     @ResponseBody
     @RequiresPermissions("user:show")
-    public ReType showUser(SysUser user, String page, String limit, Principal principal) {
-        return userService.show(user, Integer.valueOf(page), Integer.valueOf(limit));
+    public ReType showUser(SysUser user, int page, int limit) {
+        ReType show = userService.show(user, page, limit);
+        /*List<SysUser> data = (List)show.getData();
+        for (int i = 0; i < 100; i++) {
+            SysUser sysUser = new SysUser();
+            sysUser.setUsername("zhangsan");
+            sysUser.setAge(i);
+            sysUser.setEmail("150@qq.com");
+            data.add(sysUser);
+        }*/
+        return show;
     }
 
     @ApiOperation(value = "/listByRoleId", httpMethod = "GET", notes = "展示角色")

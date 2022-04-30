@@ -26,7 +26,7 @@ layui.define(['element', 'nprogress', 'form', 'table', 'loader', 'tab', 'navbar'
             layer.alert('Hello ' + (str || 'test'));
         },
         config: {
-            type: 'iframe'
+            type: 'page'
         },
         set: function(options) {
             var that = this;
@@ -49,7 +49,7 @@ layui.define(['element', 'nprogress', 'form', 'table', 'loader', 'tab', 'navbar'
             if (_config.type === 'page') {
                 tab.set({
                     renderType: 'page',
-                    mainUrl: 'table.html',
+                    mainUrl: 'dashboard',
                     elem: '#container',
                     onSwitch: function(data) { //选项卡切换时触发
                         //console.log(data.layId); //lay-id值
@@ -133,7 +133,7 @@ layui.define(['element', 'nprogress', 'form', 'table', 'loader', 'tab', 'navbar'
                 // });
 
                 //处理顶部一级菜单
-                var onelevel = layui.onelevel;
+                /*var onelevel = layui.onelevel;
                 if (onelevel.hasElem()) {
                     onelevel.set({
                         remote: {
@@ -194,7 +194,7 @@ layui.define(['element', 'nprogress', 'form', 'table', 'loader', 'tab', 'navbar'
                             elem.find('li').eq(0).click(); //模拟点击第一个
                         }
                     }).render();
-                }
+                }*/
             }
 
             // ripple start

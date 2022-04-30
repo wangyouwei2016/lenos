@@ -23,7 +23,7 @@ To change this template use File | Settings | File Templates.-->
 <body>
 <div class="x-body">
   <form class="layui-form layui-form-pane" style="margin-left: 20px;">
-    <div style="width:98%;height:450px;overflow: auto;">
+    <div <#--style="width:98%;height:450px;overflow: auto;"-->>
     <div class="layui-form-item">
       <fieldset class="layui-elem-field layui-field-title" style="margin-top: 10px;">
         <legend style="font-size:16px;">请假信息</legend>

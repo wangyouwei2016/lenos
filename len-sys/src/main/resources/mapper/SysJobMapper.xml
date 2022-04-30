@@ -2,9 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.len.mapper.SysJobMapper">
   <resultMap id="BaseResultMap" type="com.len.entity.SysJob">
-    <!--
-      WARNING - @mbg.generated
-    -->
+
     <id column="id" jdbcType="VARCHAR" property="id" />
     <result column="job_name" jdbcType="VARCHAR" property="jobName" />
     <result column="cron" jdbcType="VARCHAR" property="cron" />

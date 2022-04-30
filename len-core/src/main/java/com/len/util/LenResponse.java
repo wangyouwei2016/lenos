@@ -1,22 +1,21 @@
 package com.len.util;
 
-
 import com.alibaba.fastjson.JSONObject;
+
 import lombok.Data;
 
 /**
  * @author zhuxiaomeng
  * @date 2017/12/15.
- * @email lenospmiller@gmail.com
- * ajax 回执
+ * @email lenospmiller@gmail.com ajax 回执
  */
 @Data
 public class LenResponse {
 
-    //默认成功
+    // 默认成功
     private boolean flag = true;
     private String msg;
-    private JSONObject josnObj;
+    private JSONObject jsonObj;
     private Integer status;
     private Object data;
 
@@ -28,7 +27,11 @@ public class LenResponse {
         this.flag = flag;
     }
 
-    public LenResponse() {
+    public LenResponse() {}
+
+    public LenResponse(boolean flag, Object data) {
+        this.flag = flag;
+        this.data = data;
     }
 
     public LenResponse(boolean flag, String msg) {

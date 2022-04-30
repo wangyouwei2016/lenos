@@ -1,5 +1,17 @@
 package com.len.service.impl;
 
+import static com.len.validator.ValidatorUtils.*;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import org.apache.shiro.session.Session;
+import org.apache.shiro.subject.Subject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.alibaba.fastjson.JSONArray;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.len.base.CurrentMenu;
@@ -21,22 +33,9 @@ import com.len.service.SysUserService;
 import com.len.util.*;
 import com.len.validator.ValidatorUtils;
 import com.len.validator.group.AddGroup;
-import org.apache.shiro.session.Session;
-import org.apache.shiro.subject.Subject;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-import static com.len.validator.ValidatorUtils.*;
 
 /**
- * @author zhuxiaomeng
- * @date 2017/12/4.
- * @email lenospmiller@gmail.com
+ * 账户 service
  */
 @Service
 public class SysUserServiceImpl extends BaseServiceImpl<SysUserMapper, SysUser> implements SysUserService {
@@ -63,12 +62,10 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUserMapper, SysUser> 
         return sysUserMapper.login(username);
     }
 
-
     @Override
     public List<SysRoleUser> selectByCondition(SysRoleUser sysRoleUser) {
         return sysRoleUserMapper.selectByCondition(sysRoleUser);
     }
-
 
     @Override
     public int count() {
@@ -83,7 +80,7 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUserMapper, SysUser> 
         if (result > 0) {
             throw new ServiceException(MsHelper.getMsg("user.exists"));
         }
-        //密码加密
+        // 密码加密
         user.setPassword(Md5Util.getMD5(user.getPassword(), user.getUsername()));
         boolean save = save(user);
         SysRoleUser sysRoleUser = new SysRoleUser();
@@ -135,11 +132,11 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUserMapper, SysUser> 
             throw new ServiceException(MsHelper.getMsg("user.bind.role"));
         }
         if (!realDel) {
-            //逻辑
+            // 逻辑
             sysUser.setDelFlag(Byte.parseByte("1"));
             sysUserMapper.updateById(sysUser);
         } else {
-            //物理
+            // 物理
             sysUserMapper.delById(id);
         }
         return true;
@@ -192,23 +189,22 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUserMapper, SysUser> 
         return sysUserMapper.getUserByRoleId(roleId);
     }
 
-
     @Override
     public void setMenuAndRoles(String username) {
         SysUser s = new SysUser();
         s.setUsername(username);
         QueryWrapper<SysUser> userQueryWrapper = new QueryWrapper<>(s);
         s = sysUserMapper.selectOne(userQueryWrapper);
-        CurrentUser currentUser = new CurrentUser(s.getId(), s.getUsername(), s.getAge(), s.getEmail(), s.getPhoto(), s.getRealName());
+        CurrentUser currentUser = new CurrentUser(s.getId(), s.getUsername(), s.getAge(), s.getEmail(), s.getPhoto());
         Subject subject = Principal.getSubject();
         /*角色权限封装进去*/
-        //根据用户获取菜单
+        // 根据用户获取菜单
         Session session = subject.getSession();
 
         List<SysMenu> menuList = menuService.getUserMenu(s.getId());
-        JSONArray json = menuService.getMenuJsonByUser(menuList);
-        session.setAttribute("menu", json);
-
+        JSONArray menuArr = menuService.getMenuJsonByUser(menuList);
+        session.setAttribute("menu", menuArr);
+        session.setAttribute("menuArr", menuArr.toString());
 
         List<CurrentMenu> currentMenuList = new ArrayList<>();
         Set<SysRole> roleList = new HashSet<>();
@@ -238,7 +234,7 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUserMapper, SysUser> 
     public void updateCurrent(SysUser sysUser) {
         CurrentUser principal = Principal.getPrincipal();
         if (principal.getId().equals(sysUser.getId())) {
-            //当前用户
+            // 当前用户
             CurrentUser currentUse = Principal.getCurrentUse();
             Session session = Principal.getSession();
             currentUse.setPhoto(sysUser.getPhoto());

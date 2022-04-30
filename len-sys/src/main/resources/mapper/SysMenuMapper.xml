@@ -1,63 +1,130 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.len.mapper.SysMenuMapper">
-  <resultMap id="BaseResultMap" type="com.len.entity.SysMenu">
-    <!--
-      WARNING - @mbg.generated
-    -->
-    <id column="id" jdbcType="VARCHAR" property="id" />
-    <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="p_id" jdbcType="VARCHAR" property="pId" />
-    <result column="url" jdbcType="VARCHAR" property="url" />
-    <result column="order_num" jdbcType="INTEGER" property="orderNum" />
-    <result column="icon" jdbcType="VARCHAR" property="icon" />
-    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
-    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
-    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
-    <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
-    <result column="permission" jdbcType="VARCHAR" property="permission" />
-    <result column="menu_type" jdbcType="TINYINT" property="menuType" />
-  </resultMap>
+    <resultMap id="BaseResultMap" type="com.len.entity.SysMenu">
 
-  <resultMap id="menuAndRoleMap" type="com.len.entity.SysMenu">
-    <id column="id" jdbcType="VARCHAR" property="id" />
-    <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="p_id" jdbcType="VARCHAR" property="pId" />
-    <result column="url" jdbcType="VARCHAR" property="url" />
-    <result column="order_num" jdbcType="INTEGER" property="orderNum" />
-    <result column="icon" jdbcType="VARCHAR" property="icon" />
-    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
-    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
-    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
-    <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
-    <result column="permission" jdbcType="VARCHAR" property="permission" />
-    <result column="menu_type" jdbcType="TINYINT" property="menuType" />
-    <collection property="roleList" ofType="com.len.entity.SysRole">
-      <id column="rid" jdbcType="VARCHAR" property="id" />
-      <result column="role_name" jdbcType="VARCHAR" property="roleName" />
-      <result column="remark" jdbcType="VARCHAR" property="remark" />
-    </collection>
-  </resultMap>
-  <select id="getMenuNotSuper" resultMap="BaseResultMap">
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="code" jdbcType="VARCHAR" property="code"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="p_id" jdbcType="VARCHAR" property="pId"/>
+        <result column="url" jdbcType="VARCHAR" property="url"/>
+        <result column="router" jdbcType="VARCHAR" property="router"/>
+        <result column="order_num" jdbcType="INTEGER" property="orderNum"/>
+        <result column="icon" jdbcType="VARCHAR" property="icon"/>
+        <result column="create_by" jdbcType="VARCHAR" property="createBy"/>
+        <result column="create_date" jdbcType="TIMESTAMP" property="createDate"/>
+        <result column="update_by" jdbcType="VARCHAR" property="updateBy"/>
+        <result column="update_date" jdbcType="TIMESTAMP" property="updateDate"/>
+        <result column="permission" jdbcType="VARCHAR" property="permission"/>
+        <result column="menu_type" jdbcType="TINYINT" property="menuType"/>
+    </resultMap>
+
+    <resultMap id="menuAndRoleMap" type="com.len.entity.SysMenu">
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="code" jdbcType="VARCHAR" property="code"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="p_id" jdbcType="VARCHAR" property="pId"/>
+        <result column="router" jdbcType="VARCHAR" property="router"/>
+        <result column="url" jdbcType="VARCHAR" property="url"/>
+        <result column="order_num" jdbcType="INTEGER" property="orderNum"/>
+        <result column="icon" jdbcType="VARCHAR" property="icon"/>
+        <result column="create_by" jdbcType="VARCHAR" property="createBy"/>
+        <result column="create_date" jdbcType="TIMESTAMP" property="createDate"/>
+        <result column="update_by" jdbcType="VARCHAR" property="updateBy"/>
+        <result column="update_date" jdbcType="TIMESTAMP" property="updateDate"/>
+        <result column="permission" jdbcType="VARCHAR" property="permission"/>
+        <result column="menu_type" jdbcType="TINYINT" property="menuType"/>
+        <collection property="roleList" ofType="com.len.entity.SysRole">
+            <id column="rid" jdbcType="VARCHAR" property="id"/>
+            <result column="role_name" jdbcType="VARCHAR" property="roleName"/>
+            <result column="remark" jdbcType="VARCHAR" property="remark"/>
+        </collection>
+    </resultMap>
+    <select id="getMenuNotSuper" resultMap="BaseResultMap">
     select
     *
     from sys_menu where p_id is null and  menu_type=0 order by order_num asc
   </select>
-  <select id="getMenuChildren" parameterType="java.lang.String" resultMap="BaseResultMap">
+    <select id="getMenuChildren" parameterType="java.lang.String" resultMap="BaseResultMap">
     select
     *
     from sys_menu where p_id=#{id,jdbcType=VARCHAR} and  menu_type=0 order by order_num asc
   </select>
 
-  <select id="getMenuChildrenAll" parameterType="java.lang.String" resultMap="BaseResultMap">
+    <select id="getMenuChildrenAll" parameterType="java.lang.String" resultMap="BaseResultMap">
     select
     *
     from sys_menu where p_id=#{id,jdbcType=VARCHAR} order by order_num asc
   </select>
-  <select id="getUserMenu" parameterType="java.lang.String" resultMap="menuAndRoleMap">
-    select m.*,r.id as rid,r.role_name as role_name,r.remark as remark from sys_menu m left join sys_role_menu rm
+    <select id="getUserMenu" parameterType="java.lang.String" resultMap="menuAndRoleMap">
+    select m.*,r.id as rid,m.router,r.role_name as role_name,r.remark as remark from sys_menu m left join sys_role_menu rm
     on m.id=rm.menu_id left join sys_role r
     on rm.role_id=r.id left join sys_role_user ru
     on r.id=ru.role_id where ru.user_id =#{id,jdbcType=VARCHAR} order by m.order_num asc
   </select>
+    <!--获取用户快捷菜单-->
+    <select id="getUserShortCuts" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select m.name,m.code,m.icon from sys_shortcuts s left join sys_menu m on s.shortcuts_menuid = m.id
+    where s.shortcuts_userid =#{userId,jdbcType=VARCHAR} order by s.create_date asc
+  </select>
+
+    <sql id="shortcutsColumn">
+        <trim suffix="" suffixOverrides=",">
+            <if test="id!=null">
+                id,
+            </if>
+            <if test="shortcutsUserid!=null">
+                shortcuts_userid,
+            </if>
+            <if test="shortcutsMenuid!=null">
+                shortcuts_menuid,
+            </if>
+            <if test="createBy != null">
+                create_by,
+            </if>
+            <if test="updateBy != null">
+                update_by,
+            </if>
+            <if test="createDate != null">
+                create_date,
+            </if>
+            <if test="updateDate != null">
+                update_date
+            </if>
+        </trim>
+    </sql>
+
+    <sql id="shortcutsValue">
+        <trim suffix="" suffixOverrides=",">
+            <if test="id!=null">
+                #{id},
+            </if>
+            <if test="shortcutsUserid!=null">
+                #{shortcutsUserid},
+            </if>
+            <if test="shortcutsMenuid!=null">
+                #{shortcutsMenuid},
+            </if>
+            <if test="createBy != null">
+                #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateBy != null">
+                #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateDate != null">
+                #{updateDate,jdbcType=TIMESTAMP}
+            </if>
+        </trim>
+    </sql>
+
+    <insert id="addShortcuts" parameterType="com.len.entity.SysShortcuts">
+        insert into sys_shortcuts(
+        <include refid="shortcutsColumn"/>
+        ) values (
+        <include refid="shortcutsValue"/>
+        )
+    </insert>
 </mapper>

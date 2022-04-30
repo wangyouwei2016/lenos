@@ -1,11 +1,15 @@
 package com.len.base;
 
-import com.alibaba.fastjson.JSON;
-import com.google.common.collect.Maps;
-import com.len.exception.ServiceException;
-import com.len.util.LenResponse;
-import com.len.util.MsHelper;
-import lombok.extern.slf4j.Slf4j;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.shiro.authz.AuthorizationException;
 import org.apache.shiro.authz.UnauthorizedException;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -13,14 +17,13 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.InitBinder;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Map;
+import com.alibaba.fastjson.JSON;
+import com.google.common.collect.Maps;
+import com.len.exception.ServiceException;
+import com.len.util.LenResponse;
+import com.len.util.MsHelper;
+
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * @author zhuxiaomeng
@@ -32,10 +35,9 @@ public abstract class BaseController<T> {
 
     @InitBinder
     protected void initBinder(WebDataBinder binder) {
-        binder.registerCustomEditor(Date.class, new CustomDateEditor(
-                new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"), true));
-        binder.registerCustomEditor(Date.class, new CustomDateEditor(
-                new SimpleDateFormat("yyyy-MM-dd"), true));
+        binder.registerCustomEditor(Date.class,
+            new CustomDateEditor(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"), true));
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(new SimpleDateFormat("yyyy-MM-dd"), true));
     }
 
     @ExceptionHandler({UnauthorizedException.class, AuthorizationException.class})
@@ -99,6 +101,10 @@ public abstract class BaseController<T> {
         return resp(true, msg);
     }
 
+    public LenResponse succ(Object data) {
+        return new LenResponse(true, data);
+    }
+
     public LenResponse succ() {
         return succ(null);
     }
@@ -110,6 +116,5 @@ public abstract class BaseController<T> {
     public LenResponse error() {
         return error(null);
     }
-
 
 }

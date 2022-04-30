@@ -1,4 +1,18 @@
-## 演示地址
+## 演示地址(暂时挂了)
+注：本分支预计新增以下功能：   
+1. 前端结构组件化调整
+    1. 前端组件在路径：
+    len-sys->resources/ftl/system/base/ 下(部分已实现)
+    2. 具体使用和介绍参考 base目录下 readme.md 文件
+2. 仪表盘面板调整(界面已实现)
+    1. 新增动态处理
+    2. 新增快捷菜单(已实现)
+    3. 新增待办事项
+3. 工作流调整
+    1. 可配置化审批流
+4. 新增动态
+    1. 请假审批 被拒动态
+
 
 [www.lenosp.cn](http://www.lenosp.cn)  admin 123456 [博客blog.lenosp.cn](http://blog.lenosp.cn)
 

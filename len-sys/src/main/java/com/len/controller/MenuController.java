@@ -64,19 +64,7 @@ public class MenuController extends BaseController {
     @PostMapping(value = "addMenu")
     @ResponseBody
     public LenResponse addMenu(SysMenu sysMenu) {
-        if (StringUtils.isEmpty(sysMenu.getPId())) {
-            sysMenu.setPId(null);
-        }
-        if (StringUtils.isEmpty(sysMenu.getUrl())) {
-            sysMenu.setUrl(null);
-        }
-        if (StringUtils.isEmpty(sysMenu.getPermission())) {
-            sysMenu.setPermission(null);
-        }
-        if (sysMenu.getMenuType() == 2) {
-            sysMenu.setMenuType((byte)0);
-        }
-        menuService.save(sysMenu);
+        menuService.addMenu(sysMenu);
         return succ(MsHelper.getMsg("insert.success"));
     }
 

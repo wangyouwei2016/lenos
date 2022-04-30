@@ -1,4 +1,3 @@
-<#include "/system/base/head.ftl">
 
 <#--搜索-->
 <div class="lenos-search">
@@ -24,15 +23,15 @@
 <table id="jobList" width="100%" lay-filter="job"></table>
 
 <script type="text/html" id="toolBar">
-    <@lenInclude  path="/system/base/bar.ftl" hasPermission="job:add"  name="查看" event="detail"/>
-    <@lenInclude  path="/system/base/bar.ftl" hasPermission="job:update" name="编辑" event="edit"/>
+    <@lenInclude  path="/system/base/bar.ftl"  hasPermission="job:add"   name="查看" event="detail"/>
+    <@lenInclude  path="/system/base/bar.ftl" hasPermission="job:update" code="edit" name="编辑" event="edit"/>
     {{#  if(!d.status){ }}
     <@lenInclude  path="/system/base/bar.ftl" hasPermission="job:start" name="启动" event="start"/>
     {{#  } }}
     {{# if(d.status){ }}
     <@lenInclude  path="/system/base/bar.ftl" hasPermission="job:end"   name="停止" event="end"/>
     {{#  } }}
-    <@lenInclude  path="/system/base/bar.ftl" hasPermission="job:del"   name="删除" event="del"/>
+    <@lenInclude  path="/system/base/bar.ftl" hasPermission="job:del" code="del"   name="删除" event="del"/>
 </script>
 <script>
 

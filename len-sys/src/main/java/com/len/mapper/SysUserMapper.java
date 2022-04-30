@@ -1,10 +1,15 @@
 package com.len.mapper;
 
-import com.len.entity.SysUser;
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-import java.util.List;
+import com.len.entity.SysUser;
+
+/**
+ * 账户菜单 mapper
+ */
 @Mapper
 public interface SysUserMapper extends com.len.base.BaseMapper<SysUser> {
 

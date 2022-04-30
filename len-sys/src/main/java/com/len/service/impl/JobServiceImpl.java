@@ -15,9 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
- * @author zhuxiaomeng
- * @date 2018/1/6.
- * @email lenospmiller@gmail.com
+ * 任务 service
  */
 @Service
 @Slf4j

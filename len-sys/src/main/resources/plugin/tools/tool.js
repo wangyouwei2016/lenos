@@ -9,7 +9,9 @@ var Len = {
      * @param id
      */
     add: function (url, title, id) {
-        this.popup(url, this.isEmpty(title) ? '添加' : title, 700, 450, id)
+        var w = $(window).width() * 0.7,
+            h = $(window).width() * 0.4;
+        this.popup(url, this.isEmpty(title) ? '添加' : title, w, h, id)
     },
 
     /**
@@ -142,6 +144,20 @@ var Len = {
         parent.layer.close(index);
     },
 
+    screen: function () {
+        //获取当前窗口的宽度
+        var width = $(window).width();
+        if (width > 1200) {
+            return 3;   //大屏幕
+        } else if (width > 992) {
+            return 2;   //中屏幕
+        } else if (width > 768) {
+            return 1;   //小屏幕
+        } else {
+            return 0;   //超小屏幕
+        }
+    },
+
     /**
      * 通用弹框
      * @param url 请求url
@@ -158,7 +174,7 @@ var Len = {
         window.top.layer.open({
             id: id,
             type: 2,
-            area: [w + 'px', h + 'px'],
+            area: this.screen() < 2 ? ['90%', '80%'] : ['700px', '450px'],//[w + 'px', h + 'px'],
             fix: false,
             maxmin: true,
             shadeClose: true,
@@ -374,7 +390,7 @@ var Len = {
         /**
          * 全局业务异常捕获 未知异常捕获
          */
-        layui.jquery.ajaxSetup({
+        /*layui.jquery.ajaxSetup({
             beforeSend: function (xhr, options) {
                 var originalSuccess = options.success;
                 options.success = function (data, textStatus, jqXhr) {
@@ -385,8 +401,26 @@ var Len = {
                     originalSuccess.apply(this, arguments)
                 };
             }
-        });
+        });*/
+    },
+
+    /**
+     * 根据路由获取菜单
+     * @param router
+     */
+    getMenu: function (router) {
+        var menuArr = Len.menuArr;
+        for (var i = 0; i < menuArr.length; i++) {
+            var childArr = menuArr[i].children;
+            for (var j = 0; j < childArr.length; j++) {
+                if (childArr[j].router === router) {
+                    return childArr[j];
+                }
+            }
+        }
+        return null;
     }
+
 };
 
 Len.init();
