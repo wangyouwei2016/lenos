@@ -167,6 +167,7 @@ public class MenuServiceImpl extends BaseServiceImpl<SysMenuMapper, SysMenu> imp
         shortcuts.setShortcutsUserid(userId);
         shortcuts.setCreateBy(userId);
         shortcuts.setCreateDate(new Date());
+        shortcuts.setShortcutsNum(8);
         menuDao.addShortcuts(shortcuts);
         return menu;
     }
@@ -190,6 +191,19 @@ public class MenuServiceImpl extends BaseServiceImpl<SysMenuMapper, SysMenu> imp
         shortcuts.setShortcutsMenuid(menu.getId());
         QueryWrapper<SysShortcuts> queryWrapper = new QueryWrapper<>(shortcuts);
         shortcutsMapper.delete(queryWrapper);
+    }
+
+    @Override
+    public void sortShortCuts(List<String> shortCutsIds) {
+        int i = 0;
+        for (String shortcutsId : shortCutsIds) {
+            SysShortcuts shortcuts = new SysShortcuts();
+            shortcuts.setId(shortcutsId);
+            shortcuts.setShortcutsNum(i);
+            shortcutsMapper.updateById(shortcuts);
+            i++;
+        }
+
     }
 
     public SysMenu getChilds(SysMenu menu, List<SysMenu> menuList) {

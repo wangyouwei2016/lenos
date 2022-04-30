@@ -1,5 +1,7 @@
 package com.len.controller;
 
+import java.util.Arrays;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,7 +36,7 @@ public class DashboardController extends BaseController {
     /**
      * 添加快捷菜单
      * 
-     * @param code
+     * @param code 菜单code
      * @return
      */
     @PostMapping("/shortCuts/add")
@@ -43,10 +45,30 @@ public class DashboardController extends BaseController {
         return succ(menuService.addShortCuts(code));
     }
 
+    /**
+     * 根据编码删除菜单
+     * 
+     * @param code 菜单code
+     * @return
+     */
     @PostMapping("/shortCuts/del/{code}")
     @ResponseBody
     public LenResponse delShortCuts(@PathVariable("code") String code) {
         menuService.delShortcuts(code);
+        return succ();
+    }
+
+    /**
+     * 根据编码删除菜单
+     *
+     * @param shortCutsIds 快捷菜单id arr
+     * @return
+     */
+    @PostMapping("/shortCuts/sort")
+    @ResponseBody
+    public LenResponse sortShortCuts(String shortCutsIds) {
+        String[] shortCutsList = shortCutsIds.split(",", -1);
+        menuService.sortShortCuts(Arrays.asList(shortCutsList));
         return succ();
     }
 
