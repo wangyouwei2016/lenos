@@ -34,10 +34,6 @@ public class PersonController extends BaseController {
     @Autowired
     SysUserService userService;
 
-    @GetMapping("/index")
-    public String main() {
-        return "/main/index";
-    }
 
     @GetMapping()
     public String toPerson(Model model) {

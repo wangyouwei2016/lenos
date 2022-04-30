@@ -1,11 +1,16 @@
 package com.len.mapper;
 
-import com.len.base.BaseMapper;
-import com.len.entity.SysMenu;
-import org.apache.ibatis.annotations.Param;
-
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
+import com.len.base.BaseMapper;
+import com.len.entity.SysMenu;
+import com.len.entity.SysShortcuts;
+
+/**
+ * 菜单 mapper
+ */
 public interface SysMenuMapper extends BaseMapper<SysMenu> {
 
     /**
@@ -29,4 +34,20 @@ public interface SysMenuMapper extends BaseMapper<SysMenu> {
      * @return
      */
     List<SysMenu> getUserMenu(@Param("id") String id);
+
+    /**
+     * 获取用户快捷菜单列表
+     * 
+     * @param userId 用户id
+     * @return
+     */
+    List<SysMenu> getUserShortCuts(@Param("userId") String userId);
+
+    /**
+     * 添加快捷方式
+     * 
+     * @param shortcuts
+     */
+    void addShortcuts(SysShortcuts shortcuts);
+
 }

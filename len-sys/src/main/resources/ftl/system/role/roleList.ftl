@@ -1,6 +1,5 @@
-<#include "/system/base/head.ftl">
 
-<body>
+
 
 <div class="lenos-search">
     <div class="select">
@@ -22,8 +21,8 @@
 <table id="roleList" width="100%" lay-filter="user"></table>
 <script type="text/html" id="toolBar">
     <@lenInclude  path="/system/base/bar.ftl" hasPermission="role:add"   name="查看" event="detail"/>
-    <@lenInclude  path="/system/base/bar.ftl" hasPermission="user:update"   name="编辑" event="edit"/>
-    <@lenInclude  path="/system/base/bar.ftl" hasPermission="user:del"   name="删除" event="del"/>
+    <@lenInclude  path="/system/base/bar.ftl" hasPermission="user:update" code="edit"   name="编辑" event="edit"/>
+    <@lenInclude  path="/system/base/bar.ftl" hasPermission="user:del"  code="del"  name="删除" event="del"/>
 </script>
 <script>
     layui.use('table', function () {
@@ -105,4 +104,3 @@
         Len.btnBind(active);
     });
 </script>
-</body>

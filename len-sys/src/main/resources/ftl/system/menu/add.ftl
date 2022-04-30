@@ -1,14 +1,5 @@
-<!DOCTYPE html>
-<html>
 
-<head>
-    <meta charset="UTF-8">
-    <title>菜单管理</title>
-    <#include "/system/base/head.ftl">
-</head>
 
-<#--body-->
-<body>
 <div class="x-body">
     <form class="layui-form layui-form-pane" style="margin-left: 20px;">
         <div style="width:100%;height:500px;overflow: auto;">
@@ -267,6 +258,3 @@
         $('#layui-layer-iframe1').contents().find('#menu-icon').val(id);
     }
 </script>
-</body>
-
-</html>

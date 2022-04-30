@@ -21,9 +21,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * @author zhuxiaomeng
- * @date 2017/12/19.
- * @email lenospmiller@gmail.com
+ * 角色 service
  */
 @Service
 public class RoleServiceImpl extends BaseServiceImpl<SysRoleMapper, SysRole> implements RoleService {
@@ -37,12 +35,11 @@ public class RoleServiceImpl extends BaseServiceImpl<SysRoleMapper, SysRole> imp
     @Autowired
     private RoleUserService roleUserService;
 
-
     @Override
     public void addRole(SysRole sysRole, String[] menus) {
         ValidatorUtils.validateEntity(sysRole, AddGroup.class);
         roleMapper.insert(sysRole);
-        //操作role-menu data
+        // 操作role-menu data
         if (menus != null) {
             for (String menu : menus) {
                 SysRoleMenu sysRoleMenu = new SysRoleMenu();

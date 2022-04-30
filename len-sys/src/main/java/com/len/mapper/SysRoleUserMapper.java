@@ -5,6 +5,9 @@ import com.len.entity.SysRoleUser;
 
 import java.util.List;
 
+/**
+ * 账户角色 mapper
+ */
 public interface SysRoleUserMapper extends BaseMapper<SysRoleUser> {
 
     List<SysRoleUser> selectByCondition(SysRoleUser sysRoleUser);

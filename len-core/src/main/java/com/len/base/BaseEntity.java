@@ -13,7 +13,7 @@ import java.util.Date;
  * @date 2019-11-12.
  */
 @Data
-public class AbstractEntity implements Serializable {
+public class BaseEntity implements Serializable {
 
     @TableId(type = IdType.UUID)
     private String id;

@@ -3,10 +3,12 @@
 <#--description
 -->
 
-<div>
-    <span>${name}：</span>
+<div class="search-div">
+    <div class="search-div-label">
+        <span>${name}</span>
+    </div>
     <span class="layui-inline">
-        <input class="layui-input" height="20px" id="${id}" autocomplete="off">
+        <input class="layui-input" id="${id}" autocomplete="off">
     </span>
 </div>
 

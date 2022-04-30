@@ -1,4 +1,3 @@
-<#include "/system/base/head.ftl">
 
 <link rel="stylesheet" href="${re.contextPath}/plugin/ztree/css/metroStyle/metroStyle.css">
 <script type="text/javascript"

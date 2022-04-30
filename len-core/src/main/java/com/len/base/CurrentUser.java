@@ -39,14 +39,12 @@ public class CurrentUser implements Serializable {
    private List<CurrentRole> currentRoleList;
     private static final long serialVersionUID = 1L;
 
-    public CurrentUser(String id, String username, Integer age, String email, String photo,
-        String realName) {
+    public CurrentUser(String id, String username, Integer age, String email, String photo) {
         this.id = id;
         this.username = username;
         this.age = age;
         this.email = email;
         this.photo = photo;
-        this.realName = realName;
     }
 
     public CurrentUser() {

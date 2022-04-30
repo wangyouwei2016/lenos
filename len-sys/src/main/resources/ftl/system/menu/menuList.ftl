@@ -1,5 +1,4 @@
 <#--公共文件-->
-<#include "/system/base/head.ftl">
 
 <#--搜索-->
 <div class="lenos-search">

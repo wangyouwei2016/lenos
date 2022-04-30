@@ -1,25 +1,39 @@
-<#include "/system/base/head.ftl">
+<#--<#include "/system/base/head.ftl">-->
 
 <#--搜索-->
-<div class="lenos-search">
-    <div class="select">
-        <@lenInclude path="/system/base/queryBox.ftl" name="用户名" id="uname" ></@lenInclude>
-        <@lenInclude path="/system/base/queryBox.ftl" name="邮箱" id="email" ></@lenInclude>
-    </div>
-    <#include "/system/base/searth.ftl">
-</div>
+<div class="len-head">
+    <div class="lenos-search" style="background-color: #F8F8F8">
+        <div class="select">
+            <@lenInclude path="/system/base/queryBox.ftl" name="用户名" id="uname" ></@lenInclude>
+            <@lenInclude path="/system/base/queryBox.ftl" name="邮箱" id="email" ></@lenInclude>
+            <@lenInclude path="/system/base/queryBox.ftl" name="邮箱" id="email" ></@lenInclude>
+            <@lenInclude path="/system/base/queryBox.ftl" name="邮箱" id="email" ></@lenInclude>
+            <@lenInclude path="/system/base/queryBox.ftl" name="邮箱" id="email" ></@lenInclude>
+            <@lenInclude path="/system/base/queryBox.ftl" name="邮箱" id="email" ></@lenInclude>
+            <@lenInclude path="/system/base/queryBox.ftl" name="邮箱" id="email" ></@lenInclude>
+            <@lenInclude path="/system/base/queryBox.ftl" name="邮箱" id="email" ></@lenInclude>
+            <@lenInclude path="/system/base/queryBox.ftl" name="邮箱" id="email" ></@lenInclude>
+            <@lenInclude path="/system/base/queryBox.ftl" name="邮箱" id="email" ></@lenInclude>
+            <@lenInclude path="/system/base/queryBox.ftl" name="邮箱" id="email" ></@lenInclude>
+            <@lenInclude path="/system/base/queryBox.ftl" name="邮箱" id="email" ></@lenInclude>
+        </div>
 
-<#--按钮-->
-<div class="layui-col-md12 len-button">
-    <div class="layui-btn-group">
-        <@lenInclude path="/system/base/btn.ftl" hasPermission="user:select"
-        type="add" name="新增" icon="&#xe608;"></@lenInclude>
-        <@lenInclude path="/system/base/btn.ftl" hasPermission="user:select"
-        type="update" name="编辑" icon="&#xe642;"></@lenInclude>
-        <@lenInclude path="/system/base/btn.ftl" hasPermission="user:del"
-        type="detail" name="查看" icon="&#xe605;"></@lenInclude>
-        <@lenInclude path="/system/base/btn.ftl" hasPermission="user:repass"
-        type="changePwd" name="修改密码" icon="&#xe605;"></@lenInclude>
+    </div>
+
+    <#--按钮-->
+    <div class="layui-col-md12 len-button" style="height: auto;background-color: #f8f8f8;padding: 8px 8px;">
+        <div class="layui-btn-group" style="width: 100%;">
+            <@lenInclude path="/system/base/btn.ftl" hasPermission="user:select"
+            type="add" name="新增" icon="&#xe608;"></@lenInclude>
+            <@lenInclude path="/system/base/btn.ftl" hasPermission="user:select"
+            type="update" name="编辑" icon="&#xe642;"></@lenInclude>
+            <@lenInclude path="/system/base/btn.ftl" hasPermission="user:del"
+            type="detail" name="查看" icon="&#xe605;"></@lenInclude>
+            <@lenInclude path="/system/base/btn.ftl" hasPrmission="user:repass"
+            type="changePwd" name="修改密码" icon="&#xe605;"></@lenInclude>
+            <#include "/system/base/searth.ftl">
+        </div>
+
     </div>
 </div>
 
@@ -29,8 +43,8 @@
 <#--toobar-->
 <script type="text/html" id="bar">
     <@lenInclude  path="/system/base/bar.ftl" hasPermission="user:select"   name="查看" event="detail"/>
-    <@lenInclude  path="/system/base/bar.ftl" hasPermission="user:update"  name="编辑" event="edit"/>
-    <@lenInclude  path="/system/base/bar.ftl" hasPermission="user:del" name="删除" event="del"/>
+    <@lenInclude  path="/system/base/bar.ftl" code="edit" hasPermission="user:update"  name="编辑" event="edit"/>
+    <@lenInclude  path="/system/base/bar.ftl" code="del" hasPermission="user:del" name="删除" event="del"/>
 </script>
 <script type="text/html" id="switchTpl">
     <input type="checkbox" name="sex" lay-skin="switch" lay-text="女|男" lay-filter="sexDemo">
@@ -44,7 +58,7 @@
         table.render({
             id: 'userList',
             elem: '#userList'
-            , url: 'showUserList'
+            , url: 'user/showUserList'
             , parseData: function (res) {
                 return {
                     "code": res.code,

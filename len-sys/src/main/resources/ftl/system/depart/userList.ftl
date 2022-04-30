@@ -1,12 +1,4 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>部门管理</title>
-    <#include "/system/base/head.ftl">
-</head>
 
-<body>
 <div class="lenos-search">
     <div class="select">
         <span>用户名：</span>
@@ -306,5 +298,3 @@
         });
     }
 </script>
-</body>
-</html>

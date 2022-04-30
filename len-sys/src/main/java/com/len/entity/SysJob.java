@@ -1,10 +1,7 @@
 package com.len.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.len.base.AbstractEntity;
+import com.len.base.BaseEntity;
 import com.len.validator.group.AddGroup;
 import com.len.validator.group.UpdateGroup;
 import lombok.Data;
@@ -12,13 +9,12 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 import javax.validation.constraints.NotEmpty;
-import java.util.Date;
 
 @EqualsAndHashCode(callSuper = true)
 @TableName(value = "sys_job")
 @Data
 @ToString
-public class SysJob extends AbstractEntity {
+public class SysJob extends BaseEntity {
 
     /**
      * 描述任务

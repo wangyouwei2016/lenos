@@ -116,7 +116,7 @@ public class ListenUserRole {
         identityService.deleteUser(user.getId());
         User au = new UserEntity();
         au.setId(user.getId());
-        au.setFirstName(user.getRealName());
+//        au.setFirstName(user.getRealName());
         au.setEmail(user.getEmail());
         identityService.saveUser(au);
 

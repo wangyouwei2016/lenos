@@ -1,4 +1,4 @@
-<#--表格 toolbar 模板-->
+<#--表格 toolbar 模板组件-->
 
 <#--description
 定义默认class
@@ -8,11 +8,11 @@
 未定义：layui-btn-normal-->
 
 <#assign notExistsClass=class==''/>
-<#if name=="查看"&&notExistsClass>
+<#if code=="select"&&notExistsClass>
     <#assign currentClass='layui-btn-primary'/>
-<#elseif name=="编辑"&&notExistsClass>
+<#elseif code=="edit"&&notExistsClass>
     <#assign currentClass='layui-btn-normal'/>
-<#elseif name=="删除"&&notExistsClass>
+<#elseif code=="del"&&notExistsClass>
     <#assign currentClass='layui-btn-danger'/>
 <#elseif notExistsClass>
     <#assign currentClass='layui-btn-normal'/>
@@ -37,3 +37,4 @@
 <#assign class=''>
 <#assign event=''>
 <#assign name=''>
+<#assign code=''>

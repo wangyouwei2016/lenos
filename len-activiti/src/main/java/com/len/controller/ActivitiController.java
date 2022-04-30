@@ -112,7 +112,7 @@ public class ActivitiController extends BaseController {
             for (SysUser user : userList) {
                 au = new UserEntity();
                 au.setId(user.getId());
-                au.setFirstName(user.getRealName());
+//                au.setFirstName(user.getRealName());
                 au.setEmail(user.getEmail());
                 identityService.deleteUser(au.getId());
                 identityService.saveUser(au);
@@ -141,9 +141,7 @@ public class ActivitiController extends BaseController {
         return j;
     }
 
-    /**
-     * 方法此有所参考 感谢我参考原作者：liuruijie
-     */
+
     @GetMapping(value = "goActiviti")
     public String goActiviti() throws UnsupportedEncodingException {
         Model model = repositoryService.newModel();

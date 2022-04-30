@@ -1,3 +1,4 @@
+<#--
 <!DOCTYPE html>
 <html>
 
@@ -12,7 +13,7 @@
 </head>
 <body class="kit-theme">
 
-<#--动态tab演示  利用 freemarker 宏实现-->
+&lt;#&ndash;动态tab演示  利用 freemarker 宏实现&ndash;&gt;
 <#macro tree data start end>
     <#if (start=="start")>
         <div class="layui-side layui-bg-black kit-side">
@@ -48,4 +49,4 @@
 <script src="${re.contextPath}/plugin/layui/layui.js"></script>
 <script src="${re.contextPath}/plugin/tools/main.js"></script>
 </body>
-</html>
+</html>-->

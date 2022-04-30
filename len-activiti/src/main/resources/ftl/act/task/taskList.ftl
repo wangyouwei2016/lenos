@@ -151,9 +151,9 @@
       table.on('tool(task)', function (obj) {
       var data = obj.data;
       if (obj.event === 'handle') {
-        Len.popup('办理','/leave/agent/'+data.id,700,500,'task-agent');
+        Len.popup('/leave/agent/'+data.id,700,500,'办理','task-agent');
       }else if(obj.event === 'update'){
-        Len.popup('编辑','${re.contextPath}/leave/updateLeave/'+data.id,700,500,'task-update');
+        Len.popup('${re.contextPath}/leave/updateLeave/'+data.id,700,500,'编辑','task-update');
       }else if(obj.event==='leaveDetail'){
           window.top.layer.open({
               id: 'leave-detail',
