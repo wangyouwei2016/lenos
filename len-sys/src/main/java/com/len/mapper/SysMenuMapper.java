@@ -43,11 +43,13 @@ public interface SysMenuMapper extends BaseMapper<SysMenu> {
      */
     List<SysMenu> getUserShortCuts(@Param("userId") String userId);
 
+
     /**
-     * 添加快捷方式
+     * 获取个人快捷菜单最大编码数
      * 
-     * @param shortcuts
+     * @param userId
+     * @return
      */
-    void addShortcuts(SysShortcuts shortcuts);
+    Integer getMaxNum(String userId);
 
 }

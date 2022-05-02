@@ -67,64 +67,8 @@
     select s.id,m.name,m.code,m.icon from sys_shortcuts s left join sys_menu m on s.shortcuts_menuid = m.id
     where s.shortcuts_userid =#{userId,jdbcType=VARCHAR} order by s.shortcuts_num asc
   </select>
-
-    <sql id="shortcutsColumn">
-        <trim suffix="" suffixOverrides=",">
-            <if test="id!=null">
-                id,
-            </if>
-            <if test="shortcutsUserid!=null">
-                shortcuts_userid,
-            </if>
-            <if test="shortcutsMenuid!=null">
-                shortcuts_menuid,
-            </if>
-            <if test="createBy != null">
-                create_by,
-            </if>
-            <if test="updateBy != null">
-                update_by,
-            </if>
-            <if test="createDate != null">
-                create_date,
-            </if>
-            <if test="updateDate != null">
-                update_date
-            </if>
-        </trim>
-    </sql>
-
-    <sql id="shortcutsValue">
-        <trim suffix="" suffixOverrides=",">
-            <if test="id!=null">
-                #{id},
-            </if>
-            <if test="shortcutsUserid!=null">
-                #{shortcutsUserid},
-            </if>
-            <if test="shortcutsMenuid!=null">
-                #{shortcutsMenuid},
-            </if>
-            <if test="createBy != null">
-                #{createBy,jdbcType=VARCHAR},
-            </if>
-            <if test="updateBy != null">
-                #{updateBy,jdbcType=VARCHAR},
-            </if>
-            <if test="createDate != null">
-                #{createDate,jdbcType=TIMESTAMP},
-            </if>
-            <if test="updateDate != null">
-                #{updateDate,jdbcType=TIMESTAMP}
-            </if>
-        </trim>
-    </sql>
-
-    <insert id="addShortcuts" parameterType="com.len.entity.SysShortcuts">
-        insert into sys_shortcuts(
-        <include refid="shortcutsColumn"/>
-        ) values (
-        <include refid="shortcutsValue"/>
-        )
-    </insert>
+    <!--获取当前用户快捷菜单最大编码-->
+    <select id="getMaxNum" parameterType="java.lang.String" resultType="java.lang.Integer">
+    select max(shortcuts_num) from sys_shortcuts where shortcuts_userid =#{userId,jdbcType=VARCHAR}
+  </select>
 </mapper>

@@ -17,7 +17,7 @@ public class SysShortcuts extends BaseEntity {
     /**
      * 序号
      */
-    private int shortcutsNum;
+    private Integer shortcutsNum;
 
     /**
      * 用户id

@@ -207,9 +207,7 @@ layui.config({
                 success: function () {
                 }
             });
-        }
-
-        ,
+        },
 
 
         /**
@@ -231,8 +229,7 @@ layui.config({
                 "    </i>" +
                 " </li>";
             return $(shortCuts);
-        }
-        ,
+        },
 
         /**
          * 绑定单个 快捷菜单
@@ -240,8 +237,7 @@ layui.config({
         singleShortcutBind: function ($that) {
             _dashboard.singleShortcutBind($that);
             _dashboard.delSingleShortcutBind($that);
-        }
-        ,
+        },
 
         /**
          * 根据菜单编码删除快捷方式
@@ -322,8 +318,9 @@ layui.config({
                         code: cId
                     }, function (resp, textStatus) {
                         var name = resp.data.name,
-                            icon = resp.data.icon;
-                        var shortCuts = dashboard.createShortCuts(cId, name, icon);
+                            icon = resp.data.icon,
+                            code = resp.data.icon;
+                        var shortCuts = dashboard.createShortCuts(cId, code, name, icon);
                         //添加快捷
                         sBody.append(shortCuts);
                         //绑定事件
