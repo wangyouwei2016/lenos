@@ -159,16 +159,18 @@ public class MenuServiceImpl extends BaseServiceImpl<SysMenuMapper, SysMenu> imp
 
     @Override
     public SysMenu addShortCuts(String code) {
+        String userId = Principal.getPrincipal().getId();
+        Integer maxNum = menuDao.getMaxNum(userId);
+        maxNum = maxNum == null ? 0 : maxNum;
         SysMenu menu = getMenuBNyCode(code);
         SysShortcuts shortcuts = new SysShortcuts();
         shortcuts.setId(UuidUtil.getUuid());
         shortcuts.setShortcutsMenuid(menu.getId());
-        String userId = Principal.getPrincipal().getId();
+        shortcuts.setShortcutsNum(maxNum + 1);
         shortcuts.setShortcutsUserid(userId);
         shortcuts.setCreateBy(userId);
         shortcuts.setCreateDate(new Date());
-        shortcuts.setShortcutsNum(8);
-        menuDao.addShortcuts(shortcuts);
+        shortcutsMapper.insert(shortcuts);
         return menu;
     }
 
