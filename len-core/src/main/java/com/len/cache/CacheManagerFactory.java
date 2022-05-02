@@ -32,7 +32,7 @@ public class CacheManagerFactory {
                 cacheManager = redisCacheManager;
                 break;
             default:
-                throw new LenException(String.format("[%]不支持的缓存", provider));
+                throw new LenException(String.format("不支持的缓存 [%]", provider));
 
         }
     }

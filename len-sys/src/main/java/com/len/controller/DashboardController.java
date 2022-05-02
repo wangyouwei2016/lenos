@@ -1,11 +1,14 @@
 package com.len.controller;
 
 import java.util.Arrays;
+import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import com.len.base.BaseController;
+import com.len.entity.SysPanelOpt;
+import com.len.service.DashboardService;
 import com.len.service.MenuService;
 import com.len.util.LenResponse;
 
@@ -18,10 +21,37 @@ public class DashboardController extends BaseController {
 
     private final MenuService menuService;
 
-    public DashboardController(MenuService menuService) {
+    private final DashboardService dashboardService;
+
+    public DashboardController(MenuService menuService, DashboardService dashboardService) {
         this.menuService = menuService;
+        this.dashboardService = dashboardService;
     }
 
+    @GetMapping("/panel/list")
+    @ResponseBody
+    public LenResponse paneList() {
+        return succ(dashboardService.panelList());
+    }
+
+    /**
+     * 保存个人面板顺序配置
+     *
+     * @param panelOpts
+     * @return
+     */
+    @PostMapping("/panel/save")
+    @ResponseBody
+    public LenResponse savePanel(@RequestBody List<SysPanelOpt> panelOpts) {
+        dashboardService.savePanelOpt(panelOpts);
+        return succ();
+    }
+
+    /**
+     * 展示面板
+     * 
+     * @return
+     */
     @GetMapping
     public String main() {
         return "/main/dashboard";

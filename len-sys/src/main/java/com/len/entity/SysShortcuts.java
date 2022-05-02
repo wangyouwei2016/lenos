@@ -6,6 +6,9 @@ import com.len.base.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+/**
+ * 快捷菜单
+ */
 @EqualsAndHashCode(callSuper = true)
 @Data
 @TableName(value = "sys_shortcuts")

@@ -4,18 +4,146 @@
 layui.config({
     base: 'plugin/build/js/',
     version: '1.0.1'
-}).define(['layer'], function (exports) {
+}).define(['layer', 'utils'], function (exports) {
     var $ = layui.jquery,
+        utils = layui.utils,
         layer = layui.layer;
 
 
     var dashboard = {
 
+        panelOpt: {},
+
         init: function () {
+            dashboard.showDashboard();
             _dashboard.initShortcut();
             _dashboard.initDynamic();
             _dashboard.initBacklog();
             dashboard.dragPanel();
+        },
+
+        /**
+         * 根据配置面板渲染面板功能模块
+         */
+        showDashboard: function () {
+            var data = dashboard.getPanelOptData();
+            var panelColumnOne = $('#panelColumnOne'),
+                panelColumnTwo = $('#panelColumnTwo');
+            $.map(data, function (panelOptArr) {
+                panelOptArr.forEach(function (panelOpt) {
+                    var panelId = panelOpt.id,
+                        code = panelOpt.paneloptCode,
+                        column = panelOpt.paneloptColumn;
+                    dashboard.panelOpt[panelId] = code;
+
+                    var itemBody = dashboard.getPanelItemBody(code, panelId);
+                    if (column === 1) {
+                        panelColumnOne.append(itemBody);
+                    } else {
+                        panelColumnTwo.append(itemBody);
+                    }
+                });
+            });
+            //不存在赋一个空拖拽元素
+            if (panelColumnOne.find('div').length === 0) {
+                panelColumnOne.append(dashboard.panelNullDiv());
+            }
+            if (panelColumnTwo.find('div').length === 0) {
+                panelColumnTwo.append(dashboard.panelNullDiv());
+            }
+        },
+
+        panelNullDiv: function () {
+            return "<div panel-item='true' class=\"dragdropPanel\" style='margin-bottom: 15px' >" +
+                "</div>";
+        },
+
+        /**
+         * 更具code 获取功能面板
+         * @param code
+         * @param id
+         * @returns {string}
+         */
+        getPanelItemBody(code, id) {
+            switch (code) {
+                case 'DYNAMIC':
+                    return dashboard.dynamicBody(id);
+                case 'SHORTCUTS':
+                    return dashboard.shortCutsBody(id);
+                case 'BACKLOG':
+                    return dashboard.backlogBody(id);
+            }
+            return '';
+        },
+
+        /**
+         * 获取面板配置
+         * @returns {string}
+         */
+        getPanelOptData: function () {
+            var data = '';
+            $.ajaxSettings.async = false;
+            $.get('dashboard/panel/list', {}, function (resp, status) {
+                $.ajaxSettings.async = true;
+                data = resp.data;
+            });
+            $.ajaxSettings.async = true;
+            return data;
+        },
+        /**
+         * 快捷菜单body
+         * @returns {string}
+         */
+        shortCutsBody: function (id) {
+            return "<div panel-item='true'  class=\"dragdropPanel\" style='margin-bottom: 15px' >" +
+                "   <div  panel-id=" + id + " class=\"layui-card  admin-shortcut\">\n" +
+                "       <div class=\"layui-card-header\" title=\"可从左侧菜单拖拽\">\n" +
+                "           快捷菜单\n" +
+                "       </div>\n" +
+                "       <div class=\"layui-card-body admin-shortcut-content\" style=\"height: 230px\">\n" +
+                "           <div carousel-item=\"\">\n" +
+                "               <ul id=\"admin-shortcut-content\" class=\"layui-row layui-col-space10 layui-this\">\n" +
+                "               </ul>\n" +
+                "           </div>\n" +
+                "       </div>\n" +
+                "    </div>\n" +
+                "</div>";
+        },
+
+        /**
+         * 动态面板 body
+         * @returns {string}
+         */
+        dynamicBody: function (id) {
+            return "<div panel-item='true' class=\"dragdropPanel\" style='margin-bottom: 15px' >" +
+                "     <div panel-id=" + id + " class=\"layui-card admin-dynamic\">\n" +
+                "         <div class=\"layui-card-header\">\n" +
+                "             动态\n" +
+                "         </div>\n" +
+                "         <div class=\"layui-card-body admin-dynamic-content\" style=\"height: 540px\">\n" +
+                "             <ul class=\"layui-row layui-col-space10 layui-this\">\n" +
+                "             </ul>\n" +
+                "         </div>\n" +
+                "     </div>\n" +
+                "</div>";
+        },
+
+        /**
+         * 待办事项 body
+         * @returns {string}
+         */
+        backlogBody: function (id) {
+            return "<div panel-item='true' class=\"dragdropPanel\" style='margin-bottom: 15px' >" +
+                "    <div panel-id=" + id + " class=\"layui-card admin-backlog\">\n" +
+                "        <div class=\"layui-card-header\">\n" +
+                "            代办事项\n" +
+                "        </div>\n" +
+                "        <div class=\"layui-card-body\" style=\"height: 230px\">\n" +
+                "            <ul class=\"layui-row layui-col-space10 layui-this\">\n" +
+                "            </ul>\n" +
+                "        </div>\n" +
+                "    </div>\n" +
+                "    </div>";
         },
 
 
@@ -25,13 +153,63 @@ layui.config({
         dragPanel: function () {
             var dragdropPanel = document.getElementsByClassName('dragdropPanel');
             for (var i = 0; i < dragdropPanel.length; i++) {
-                Sortable.create(dragdropPanel[i], {
-                    group: 'dragdropPanel',
+                new Sortable(dragdropPanel[i], {
+                    group: 'dragdrop',
                     swapThreshold: 0.31,
-                    animation: 150
+                    animation: 150,
+                    onAdd: function ( /**Event*/ evt) {
+                        dashboard.savePanelOpt();
+                    }
                 });
             }
         },
+
+        /**
+         * 保存面板配置
+         */
+        savePanelOpt: function () {
+            //保存拖拽配置
+            var panelColumnOne = $('#panelColumnOne'),
+                panelColumnTwo = $('#panelColumnTwo');
+            var opt = [];
+            var oneIndexArr = panelColumnOne.find('div[panel-id]'),
+                twoIndexArr = panelColumnTwo.find('div[panel-id]');
+
+            $.each(oneIndexArr, function (index, $el) {
+                var id = $($el).attr('panel-id');
+                var code = dashboard.panelOpt[id];
+                opt.push({
+                    id: id,
+                    paneloptColumn: 1,
+                    paneloptIndex: parseInt(index),
+                    paneloptCode: code
+                })
+            });
+
+            $.each(twoIndexArr, function (index, $el) {
+                var id = $($el).attr('panel-id');
+                var code = dashboard.panelOpt[id];
+                opt.push({
+                    id: id,
+                    paneloptColumn: 2,
+                    paneloptIndex: parseInt(index),
+                    paneloptCode: code
+                })
+            });
+
+            $.ajax({
+                url: 'dashboard/panel/save',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                method: 'POST',
+                data: JSON.stringify(opt),
+                success: function () {
+                }
+            });
+        }
+
+        ,
 
 
         /**
@@ -53,7 +231,8 @@ layui.config({
                 "    </i>" +
                 " </li>";
             return $(shortCuts);
-        },
+        }
+        ,
 
         /**
          * 绑定单个 快捷菜单
@@ -61,7 +240,8 @@ layui.config({
         singleShortcutBind: function ($that) {
             _dashboard.singleShortcutBind($that);
             _dashboard.delSingleShortcutBind($that);
-        },
+        }
+        ,
 
         /**
          * 根据菜单编码删除快捷方式
@@ -167,11 +347,7 @@ layui.config({
                         shortCutsIds: shortCutsIds.join()
                     }, function (resp, textStatus) {
                     });
-
-
                 },
-
-
             });
         },
 
@@ -235,4 +411,5 @@ layui.config({
     };
 
     exports('dashboard', dashboard);
-});
+})
+;
