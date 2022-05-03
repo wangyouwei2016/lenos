@@ -317,9 +317,9 @@ layui.config({
                     $.post('dashboard/shortCuts/add', {
                         code: cId
                     }, function (resp, textStatus) {
-                        var name = resp.data.name,
-                            icon = resp.data.icon,
-                            code = resp.data.icon;
+                        var code = resp.data.code,
+                            name = resp.data.name,
+                            icon = resp.data.icon;
                         var shortCuts = dashboard.createShortCuts(cId, code, name, icon);
                         //添加快捷
                         sBody.append(shortCuts);
@@ -408,5 +408,4 @@ layui.config({
     };
 
     exports('dashboard', dashboard);
-})
-;
+});
