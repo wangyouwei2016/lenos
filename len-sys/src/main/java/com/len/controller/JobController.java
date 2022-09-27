@@ -33,16 +33,13 @@ import io.swagger.annotations.ApiOperation;
 @Controller
 @RequestMapping("/job")
 @Api(value = "定时任务", tags = "定时任务")
-public class JobController extends BaseController<SysJob> {
-
+public class JobController extends BaseController {
 
     private final JobService jobService;
 
-
     private final JobTask jobTask;
 
-    public JobController(JobService jobService,
-                         JobTask jobTask) {
+    public JobController(JobService jobService, JobTask jobTask) {
         this.jobService = jobService;
         this.jobTask = jobTask;
     }

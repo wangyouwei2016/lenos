@@ -1,7 +1,7 @@
 
 <#--搜索-->
 <div class="lenos-search">
-    <div class="select">
+    <div class="search-select">
         <@lenInclude path="/system/base/queryBox.ftl" name="操作用户" id="userName" ></@lenInclude>
         <@lenInclude path="/system/base/queryBox.ftl" name="操作类型" id="type" ></@lenInclude>
     </div>

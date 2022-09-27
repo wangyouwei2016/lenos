@@ -31,9 +31,12 @@ import java.util.List;
 @Api(value = "个人业务", tags = "个人业务处理")
 public class PersonController extends BaseController {
 
-    @Autowired
-    SysUserService userService;
 
+    private final SysUserService userService;
+
+    public PersonController(SysUserService userService) {
+        this.userService = userService;
+    }
 
     @GetMapping()
     public String toPerson(Model model) {

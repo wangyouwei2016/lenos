@@ -14,7 +14,7 @@
 
 <body>
 <div class="lenos-search">
-  <div class="select">
+  <div class="search-select">
     操作用户：
     <span class="layui-inline">
       <input class="layui-input" height="20px" id="userName" autocomplete="off">

@@ -9,6 +9,7 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.ExcessiveAttemptsException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
+import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -64,6 +65,7 @@ public class LoginController {
     @GetMapping(value = "/login")
     public String toLogin() {
         Subject sub = SecurityUtils.getSubject();
+        Session session = sub.getSession();
         if (sub.isAuthenticated() || sub.isRemembered()) {
             return "/main/main";
         }

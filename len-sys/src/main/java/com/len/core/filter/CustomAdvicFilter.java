@@ -14,11 +14,13 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 public class CustomAdvicFilter extends FormAuthenticationFilter {
 
+/*
     @Autowired
     private SysUserService userService;
 
     @Autowired
     private MenuService menuService;
+*/
 
     @Override
     protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws Exception {

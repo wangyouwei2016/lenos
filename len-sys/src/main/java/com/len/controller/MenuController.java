@@ -34,8 +34,12 @@ import io.swagger.annotations.ApiOperation;
 @Api(value = "菜单管理", tags = "菜单业务处理")
 public class MenuController extends BaseController {
 
-    @Autowired
-    private MenuService menuService;
+
+    private final MenuService menuService;
+
+    public MenuController(MenuService menuService) {
+        this.menuService = menuService;
+    }
 
     @GetMapping(value = "showMenu")
     public String showUser() {

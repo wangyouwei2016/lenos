@@ -31,7 +31,7 @@ import lombok.extern.slf4j.Slf4j;
  * @email lenospmiller@gmail.com
  */
 @Slf4j
-public abstract class BaseController<T> {
+public abstract class BaseController {
 
     @InitBinder
     protected void initBinder(WebDataBinder binder) {

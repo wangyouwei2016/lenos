@@ -7,6 +7,7 @@
 <link rel="stylesheet" href="${re.contextPath}/plugin/lenos/main.css">
 <link rel="stylesheet" href="${re.contextPath}/plugin/build/css/admin.css">
 <script type="text/javascript" src="${re.contextPath}/plugin/jquery/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="${re.contextPath}/plugin/aggrid/ag-grid-community.js"></script>
 <link rel="stylesheet" href="${re.contextPath}/plugin/plugins/font-awesome/css/font-awesome.min.css" media="all"/>
 <link rel="stylesheet" href="${re.contextPath}/plugin/build/css/app.css" media="all"/>
 <link rel="stylesheet" href="${re.contextPath}/plugin/build/css/themes/default.css" media="all" id="skin" kit-skin/>

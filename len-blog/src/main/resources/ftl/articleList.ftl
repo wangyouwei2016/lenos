@@ -17,7 +17,7 @@
 
 <body>
 <div class="lenos-search">
-    <div class="select">
+    <div class="search-select">
         标题：
         <div class="layui-inline">
             <input class="layui-input" height="20px" id="title" autocomplete="off">

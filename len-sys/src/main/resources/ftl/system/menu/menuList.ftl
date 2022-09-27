@@ -2,7 +2,7 @@
 
 <#--搜索-->
 <div class="lenos-search">
-    <div class="select">
+    <div class="search-select">
         <@lenInclude path="/system/base/queryBox.ftl" name="菜单名称" id="name" ></@lenInclude>
     </div>
     <#include "/system/base/searth.ftl">

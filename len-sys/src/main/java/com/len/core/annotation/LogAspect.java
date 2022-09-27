@@ -69,12 +69,12 @@ public class LogAspect {
         StringBuffer buffer = new StringBuffer();
         if (obj != null) {
             for (int i = 0; i < obj.length; i++) {
-                buffer.append("[参数" + (i + 1) + ":");
+                buffer.append("[参数").append(i + 1).append(":");
                 Object o = obj[i];
                 if (o instanceof Model) {
                     continue;
                 }
-                String parameter = null;
+                String parameter;
                 try {
                     parameter = JSON.toJSONString(o);
                 } catch (Exception e) {
@@ -91,7 +91,6 @@ public class LogAspect {
                 log.setUserName(currentUser.getUsername());
             }
         } catch (UnavailableSecurityManagerException e) {
-
         }
         logMapper.insert(log);
     }
