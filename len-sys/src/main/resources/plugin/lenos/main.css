@@ -6,25 +6,60 @@ html {
     min-width: 120px;
 }
 
-.lenos-search .select {
+.lenos-search .search-select {
     height: auto;
     background-color: #f8f8f8;
+    width: 100%;
 }
 
-.lenos-search .select .search-div {
+.lenos-search .search-zoom {
+    display: flex;
+    width: 100%;
+    height: 20px;
+    background-color: #f8f8f8;
+    padding-bottom: 5px
+}
+
+.lenos-search .search-zoom .search-zoom-show {
+    cursor: pointer;
+    text-align: center;
+    margin: auto;
+    width: 50px;
+    height: 18px;
+    background-color: white;
+    border-radius: 15px
+}
+
+.lenos-search .search-zoom .search-zoom-show:hover {
+    background-color: #fdfdfd;
+}
+
+.lenos-search .search-zoom .search-zoom-hidden {
+    display: none;
+    cursor: pointer;
+    text-align: center;
+    margin: auto;
+    width: 50px;
+    height: 18px;
+    background-color: white;
+    border-radius: 15px
+}
+
+
+.lenos-search .search-select .search-div {
     margin: 0 0 10px 20px;
 }
 
-.lenos-search .select .search-div .search-div-label {
+.lenos-search .search-select .search-div .search-div-label {
     width: 100px;
     padding-top: 3px
 }
 
-.lenos-search .select .search-div span {
+.lenos-search .search-select .search-div span {
     color: #707070;
 }
 
-.lenos-search .select span .layui-input {
+.lenos-search .search-select span .layui-input {
     height: 25px;
 }
 
@@ -82,6 +117,8 @@ html {
 /*列表按鈕*/
 .len-button button {
     border-radius: 100px;
+    margin-bottom: 10px;
+    max-width: 200px;
 }
 
 .len-button .layui-btn-group span {

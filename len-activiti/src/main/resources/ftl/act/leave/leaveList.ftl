@@ -15,7 +15,7 @@
 
 <body>
 <div class="lenos-search">
-    <div class="select">
+    <div class="search-select">
         开始时间：
         <span class="layui-inline">
             <input class="layui-input" placeholder="yyyy-MM-dd" height="20px" id="beginTime" autocomplete="off">

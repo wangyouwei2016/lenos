@@ -248,10 +248,11 @@ var Len = {
      * @param active
      */
     btnBind: function (active) {
-        $('.len-form-item .layui-btn,.layui-btn-group .layui-btn').on('click', function () {
-            var type = $(this).data('type');
-            active[type] ? active[type].call(this) : '';
-        });
+        $('.len-form-item .layui-btn,.layui-btn-group .layui-btn,.lenos-search .search-zoom div')
+            .on('click', function () {
+                var type = $(this).data('type');
+                active[type] ? active[type].call(this) : '';
+            });
     },
 
     /**

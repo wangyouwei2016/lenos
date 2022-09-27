@@ -14,7 +14,7 @@
 
 <body>
 <div class="lenos-search">
-    <div class="select">
+    <div class="search-select">
         模型名称：
         <span class="layui-inline">
       <input class="layui-input" height="20px" id="name" autocomplete="off">

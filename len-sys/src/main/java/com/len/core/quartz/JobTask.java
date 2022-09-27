@@ -26,6 +26,7 @@ import java.util.HashSet;
 @Slf4j
 public class JobTask {
 
+
     @Autowired
     SchedulerFactoryBean schedulerFactoryBean;
 

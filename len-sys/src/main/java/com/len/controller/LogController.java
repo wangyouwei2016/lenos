@@ -30,11 +30,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Slf4j
 @Api(value = "日志管理", tags = "操作日志记录")
 public class LogController extends BaseController {
-    @Autowired
-    private SysLogMapper logMapper;
+
+    private final SysLogMapper logMapper;
+
+    public LogController(SysLogMapper logMapper) {
+        this.logMapper = logMapper;
+    }
 
     @GetMapping(value = "showLog")
-    public String showMenu(Model model) {
+    public String showMenu() {
         return "/system/log/logList";
     }
 

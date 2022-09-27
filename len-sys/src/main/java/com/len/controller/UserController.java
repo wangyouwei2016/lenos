@@ -1,6 +1,16 @@
 package com.len.controller;
 
-import cn.hutool.core.util.NumberUtil;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.Page;
@@ -8,28 +18,15 @@ import com.github.pagehelper.PageHelper;
 import com.len.base.BaseController;
 import com.len.core.annotation.Log;
 import com.len.core.annotation.Log.LOG_TYPE;
-import com.len.core.quartz.JobTask;
 import com.len.entity.SysUser;
 import com.len.exception.ServiceException;
-import com.len.service.RoleUserService;
 import com.len.service.SysUserService;
 import com.len.util.*;
 import com.len.validator.ValidatorUtils;
 import com.len.validator.group.AddGroup;
+
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.security.Principal;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * @author zhuxiaomeng
@@ -42,14 +39,14 @@ import java.util.List;
 @Api(value = "用户管理", tags = "用户管理业务")
 public class UserController extends BaseController {
 
-    @Autowired
-    SysUserService userService;
+    private final SysUserService userService;
 
-    @Autowired
-    RoleUserService roleUserService;
+    private final UploadUtil uploadUtil;
 
-    @Autowired
-    JobTask task;
+    public UserController(SysUserService userService, UploadUtil uploadUtil) {
+        this.userService = userService;
+        this.uploadUtil = uploadUtil;
+    }
 
     @GetMapping(value = "mainTest")
     @RequiresPermissions("user:show")
@@ -182,9 +179,6 @@ public class UserController extends BaseController {
         userService.rePass(id, newPwd);
         return succ(MsHelper.getMsg("update.success"));
     }
-
-    @Autowired
-    UploadUtil uploadUtil;
 
     /**
      * 头像上传 目前首先相对路径

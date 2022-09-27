@@ -2,7 +2,7 @@
 
 
 <div class="lenos-search">
-    <div class="select">
+    <div class="search-select">
         <@lenInclude path="/system/base/queryBox.ftl" name="角色名" id="rolename" ></@lenInclude>
         <@lenInclude path="/system/base/queryBox.ftl" name="描述" id="remark" ></@lenInclude>
     </div>

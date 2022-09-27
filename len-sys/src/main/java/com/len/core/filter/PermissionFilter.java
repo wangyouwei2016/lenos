@@ -22,25 +22,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 @Slf4j
 public class PermissionFilter extends AuthorizationFilter {
 
-    @Autowired
-    private SysUserService userService;
-
-    @Autowired
-    private MenuService menuService;
 
     @Override
-    protected boolean isAccessAllowed(ServletRequest servletRequest, ServletResponse servletResponse, Object o)
-        throws Exception {
-        String[] roles = (String[])o;
-
+    protected boolean isAccessAllowed(ServletRequest servletRequest, ServletResponse servletResponse, Object o) {
         Subject sub = getSubject(servletRequest, servletResponse);
         Session session = sub.getSession();
         CurrentUser user = (CurrentUser)session.getAttribute("currentPrincipal");
         log.info("user:{}", user);
-        if (user == null) {
-            return false;
-        }
-        return true;
+        return user != null;
     }
 
     @Override

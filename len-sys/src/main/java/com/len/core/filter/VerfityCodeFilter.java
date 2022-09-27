@@ -1,13 +1,14 @@
 package com.len.core.filter;
 
-import org.apache.commons.lang3.StringUtils;
-import org.apache.shiro.session.Session;
-import org.apache.shiro.web.filter.AccessControlFilter;
+import java.util.Collection;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
-import java.util.Collection;
+
+import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.session.Session;
+import org.apache.shiro.web.filter.AccessControlFilter;
 
 /**
  * @author zhuxiaomeng
@@ -32,6 +33,15 @@ public class VerfityCodeFilter extends AccessControlFilter {
      */
     private String failureKeyAttribute = "shiroLoginFailure";
 
+    /**
+     * shiro回调 是否允许访问
+     * 
+     * @param request
+     * @param response
+     * @param o
+     * @return
+     * @throws Exception
+     */
     @Override
     protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object o) throws Exception {
         request.setAttribute("verfitiCode", verfitiCode);// 暂时未用到非验证码
@@ -41,7 +51,7 @@ public class VerfityCodeFilter extends AccessControlFilter {
             return true;
         }
         Session session = getSubject(request, response).getSession();
-        Collection<Object> attributeKeys = session.getAttributeKeys();
+        //Collection<Object> attributeKeys = session.getAttributeKeys();
         Object code = getSubject(request, response).getSession().getAttribute(jcaptchaParam);
         String storedCode = null;
         if (null != code) {

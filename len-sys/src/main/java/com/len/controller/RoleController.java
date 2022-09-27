@@ -36,14 +36,20 @@ import java.util.List;
 @Api(value = "用户角色管理", tags = "角色业务处理")
 public class RoleController extends BaseController {
 
-    @Autowired
-    private RoleService roleService;
 
-    @Autowired
-    private MenuService menuService;
+    private final RoleService roleService;
 
-    @Autowired
-    private RoleMenuService roleMenuService;
+
+    private final MenuService menuService;
+
+
+    private final RoleMenuService roleMenuService;
+
+    public RoleController(RoleService roleService, MenuService menuService, RoleMenuService roleMenuService) {
+        this.roleService = roleService;
+        this.menuService = menuService;
+        this.roleMenuService = roleMenuService;
+    }
 
     @GetMapping(value = "showRole")
     @RequiresPermissions(value = "role:show")
