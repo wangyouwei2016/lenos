@@ -35,7 +35,7 @@ public class DashboardServiceImpl implements DashboardService {
         }
         sysPanelOpts.sort(Comparator.comparing(SysPanelOpt::getPaneloptIndex));
         return sysPanelOpts.stream().sorted(Comparator.comparingInt(SysPanelOpt::getPaneloptColumn))
-            .collect(Collectors.groupingBy(SysPanelOpt::getPaneloptColumn));
+                .collect(Collectors.groupingBy(SysPanelOpt::getPaneloptColumn));
     }
 
     /**

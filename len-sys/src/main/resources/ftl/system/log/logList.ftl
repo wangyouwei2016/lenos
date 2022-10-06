@@ -10,7 +10,7 @@
 
 <#--按钮-->
 <div class="layui-col-md12">
-    <div class="layui-btn-group">
+    <div class="layui-btn-group log-bar">
         <@lenInclude path="/system/base/btn.ftl" hasPermission="control:del"
         type="del" name="删除" icon="&#xe640;"></@lenInclude>
     </div>
@@ -103,7 +103,7 @@
                 del(ids);
             }
         });
-        Len.formBind(active);
+        Len.formBind($('.log-bar .layui-btn')active);
 
     });
 

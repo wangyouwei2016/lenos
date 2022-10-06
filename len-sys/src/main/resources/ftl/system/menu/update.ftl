@@ -1,11 +1,4 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-    <meta charset="UTF-8">
-    <title>菜单管理</title>
-    <#include "/system/base/head.ftl">
-</head>
+<#include "/system/base/head.ftl">
 
 <#--body-->
 <body>
