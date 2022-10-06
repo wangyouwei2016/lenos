@@ -24,7 +24,8 @@
                 $('#userZoomShow').css('display', 'block');
             }
         };
-        Len.btnBind(active);
+        //存在问题
+        Len.btnBind($('.search-zoom div'), active);
     });
 </script>
 

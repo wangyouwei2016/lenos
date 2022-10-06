@@ -7,6 +7,8 @@ import javax.servlet.Filter;
 import org.apache.shiro.authc.pam.AtLeastOneSuccessfulStrategy;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.realm.Realm;
+import org.apache.shiro.session.mgt.eis.MemorySessionDAO;
+import org.apache.shiro.session.mgt.eis.SessionDAO;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
@@ -40,12 +42,11 @@ import com.len.menu.LoginType;
 @Configuration
 public class ShiroConfig {
 
-    private static String provider;
+    private static String sessionCache;
 
     static {
-        provider = LenProp.getCache();
+        sessionCache = LenProp.getSessionCache();
     }
-
 
     public RetryLimitCredentialsMatcher getRetryLimitCredentialsMatcher() {
         RetryLimitCredentialsMatcher rm = new RetryLimitCredentialsMatcher(CacheManagerFactory.getCacheManager());
@@ -98,10 +99,25 @@ public class ShiroConfig {
         defaultWebSessionManager.setDeleteInvalidSessions(true);
         defaultWebSessionManager.setSessionValidationSchedulerEnabled(true);
         defaultWebSessionManager.setSessionIdUrlRewritingEnabled(false);
-        if (provider.equals("redis")) {
-            defaultWebSessionManager.setSessionDAO(redisSessionDAO());
-        }
+        defaultWebSessionManager.setSessionDAO(sessionDao());
         return defaultWebSessionManager;
+    }
+
+    /**
+     * session 储存对象
+     * 
+     * @return
+     */
+    private static SessionDAO sessionDao() {
+        SessionDAO sessionDAO;
+        switch (sessionCache) {
+            case "redis":
+                sessionDAO = redisSessionDAO();
+                break;
+            default:
+                sessionDAO = new MemorySessionDAO();
+        }
+        return sessionDAO;
     }
 
     @Bean(name = "securityManager")

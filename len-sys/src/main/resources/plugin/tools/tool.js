@@ -244,24 +244,26 @@ var Len = {
         }
     },
     /**
-     * 按钮绑定
+     * 按钮事件绑定
+     * @param _this 绑定对象
      * @param active
      */
-    btnBind: function (active) {
-        $('.len-form-item .layui-btn,.layui-btn-group .layui-btn,.lenos-search .search-zoom div')
-            .on('click', function () {
-                var type = $(this).data('type');
-                active[type] ? active[type].call(this) : '';
-            });
+    btnBind: function (_this, active) {
+        //$('.len-form-item .layui-btn,.layui-btn-group .layui-btn,.lenos-search .search-zoom div')
+        _this.on('click', function () {
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
     },
 
     /**
      * 表单绑定 回车搜索和按钮事件
+     * @param _this
      * @param active
      */
-    formBind: function (active) {
+    formBind: function (_this, active) {
         Len.keydown(active);
-        Len.btnBind(active);
+        Len.btnBind(_this, active);
     },
 
     /**

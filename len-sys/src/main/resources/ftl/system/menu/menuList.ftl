@@ -10,7 +10,7 @@
 <hr class="layui-bg-gray">
 <#--按钮-->
 <div class="layui-btn-container">
-    <div class="layui-btn-group">
+    <div class="layui-btn-group menu-bar">
         <@lenInclude path="/system/base/btn.ftl" type="add" name="新增" icon="&#xe608;"></@lenInclude>
     </div>
 </div>
@@ -36,7 +36,7 @@
         // 渲染表格
         table = treeTable.render({
             elem: '#treeList',
-            url: 'showMenuList',
+            url: 'menu/showMenuList',
             tree: {
                 iconIndex: 2,
                 isPidData: true,
@@ -103,7 +103,7 @@
                     break;
             }
         });
-        Len.btnBind(active);
+        Len.btnBind($('.menu-bar .layui-btn'), active);
         Len.keydown(active);
     });
 </script>

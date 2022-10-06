@@ -1,4 +1,4 @@
-
+<#include "/system/base/head.ftl">
 
 <div class="x-body">
     <form class="layui-form layui-form-pane" style="margin-left: 20px;">

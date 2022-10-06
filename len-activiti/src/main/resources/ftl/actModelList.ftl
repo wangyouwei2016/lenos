@@ -101,7 +101,7 @@
         table.render({
             id: 'actModelList',
             elem: '#actModelList'
-            , url: 'showAm'
+            , url: 'act/showAm'
             , cols: [[
                 {checkbox: true, fixed: true, width: '5%'}
                 , {field: 'id', title: '编号', width: '10%', sort: true}

@@ -10,7 +10,7 @@
 
 <#--按钮-->
 <div class="layui-col-md12">
-    <div class="layui-btn-group">
+    <div class="layui-btn-group job-bar">
         <@lenInclude path="/system/base/btn.ftl" hasPermission="job:add"
         type="add" name="新增" icon="&#xe608;"></@lenInclude>
         <@lenInclude path="/system/base/btn.ftl" hasPermission="job:update"
@@ -41,7 +41,7 @@
         table.render({
             id: 'jobList',
             elem: '#jobList'
-            , url: 'showJobList'
+            , url: 'job/showJobList'
             , parseData: function (res) {
                 return {
                     "code": res.code,
@@ -147,7 +147,7 @@
                     break;
             }
         });
-        Len.btnBind(active);
+        Len.btnBind($('.job-bar .layui-btn'), active);
         Len.keydown(active);
     });
 </script>

@@ -9,7 +9,7 @@
     <#include "/system/base/searth.ftl">
 </div>
 <div class="layui-col-md12">
-    <div class="layui-btn-group">
+    <div class="layui-btn-group role-bar">
         <@lenInclude path="/system/base/btn.ftl" hasPermission="role:add"
         type="add" name="新增" icon="&#xe608;"></@lenInclude>
         <@lenInclude path="/system/base/btn.ftl"
@@ -31,7 +31,7 @@
         table.render({
             id: 'roleList',
             elem: '#roleList'
-            , url: 'showRoleList'
+            , url: 'role/showRoleList'
             , parseData: function (res) {
                 return {
                     "code": res.code,
@@ -39,20 +39,16 @@
                     "count": res.count,
                     "data": res.data
                 };
-            }
-            , cols: [[
-                {checkbox: true, fixed: true, width: '5%'}
-                , {field: 'roleName', title: '角色名称', width: '20%', sort: true}
-                , {field: 'remark', title: '角色描述', width: '20%', sort: true}
-                , {
+            }, cols: [[
+                {checkbox: true, fixed: true, width: '5%'},
+                {field: 'roleName', title: '角色名称', width: '20%', sort: true},
+                {field: 'remark', title: '角色描述', width: '20%', sort: true},
+                {
                     title: '创建时间',
                     width: '20%',
                     templet: '<div>{{ moment(+d.createDate).format(\'YYYY-MM-DD\')  }}</div>'
-                }
-                , {field: 'remark', title: '操作', width: '20%', toolbar: "#toolBar"}
-            ]]
-            , page: true
-            , height: 'full-100'
+                }, {field: 'remark', title: '操作', width: '20%', toolbar: "#toolBar"}
+            ]], page: true, height: 'full-100'
         });
 
         var $ = layui.$, active = {
@@ -100,7 +96,7 @@
                 Len.update('/role/updateRole?id=' + data.id, '编辑角色');
             }
         });
+        Len.btnBind($('.role-bar .layui-btn'), active);
         Len.keydown(active);
-        Len.btnBind(active);
     });
 </script>

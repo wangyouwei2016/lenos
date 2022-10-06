@@ -88,7 +88,7 @@
     table.render({
       id: 'taskList',
       elem: '#taskList'
-      , url: 'showTaskList'
+      , url: 'leave/showTaskList'
         ,parseData: function(res){
             return {
                 "code": res.code,

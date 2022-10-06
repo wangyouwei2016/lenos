@@ -29,7 +29,7 @@
     <#--按钮-->
     <div class="layui-col-md12 len-button"
          style="height: auto;background-color: #f8f8f8;padding: 8px 8px;display: flex">
-        <div class="layui-btn-group" style="width: 100%;flex-wrap: wrap">
+        <div class="layui-btn-group len-user" style="width: 100%;flex-wrap: wrap">
             <@lenInclude path="/system/base/btn.ftl" hasPermission="user:select"
             type="add" name="新增" icon="&#xe608;"></@lenInclude>
             <@lenInclude path="/system/base/btn.ftl" hasPermission="user:select"
@@ -46,7 +46,8 @@
 </div>
 
 
-<div id="myGrid" style="width: 100%;height: 500px;" class="ag-theme-alpine"></div>
+<#--<div id="myGrid" style="width: 100%;height: 500px;" class="ag-theme-alpine"></div>-->
+<div id="myGrid" style="width: 100%;height: 500px;" class="ag-theme-balham"></div>
 
 <script>
     //定义表格列
@@ -85,7 +86,7 @@
             gridOptions.api.sizeColumnsToFit();//调整表格大小自适应
         },
         defaultColDef: {
-            editable: true,//单元表格是否可编辑
+            editable: false,//单元表格是否可编辑
             enableRowGroup: true,
             enablePivot: true,
             enableValue: true,
@@ -151,7 +152,7 @@
             }
         };
 
-        Len.btnBind(active);
+        Len.btnBind($('.len-user .layui-btn'), active);
         Len.keydown(active);
 
     });

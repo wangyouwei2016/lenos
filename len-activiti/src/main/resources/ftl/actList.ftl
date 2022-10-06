@@ -89,7 +89,7 @@
         table.render({
             id: 'actList',
             elem: '#actList'
-            , url: 'showAct'
+            , url: 'act/showAct'
             , cols: [[
                 {checkbox: true, fixed: true, width: '5%'}
                 , {field: 'id', title: '编号', width: '15%', sort: true}
