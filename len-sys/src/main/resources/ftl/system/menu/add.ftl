@@ -1,4 +1,4 @@
-<#include "/system/base/head.ftl">
+<#include "/system/base/formHead.ftl">
 
 <div class="x-body">
     <form class="layui-form layui-form-pane" style="margin-left: 20px;">
@@ -9,6 +9,8 @@
                 </fieldset>
             </div>
             <div style="margin-left:25%">
+
+                <#--类型-->
                 <div class="layui-form-item">
                     <label for="menuType" class="layui-form-label">
                         <span class="x-red">*</span>类型
@@ -22,6 +24,8 @@
                         </select>
                     </div>
                 </div>
+
+                <#--父级菜单-->
                 <div class="layui-form-item" id="pDiv">
                     <label for="pName" class="layui-form-label">
                         父级菜单
@@ -35,6 +39,8 @@
                         <div id="tree"></div>
                     </div>
                 </div>
+
+                <#--名称-->
                 <div class="layui-form-item">
                     <label for="name" class="layui-form-label">
                         <span class="x-red">*</span>名称
@@ -47,6 +53,8 @@
                         <span class="x-red">*</span><span id="ums">必须填写</span>
                     </div>
                 </div>
+
+                <#--url-->
                 <div class="layui-form-item">
                     <label for="url" class="layui-form-label">
                         url
@@ -55,8 +63,9 @@
                         <input type="text" id="url" name="url" lay-verify="url" autocomplete="off" class="layui-input">
                     </div>
                 </div>
-                <div class="layui-form-item">
 
+                <#--权限-->
+                <div class="layui-form-item">
                     <label for="permission" class="layui-form-label">
                         <span class="x-red">*</span>权限
                     </label>
@@ -65,15 +74,17 @@
                                autocomplete="off" class="layui-input">
                     </div>
                 </div>
+
+                <#--图标-->
                 <div class="layui-form-item">
-                    <label for="icon" class="layui-form-label">
+                    <label for="menu-icon" class="layui-form-label">
                         <span class="x-red">*</span>图标
                     </label>
                     <div class="layui-input-inline">
                         <div style="margin-left: 20px;margin-top:5px">
                             <ul>
-                                <li style="display: inline-block;width: 50px;" id="menu-icon">
-                                    <i class="layui-icon" id="icon" style="font-size: 25px;"></i>
+                                <li style="display: inline-block;width: 50px;">
+                                    <i id="menu-icon" class="layui-icon" style="font-size: 25px;">&#xe671;</i>
                                 </li>
                                 <li style="display: inline-block;">
                                     <i class="layui-btn layui-btn-primary layui-btn-sm"
@@ -83,6 +94,8 @@
                         </div>
                     </div>
                 </div>
+
+                <#--序号-->
                 <div class="layui-form-item">
                     <label for="orderNum" class="layui-form-label">
                         <span class="x-red">*</span>序号
@@ -218,8 +231,8 @@
         });
         //监听提交
         form.on('submit(add)', function (data) {
-            data.field['icon'] = $('#icon').text();
-            Len.layerAjax('addMenu', data.field, 'demoTreeTb');
+            data.field['icon'] = $('#menu-icon').text();
+            Len.layerAjax('addMenu', data.field, 'treeList');
             return false;
         });
         form.render();
@@ -257,4 +270,8 @@
     function callback(id) {
         $('#layui-layer-iframe1').contents().find('#menu-icon').val(id);
     }
+    window.memuCallback=function(id){
+        debugger
+        callback(id)
+    };
 </script>

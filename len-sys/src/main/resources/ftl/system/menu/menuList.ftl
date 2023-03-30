@@ -8,19 +8,25 @@
     <#include "/system/base/searth.ftl">
 </div>
 <hr class="layui-bg-gray">
+
 <#--按钮-->
 <div class="layui-btn-container">
     <div class="layui-btn-group menu-bar">
         <@lenInclude path="/system/base/btn.ftl" type="add" name="新增" icon="&#xe608;"></@lenInclude>
     </div>
 </div>
+
 <#--表格-->
 <table id="treeList" width="100%"></table>
+
+
 <!-- 表格操作列 -->
 <script type="text/html" id="tbBar">
     <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit">修改</a>
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 </script>
+
+
 <script type="text/javascript">
     /*加载treetable 模块*/
     layui.config({
@@ -58,7 +64,7 @@
                 {title: '类型', templet: '<p>{{d.menuType=="1"?"按钮":"菜单"}}</p>', align: 'center', width: 60},
                 {field: 'url', title: '菜单地址'},
                 {field: 'permission', title: '权限标识'},
-                {title: '创建时间', templet: '<div>{{ moment(+d.createDate).format(\'YYYY-MM-DD\') }}</div>'},
+                // {title: '创建时间', templet: '<div>{{ moment(+d.createDate).format(\'yyyy-MM-dd\') }}</div>'},
                 {align: 'center', toolbar: '#tbBar', title: '操作', width: 120}
             ]],
             style: 'margin-top:0;'
@@ -96,7 +102,7 @@
                     Len.update('menu/showUpdateMenu?id=' + data.id);
                     break;
                 case "del":
-                    Len.delete('del', data.id, function () {
+                    Len.delete('menu/del', data.id, function () {
                         Len.rbSuccess("删除成功");
                         active.reload();
                     });
