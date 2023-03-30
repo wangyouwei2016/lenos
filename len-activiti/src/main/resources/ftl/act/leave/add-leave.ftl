@@ -1,8 +1,3 @@
-<#--Created by IntelliJ IDEA.
-User: zxm
-Date: 2017/12/20
-Time: 10:00
-To change this template use File | Settings | File Templates.-->
 
 <!DOCTYPE html>
 <html>
@@ -86,7 +81,6 @@ To change this template use File | Settings | File Templates.-->
     layui.use(['form', 'layer'], function () {
         $ = layui.jquery;
         var form = layui.form
-                , layer = layui.layer
                 , laydate = layui.laydate;
         var d = new Date();
         var day = d.getFullYear() + "-" + (parseInt(d.getMonth()) + 1) + '-' + d.getDate();
