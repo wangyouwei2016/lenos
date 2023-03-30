@@ -1,4 +1,4 @@
-<#include "/system/base/head.ftl">
+<#include "/system/base/formHead.ftl">
 
 <#--body-->
 <body>
@@ -73,15 +73,14 @@
                     </div>
                 </div>
                 <div class="layui-form-item">
-                    <label for="icon" class="layui-form-label">
+                    <label for="menu-icon" class="layui-form-label">
                         <span class="x-red">*</span>图标
                     </label>
                     <div class="layui-input-inline">
                         <div style="margin-left: 20px;margin-top:5px">
                             <ul>
-                                <li style="display: inline-block;width: 50px;" id="menu-icon"><i class="layui-icon"
-                                                                                                 id="icon"
-                                                                                                 style="font-size: 25px;">${sysMenu.icon}</i>
+                                <li style="display: inline-block;width: 50px;">
+                                    <i  id="menu-icon" class="layui-icon" style="font-size: 25px;">${sysMenu.icon}</i>
                                 </li>
                                 <li style="display: inline-block;"><i class="layui-btn layui-btn-primary layui-btn-sm"
                                                                       id="select_icon">选择图标</i></li>
@@ -155,7 +154,7 @@
                 shade: 0.4,
                 zIndex: layer.zIndex,
                 title: '图标',
-                content: '../plugin/html/icon.html'
+                content: '../plugin/html/icon.html?param.parentname=' + window.name,
             });
         });
 
@@ -229,7 +228,7 @@
         });
         //监听提交
         form.on('submit(add)', function (data) {
-            data.field['icon'] = $('#icon').text();
+            data.field['icon'] = $('#menu-icon').text();
             data.field['id'] = '${sysMenu.id}';
             Len.layerAjax('updateMenu', data.field, 'treeList');
             return false;

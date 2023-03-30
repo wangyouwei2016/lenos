@@ -184,6 +184,12 @@ var Len = {
         });
     },
 
+    /**
+     * 更新
+     * @param url 更新url
+     * @param data 数据
+     * @param tableId 要刷新的表格id
+     */
     layerAjax: function (url, data, tableId) {
         $.ajax({
             url: url,
@@ -192,14 +198,14 @@ var Len = {
             traditional: true,
             success: function (d) {
                 parent.layer.close(parent.layer.getFrameIndex(window.name));
-                window.parent.document.getElementById(parent.getId()).contentWindow.table.reload(tableId);
+                parent.layui.table.reload(tableId);
                 var msg = d.msg;
                 if (Len.isEmpty(d.msg)) {
                     msg = "成功";
                 }
                 window.top.layer.msg(msg, {icon: 6, offset: 'rb', area: ['200px', '80px'], anim: 2});
             }, error: function (e) {
-                layer.alert("发生错误", {icon: 6}, function () {
+                layer.alert("error", {icon: 6}, function () {
                     parent.layer.close(parent.layer.getFrameIndex(window.name));
                 });
             }

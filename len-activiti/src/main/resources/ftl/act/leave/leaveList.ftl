@@ -1,35 +1,15 @@
-<#-- Created by IntelliJ IDEA.
- User: zxm
- Date: 2018/1/15
- Time: 16:53
- To change this template use File | Settings | File Templates.
-流程部署-->
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>请假流程示例</title>
-    <#include "/system/base/head.ftl">
-    <script src="${re.contextPath}/plugin/activiti.js"></script>
-</head>
-
+<#include "/system/base/head.ftl">
 <body>
+
+<#--搜索区域-->
 <div class="lenos-search">
-    <div class="search-select">
-        开始时间：
-        <span class="layui-inline">
-            <input class="layui-input" placeholder="yyyy-MM-dd" height="20px" id="beginTime" autocomplete="off">
-        </span>
-        结束时间：
-        <span class="layui-inline">
-            <input class="layui-input" placeholder="yyyy-MM-dd" height="20px" id="endTime" autocomplete="off">
-        </span>
-    </div>
     <div class="len-form-item">
         <button type="button" class="layui-btn layui-btn-normal layui-btn layui-btn-sm" data-type="select">查询</button>
         <button type="button" class="layui-btn layui-btn-normal layui-btn layui-btn-sm" data-type="reload">重置</button>
     </div>
 </div>
+
+<#--按钮-->
 <div class="layui-col-md12">
     <div class="layui-btn-group">
         <button class="layui-btn layui-btn-normal layui-btn-sm" data-type="createLeave">
@@ -38,12 +18,20 @@
     </div>
 </div>
 
+<#--表格-->
 <table id="leaveList" width="100%" lay-filter="leave"></table>
+
+
+<#--表格toolbar-->
 <script type="text/html" id="toolBar">
-    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="getProcImage"><i class="layui-icon">&#xe640;</i>查看流程图</a>
-    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="leaveDetail"><i
-                class="layui-icon">&#xe640;</i>查看详情</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="getProcImage">
+        <i class="layui-icon">&#xe640;</i>查看流程图</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="leaveDetail">
+        <i class="layui-icon">&#xe640;</i>查看详情</a>
 </script>
+
+
+
 <script type="text/html" id="status">
     {{#if(typeof(d.taskName)!='undefined'){}}
     <div>${d.taskName}</div>
@@ -51,6 +39,9 @@
     结束
     {{# }}}
 </script>
+
+
+<script src="${re.contextPath}/plugin/activiti.js"></script>
 <script>
     layui.laytpl.toDateString = function (d, format) {
         var date = new Date(d || new Date())
@@ -95,28 +86,12 @@
     }
 
     layui.use('table', function () {
-        table = layui.table, laydate = layui.laydate;
-        var a = laydate.render({
-            elem: '#beginTime',
-            done: function (value, date, endDate) {
-                b.config.min = {
-                    year: date.year,
-                    month: date.month - 1,
-                    date: date.date,
-                    hours: date.hours,
-                    minutes: date.minutes,
-                    seconds: date.seconds
-                }
-            }
-        });
-        var b = laydate.render({
-            elem: '#endTime'
-        });
+       var table = layui.table;
         //方法级渲染
         table.render({
             id: 'leaveList',
             elem: '#leaveList'
-            , url: 'showLeaveList'
+            , url: 'leave/showLeaveList'
             , parseData: function (res) {
                 return {
                     "code": res.code,
@@ -218,5 +193,3 @@
 
 </script>
 </body>
-
-</html>
