@@ -13,6 +13,6 @@
 <link rel="stylesheet" href="${re.contextPath}/plugin/build/css/themes/default.css" media="all" id="skin" kit-skin/>
 <#assign class=''>
 
-<script type="application/javascript">
 
-</script>
+<script type="text/javascript" src="/plugin/tools/tool.js" charset="utf-8"></script>
+<script type="text/javascript" src="/plugin/tools/moment.js" charset="utf-8"></script>
