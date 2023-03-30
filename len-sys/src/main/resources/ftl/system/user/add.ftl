@@ -1,11 +1,4 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-    <meta charset="UTF-8">
-    <title>用户管理</title>
-    <#include "/system/base/formHead.ftl">
-</head>
+<#include "/system/base/formHead.ftl">
 
 <body>
 <div class="x-body">
@@ -211,5 +204,3 @@
     });
 </script>
 </body>
-
-</html>

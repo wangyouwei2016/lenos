@@ -9,14 +9,20 @@
     <script type="text/javascript" src="../layui/layui.all.js" charset="utf-8"></script>
 </head>
 <script>
-    var winName="${param.parentname}";
+    function getQueryString(name) {
+        var result = window.location.search.substr(1).match(new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i'));
+        if (result != null) {
+            return unescape(result[2]);
+        }
+        return null;
+    }
     $(function () {
-        var layer = layui.layer;
+        var winName=getQueryString("param.parentname");
         $('li').on('click', function () {
             var text = $(this).find('div').eq(1).html();
             text = text.substring(5, text.length);
             var frames = parent.frames;
-            parent.$("#"+winName)[0].contentWindow.$("#menu-icon").val(text);
+            frames.$("#"+winName)[0].contentWindow.$("#menu-icon").html('&'+text);
             /*var parentFrames;
             if (frames.length > 0) {
                 for (var f in frames) {

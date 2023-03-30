@@ -5,6 +5,7 @@ form表单 引用
 -->
 <#include "system/base/head.ftl">
 <script type="text/javascript" src="${re.contextPath}/plugin/validator/validator.min.js"></script>
+<script type="text/javascript" src="${re.contextPath}/plugin/layui/layui.all.js" charset="utf-8"></script>
 <script type="text/javascript">
     $(document).ready(function () {
         if ('${detail}') {
