@@ -4,11 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 
 import lombok.Data;
 
-/**
- * @author zhuxiaomeng
- * @date 2017/12/15.
- * @email lenospmiller@gmail.com ajax 回执
- */
+
 @Data
 public class LenResponse {
 

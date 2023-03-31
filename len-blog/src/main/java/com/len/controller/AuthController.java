@@ -25,9 +25,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * @author zhuxiaomeng
- * @date 2018/7/25.
- * @email lenospmiller@gmail.com
  */
 @CrossOrigin
 @RestController

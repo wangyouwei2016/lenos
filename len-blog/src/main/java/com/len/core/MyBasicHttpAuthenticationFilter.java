@@ -10,11 +10,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- * @author zhuxiaomeng
- * @date 2018/8/19.
- * @email lenospmiller@gmail.com
- */
+
 public class MyBasicHttpAuthenticationFilter extends BasicHttpAuthenticationFilter {
 
     @Override

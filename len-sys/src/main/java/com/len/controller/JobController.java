@@ -24,11 +24,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 /**
- * @author zhuxiaomeng
- * @date 2018/1/6.
- * @email lenospmiller@gmail.com
- *        <p>
- *        定时任务 controller
+ * 定时任务 controller
  */
 @Controller
 @RequestMapping("/job")

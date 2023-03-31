@@ -3,10 +3,7 @@ package com.len.core.init.job;
 import com.len.base.handler.ExecuteContext;
 import org.springframework.context.event.ContextRefreshedEvent;
 
-/**
- * @author zxm
- * @date 2020/8/11 22:02
- */
+
 
 public class JobExecuteImpl implements ExecuteContext {
 

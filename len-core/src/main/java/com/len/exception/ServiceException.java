@@ -1,9 +1,6 @@
 package com.len.exception;
 
-/**
- * @author zxm
- * @date 2021/3/21 13:56
- */
+
 
 
 public class ServiceException extends RuntimeException {

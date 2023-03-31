@@ -10,10 +10,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 /**
- * @author zhuxiaomeng
- * @date 2018/1/29.
- * @email lenospmiller@gmail.com
- * <p>
+ *
  * 定时还原数据库数据
  */
 

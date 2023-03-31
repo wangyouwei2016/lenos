@@ -1,9 +1,6 @@
 package com.len.menu;
 
-/**
- * @author zxm
- * @date 2020/8/11 23:05
- */
+
 
 
 public enum LoginType {

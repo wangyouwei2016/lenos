@@ -21,9 +21,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 
 /**
- * @author zhuxiaomeng
- * @date 2018/1/28.
- * @email lenospmiller@gmail.com
  *
  * 可以自定义一些配置类
  */

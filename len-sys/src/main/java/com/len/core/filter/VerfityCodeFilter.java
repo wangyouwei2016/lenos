@@ -11,10 +11,6 @@ import org.apache.shiro.session.Session;
 import org.apache.shiro.web.filter.AccessControlFilter;
 
 /**
- * @author zhuxiaomeng
- * @date 2017/12/29.
- * @email lenospmiller@gmail.com
- *        <p>
  *        验证码拦截
  */
 public class VerfityCodeFilter extends AccessControlFilter {

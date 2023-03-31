@@ -29,9 +29,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 /**
- * @author zhuxiaomeng
- * @date 2017/12/6.
- * @email lenospmiller@gmail.com 用户管理
+ *  用户管理
  */
 // @Api(value="user")
 @Controller

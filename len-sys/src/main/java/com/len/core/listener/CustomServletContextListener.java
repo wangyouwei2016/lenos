@@ -5,11 +5,6 @@ import javax.servlet.ServletContextListener;
 
 import org.springframework.stereotype.Component;
 
-/**
- * @author zhuxiaomeng
- * @date 2018/1/6.
- * @email lenospmiller@gmail.com
- */
 @Component
 public class CustomServletContextListener implements ServletContextListener {
 

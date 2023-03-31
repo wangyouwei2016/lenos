@@ -6,11 +6,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.len.base.BaseService;
 import com.len.entity.SysMenu;
 
-/**
- * @author zhuxiaomeng
- * @date 2017/12/12.
- * @email lenospmiller@gmail.com
- */
+
 public interface MenuService extends BaseService<SysMenu> {
 
     /**

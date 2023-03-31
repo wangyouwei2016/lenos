@@ -8,10 +8,6 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * @author zhuxiaomeng
- * @date 2017/12/28.
- * @email lenospmiller@gmail.com
- *        <p>
  *        记录日志
  */
 @Retention(RetentionPolicy.RUNTIME)

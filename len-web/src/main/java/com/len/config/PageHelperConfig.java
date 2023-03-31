@@ -1,10 +1,6 @@
 package com.len.config;
 
 /**
- * @author zhuxiaomeng
- * @date 2018/1/2.
- * @email lenospmiller@gmail.com
- * <p>
  * 此方案可替代 application.yml中 pagehelper配置
  */
 //@Configuration

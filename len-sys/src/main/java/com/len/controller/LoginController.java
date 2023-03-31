@@ -31,9 +31,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * @author zhuxiaomeng
- * @date 2017/12/4.
- * @email lenospmiller@gmail.com 登录、退出页面
+ * 登录、退出页面
  */
 @Controller
 @Slf4j

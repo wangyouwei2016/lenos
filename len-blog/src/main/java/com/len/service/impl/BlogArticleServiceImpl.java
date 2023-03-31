@@ -26,11 +26,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-/**
- * @author zhuxiaomeng
- * @date 2018/9/9.
- * @email lenospmiller@gmail.com
- */
+
 @Service
 public class BlogArticleServiceImpl extends BaseServiceImpl<BlogArticleMapper, BlogArticle> implements BlogArticleService {
 

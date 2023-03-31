@@ -8,10 +8,6 @@ import org.crazycake.shiro.RedisManager;
 import com.len.cache.impl.config.LenProp;
 import com.len.exception.LenException;
 
-/**
- * @author zxm
- * @date 2021/3/27 14:43
- */
 
 public class CacheManagerFactory {
 

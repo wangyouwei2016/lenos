@@ -33,11 +33,7 @@ import com.len.core.shiro.RetryLimitCredentialsMatcher;
 import com.len.menu.LoginType;
 
 /**
- * @author zhuxiaomeng
- * @date 2018/1/1.
- * @email lenospmiller@gmail.com spring shiro 元旦快乐：code everybody
- *        <p>
- *        2020/4/19 添加redis缓存，支持集群 默认redis缓存，如果单机配置可放开下面 ehcache
+ * 添加redis缓存，支持集群 默认redis缓存，如果单机配置可放开下面 ehcache
  */
 @Configuration
 public class ShiroConfig {

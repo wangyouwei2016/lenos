@@ -25,11 +25,7 @@ import com.len.util.MsHelper;
 
 import lombok.extern.slf4j.Slf4j;
 
-/**
- * @author zhuxiaomeng
- * @date 2017/12/19.
- * @email lenospmiller@gmail.com
- */
+
 @Slf4j
 public abstract class BaseController {
 

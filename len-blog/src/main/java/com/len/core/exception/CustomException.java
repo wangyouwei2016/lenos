@@ -8,11 +8,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-/**
- * @author zhuxiaomeng
- * @date 2018/8/19.
- * @email lenospmiller@gmail.com
- */
+
 @RestControllerAdvice
 public class CustomException {
 

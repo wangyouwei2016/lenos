@@ -7,11 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-/**
- * @author zhuxiaomeng
- * @date 2017/12/30.
- * @email lenospmiller@gmail.com
- */
+
 @Getter
 @Setter
 @ToString

@@ -6,9 +6,6 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 
 /**
- * @author zhuxiaomeng
- * @date 2017/12/4.
- * @email lenospmiller@gmail.com
  *
  * 管理工具类
  */

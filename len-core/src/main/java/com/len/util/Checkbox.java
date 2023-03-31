@@ -4,9 +4,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * @author zhuxiaomeng
- * @date 2017/12/21.
- * @email lenospmiller@gmail.com
  * 复选框类
  */
 @Getter

@@ -6,11 +6,7 @@ import com.len.mapper.BlogTagMapper;
 import com.len.service.BlogTagService;
 import org.springframework.stereotype.Service;
 
-/**
- * @author zhuxiaomeng
- * @date 2018/7/28.
- * @email lenospmiller@gmail.com
- */
+
 @Service
 public class BlogTagServiceImpl extends BaseServiceImpl<BlogTagMapper, BlogTag> implements BlogTagService {
 }

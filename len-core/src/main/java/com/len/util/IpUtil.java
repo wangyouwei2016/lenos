@@ -2,11 +2,7 @@ package com.len.util;
 
 import javax.servlet.http.HttpServletRequest;
 
-/**
- * @author zhuxiaomeng
- * @date 2017/12/28.
- * @email lenospmiller@gmail.com
- */
+
 public class IpUtil {
 
     public static String getIp(HttpServletRequest request){

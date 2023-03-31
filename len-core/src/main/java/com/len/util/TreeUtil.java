@@ -6,9 +6,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * @author zhuxiaomeng
- * @date 2017/12/27.
- * @email lenospmiller@gmail.com
  *
  * 树形工具类
  */

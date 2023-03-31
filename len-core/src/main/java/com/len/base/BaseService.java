@@ -6,9 +6,6 @@ import com.len.util.ReType;
 import java.util.List;
 
 /**
- * @author zhuxiaomeng
- * @date 2017/12/13.
- * @email lenospmiller@gmail.com
  * 通用service层
  */
 public interface BaseService<T> extends IService<T> {

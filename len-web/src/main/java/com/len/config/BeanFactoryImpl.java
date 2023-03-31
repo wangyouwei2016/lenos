@@ -7,11 +7,7 @@ import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.ResolvableType;
 
-/**
- * @author zhuxiaomeng
- * @date 2018/1/31.
- * @email lenospmiller@gmail.com
- */
+
 @Configuration
 public class BeanFactoryImpl implements BeanFactoryAware {
 

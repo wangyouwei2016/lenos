@@ -8,9 +8,6 @@ import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
 
 /**
- * @author zhuxiaomeng
- * @date 2017/12/18.
- * @email lenospmiller@gmail.com
  * 对象操作
  */
 public class BeanUtil {

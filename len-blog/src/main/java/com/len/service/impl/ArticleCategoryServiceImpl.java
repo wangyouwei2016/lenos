@@ -9,11 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-/**
- * @author zhuxiaomeng
- * @date 2018/10/11.
- * @email lenospmiller@gmail.com
- */
+
 @Service
 public class ArticleCategoryServiceImpl extends BaseServiceImpl<ArticleCategoryMapper, ArticleCategory>
         implements ArticleCategoryService {

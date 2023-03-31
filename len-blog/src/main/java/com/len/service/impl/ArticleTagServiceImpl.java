@@ -7,11 +7,7 @@ import com.len.service.ArticleTagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-/**
- * @author zhuxiaomeng
- * @date 2018/11/19.
- * @email lenospmiller@gmail.com
- */
+
 @Service
 public class ArticleTagServiceImpl extends BaseServiceImpl<ArticleTagMapper, ArticleTag> implements ArticleTagService {
 
