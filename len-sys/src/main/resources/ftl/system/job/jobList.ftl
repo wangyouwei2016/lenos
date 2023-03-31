@@ -5,12 +5,12 @@
         <@lenInclude path="/system/base/queryBox.ftl" name="任务名称" id="jobName" ></@lenInclude>
         <@lenInclude path="/system/base/queryBox.ftl" name="描述" id="remark" ></@lenInclude>
     </div>
-    <#include "/system/base/searth.ftl">
 </div>
 
 <#--按钮-->
-<div class="layui-col-md12">
+<div class="layui-col-md12 len-button">
     <div class="layui-btn-group job-bar">
+        <#include "/system/base/searth.ftl">
         <@lenInclude path="/system/base/btn.ftl" hasPermission="job:add"
         type="add" name="新增" icon="&#xe608;"></@lenInclude>
         <@lenInclude path="/system/base/btn.ftl" hasPermission="job:update"

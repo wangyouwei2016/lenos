@@ -5,12 +5,12 @@
         <@lenInclude path="/system/base/queryBox.ftl" name="操作用户" id="userName" ></@lenInclude>
         <@lenInclude path="/system/base/queryBox.ftl" name="操作类型" id="type" ></@lenInclude>
     </div>
-    <#include "/system/base/searth.ftl">
 </div>
 
 <#--按钮-->
-<div class="layui-col-md12">
+<div class="layui-col-md12 len-button">
     <div class="layui-btn-group log-bar">
+        <#include "/system/base/searth.ftl">
         <@lenInclude path="/system/base/btn.ftl" hasPermission="control:del"
         type="del" name="删除" icon="&#xe640;"></@lenInclude>
     </div>
@@ -103,7 +103,7 @@
                 del(ids);
             }
         });
-        Len.formBind($('.log-bar .layui-btn')active);
+        Len.formBind($('.log-bar .layui-btn'),active);
 
     });
 

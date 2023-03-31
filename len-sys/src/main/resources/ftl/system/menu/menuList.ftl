@@ -5,13 +5,13 @@
     <div class="search-select">
         <@lenInclude path="/system/base/queryBox.ftl" name="菜单名称" id="name" ></@lenInclude>
     </div>
-    <#include "/system/base/searth.ftl">
 </div>
 <hr class="layui-bg-gray">
 
 <#--按钮-->
-<div class="layui-btn-container">
+<div class="layui-btn-container len-button">
     <div class="layui-btn-group menu-bar">
+        <#include "/system/base/searth.ftl">
         <@lenInclude path="/system/base/btn.ftl" type="add" name="新增" icon="&#xe608;"></@lenInclude>
     </div>
 </div>

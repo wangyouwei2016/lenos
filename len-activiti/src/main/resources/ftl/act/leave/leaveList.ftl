@@ -2,16 +2,13 @@
 <body>
 
 <#--搜索区域-->
-<div class="lenos-search">
-    <div class="len-form-item">
-        <button type="button" class="layui-btn layui-btn-normal layui-btn layui-btn-sm" data-type="select">查询</button>
-        <button type="button" class="layui-btn layui-btn-normal layui-btn layui-btn-sm" data-type="reload">重置</button>
-    </div>
-</div>
+
 
 <#--按钮-->
-<div class="layui-col-md12">
+<div class="layui-col-md12 len-button">
     <div class="layui-btn-group">
+        <#include "/system/base/searth.ftl">
+
         <button class="layui-btn layui-btn-normal layui-btn-sm" data-type="createLeave">
             <i class="layui-icon">&#xe640;</i>新建请假
         </button>

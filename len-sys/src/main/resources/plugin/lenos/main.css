@@ -73,7 +73,7 @@ html {
 }
 
 .layui-col-md12 {
-    height: 34px;
+    height: 40px;
     padding-top: 4px;
     margin-top: 4px;
     border-top: 1px solid #e5e5e5;
@@ -127,6 +127,7 @@ html {
 
 .len-button .layui-btn-group .len-button-query {
     float: right;
+    height: 40px;
     padding-right: 85px;
 }
 
@@ -144,7 +145,7 @@ body .layui-table-view {
 
 body .layui-col-md12 {
     margin-top: 0;
-    height: 34px;
+    height: 40px;
     padding-top: 4px;
     border-top: 1px solid #e5e5e5;
 }

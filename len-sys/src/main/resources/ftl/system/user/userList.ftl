@@ -1,17 +1,19 @@
 <#include "/system/base/head.ftl">
 
 <#--搜索-->
-<div class="lenos-search">
+<div class="lenos-search len-button">
     <div class="search-select">
         <@lenInclude path="/system/base/queryBox.ftl" name="用户名" id="uname" ></@lenInclude>
         <@lenInclude path="/system/base/queryBox.ftl" name="邮箱" id="email" ></@lenInclude>
     </div>
-    <#include "/system/base/searth.ftl">
+
+
 </div>
 
 <#--按钮-->
 <div class="layui-col-md12 len-button">
     <div class="layui-btn-group  user-bar">
+        <#include "/system/base/searth.ftl">
         <@lenInclude path="/system/base/btn.ftl" hasPermission="user:select"
         type="add" name="新建" icon="&#xe608;"></@lenInclude>
         <@lenInclude path="/system/base/btn.ftl" hasPermission="user:select"

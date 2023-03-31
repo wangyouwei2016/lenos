@@ -6,10 +6,10 @@
         <@lenInclude path="/system/base/queryBox.ftl" name="角色名" id="rolename" ></@lenInclude>
         <@lenInclude path="/system/base/queryBox.ftl" name="描述" id="remark" ></@lenInclude>
     </div>
-    <#include "/system/base/searth.ftl">
 </div>
-<div class="layui-col-md12">
+<div class="layui-col-md12 len-button">
     <div class="layui-btn-group role-bar">
+        <#include "/system/base/searth.ftl">
         <@lenInclude path="/system/base/btn.ftl" hasPermission="role:add"
         type="add" name="新增" icon="&#xe608;"></@lenInclude>
         <@lenInclude path="/system/base/btn.ftl"
