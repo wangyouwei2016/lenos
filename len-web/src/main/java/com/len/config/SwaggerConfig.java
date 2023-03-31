@@ -30,7 +30,7 @@ public class SwaggerConfig {
                 .title("Swagger接口列表")
                 .description("接口")
                 .termsOfServiceUrl("http://localhost:8081/swagger-ui.html")
-                .contact(new Contact("zxm", "http://www.lenosp.cn", "lenospmiller@gmail.com"))
+                .contact(new Contact("zxm", "http://www.lenosp.xyz", ""))
                 .version("1.1.0")
                 .build();
     }
