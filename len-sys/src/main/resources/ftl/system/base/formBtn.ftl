@@ -23,7 +23,7 @@
  </div>-->
     <div class="layer-footer">
         <button class="layui-btn layui-btn-normal" lay-filter="add" lay-submit>
-            通过
+            确定
         </button>
         <button class="layui-btn layui-btn-primary" id="close">
             取消

@@ -43,26 +43,23 @@
                 </div>
             </div>
 
-            <#--真实姓名-->
             <div class="layui-form-item">
-                <div class="layui-inline">
-                    <label for="realName" class="layui-form-label">
-                        <span class="x-red">*</span>真实姓名
-                    </label>
-                    <div class="layui-input-inline">
-                        <input type="text" id="realName" value="${user.realName}" name="realName" lay-verify="realName"
-                               autocomplete="off" class="layui-input">
-                    </div>
-                </div>
-                <div class="layui-inline">
-                    <label for="age" class="layui-form-label">
-                        <span class="x-red">*</span>年龄
-                    </label>
-                    <div class="layui-input-inline">
-                        <input type="text" id="age" name="age" value="${user.age}" lay-verify="number"
-                               autocomplete="off" class="layui-input">
-                    </div>
-                </div>
+
+                <#--真实姓名-->
+                <@lenInclude  path="/system/base/lineInput.ftl"
+                for="realName"
+                label="真实姓名"
+                id="realName"
+                value="${user.realName}"
+                name="realName"/>
+
+                <#--年龄-->
+                <@lenInclude  path="/system/base/lineInput.ftl"
+                for="age"
+                label="年龄"
+                id="age"
+                value="${user.age}"
+                name="age"/>
             </div>
 
             <#--邮箱-->
@@ -151,7 +148,9 @@
             }
         });
 
-        //自定义验证规则
+        /**
+         * 校验
+         */
         form.verify({
             username: function (value) {
                 if (value.trim() === "") {

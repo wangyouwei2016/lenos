@@ -63,14 +63,6 @@ public class UserController extends BaseController {
     @RequiresPermissions("user:show")
     public ReType showUser(SysUser user, int page, int limit) {
         ReType show = userService.show(user, page, limit);
-        /*List<SysUser> data = (List)show.getData();
-        for (int i = 0; i < 100; i++) {
-            SysUser sysUser = new SysUser();
-            sysUser.setUsername("zhangsan");
-            sysUser.setAge(i);
-            sysUser.setEmail("150@qq.com");
-            data.add(sysUser);
-        }*/
         return show;
     }
 

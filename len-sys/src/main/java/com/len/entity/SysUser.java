@@ -32,7 +32,7 @@ public class SysUser extends BaseEntity {
     private String photo;
 
 
-//    private String realName;
+    private String realName;
 
     /**
      * 员工id

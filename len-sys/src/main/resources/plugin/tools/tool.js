@@ -169,15 +169,13 @@ var Len = {
     popup: function (url, title, w, h, id) {
         title = Len.isEmpty(title) ? false : title;
         url = Len.isEmpty(url) ? "error/404" : url;
-        w = Len.isEmpty(w) ? ($(window).width() * 0.9) : w;
-        h = Len.isEmpty(h) ? ($(window).height() - 50) : h;
         window.top.layer.open({
             id: id,
             type: 2,
-            area: this.screen() < 2 ? ['90%', '80%'] : ['700px', '450px'],//[w + 'px', h + 'px'],
+            area: this.screen() < 2 ? ['90%', '80%'] : ['700px', '450px'],
             fix: false,
             maxmin: true,
-            shadeClose: true,
+            shadeClose: false,
             shade: 0.4,
             title: title,
             content: url
