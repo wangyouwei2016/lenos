@@ -24,18 +24,16 @@
       <input class="layui-input" height="20px" id="key" autocomplete="off">
     </span>
     </div>
-    <div class="len-form-item">
-        <button type="button" class="layui-btn layui-btn-normal layui-btn layui-btn-sm" data-type="select">查询</button>
-        <button type="button" class="layui-btn layui-btn-normal layui-btn layui-btn-sm" data-type="reload">重置</button>
-    </div>
+
 </div>
-<div class="layui-col-md12">
+<div class="layui-col-md12 len-button">
     <div class="layui-btn-group">
-<@shiro.hasPermission name="control:del">
-    <button class="layui-btn layui-btn-normal layui-btn-sm" data-type="syncdata">
-        <i class="layui-icon">&#xe618;</i>同步数据
-    </button>
-</@shiro.hasPermission>
+        <#include "/system/base/searth.ftl">
+        <@shiro.hasPermission name="control:del">
+            <button class="layui-btn layui-btn-normal layui-btn-sm" data-type="syncdata">
+                <i class="layui-icon">&#xe618;</i>同步数据
+            </button>
+        </@shiro.hasPermission>
         <button class="layui-btn layui-btn-normal layui-btn-sm" id="processGroup" data-type="add">
             <i class="layui-icon">&#xe642;</i>新建流程
         </button>
