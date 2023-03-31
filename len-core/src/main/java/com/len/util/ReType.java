@@ -10,9 +10,6 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @author zhuxiaomeng
- * @date 2017/12/19.
- * @email lenospmiller@gmail.com
  * 查询返回json格式依照ui默认属性名称
  */
 @Data

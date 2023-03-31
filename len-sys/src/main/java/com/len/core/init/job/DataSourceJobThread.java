@@ -16,10 +16,7 @@ import com.len.util.SpringUtil;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * @author zhuxiaomeng
- * @date 2018/1/6.
- * @email lenospmiller@gmail.com
- *        <p>
+ *
  *        启动数据库中已经设定为 启动状态(status:true)的任务 项目启动时init 可优化
  */
 @Configuration

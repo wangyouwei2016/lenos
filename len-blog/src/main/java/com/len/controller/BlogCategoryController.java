@@ -12,10 +12,6 @@ import java.util.*;
 
 /**
  * 类别
- *
- * @author zhuxiaomeng
- * @date 2018/9/9.
- * @email lenospmiller@gmail.com
  */
 @CrossOrigin
 @RestController

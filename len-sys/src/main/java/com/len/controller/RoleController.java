@@ -26,9 +26,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.List;
 
 /**
- * @author zhuxiaomeng
- * @date 2017/12/19.
- * @email lenospmiller@gmail.com
  * 角色业务
  */
 @Controller

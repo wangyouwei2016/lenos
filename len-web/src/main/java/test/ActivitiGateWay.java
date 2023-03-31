@@ -22,12 +22,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 /**
- * @author zhuxiaomeng
- * @date 2018/1/11.
- * @email lenospmiller@gmail.com
  *
  * 本demo 根据官网doc教程 address：http://www.mossle.com/docs/activiti/index.html
- *
  * 网关
  */
 @RunWith(SpringJUnit4ClassRunner.class)

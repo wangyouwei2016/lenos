@@ -3,11 +3,7 @@ package com.len.util;
 import com.len.menu.LoginType;
 import org.apache.shiro.authc.UsernamePasswordToken;
 
-/**
- * @author zhuxiaomeng
- * @date 2018/8/18.
- * @email lenospmiller@gmail.com
- */
+
 public class CustomUsernamePasswordToken extends UsernamePasswordToken {
 
     private LoginType type;

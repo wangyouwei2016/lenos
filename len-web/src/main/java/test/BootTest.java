@@ -11,11 +11,7 @@ import com.len.entity.SysUser;
 import com.len.redis.RedisService;
 import com.len.service.SysUserService;
 
-/**
- * @author zhuxiaomeng
- * @date 2018/1/5.
- * @email lenospmiller@gmail.com
- */
+
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = LenApplication.class,webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class BootTest {

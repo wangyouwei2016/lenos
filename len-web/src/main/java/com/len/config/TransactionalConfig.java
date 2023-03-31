@@ -10,9 +10,6 @@ import org.springframework.transaction.interceptor.TransactionInterceptor;
 import java.util.Properties;
 
 /**
- * @author zhuxiaomeng
- * @date 2018/1/30.
- * @email lenospmiller@gmail.com
  * 事务管理
  */
 @Configuration

@@ -25,9 +25,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 /**
- * @author zhuxiaomeng
- * @date 2017/12/13.
- * @email lenospmiller@gmail.com 菜单
+ *  菜单
  */
 @RequestMapping("/menu")
 @Controller

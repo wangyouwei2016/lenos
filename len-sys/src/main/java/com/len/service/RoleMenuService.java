@@ -5,11 +5,7 @@ import com.len.entity.SysRoleMenu;
 
 import java.util.List;
 
-/**
- * @author zhuxiaomeng
- * @date 2017/12/28.
- * @email lenospmiller@gmail.com
- */
+
 public interface RoleMenuService extends BaseService<SysRoleMenu> {
 
     List<SysRoleMenu> selectByCondition(SysRoleMenu sysRoleMenu);

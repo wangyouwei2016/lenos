@@ -8,11 +8,7 @@ import com.len.util.Checkbox;
 
 import java.util.List;
 
-/**
- * @author zhuxiaomeng
- * @date 2017/12/4.
- * @email lenospmiller@gmail.com
- */
+
 public interface SysUserService extends BaseService<SysUser> {
 
     SysUser login(String username);

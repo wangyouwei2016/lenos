@@ -18,11 +18,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-/**
- * @author zhuxiaomeng
- * @date 2018/7/28.
- * @email lenospmiller@gmail.com
- */
+
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = LenApplication.class)
 @WebAppConfiguration

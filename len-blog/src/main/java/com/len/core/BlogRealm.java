@@ -18,9 +18,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
- * @author zhuxiaomeng
- * @date 2017/12/4.
- * @email lenospmiller@gmail.com
  */
 @Service
 public class BlogRealm extends AuthorizingRealm {

@@ -11,12 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 
-/**
- * @author zhuxiaomeng
- * @date 2017/12/13.
- * @email lenospmiller@gmail.com
- * update by 2019/11/12 mybatisplus
- */
+
 @Slf4j
 public class AbstractServiceImpl<E extends com.baomidou.mybatisplus.core.mapper.BaseMapper, T> extends ServiceImpl<BaseMapper<T>, T> implements BaseService<T> {
 

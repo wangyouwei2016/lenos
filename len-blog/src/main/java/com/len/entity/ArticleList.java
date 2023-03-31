@@ -4,11 +4,7 @@ import lombok.Data;
 
 import java.util.Date;
 
-/**
- * @author zhuxiaomeng
- * @date 2018/10/1.
- * @email lenospmiller@gmail.com
- */
+
 @Data
 public class ArticleList {
 

@@ -16,9 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 /**
- * @author zhuxiaomeng
- * @date 2018/7/28.
- * @email lenospmiller@gmail.com
  * <p>
  * 标签
  */

@@ -7,11 +7,7 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
 /**
- * @author zhuxiaomeng
- * @date 2018/1/6.
- * @email lenospmiller@gmail.com
- *        <p>
- *        lenosp 初始化类
+ *   初始化类
  */
 @Component
 public class LenospInit implements ApplicationListener<ContextRefreshedEvent> {

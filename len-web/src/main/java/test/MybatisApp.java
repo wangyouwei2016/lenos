@@ -2,11 +2,7 @@ package test;
 
 import org.mybatis.generator.api.ShellRunner;
 
-/**
- * @author zhuxiaomeng
- * @date 2017/12/4.
- * @email lenospmiller@gmail.com
- */
+
 public class MybatisApp {
 
   public static void main(String[] args) {

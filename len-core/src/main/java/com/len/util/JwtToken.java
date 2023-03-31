@@ -3,11 +3,7 @@ package com.len.util;
 import com.len.menu.LoginType;
 import org.apache.shiro.authc.AuthenticationToken;
 
-/**
- * @author zhuxiaomeng
- * @date 2018/8/19.
- * @email lenospmiller@gmail.com
- */
+
 public class JwtToken implements AuthenticationToken {
 
     private String token;

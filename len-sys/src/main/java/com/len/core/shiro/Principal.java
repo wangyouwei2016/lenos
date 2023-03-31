@@ -5,11 +5,7 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 
-/**
- * @author zhuxiaomeng
- * @date 2017/12/28.
- * @email lenospmiller@gmail.com
- */
+
 public class Principal {
 
     /**

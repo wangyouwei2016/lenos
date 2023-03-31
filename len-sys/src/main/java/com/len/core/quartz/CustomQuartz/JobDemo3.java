@@ -12,10 +12,6 @@ import org.quartz.JobExecutionException;
 import org.springframework.context.ApplicationContext;
 
 /**
- * @author zhuxiaomeng
- * @date 2018/1/7.
- * @email lenospmiller@gmail.com
- *
  * 定时测试类
  */
 public class JobDemo3 implements Job{

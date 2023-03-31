@@ -7,10 +7,10 @@ spring:
       restart:
         enabled: true
   datasource:
-    druid:
-        url: jdbc:mysql://localhost:3306/lenos?useUnicode=true&characterEncoding=UTF-8
+      druid:
+        url: jdbc:mysql://42.192.219.164:3306/lenosp?useUnicode=true&characterEncoding=UTF-8
         username: root
-        password: 123456
+        password: 1993526Zxm...
         driver-class-name: com.mysql.jdbc.Driver
 #   redis:
 #     host: 127.0.0.1
@@ -28,10 +28,7 @@ spring:
       encoding:
         force: true
 #        需要启动admin模块 来监听
-  boot:
-    admin:
-      client:
-        url: http://localhost:8082
+
 #国际化 多语言配置文件放在 resources/i18n 文件夹下
   messages:
     basename: i18n.message

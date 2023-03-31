@@ -6,11 +6,7 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.subject.Subject;
 
-/**
- * @author zhuxiaomeng
- * @date 2018/11/22.
- * @email lenospmiller@gmail.com
- */
+
 public class LenUser {
     public static Principal getPrincipal() {
         Subject subject = SecurityUtils.getSubject();

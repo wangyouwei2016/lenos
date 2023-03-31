@@ -22,11 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-/**
- * @author zhuxiaomeng
- * @date 2017/12/4.
- * @email lenospmiller@gmail.com
- */
+
 @Service
 public class LoginRealm extends AuthorizingRealm {
 

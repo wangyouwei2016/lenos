@@ -21,9 +21,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * @author zhuxiaomeng
- * @date 2018/1/26.
- * @email lenospmiller@gmail.com
  *
  * 请假流程 审批信息
  */

@@ -7,11 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-/**
- * @author zhuxiaomeng
- * @date 2017/12/19.
- * @email lenospmiller@gmail.com 404 403 500
- */
+
 @Controller
 @RequestMapping(value = "/error")
 @Api(value = "异常", tags = "异常业务类")

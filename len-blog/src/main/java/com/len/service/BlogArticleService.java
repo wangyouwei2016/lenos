@@ -9,11 +9,7 @@ import com.len.util.LenResponse;
 import java.util.Date;
 import java.util.List;
 
-/**
- * @author zhuxiaomeng
- * @date 2018/9/9.
- * @email lenospmiller@gmail.com
- */
+
 public interface BlogArticleService extends BaseService<BlogArticle> {
 
     List<Article> indexSelect();

@@ -13,9 +13,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 /**
- * @author zhuxiaomeng
- * @date 2018/8/18.
- * @email lenospmiller@gmail.com
  * 多模块认证
  */
 public class MyModularRealmAuthenticator extends ModularRealmAuthenticator {

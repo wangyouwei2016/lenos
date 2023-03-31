@@ -8,10 +8,7 @@ import lombok.Data;
 import java.io.Serializable;
 import java.util.Date;
 
-/**
- * @author zxm
- * @date 2019-11-12.
- */
+
 @Data
 public class BaseEntity implements Serializable {
 

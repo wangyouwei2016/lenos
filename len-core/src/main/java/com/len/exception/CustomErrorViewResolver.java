@@ -8,11 +8,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
-/**
- * @author zhuxiaomeng
- * @date 2018/5/6.
- * @email lenospmiller@gmail.com
- */
+
 @ControllerAdvice
 public class CustomErrorViewResolver implements ErrorViewResolver {
 

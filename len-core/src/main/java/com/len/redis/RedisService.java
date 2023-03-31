@@ -10,11 +10,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.concurrent.TimeUnit;
 
-/**
- * @author zhuxiaomeng
- * @date 2018/11/24.
- * @email lenospmiller@gmail.com
- */
+
 // @Service
 public class RedisService<T> {
 
