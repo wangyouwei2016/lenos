@@ -1,9 +1,3 @@
-<#--Created by IntelliJ IDEA.
-User: zxm
-Date: 2017/12/20
-Time: 10:00
-To change this template use File | Settings | File Templates.-->
-
 <!DOCTYPE html>
 <html>
 
@@ -23,17 +17,17 @@ To change this template use File | Settings | File Templates.-->
 <body>
 <div class="x-body">
 
-    <div style="width:100%; height:320px;overflow: hidden;">
+    <div style="width:100%; height:220px;overflow: hidden;">
         <iframe style="width:100%;height:100%;border: none;" src="${leaveUrl}"></iframe>
     </div>
 
   <form class="layui-form layui-form-pane" style="margin-left: 20px;">
-    <div style="width:98%;height:80px;overflow: hidden;">
+    <div style="width:98%;height:80px;">
         <input type="hidden" name="taskId" value="${taskId}">
         <div class="layui-form-item layui-form-text">
           <label class="layui-form-label">审批意见</label>
           <div class="layui-input-block">
-            <textarea name="opinion" id="opinion" lay-verify="opinion"  class="layui-textarea" style="min-height: 30px;height: 30px"></textarea>
+            <textarea name="opinion" id="opinion" lay-verify="opinion"  class="layui-textarea" style="min-height: 30px;height: 100px"></textarea>
           </div>
         </div>
     </div>
