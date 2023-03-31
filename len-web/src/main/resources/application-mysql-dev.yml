@@ -7,10 +7,10 @@ spring:
       restart:
         enabled: true
   datasource:
-      druid:
-        url: jdbc:mysql://42.192.219.164:3306/lenosp?useUnicode=true&characterEncoding=UTF-8
+    druid:
+        url: jdbc:mysql://localhost:3306/lenos?useUnicode=true&characterEncoding=UTF-8
         username: root
-        password: 1993526Zxm...
+        password: 123456
         driver-class-name: com.mysql.jdbc.Driver
 #   redis:
 #     host: 127.0.0.1
