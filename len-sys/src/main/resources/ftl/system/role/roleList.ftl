@@ -91,7 +91,7 @@
             if (obj.event === 'detail') {
                 Len.detail('/role/updateRole?id=' + data.id, '编辑角色');
             } else if (obj.event === 'del') {
-                Len.delete('del', data.id, '', 'roleList');
+                Len.delete('role/del', data.id, '', 'roleList');
             } else if (obj.event === 'edit') {
                 Len.update('/role/updateRole?id=' + data.id, '编辑角色');
             }
