@@ -1,15 +1,10 @@
-<#-- Created by IntelliJ IDEA.
- User: zxm
- Date: 2018/1/15
- Time: 16:53
- To change this template use File | Settings | File Templates.
-流程部署-->
+
 <!DOCTYPE html>
 <html>
 <head>
   <meta charset="UTF-8">
   <title>我的任务</title>
-<#include "/system/base/head.ftl">
+<#include "/system/base/formHead.ftl">
 </head>
 
 <body>
@@ -31,7 +26,7 @@
 </div>
 
 <table id="taskList" width="100%" lay-filter="task"></table>
-<script type="text/html" id="toolBar">
+<script type="text/html" id="taskToolBar">
   {{# if(d.flag){ }}
   <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="update"><i class="layui-icon">&#xe640;</i>编辑</a>
   {{# }else{ }}
@@ -106,7 +101,7 @@
         , {field: 'createTime', title: '创建时间', width: '10%', sort: true,templet: '<div>{{ layui.laytpl.toDateString(d.createTime,"yyyy-MM-dd") }}</div>'}
         , {field: 'assignee', title: '委派人', width: '10%', sort: true}
         , {field: 'processInstanceId', title: '流程实例ID', width: '15%', sort: true}
-        , {fixed: 'right', title: '操作', width: '20%', toolbar:'#toolBar'}
+        , {fixed: 'right', title: '操作', width: '25%', toolbar:'#taskToolBar'}
 
       ]]
       , page: true
@@ -151,7 +146,7 @@
       table.on('tool(task)', function (obj) {
       var data = obj.data;
       if (obj.event === 'handle') {
-        Len.popup('/leave/agent/'+data.id,700,500,'办理','task-agent');
+        Len.popup('/leave/agent/'+data.id,'审批',700,500,'办理','task-agent');
       }else if(obj.event === 'update'){
         Len.popup('${re.contextPath}/leave/updateLeave/'+data.id,700,500,'编辑','task-update');
       }else if(obj.event==='leaveDetail'){

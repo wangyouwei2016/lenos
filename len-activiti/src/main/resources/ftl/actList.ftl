@@ -1,9 +1,4 @@
-<#-- Created by IntelliJ IDEA.
- User: zxm
- Date: 2018/1/15
- Time: 16:53
- To change this template use File | Settings | File Templates.
-流程部署-->
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -36,7 +31,7 @@
 </div>
 
 <table id="actList" width="100%" lay-filter="act"></table>
-<script type="text/html" id="toolBar">
+<script type="text/html" id="actListToolBar">
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i class="layui-icon">&#xe640;</i>删除</a>
 </script>
 <script>
@@ -98,7 +93,7 @@
                 , {field: 'diagramResourceName', title: '流程图资源', width: '15%', sort: true}
                 , {field: 'category', title: '版本', width: '15%', sort: true}
                 , {field: 'resourceName', title: '资源名称', width: '10%', sort: true}
-                , {field: 'text', title: '操作', width: '10%', toolbar: '#toolBar'}
+                , {field: 'text', title: '操作', width: '10%', toolbar: '#actListToolBar'}
 
             ]]
             , page: true
@@ -149,7 +144,7 @@
 
     function del(id) {
         $.ajax({
-            url: "delDeploy",
+            url: "act/delDeploy",
             type: "post",
             data: {id: id},
             dataType: "json", traditional: true,

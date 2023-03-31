@@ -35,12 +35,12 @@
 </div>
 
 <table id="actModelList" width="100%" lay-filter="act"></table>
-<script type="text/html" id="toolBar">
-    <shiro.hasPermission name="control:del">
+<script type="text/html" id="modelToolBar">
+<#--    <shiro.hasPermission name="control:del">-->
         <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="update"><i class="layui-icon">&#xe640;</i>编辑</a>
         <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="open"><i class="layui-icon">&#xe640;</i>发布</a>
         <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i class="layui-icon">&#xe640;</i>删除</a>
-    </shiro.hasPermission>
+<#--    </shiro.hasPermission>-->
 </script>
 <script>
     layui.laytpl.toDateString = function (d, format) {
@@ -106,7 +106,7 @@
                     width: '20%',
                     templet: '<div>{{ layui.laytpl.toDateString(d.createTime,"yyyy-MM-dd HH:mm:ss") }}</div>'
                 }
-                , {field: 'text', title: '操作', width: '20%', toolbar: '#toolBar'}
+                , {field: 'text', title: '操作', width: '20%', toolbar: '#modelToolBar'}
 
             ]]
             , page: true
@@ -187,7 +187,7 @@
 
     function del(id) {
         $.ajax({
-            url: "delModel",
+            url: "act/delModel",
             type: "post",
             data: {id: id},
             dataType: "json", traditional: true,
@@ -205,7 +205,7 @@
     function syncdata() {
        var index= layer.load(2);
         $.ajax({
-            url: "syncdata",
+            url: "act/syncdata",
             type: "post",
             dataType: "json", traditional: true,
             success: function (data) {
@@ -217,7 +217,7 @@
 
     function open(id) {
         $.ajax({
-            url: "open",
+            url: "act/open",
             type: "post",
             data: {id: id},
             dataType: "json", traditional: true,
