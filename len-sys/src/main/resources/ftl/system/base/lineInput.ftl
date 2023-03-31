@@ -15,8 +15,11 @@
         </#if>
     </label>
     <div class="layui-input-inline">
-        <input type="${type}" id="${id}"
-               name="${name}" lay-verify="${varify}"
+        <input type="${type}"
+               id="${id}"
+               name="${name}"
+               lay-verify="${verify}"
+               value="${value}"
                autocomplete="off"
                class="layui-input"/>
     </div>

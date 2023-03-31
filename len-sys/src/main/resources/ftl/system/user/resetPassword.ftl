@@ -1,11 +1,4 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-  <meta charset="UTF-8">
-  <title>重置密码</title>
-<#include "/system/base/head.ftl">
-</head>
+<#include "/system/base/formHead.ftl">
 
 <body>
 <div class="x-body">
@@ -96,5 +89,3 @@
   });
 </script>
 </body>
-
-</html>

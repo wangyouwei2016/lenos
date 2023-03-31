@@ -128,19 +128,17 @@
                     Len.update('/user/updateUser?id=' + data.id);
                     break;
                 case "del":
-                    layer.confirm('确定删除用户[<label style="color: #00AA91;">' + data.username + '</label>]?', {
-                        btn: ['逻辑删除', '物理删除']
-                    }, function () {
-                        Len.ajaxPost('del', {id: data.id, realDel: false}, function () {
-                            Len.success("删除成功");
-                            layui.table.reload('userList');
-                        }, data.username);
-                    }, function () {
-                        Len.ajaxPost('del', {id: data.id, realDel: true}, function () {
-                            Len.success("删除成功");
-                            layui.table.reload('userList');
+                    layer.confirm('确定删除?', function () {
+                        Len.ajaxPost('user/del', {id: data.id, realDel: true}, function (result) {
+                            if (!result.flag) {
+                                Len.warn(result.msg);
+                            } else {
+                                Len.success("删除成功");
+                                layui.table.reload('userList');
+                            }
                         }, data.username);
                     });
+
             }
         });
         Len.btnBind($('.user-bar .layui-btn'),active);
