@@ -3,6 +3,7 @@
 <body>
 <div class="x-body">
   <form class="layui-form layui-form-pane" style="margin-left: 20px;">
+    <input  name="userId" value="${user.id}" hidden>
     <div style="width:100%;height:300px;overflow: auto;">
     <div class="layui-form-item">
       <fieldset class="layui-elem-field layui-field-title" style="margin-top: 10px;">

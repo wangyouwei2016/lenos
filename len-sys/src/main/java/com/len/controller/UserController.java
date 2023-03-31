@@ -165,8 +165,8 @@ public class UserController extends BaseController {
     @PostMapping(value = "rePass")
     @ResponseBody
     @RequiresPermissions("user:repass")
-    public LenResponse rePass(String id, String newPwd) {
-        userService.rePass(id, newPwd);
+    public LenResponse rePass(String userId, String newPwd) {
+        userService.rePass(userId, newPwd);
         return succ(MsHelper.getMsg("update.success"));
     }
 
