@@ -34,6 +34,9 @@ public class LenInclude implements TemplateDirectiveModel {
         TemplateLoader templateLoader = environment.getConfiguration().getTemplateLoader();
         String templatePath = templatePath(environment, map, PATH);
         DefaultObjectWrapperBuilder builder = new DefaultObjectWrapperBuilder(Configuration.VERSION_2_3_29);
+        if (templatePath.startsWith("/")) {
+            templatePath = templatePath.substring(1);
+        }
         if (templateLoader.findTemplateSource(templatePath) == null) {
             throw new _MiscTemplateException(String.format("未找到模板文件(Template file not found)[%s]", templatePath));
         }
