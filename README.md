@@ -9,7 +9,7 @@ lenosp是一个基于spring boot的脚手架。
 
 
 # 模块
-![输入图片说明](image/image.png)
+![输入图片说明](image/moduleimage.png)
 # 里程碑
 完善当前单体应用，趋于稳定，可供中小企业快速迭代。
 
