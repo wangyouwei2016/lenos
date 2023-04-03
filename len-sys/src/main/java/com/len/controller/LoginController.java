@@ -38,8 +38,18 @@ import lombok.extern.slf4j.Slf4j;
 @Api(value = "登录业务", tags = "登录校验处理")
 public class LoginController {
 
-    @Autowired
     SysUserService userService;
+    /**
+     * spring在4.x版本后推荐使用构造器的方式的来注入fileld；
+     * Spring4.3+之后，constructor注入支持非显示注入方式。
+     * 下方的@Autowired就已经可以去掉了
+     * @param userService
+     */
+    @Autowired
+    public LoginController(SysUserService userService) {
+        this.userService = userService;
+    }
+
     private static final String CODE_ERROR = "code.error";
     private static final String CODE_TIMEOUT = "code.timeout";
     private static final Long TWO_WEEK = 1000 * 60 * 60 * 24 * 14L;
