@@ -1,3 +1,25 @@
+<p align="center">
+	👉 <a href="http://42.192.219.164:8081">http://42.192.219.164:8081</a> 👈
+</p>
+<p align="center">
+	<a target="_blank" href="https://gitee.com/zzdevelop/lenosp/stargazers">
+		<img src="https://gitee.com/zzdevelop/lenosp/badge/star.svg?theme=gvp" />
+	</a>
+        <a target="_blank" href="https://www.apache.org/licenses/LICENSE-2.0">
+		<img src="https://img.shields.io/:license-apache2-read.svg" />
+	</a>
+        <a target="_blank" href="https://gitee.com/zzdevelop/lenosp">
+		<img src="https://img.shields.io/badge/-Spring%20boot-green" />
+	</a>
+        <a target="_blank" href="https://gitee.com/zzdevelop/lenosp">
+		<img src="https://img.shields.io/badge/-Spring%20boot-green" />
+	</a>
+        <a target="_blank" href="https://gitee.com/zzdevelop">
+		<img src="https://img.shields.io/badge/%E7%BB%84%E7%BB%87-%E9%83%91%E5%B7%9E%E7%A8%8B%E5%BA%8F%E5%91%98-green" />
+	</a>
+
+</p>
+
 # 简介
 lenosp是一个基于spring boot的脚手架。
 # 体验
