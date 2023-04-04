@@ -4,32 +4,32 @@ spring:
   main:
     allow-bean-definition-overriding: true
   devtools:
-      restart:
-        enabled: true
+    restart:
+      enabled: true
   datasource:
     druid:
-        url: jdbc:mysql://localhost:3306/lenos?useUnicode=true&characterEncoding=UTF-8
-        username: root
-        password: 123456
-        driver-class-name: com.mysql.jdbc.Driver
-#   redis:
-#     host: 127.0.0.1
-#     port: 6379
-#     timeout: 3000
-#     maxRetryCount: 10
-#     second: 300
-#   session:
-#     store-type: redis
-#   data:
-#     redis:
-#       repositories:
-#         enabled: false
+      url: jdbc:mysql://localhost:3306/lenos?useUnicode=true&characterEncoding=UTF-8
+      username: root
+      password: 123456
+      driver-class-name: com.mysql.jdbc.Driver
+  #   redis:
+  #     host: 127.0.0.1
+  #     port: 6379
+  #     timeout: 3000
+  #     maxRetryCount: 10
+  #     second: 300
+  #   session:
+  #     store-type: redis
+  #   data:
+  #     redis:
+  #       repositories:
+  #         enabled: false
   http:
-      encoding:
-        force: true
-#        需要启动admin模块 来监听
+    encoding:
+      force: true
+  #        需要启动admin模块 来监听
 
-#国际化 多语言配置文件放在 resources/i18n 文件夹下
+  #国际化 多语言配置文件放在 resources/i18n 文件夹下
   messages:
     basename: i18n.message
     encoding: UTF-8
@@ -40,8 +40,8 @@ spring:
       exposure:
         include: "*"
   endpoint:
-      health:
-          show-details: ALWAYS
+    health:
+      show-details: ALWAYS
 eureka:
   client:
     fetch-registry: false
@@ -52,17 +52,17 @@ eureka:
 #     port: 6379
 
 mybatis:
-    type-aliases-package: com.len.entity
-    mapper-locations: classpath*:mapper/*.xml
-    check-config-location: true
+  type-aliases-package: com.len.entity
+  mapper-locations: classpath*:mapper/*.xml
+  check-config-location: true
 
 
 # PageHelperConfig
 pagehelper:
-    helperDialect: mysql
-    reasonable: true
-    supportMethodsArguments: true
-    params: count=countSql
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
 
 #文件储存路径配置
 lenosp:

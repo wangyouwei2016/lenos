@@ -96,7 +96,12 @@
                 var data = table.checkStatus('jobList').data;
                 if (Len.onlyOne(data.length)) {
                     if (data[0].status) {
-                        layer.msg('已经启动任务无法更新,请停止后更新', {icon: 5, offset: 'rb', area: ['200px', '100px'], anim: 2});
+                        layer.msg('已经启动任务无法更新,请停止后更新', {
+                            icon: 5,
+                            offset: 'rb',
+                            area: ['200px', '100px'],
+                            anim: 2
+                        });
                         return false;
                     }
                     Len.update('/job/updateJob?id=' + data[0].id, '编辑任务');
@@ -119,14 +124,24 @@
                     if (!data.status) {
                         Len.delete('del', data.id, '', 'jobList');
                     } else {
-                        layer.msg('已经启动任务无法更新,请停止后删除', {icon: 5, offset: 'rb', area: ['200px', '100px'], anim: 2});
+                        layer.msg('已经启动任务无法更新,请停止后删除', {
+                            icon: 5,
+                            offset: 'rb',
+                            area: ['200px', '100px'],
+                            anim: 2
+                        });
                     }
                     break;
                 case "edit":
                     if (!data.status) {
                         Len.update('/job/updateJob?id=' + data.id, '编辑任务');
                     } else {
-                        layer.msg('已经启动任务无法更新,请停止后更新', {icon: 5, offset: 'rb', area: ['200px', '100px'], anim: 2});
+                        layer.msg('已经启动任务无法更新,请停止后更新', {
+                            icon: 5,
+                            offset: 'rb',
+                            area: ['200px', '100px'],
+                            anim: 2
+                        });
                     }
                     break;
                 case "start":

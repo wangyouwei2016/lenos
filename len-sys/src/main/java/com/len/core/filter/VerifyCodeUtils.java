@@ -1,10 +1,6 @@
 package com.len.core.filter;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
+import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -13,6 +9,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Arrays;
 import java.util.Random;
+
 import javax.imageio.ImageIO;
 
 public class VerifyCodeUtils {
@@ -22,37 +19,8 @@ public class VerifyCodeUtils {
     private static Random random = new Random();
 
     /**
-     * 验证码对象
-     * 
-     * @author zhou-baicheng
-     *
-     */
-    public static class Verify {
-
-        private String code;// 如 1 + 2
-
-        private Integer value;// 如 3
-
-        public String getCode() {
-            return code;
-        }
-
-        public void setCode(String code) {
-            this.code = code;
-        }
-
-        public Integer getValue() {
-            return value;
-        }
-
-        public void setValue(Integer value) {
-            this.value = value;
-        }
-    }
-
-    /**
      * 使用系统默认字符源生成验证码
-     * 
+     *
      * @param
      * @return
      */
@@ -67,7 +35,7 @@ public class VerifyCodeUtils {
 
     /**
      * 使用系统默认字符源生成验证码
-     * 
+     *
      * @param verifySize 验证码长度
      * @return
      */
@@ -77,7 +45,7 @@ public class VerifyCodeUtils {
 
     /**
      * 使用指定源生成验证码
-     * 
+     *
      * @param verifySize 验证码长度
      * @param sources 验证码字符源
      * @return
@@ -97,7 +65,7 @@ public class VerifyCodeUtils {
 
     /**
      * 生成随机验证码文件,并返回验证码值
-     * 
+     *
      * @param w
      * @param h
      * @param outputFile
@@ -113,7 +81,7 @@ public class VerifyCodeUtils {
 
     /**
      * 输出随机验证码图片流,并返回验证码值
-     * 
+     *
      * @param w
      * @param h
      * @param os
@@ -129,7 +97,7 @@ public class VerifyCodeUtils {
 
     /**
      * 生成指定验证码图像文件
-     * 
+     *
      * @param w
      * @param h
      * @param outputFile
@@ -156,7 +124,7 @@ public class VerifyCodeUtils {
 
     /**
      * 输出指定验证码图片流
-     * 
+     *
      * @param w
      * @param h
      * @param os
@@ -309,6 +277,35 @@ public class VerifyCodeUtils {
             String verifyCode = generateVerifyCode(4);
             File file = new File(dir, verifyCode + ".jpg");
             outputImage(w, h, file, verifyCode);
+        }
+    }
+
+    /**
+     * 验证码对象
+     *
+     * @author zhou-baicheng
+     *
+     */
+    public static class Verify {
+
+        private String code;// 如 1 + 2
+
+        private Integer value;// 如 3
+
+        public String getCode() {
+            return code;
+        }
+
+        public void setCode(String code) {
+            this.code = code;
+        }
+
+        public Integer getValue() {
+            return value;
+        }
+
+        public void setValue(Integer value) {
+            this.value = value;
         }
     }
 

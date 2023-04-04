@@ -1,14 +1,15 @@
 package com.len.controller;
 
-import com.len.entity.BlogCategory;
-import com.len.service.BlogCategoryService;
+import java.util.*;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.*;
+import com.len.entity.BlogCategory;
+import com.len.service.BlogCategoryService;
 
 /**
  * 类别
@@ -20,7 +21,6 @@ public class BlogCategoryController {
 
     @Autowired
     private BlogCategoryService categoryService;
-
 
     @GetMapping("/menu")
     public List<Map> menuList() {

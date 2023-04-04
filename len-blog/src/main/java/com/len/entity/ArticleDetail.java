@@ -1,12 +1,12 @@
 package com.len.entity;
 
-import com.len.model.Article;
-import com.len.model.SimpleArticle;
-import lombok.Data;
-
 import java.util.ArrayList;
 import java.util.List;
 
+import com.len.model.Article;
+import com.len.model.SimpleArticle;
+
+import lombok.Data;
 
 @Data
 public class ArticleDetail {

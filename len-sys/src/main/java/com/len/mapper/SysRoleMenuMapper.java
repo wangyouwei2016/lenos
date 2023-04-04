@@ -1,9 +1,9 @@
 package com.len.mapper;
 
+import java.util.List;
+
 import com.len.base.BaseMapper;
 import com.len.entity.SysRoleMenu;
-
-import java.util.List;
 
 /**
  * 角色菜单 mapper

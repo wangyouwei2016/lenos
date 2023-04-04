@@ -1,75 +1,76 @@
+# len-webç›®å½•ç»“æ„
 
-# len-webÄ¿Â¼½á¹¹
-1. Ä¿Â¼½á¹¹
+1. ç›®å½•ç»“æ„
 
  ```
-   ©À©¤src
-   ©¦  ©¸©¤main
-   ©¦      ©À©¤java
-   ©¦      ©¦  ©À©¤com
-   ©¦      ©¦  ©¦  ©¸©¤len
-   ©¦      ©¦  ©¦      ©¦  LenApplication.java   Æô¶¯Àà
-   ©¦      ©¦  ©¦      ©¦
-   ©¦      ©¦  ©¦      ©¸©¤config
-   ©¦      ©¦  ©¦              BeanFactoryImpl.java   ¹¤³§ÉèÖÃ
-   ©¦      ©¦  ©¦              BeanName.java
-   ©¦      ©¦  ©¦              DruidConfig.java       Êı¾İÔ´
-   ©¦      ©¦  ©¦              FreeMarkerConfig.java  freemarker£¨¹¤×÷Á÷£©ÅäÖÃÀà
-   ©¦      ©¦  ©¦              FreemarkerShiroConfig.java
-   ©¦      ©¦  ©¦              LenFilter.java
-   ©¦      ©¦  ©¦              LogConfig.java
-   ©¦      ©¦  ©¦              MyBatisPlusConfig.java
-   ©¦      ©¦  ©¦              MyModularRealmAuthenticator.java
-   ©¦      ©¦  ©¦              PageHelperConfig.java
-   ©¦      ©¦  ©¦              ShiroConfig.java
-   ©¦      ©¦  ©¦              ShiroSessionManager.java
-   ©¦      ©¦  ©¦              SocketConfig.java
-   ©¦      ©¦  ©¦              SwaggerConfig.java
-   ©¦      ©¦  ©¦              TransactionalConfig.java
-   ©¦      ©¦  ©¦              WebMvcConfig.java
-   ©¦      ©¦  ©¦              ZBeanFactory.java
-   ©¦      ©¦  ©¦
-   ©¦      ©¦  ©¸©¤test     ²âÊÔ°¸Àı×Ô¶¨Òå
-   ©¦      ©¦
-   ©¦      ©¸©¤resources
-   ©¦          ©¦
-   ©¦          ©À©¤auto-config
-   ©¦          ©¦      mybatis-config.xml
-   ©¦          ©¦
-   ©¦          ©¸©¤ehcache
-   ©¦                  ehcache.xml
-   ©¦
+   â”œâ”€src
+   â”‚  â””â”€main
+   â”‚      â”œâ”€java
+   â”‚      â”‚  â”œâ”€com
+   â”‚      â”‚  â”‚  â””â”€len
+   â”‚      â”‚  â”‚      â”‚  LenApplication.java   å¯åŠ¨ç±»
+   â”‚      â”‚  â”‚      â”‚
+   â”‚      â”‚  â”‚      â””â”€config
+   â”‚      â”‚  â”‚              BeanFactoryImpl.java   å·¥å‚è®¾ç½®
+   â”‚      â”‚  â”‚              BeanName.java
+   â”‚      â”‚  â”‚              DruidConfig.java       æ•°æ®æº
+   â”‚      â”‚  â”‚              FreeMarkerConfig.java  freemarkerï¼ˆå·¥ä½œæµï¼‰é…ç½®ç±»
+   â”‚      â”‚  â”‚              FreemarkerShiroConfig.java
+   â”‚      â”‚  â”‚              LenFilter.java
+   â”‚      â”‚  â”‚              LogConfig.java
+   â”‚      â”‚  â”‚              MyBatisPlusConfig.java
+   â”‚      â”‚  â”‚              MyModularRealmAuthenticator.java
+   â”‚      â”‚  â”‚              PageHelperConfig.java
+   â”‚      â”‚  â”‚              ShiroConfig.java
+   â”‚      â”‚  â”‚              ShiroSessionManager.java
+   â”‚      â”‚  â”‚              SocketConfig.java
+   â”‚      â”‚  â”‚              SwaggerConfig.java
+   â”‚      â”‚  â”‚              TransactionalConfig.java
+   â”‚      â”‚  â”‚              WebMvcConfig.java
+   â”‚      â”‚  â”‚              ZBeanFactory.java
+   â”‚      â”‚  â”‚
+   â”‚      â”‚  â””â”€test     æµ‹è¯•æ¡ˆä¾‹è‡ªå®šä¹‰
+   â”‚      â”‚
+   â”‚      â””â”€resources
+   â”‚          â”‚
+   â”‚          â”œâ”€auto-config
+   â”‚          â”‚      mybatis-config.xml
+   â”‚          â”‚
+   â”‚          â””â”€ehcache
+   â”‚                  ehcache.xml
+   â”‚
  ```
 
-## ÓÅ»¯sql
-1. Ö´ĞĞPMD´úÂë¼ì²é
+## ä¼˜åŒ–sql
 
-2. ##### Ê¹ÓÃexpl ain²é¿´×Ô¼º±àĞ´µÄSqlÖ´ĞĞÇé¿ö¡£
+1. æ‰§è¡ŒPMDä»£ç æ£€æŸ¥
 
-3. ##### Ğ´µÄSql¾¡Á¿Âú×ã×î×óË÷ÒıÆ¥ÅäÔ­ÔòÊ¹ÓÃË÷Òı¡£
+2. ##### ä½¿ç”¨expl ainæŸ¥çœ‹è‡ªå·±ç¼–å†™çš„Sqlæ‰§è¡Œæƒ…å†µã€‚
 
-4. ##### ²éÑ¯SQL¾¡Á¿²»ÒªÊ¹ÓÃselect *£¬¶øÊÇ¾ßÌå×Ö¶Î
+3. ##### å†™çš„Sqlå°½é‡æ»¡è¶³æœ€å·¦ç´¢å¼•åŒ¹é…åŸåˆ™ä½¿ç”¨ç´¢å¼•ã€‚
 
-5. ##### whereÖĞÊ¹ÓÃÄ¬ÈÏÖµ´úÌænull
+4. ##### æŸ¥è¯¢SQLå°½é‡ä¸è¦ä½¿ç”¨select *ï¼Œè€Œæ˜¯å…·ä½“å­—æ®µ
 
-6. ##### Ê×ÏÈ¾¡Á¿±ÜÃâÄ£ºı²éÑ¯£¬Èç¹û±ØĞëÊ¹ÓÃ£¬²»²ÉÓÃÈ«Ä£ºı²éÑ¯£¬Ò²Ó¦¾¡Á¿²ÉÓÃÓÒÄ£ºı²éÑ¯£¬ ¼´`like ¡®¡­%¡¯`£¬ÊÇ»áÊ¹ÓÃË÷ÒıµÄ£»
+5. ##### whereä¸­ä½¿ç”¨é»˜è®¤å€¼ä»£æ›¿null
 
-7. ##### ±ÜÃâÔÚwhere×Ó¾äÖĞÊ¹ÓÃ!=»ò<>²Ù×÷·û
+6. ##### é¦–å…ˆå°½é‡é¿å…æ¨¡ç³ŠæŸ¥è¯¢ï¼Œå¦‚æœå¿…é¡»ä½¿ç”¨ï¼Œä¸é‡‡ç”¨å…¨æ¨¡ç³ŠæŸ¥è¯¢ï¼Œä¹Ÿåº”å°½é‡é‡‡ç”¨å³æ¨¡ç³ŠæŸ¥è¯¢ï¼Œ å³`like â€˜â€¦%â€™`ï¼Œæ˜¯ä¼šä½¿ç”¨ç´¢å¼•çš„ï¼›
 
-   Ê¹ÓÃ`!=`ºÍ`<>`ºÜ¿ÉÄÜ»áÈÃË÷ÒıÊ§Ğ§
+7. ##### é¿å…åœ¨whereå­å¥ä¸­ä½¿ç”¨!=æˆ–<>æ“ä½œç¬¦
 
-   Ó¦¾¡Á¿±ÜÃâÔÚ`where`×Ó¾äÖĞÊ¹ÓÃ`!=`»ò`<>`²Ù×÷·û£¬·ñÔòÒıÇæ½«·ÅÆúÊ¹ÓÃË÷Òı¶ø½øĞĞÈ«±íÉ¨Ãè
+   ä½¿ç”¨`!=`å’Œ`<>`å¾ˆå¯èƒ½ä¼šè®©ç´¢å¼•å¤±æ•ˆ
 
-8. ##### ±ÜÃâÔÚwhere×Ó¾äÖĞÊ¹ÓÃ or À´Á¬½ÓÌõ¼ş    Ê¹ÓÃunion all  ÀıÈç
+   åº”å°½é‡é¿å…åœ¨`where`å­å¥ä¸­ä½¿ç”¨`!=`æˆ–`<>`æ“ä½œç¬¦ï¼Œå¦åˆ™å¼•æ“å°†æ”¾å¼ƒä½¿ç”¨ç´¢å¼•è€Œè¿›è¡Œå…¨è¡¨æ‰«æ
+
+8. ##### é¿å…åœ¨whereå­å¥ä¸­ä½¿ç”¨ or æ¥è¿æ¥æ¡ä»¶    ä½¿ç”¨union all  ä¾‹å¦‚
 
    ```
    SELECT?*?FROM?a WHERE?id=1?UNION?ALL SELECT?*?FROM? a  WHERE?salary=5000 
    ```
 
-   Ô­Òò£º
+   åŸå› ï¼š
 
-   - Ê¹ÓÃ`or`¿ÉÄÜ»áÊ¹Ë÷ÒıÊ§Ğ§£¬´Ó¶øÈ«±íÉ¨Ãè£»
+    - ä½¿ç”¨`or`å¯èƒ½ä¼šä½¿ç´¢å¼•å¤±æ•ˆï¼Œä»è€Œå…¨è¡¨æ‰«æï¼›
 
-   - ¶ÔÓÚ`or`Ã»ÓĞË÷ÒıµÄ`salary`ÕâÖÖÇé¿ö£¬¼ÙÉèËü×ßÁË`id`µÄË÷Òı£¬µ«ÊÇ×ßµ½`salary`²éÑ¯Ìõ¼şÊ±£¬Ëü»¹µÃÈ«±íÉ¨Ãè£»
+    - å¯¹äº`or`æ²¡æœ‰ç´¢å¼•çš„`salary`è¿™ç§æƒ…å†µï¼Œå‡è®¾å®ƒèµ°äº†`id`çš„ç´¢å¼•ï¼Œä½†æ˜¯èµ°åˆ°`salary`æŸ¥è¯¢æ¡ä»¶æ—¶ï¼Œå®ƒè¿˜å¾—å…¨è¡¨æ‰«æï¼›
 
-     ##### 
+      #####  

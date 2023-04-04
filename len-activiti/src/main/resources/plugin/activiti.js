@@ -7,10 +7,10 @@ var activiti = {
      * @param h 高
      */
     img: function (processInstanceId, w, h) {
-        if (typeof w==='undefined') {
+        if (typeof w === 'undefined') {
             w = $(window).width();
         }
-        if (typeof h==='undefined') {
+        if (typeof h === 'undefined') {
             h = $(window).height();
         }
         window.parent.layer.open({

@@ -1,5 +1,10 @@
 package com.len.service.impl;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.len.base.impl.BaseServiceImpl;
 import com.len.entity.SysRole;
@@ -15,10 +20,6 @@ import com.len.util.LenResponse;
 import com.len.util.MsHelper;
 import com.len.validator.ValidatorUtils;
 import com.len.validator.group.AddGroup;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 /**
  * 角色 service

@@ -1,11 +1,11 @@
 package com.len.config;
 
-import com.jagregory.shiro.freemarker.ShiroTags;
-import com.len.freemarker.LenInclude;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.jagregory.shiro.freemarker.ShiroTags;
+import com.len.freemarker.LenInclude;
 
 @Component
 public class FreemarkerShiroConfig implements InitializingBean {

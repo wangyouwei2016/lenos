@@ -1,13 +1,9 @@
 package com.len.core.shiro;
 
-import com.len.base.CurrentMenu;
-import com.len.base.CurrentRole;
-import com.len.base.CurrentUser;
-import com.len.entity.SysUser;
-import com.len.menu.LoginType;
-import com.len.service.SysUserService;
-import com.len.util.BeanUtil;
-import com.len.util.JWTUtil;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
@@ -18,10 +14,14 @@ import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-
+import com.len.base.CurrentMenu;
+import com.len.base.CurrentRole;
+import com.len.base.CurrentUser;
+import com.len.entity.SysUser;
+import com.len.menu.LoginType;
+import com.len.service.SysUserService;
+import com.len.util.BeanUtil;
+import com.len.util.JWTUtil;
 
 @Service
 public class LoginRealm extends AuthorizingRealm {

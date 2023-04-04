@@ -25,7 +25,7 @@
             }
         }
     };
-    var zNodes =${menus};
+    var zNodes = ${menus};
     $(document).ready(function () {
         $.fn.zTree.init($("#treeDemo"), setting, zNodes);
     });

@@ -2,7 +2,7 @@
 
 <#--description
 -->
-    
+
 <#if type=="">
     <#assign type='text'>
 </#if>

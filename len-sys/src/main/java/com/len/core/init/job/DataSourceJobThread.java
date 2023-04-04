@@ -17,7 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 
 /**
  *
- *        启动数据库中已经设定为 启动状态(status:true)的任务 项目启动时init 可优化
+ * 启动数据库中已经设定为 启动状态(status:true)的任务 项目启动时init 可优化
  */
 @Configuration
 @Slf4j

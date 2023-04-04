@@ -2,7 +2,8 @@
 .kit-theme .kit-layout-admin .layui-header {
     border-bottom: 2px solid rgba(255, 255, 255, 0.08)
 }
-.kit-theme .layui-tab-card>.layui-tab-title{
+
+.kit-theme .layui-tab-card > .layui-tab-title {
     background-color: #fbfbfb;
 }
 

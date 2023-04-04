@@ -1,13 +1,14 @@
 package com.len.validator;
 
-import com.len.exception.LenException;
-import com.len.exception.ServiceException;
-import com.len.util.MsHelper;
+import java.util.Set;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
-import java.util.Set;
+
+import com.len.exception.LenException;
+import com.len.exception.ServiceException;
+import com.len.util.MsHelper;
 
 /**
  * @ClassName: ValidatorUtils
@@ -20,7 +21,6 @@ public class ValidatorUtils {
 
     private static Validator validator;
 
-
     static {
         validator = Validation.buildDefaultValidatorFactory().getValidator();
     }
@@ -32,12 +32,10 @@ public class ValidatorUtils {
      * @param groups 待校验的组
      * @throws LenException 校验不通过，则报BusinessException异常
      */
-    public static void validateEntity(Object object, Class<?>... groups)
-            throws LenException {
+    public static void validateEntity(Object object, Class<?>... groups) throws LenException {
         Set<ConstraintViolation<Object>> constraintViolations = validator.validate(object, groups);
         if (!constraintViolations.isEmpty()) {
-            ConstraintViolation<Object> constraint =
-                    constraintViolations.iterator().next();
+            ConstraintViolation<Object> constraint = constraintViolations.iterator().next();
             throw new ServiceException(constraint.getMessage());
         }
     }

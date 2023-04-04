@@ -5,13 +5,10 @@ import org.springframework.context.MessageSourceResolvable;
 import org.springframework.context.NoSuchMessageException;
 
 /**
- * Message Source 帮助类
- * 统一获取资源化 资源化配置在 resources/i18n目录下
+ * Message Source 帮助类 统一获取资源化 资源化配置在 resources/i18n目录下
  */
 
-
 public class MsHelper {
-
 
     private static final MessageSource messageSource;
 
@@ -19,11 +16,9 @@ public class MsHelper {
         messageSource = SpringUtil.getBean(MessageSource.class);
     }
 
-
     public static String getMsg(String msg) {
         return messageSource.getMessage(msg, null, LocalLocale.getLocale());
     }
-
 
     public static String getMessage(String s, Object[] objects, String s1) {
         return messageSource.getMessage(s, objects, s1, LocalLocale.getLocale());

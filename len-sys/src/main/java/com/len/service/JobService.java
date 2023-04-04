@@ -3,11 +3,11 @@ package com.len.service;
 import com.len.base.BaseService;
 import com.len.entity.SysJob;
 
-
 public interface JobService extends BaseService<SysJob> {
 
     /**
      * 更新
+     * 
      * @param job
      * @return
      */
@@ -15,6 +15,7 @@ public interface JobService extends BaseService<SysJob> {
 
     /**
      * 删除
+     * 
      * @param id
      * @return
      */
@@ -22,6 +23,7 @@ public interface JobService extends BaseService<SysJob> {
 
     /**
      * 启动任务
+     * 
      * @param id
      * @return
      */
@@ -29,6 +31,7 @@ public interface JobService extends BaseService<SysJob> {
 
     /**
      * 停止任务
+     * 
      * @param id
      * @return
      */

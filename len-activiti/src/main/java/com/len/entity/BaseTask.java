@@ -9,6 +9,19 @@ import java.util.Date;
 public abstract class BaseTask implements Serializable {
 
     protected String id;
+    protected String userId;
+    protected String userName;
+    protected String processInstanceId;
+    protected String status;
+    protected Date createDate;
+    protected String createBy;
+    protected Date updateDate;
+    protected String updateBy;
+    protected String reason;
+    // ***实时节点信息
+    protected String taskName;
+    private String urlpath;
+    private Integer submittimes;
 
     /**
      * @return id
@@ -23,38 +36,6 @@ public abstract class BaseTask implements Serializable {
     public void setId(String id) {
         this.id = id == null ? null : id.trim();
     }
-
-
-    protected String userId;
-
-    protected String userName;
-
-
-    protected String processInstanceId;
-
-    protected String status;
-
-    protected Date createDate;
-
-    protected String createBy;
-
-    protected Date updateDate;
-
-    protected String updateBy;
-
-
-    protected String reason;
-
-
-    //***实时节点信息
-    protected String taskName;
-
-
-    private String urlpath;
-
-
-    private Integer submittimes;
-
 
     /**
      * @return user_id
@@ -83,7 +64,6 @@ public abstract class BaseTask implements Serializable {
     public void setUserName(String userName) {
         this.userName = userName == null ? null : userName.trim();
     }
-
 
     /**
      * @return reason

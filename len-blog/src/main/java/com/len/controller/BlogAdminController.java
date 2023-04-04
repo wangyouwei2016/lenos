@@ -1,14 +1,8 @@
 package com.len.controller;
 
-import com.len.entity.ArticleDetail;
-import com.len.entity.BlogArticle;
-import com.len.entity.BlogCategory;
-import com.len.model.Article;
-import com.len.service.*;
-import com.len.util.LenResponse;
-import com.len.util.ReType;
-import com.len.util.UploadUtil;
-import lombok.extern.slf4j.Slf4j;
+import java.util.Comparator;
+import java.util.List;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,8 +10,17 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import java.util.Comparator;
-import java.util.List;
+import com.len.entity.ArticleDetail;
+import com.len.entity.BlogArticle;
+import com.len.entity.BlogCategory;
+import com.len.model.Article;
+import com.len.service.BlogArticleService;
+import com.len.service.BlogCategoryService;
+import com.len.util.LenResponse;
+import com.len.util.ReType;
+import com.len.util.UploadUtil;
+
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * <p>
@@ -40,7 +43,6 @@ public class BlogAdminController {
 
     @Autowired
     private BlogCategoryService categoryService;
-
 
     @GetMapping("/article/getList")
     public ReType getArticleList(BlogArticle article, Integer page, Integer limit) {

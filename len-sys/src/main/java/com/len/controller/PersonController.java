@@ -1,17 +1,5 @@
 package com.len.controller;
 
-import com.len.base.BaseController;
-import com.len.base.CurrentUser;
-import com.len.core.annotation.Log;
-import com.len.core.shiro.Principal;
-import com.len.entity.SysUser;
-import com.len.service.SysUserService;
-import com.len.util.Checkbox;
-import com.len.util.LenResponse;
-import com.len.util.MsHelper;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,14 +7,22 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.List;
+import com.len.base.BaseController;
+import com.len.base.CurrentUser;
+import com.len.core.annotation.Log;
+import com.len.core.shiro.Principal;
+import com.len.entity.SysUser;
+import com.len.service.SysUserService;
+import com.len.util.LenResponse;
+import com.len.util.MsHelper;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
 @Controller
 @RequestMapping("/person")
 @Api(value = "个人业务", tags = "个人业务处理")
 public class PersonController extends BaseController {
-
 
     private final SysUserService userService;
 
