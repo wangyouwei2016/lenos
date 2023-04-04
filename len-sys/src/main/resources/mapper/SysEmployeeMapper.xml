@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.len.mapper.SysEmployeeMapper">
-  <resultMap id="BaseResultMap" type="com.len.entity.SysEmployee">
+    <resultMap id="BaseResultMap" type="com.len.entity.SysEmployee">
 
-    <id column="id" jdbcType="VARCHAR" property="id" />
-    <result column="employee_code" jdbcType="VARCHAR" property="employeeCode" />
-    <result column="employee_name" jdbcType="VARCHAR" property="employeeName" />
-    <result column="employee_gender" jdbcType="VARCHAR" property="employeeGender" />
-    <result column="employee_birthday" jdbcType="VARCHAR" property="employeeBirthday" />
-    <result column="employee_deptcodes" jdbcType="VARCHAR" property="employeeDeptcodes" />
-    <result column="employee_mobile1" jdbcType="VARCHAR" property="employeeMobile1" />
-    <result column="employee_mobile2" jdbcType="VARCHAR" property="employeeMobile2" />
-    <result column="employee_mail1" jdbcType="VARCHAR" property="employeeMail1" />
-    <result column="employee_mail2" jdbcType="VARCHAR" property="employeeMail2" />
-    <result column="employee_wechat" jdbcType="VARCHAR" property="employeeWechat" />
-    <result column="employee_qq" jdbcType="VARCHAR" property="employeeQq" />
-    <result column="employee_photo" jdbcType="VARCHAR" property="employeePhoto" />
-    <result column="employee_ssn" jdbcType="VARCHAR" property="employeeSsn" />
-    <result column="employee_min" jdbcType="VARCHAR" property="employeeMin" />
-    <result column="dept_desc" jdbcType="VARCHAR" property="deptDesc" />
-    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
-    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
-    <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
-  </resultMap>
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="employee_code" jdbcType="VARCHAR" property="employeeCode"/>
+        <result column="employee_name" jdbcType="VARCHAR" property="employeeName"/>
+        <result column="employee_gender" jdbcType="VARCHAR" property="employeeGender"/>
+        <result column="employee_birthday" jdbcType="VARCHAR" property="employeeBirthday"/>
+        <result column="employee_deptcodes" jdbcType="VARCHAR" property="employeeDeptcodes"/>
+        <result column="employee_mobile1" jdbcType="VARCHAR" property="employeeMobile1"/>
+        <result column="employee_mobile2" jdbcType="VARCHAR" property="employeeMobile2"/>
+        <result column="employee_mail1" jdbcType="VARCHAR" property="employeeMail1"/>
+        <result column="employee_mail2" jdbcType="VARCHAR" property="employeeMail2"/>
+        <result column="employee_wechat" jdbcType="VARCHAR" property="employeeWechat"/>
+        <result column="employee_qq" jdbcType="VARCHAR" property="employeeQq"/>
+        <result column="employee_photo" jdbcType="VARCHAR" property="employeePhoto"/>
+        <result column="employee_ssn" jdbcType="VARCHAR" property="employeeSsn"/>
+        <result column="employee_min" jdbcType="VARCHAR" property="employeeMin"/>
+        <result column="dept_desc" jdbcType="VARCHAR" property="deptDesc"/>
+        <result column="update_by" jdbcType="VARCHAR" property="updateBy"/>
+        <result column="create_date" jdbcType="TIMESTAMP" property="createDate"/>
+        <result column="update_date" jdbcType="TIMESTAMP" property="updateDate"/>
+    </resultMap>
 </mapper>

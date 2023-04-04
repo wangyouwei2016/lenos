@@ -1,21 +1,9 @@
 package com.len.config;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import javax.sql.DataSource;
 
-import org.activiti.engine.DynamicBpmnService;
-import org.activiti.engine.FormService;
-import org.activiti.engine.HistoryService;
-import org.activiti.engine.IdentityService;
-import org.activiti.engine.ManagementService;
-import org.activiti.engine.ProcessEngine;
-import org.activiti.engine.ProcessEngineConfiguration;
-import org.activiti.engine.RepositoryService;
-import org.activiti.engine.RuntimeService;
-import org.activiti.engine.TaskService;
+import org.activiti.engine.*;
 import org.activiti.engine.impl.cfg.ProcessEngineConfigurationImpl;
-import org.activiti.image.HMProcessDiagramGenerator;
 import org.activiti.image.impl.DefaultProcessDiagramGenerator;
 import org.activiti.spring.ProcessEngineFactoryBean;
 import org.activiti.spring.SpringProcessEngineConfiguration;
@@ -23,12 +11,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.PlatformTransactionManager;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
- * Created by liuruijie on 2017/2/20.
- * activiti工作流配置
+ * Created by liuruijie on 2017/2/20. activiti工作流配置
  */
 @Configuration
 public class ActivitiConfig {
@@ -40,17 +27,18 @@ public class ActivitiConfig {
      * spring 集成 activiti
      */
     @Bean
-    public ProcessEngineConfiguration processEngineConfiguration(DataSource dataSource, PlatformTransactionManager transactionManager) {
+    public ProcessEngineConfiguration processEngineConfiguration(DataSource dataSource,
+        PlatformTransactionManager transactionManager) {
         SpringProcessEngineConfiguration processEngineConfiguration = new SpringProcessEngineConfiguration();
         processEngineConfiguration.setDataSource(dataSource);
-        //表不存在创建表
+        // 表不存在创建表
         processEngineConfiguration.setDatabaseSchemaUpdate("true");
-        //指定数据库
+        // 指定数据库
         processEngineConfiguration.setDatabaseType(dataType);
         processEngineConfiguration.setTransactionManager(transactionManager);
-        //历史变量
+        // 历史变量
         processEngineConfiguration.setHistory("full");
-        //指定字体
+        // 指定字体
         processEngineConfiguration.setActivityFontName("宋体");
         processEngineConfiguration.setAnnotationFontName("宋体");
         processEngineConfiguration.setLabelFontName("宋体");
@@ -60,11 +48,12 @@ public class ActivitiConfig {
         return processEngineConfiguration;
     }
 
-    //流程引擎，与spring整合使用factoryBean
+    // 流程引擎，与spring整合使用factoryBean
     @Bean
     public ProcessEngineFactoryBean processEngine(ProcessEngineConfiguration processEngineConfiguration) {
         ProcessEngineFactoryBean processEngineFactoryBean = new ProcessEngineFactoryBean();
-        processEngineFactoryBean.setProcessEngineConfiguration((ProcessEngineConfigurationImpl) processEngineConfiguration);
+        processEngineFactoryBean
+            .setProcessEngineConfiguration((ProcessEngineConfigurationImpl)processEngineConfiguration);
         return processEngineFactoryBean;
     }
 

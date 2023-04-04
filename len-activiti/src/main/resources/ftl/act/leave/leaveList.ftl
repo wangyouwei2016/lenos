@@ -28,7 +28,6 @@
 </script>
 
 
-
 <script type="text/html" id="status">
     {{#if(typeof(d.taskName)!='undefined'){}}
     <div>${d.taskName}</div>
@@ -83,7 +82,7 @@
     }
 
     layui.use('table', function () {
-       var table = layui.table;
+        var table = layui.table;
         //方法级渲染
         table.render({
             id: 'leaveList',

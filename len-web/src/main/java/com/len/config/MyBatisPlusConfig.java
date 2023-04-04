@@ -1,12 +1,12 @@
 package com.len.config;
 
+import org.springframework.context.annotation.Bean;
+
 import com.baomidou.mybatisplus.autoconfigure.ConfigurationCustomizer;
 import com.baomidou.mybatisplus.core.MybatisConfiguration;
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
-//@Configuration
+// @Configuration
 public class MyBatisPlusConfig {
 
     /*
@@ -17,7 +17,6 @@ public class MyBatisPlusConfig {
     public PaginationInterceptor paginationInterceptor() {
         return new PaginationInterceptor();
     }
-
 
     @Bean
     ConfigurationCustomizer mybatisConfigurationCustomizer() {

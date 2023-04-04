@@ -5,7 +5,6 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
-
 @TableName(value = "act_assignee")
 public class ActAssignee {
     @TableId(value = "id", type = IdType.UUID)
@@ -40,6 +39,12 @@ public class ActAssignee {
      */
     @TableField(value = "activti_name")
     private String activtiName;
+
+    public ActAssignee() {}
+
+    public ActAssignee(String sid) {
+        this.sid = sid;
+    }
 
     /**
      * @return id
@@ -143,12 +148,5 @@ public class ActAssignee {
      */
     public void setActivtiName(String activtiName) {
         this.activtiName = activtiName == null ? null : activtiName.trim();
-    }
-
-    public ActAssignee() {
-    }
-
-    public ActAssignee(String sid) {
-        this.sid = sid;
     }
 }

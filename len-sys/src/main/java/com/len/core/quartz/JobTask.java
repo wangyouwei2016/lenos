@@ -1,28 +1,29 @@
 package com.len.core.quartz;
 
-import com.len.core.annotation.Log;
-import com.len.core.annotation.Log.LOG_TYPE;
-import com.len.entity.SysJob;
-import lombok.extern.slf4j.Slf4j;
+import java.util.Date;
+import java.util.HashSet;
+
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.quartz.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.HashSet;
+import com.len.core.annotation.Log;
+import com.len.core.annotation.Log.LOG_TYPE;
+import com.len.entity.SysJob;
+
+import lombok.extern.slf4j.Slf4j;
 
 /**
- *        <p>
- *        定时任务类 增删改 可参考api：http://www.quartz-scheduler.org/api/2.2.1/
- *        <p>
- *        任务名称 默认为 SysJob 类 id
+ * <p>
+ * 定时任务类 增删改 可参考api：http://www.quartz-scheduler.org/api/2.2.1/
+ * <p>
+ * 任务名称 默认为 SysJob 类 id
  */
 @Service
 @Slf4j
 public class JobTask {
-
 
     @Autowired
     SchedulerFactoryBean schedulerFactoryBean;

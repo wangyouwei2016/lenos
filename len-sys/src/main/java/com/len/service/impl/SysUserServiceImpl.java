@@ -40,22 +40,17 @@ import com.len.validator.group.AddGroup;
 @Service
 public class SysUserServiceImpl extends BaseServiceImpl<SysUserMapper, SysUser> implements SysUserService {
 
+    private static final String ADMIN = "admin";
     @Autowired
     SysUserMapper sysUserMapper;
-
     @Autowired
     SysRoleUserMapper sysRoleUserMapper;
-
     @Autowired
     RoleService roleService;
-
     @Autowired
     RoleUserService roleUserService;
-
     @Autowired
     MenuService menuService;
-
-    private static final String ADMIN = "admin";
 
     @Override
     public SysUser login(String username) {

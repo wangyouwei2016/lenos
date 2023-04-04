@@ -6,7 +6,6 @@ import org.apache.ibatis.annotations.Param;
 
 import com.len.base.BaseMapper;
 import com.len.entity.SysMenu;
-import com.len.entity.SysShortcuts;
 
 /**
  * 菜单 mapper
@@ -42,7 +41,6 @@ public interface SysMenuMapper extends BaseMapper<SysMenu> {
      * @return
      */
     List<SysMenu> getUserShortCuts(@Param("userId") String userId);
-
 
     /**
      * 获取个人快捷菜单最大编码数

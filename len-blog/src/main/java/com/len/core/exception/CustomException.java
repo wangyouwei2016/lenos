@@ -1,6 +1,5 @@
 package com.len.core.exception;
 
-import com.len.util.LenResponse;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.springframework.http.HttpStatus;
@@ -8,10 +7,10 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import com.len.util.LenResponse;
 
 @RestControllerAdvice
 public class CustomException {
-
 
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ExceptionHandler(AuthenticationException.class)

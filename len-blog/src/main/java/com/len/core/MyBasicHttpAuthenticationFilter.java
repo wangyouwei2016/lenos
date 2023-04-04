@@ -1,15 +1,15 @@
 package com.len.core;
 
-import com.len.menu.LoginType;
-import com.len.util.JwtToken;
-import org.apache.shiro.web.filter.authc.BasicHttpAuthenticationFilter;
-import org.apache.shiro.web.util.WebUtils;
-
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.shiro.web.filter.authc.BasicHttpAuthenticationFilter;
+import org.apache.shiro.web.util.WebUtils;
+
+import com.len.menu.LoginType;
+import com.len.util.JwtToken;
 
 public class MyBasicHttpAuthenticationFilter extends BasicHttpAuthenticationFilter {
 
@@ -27,7 +27,7 @@ public class MyBasicHttpAuthenticationFilter extends BasicHttpAuthenticationFilt
 
     @Override
     protected boolean executeLogin(ServletRequest request, ServletResponse response) throws Exception {
-        HttpServletRequest httpServletRequest = (HttpServletRequest) request;
+        HttpServletRequest httpServletRequest = (HttpServletRequest)request;
         String token = httpServletRequest.getHeader("Authorization");
         JwtToken jwtToken = new JwtToken(token, LoginType.BLOG);
         getSubject(request, response).login(jwtToken);
@@ -36,14 +36,14 @@ public class MyBasicHttpAuthenticationFilter extends BasicHttpAuthenticationFilt
 
     @Override
     protected boolean isLoginAttempt(ServletRequest request, ServletResponse response) {
-        HttpServletRequest req = (HttpServletRequest) request;
+        HttpServletRequest req = (HttpServletRequest)request;
         String authorization = req.getHeader("Authorization");
         return authorization != null;
     }
 
     @Override
     protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws Exception {
-        WebUtils.toHttp(response).sendError(HttpServletResponse.SC_UNAUTHORIZED,"访问被拒绝");
+        WebUtils.toHttp(response).sendError(HttpServletResponse.SC_UNAUTHORIZED, "访问被拒绝");
         return false;
     }
 }

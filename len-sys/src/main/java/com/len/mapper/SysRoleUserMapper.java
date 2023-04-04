@@ -1,9 +1,9 @@
 package com.len.mapper;
 
+import java.util.List;
+
 import com.len.base.BaseMapper;
 import com.len.entity.SysRoleUser;
-
-import java.util.List;
 
 /**
  * 账户角色 mapper

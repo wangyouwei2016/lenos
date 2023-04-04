@@ -1,37 +1,28 @@
 /**
  * Copyright 2018 lenos
  * <p>
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
  * <p>
  * http://www.apache.org/licenses/LICENSE-2.0
  * <p>
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
+ * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ * specific language governing permissions and limitations under the License.
  */
 package com.len.controller;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
-import com.len.base.BaseController;
-import com.len.base.CurrentUser;
-import com.len.core.shiro.Principal;
-import com.len.entity.BaseTask;
-import com.len.entity.LeaveOpinion;
-import com.len.entity.SysRoleUser;
-import com.len.entity.UserLeave;
-import com.len.exception.LenException;
-import com.len.service.RoleUserService;
-import com.len.service.UserLeaveService;
-import com.len.util.*;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.*;
+import java.util.List;
+
+import javax.imageio.ImageIO;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.activiti.bpmn.model.BpmnModel;
 import org.activiti.engine.*;
 import org.activiti.engine.history.HistoricActivityInstance;
@@ -52,24 +43,33 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import sun.misc.BASE64Encoder;
 
-import javax.imageio.ImageIO;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.*;
-import java.util.List;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.len.base.BaseController;
+import com.len.base.CurrentUser;
+import com.len.core.shiro.Principal;
+import com.len.entity.BaseTask;
+import com.len.entity.LeaveOpinion;
+import com.len.entity.SysRoleUser;
+import com.len.entity.UserLeave;
+import com.len.exception.LenException;
+import com.len.service.RoleUserService;
+import com.len.service.UserLeaveService;
+import com.len.util.*;
+
+import sun.misc.BASE64Encoder;
 
 /**
  * @author zhuxiaomeng
  * @date 2018/1/21.
  * @email lenospmiller@gmail.com
- * <p>
- * 请假流程示例
+ *        <p>
+ *        请假流程示例
  */
 @Controller
 @RequestMapping("/leave")
@@ -98,15 +98,14 @@ public class UserLeaveController extends BaseController {
 
     @Autowired
     RoleUserService roleUserService;
-
+    @Autowired
+    HistoryService historyService;
     private String leaveOpinionList = "leaveOpinionList";
-
 
     @GetMapping(value = "showMain")
     public String showMain(Model model) {
         return "/dashboard/dashboard";
     }
-
 
     @GetMapping(value = "showMain2")
     public String showMain2(Model model) {
@@ -129,10 +128,11 @@ public class UserLeaveController extends BaseController {
             tList = leaveService.selectListByPage(userLeave);
             for (UserLeave leave : tList) {
                 ProcessInstance instance = runtimeService.createProcessInstanceQuery()
-                        .processInstanceId(leave.getProcessInstanceId()).singleResult();
-                //保证运行ing
+                    .processInstanceId(leave.getProcessInstanceId()).singleResult();
+                // 保证运行ing
                 if (instance != null) {
-                    Task task = this.taskService.createTaskQuery().processInstanceId(leave.getProcessInstanceId()).singleResult();
+                    Task task = this.taskService.createTaskQuery().processInstanceId(leave.getProcessInstanceId())
+                        .singleResult();
                     leave.setTaskName(task.getName());
                 }
             }
@@ -151,9 +151,9 @@ public class UserLeaveController extends BaseController {
      */
     @GetMapping("leaveDetail")
     public String leaveDetail(Model model, String processId) {
-        ProcessInstance instance = runtimeService.createProcessInstanceQuery()
-                .processInstanceId(processId).singleResult();
-        //保证运行ing
+        ProcessInstance instance =
+            runtimeService.createProcessInstanceQuery().processInstanceId(processId).singleResult();
+        // 保证运行ing
         List<LeaveOpinion> leaveList = null;
         if (instance != null) {
             Task task = this.taskService.createTaskQuery().processInstanceId(processId).singleResult();
@@ -161,18 +161,17 @@ public class UserLeaveController extends BaseController {
             Object o = variables.get(leaveOpinionList);
             if (o != null) {
                 /*获取历史审核信息*/
-                leaveList = (List<LeaveOpinion>) o;
+                leaveList = (List<LeaveOpinion>)o;
             }
         } else {
             leaveList = new ArrayList<>();
-            List<HistoricDetail> list = historyService.createHistoricDetailQuery().
-                    processInstanceId(processId).list();
+            List<HistoricDetail> list = historyService.createHistoricDetailQuery().processInstanceId(processId).list();
             HistoricVariableUpdate variable = null;
             for (HistoricDetail historicDetail : list) {
-                variable = (HistoricVariableUpdate) historicDetail;
+                variable = (HistoricVariableUpdate)historicDetail;
                 if (leaveOpinionList.equals(variable.getVariableName())) {
                     leaveList.clear();
-                    leaveList.addAll((List<LeaveOpinion>) variable.getValue());
+                    leaveList.addAll((List<LeaveOpinion>)variable.getValue());
                 }
             }
         }
@@ -188,7 +187,7 @@ public class UserLeaveController extends BaseController {
     @GetMapping("updateLeave/{taskId}")
     public String updateLeave(Model model, @PathVariable String taskId) {
         Map<String, Object> variables = taskService.getVariables(taskId);
-        BaseTask baseTask = (BaseTask) variables.get("baseTask");
+        BaseTask baseTask = (BaseTask)variables.get("baseTask");
         UserLeave leave = leaveService.getById(baseTask.getId());
         model.addAttribute("leave", leave);
         model.addAttribute("taskId", taskId);
@@ -197,7 +196,8 @@ public class UserLeaveController extends BaseController {
 
     @PostMapping("updateLeave/updateLeave/{taskId}/{id}/{flag}")
     @ResponseBody
-    public LenResponse updateLeave(UserLeave leave, @PathVariable String taskId, @PathVariable String id, @PathVariable boolean flag) {
+    public LenResponse updateLeave(UserLeave leave, @PathVariable String taskId, @PathVariable String id,
+        @PathVariable boolean flag) {
         LenResponse j = new LenResponse();
         try {
             UserLeave oldLeave = leaveService.getById(leave.getId());
@@ -222,7 +222,6 @@ public class UserLeaveController extends BaseController {
         return j;
     }
 
-
     @PostMapping("addLeave")
     @ResponseBody
     public LenResponse addLeave(UserLeave userLeave) {
@@ -234,7 +233,7 @@ public class UserLeaveController extends BaseController {
         long endTime = userLeave.getEndTime().getTime();
         int days = 1;
         if (endTime != beginTime) {
-            days += (int) ((endTime - beginTime) / (1000 * 60 * 60 * 24));
+            days += (int)((endTime - beginTime) / (1000 * 60 * 60 * 24));
         }
         if (days <= 0) {
             return LenResponse.error("时间输入有误");
@@ -309,7 +308,7 @@ public class UserLeaveController extends BaseController {
             }
 
             map = taskService.getVariables(taskId);
-            BaseTask userLeave = (BaseTask) map.get("baseTask");
+            BaseTask userLeave = (BaseTask)map.get("baseTask");
 
             taskEntity = new com.len.entity.Task(task1);
             taskEntity.setUserName(userLeave.getUserName());
@@ -318,7 +317,7 @@ public class UserLeaveController extends BaseController {
             /*如果是自己*/
             if (user.getId().equals(userLeave.getUserId())) {
                 if (map.get("flag") != null) {
-                    if (!(boolean) map.get("flag")) {
+                    if (!(boolean)map.get("flag")) {
                         objectMap.put("flag", true);
                     } else {
                         objectMap.put("flag", false);
@@ -339,8 +338,8 @@ public class UserLeaveController extends BaseController {
     @GetMapping("agent/{id}")
     public String agent(Model model, @PathVariable("id") String taskId) {
         Map<String, Object> variables = taskService.getVariables(taskId);
-        BaseTask baseTask = (BaseTask) variables.get("baseTask");
-//        UserLeave userLeave = leaveService.selectByPrimaryKey(baseTask.getId());
+        BaseTask baseTask = (BaseTask)variables.get("baseTask");
+        // UserLeave userLeave = leaveService.selectByPrimaryKey(baseTask.getId());
         model.addAttribute("leaveUrl", baseTask.getUrlpath());
         model.addAttribute("taskId", taskId);
         return "/act/task/task-agent-iframe";
@@ -359,38 +358,35 @@ public class UserLeaveController extends BaseController {
         Map<String, Object> map = new HashMap<>();
         map.put("flag", op.isFlag());
 
-        //判断节点是否已经拒绝过一次了
+        // 判断节点是否已经拒绝过一次了
         Object needend = variables.get("needend");
-        if (needend != null && (boolean) needend && (!op.isFlag())) {
-            map.put("needfinish", -1); //结束
+        if (needend != null && (boolean)needend && (!op.isFlag())) {
+            map.put("needfinish", -1); // 结束
         } else {
             if (op.isFlag()) {
-                map.put("needfinish", 1);//通过下一个节点
+                map.put("needfinish", 1);// 通过下一个节点
             } else {
-                map.put("needfinish", 0);//不通过
+                map.put("needfinish", 0);// 不通过
             }
         }
-        //审批信息叠加
+        // 审批信息叠加
         List<LeaveOpinion> leaveList = new ArrayList<>();
         Object o = variables.get(leaveOpinionList);
         if (o != null) {
-            leaveList = (List<LeaveOpinion>) o;
+            leaveList = (List<LeaveOpinion>)o;
         }
         leaveList.add(op);
-        UserLeave userLeave=(UserLeave)variables.get("baseTask");
-        map.put("day",userLeave.getDays());
+        UserLeave userLeave = (UserLeave)variables.get("baseTask");
+        map.put("day", userLeave.getDays());
         map.put(leaveOpinionList, leaveList);
-        j.setMsg("审核成功" + (op.isFlag() ? "<font style='color:green'>[通过]</font>" : "<font style='color:red'>[未通过]</font>"));
+        j.setMsg(
+            "审核成功" + (op.isFlag() ? "<font style='color:green'>[通过]</font>" : "<font style='color:red'>[未通过]</font>"));
         taskService.complete(op.getTaskId(), map);
         return j;
     }
 
-    @Autowired
-    HistoryService historyService;
-
     /**
-     * 追踪图片成图
-     * 增加历史流程
+     * 追踪图片成图 增加历史流程
      *
      * @param request
      * @param resp
@@ -399,7 +395,7 @@ public class UserLeaveController extends BaseController {
      */
     @GetMapping("getProcImage")
     public void getProcImage(HttpServletRequest request, HttpServletResponse resp, String processInstanceId)
-            throws IOException {
+        throws IOException {
         InputStream imageStream = generateStream(request, resp, processInstanceId, true);
         if (imageStream == null) {
             return;
@@ -416,22 +412,22 @@ public class UserLeaveController extends BaseController {
         e.start(resp.getOutputStream());
 
         BufferedImage current = ImageIO.read(imageStream); // 读入需要播放的jpg文件
-        e.addFrame(current);  //添加到帧中
+        e.addFrame(current); // 添加到帧中
 
-        e.setDelay(200); //设置播放的延迟时间
+        e.setDelay(200); // 设置播放的延迟时间
         BufferedImage nocurrent = ImageIO.read(imageNoCurrentStream); // 读入需要播放的jpg文件
-        e.addFrame(nocurrent);  //添加到帧中
+        e.addFrame(nocurrent); // 添加到帧中
 
         e.finish();
 
-//        byte[] b = new byte[1024];
-//        int len;
-//        while ((len = imageStream.read(b, 0, 1024)) != -1) {
-//            resp.getOutputStream().write(b, 0, len);
-//        }
+        // byte[] b = new byte[1024];
+        // int len;
+        // while ((len = imageStream.read(b, 0, 1024)) != -1) {
+        // resp.getOutputStream().write(b, 0, len);
+        // }
     }
 
-    //只读图片页面
+    // 只读图片页面
     @GetMapping("shinePics/{processInstanceId}")
     public String shinePics(Model model, @PathVariable String processInstanceId) {
         model.addAttribute("processInstanceId", processInstanceId);
@@ -441,7 +437,7 @@ public class UserLeaveController extends BaseController {
     @GetMapping("getShineProcImage")
     @ResponseBody
     public String getShineProcImage(HttpServletRequest request, HttpServletResponse resp, String processInstanceId)
-            throws IOException {
+        throws IOException {
         JSONObject result = new JSONObject();
         JSONArray shineProImages = new JSONArray();
         BASE64Encoder encoder = new BASE64Encoder();
@@ -465,11 +461,12 @@ public class UserLeaveController extends BaseController {
         return result.toJSONString();
     }
 
-
-    public InputStream generateStream(HttpServletRequest request, HttpServletResponse resp, String processInstanceId, boolean needCurrent) {
-        ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().processInstanceId(processInstanceId).singleResult();
+    public InputStream generateStream(HttpServletRequest request, HttpServletResponse resp, String processInstanceId,
+        boolean needCurrent) {
+        ProcessInstance processInstance =
+            runtimeService.createProcessInstanceQuery().processInstanceId(processInstanceId).singleResult();
         HistoricProcessInstance historicProcessInstance =
-                historyService.createHistoricProcessInstanceQuery().processInstanceId(processInstanceId).singleResult();
+            historyService.createHistoricProcessInstanceQuery().processInstanceId(processInstanceId).singleResult();
         String processDefinitionId = null;
         List<String> executedActivityIdList = new ArrayList<String>();
         List<String> currentActivityIdList = new ArrayList<>();
@@ -482,8 +479,8 @@ public class UserLeaveController extends BaseController {
         }
         if (historicProcessInstance != null) {
             processDefinitionId = historicProcessInstance.getProcessDefinitionId();
-            historicActivityInstanceList =
-                    historyService.createHistoricActivityInstanceQuery().processInstanceId(processInstanceId).orderByHistoricActivityInstanceId().asc().list();
+            historicActivityInstanceList = historyService.createHistoricActivityInstanceQuery()
+                .processInstanceId(processInstanceId).orderByHistoricActivityInstanceId().asc().list();
             for (HistoricActivityInstance activityInstance : historicActivityInstanceList) {
                 executedActivityIdList.add(activityInstance.getActivityId());
             }
@@ -493,24 +490,22 @@ public class UserLeaveController extends BaseController {
             return null;
         }
 
-        //高亮线路id集合
-        ProcessDefinitionEntity definitionEntity = (ProcessDefinitionEntity) repositoryService.getProcessDefinition(processDefinitionId);
+        // 高亮线路id集合
+        ProcessDefinitionEntity definitionEntity =
+            (ProcessDefinitionEntity)repositoryService.getProcessDefinition(processDefinitionId);
         List<String> highLightedFlows = getHighLightedFlows(definitionEntity, historicActivityInstanceList);
 
         BpmnModel bpmnModel = repositoryService.getBpmnModel(processDefinitionId);
-        //List<String> activeActivityIds = runtimeService.getActiveActivityIds(processInstanceId);
+        // List<String> activeActivityIds = runtimeService.getActiveActivityIds(processInstanceId);
         processEngineConfiguration = processEngine.getProcessEngineConfiguration();
-        Context.setProcessEngineConfiguration((ProcessEngineConfigurationImpl) processEngineConfiguration);
-        HMProcessDiagramGenerator diagramGenerator = (HMProcessDiagramGenerator) processEngineConfiguration.getProcessDiagramGenerator();
-        //List<String> activeIds = this.runtimeService.getActiveActivityIds(processInstance.getId());
+        Context.setProcessEngineConfiguration((ProcessEngineConfigurationImpl)processEngineConfiguration);
+        HMProcessDiagramGenerator diagramGenerator =
+            (HMProcessDiagramGenerator)processEngineConfiguration.getProcessDiagramGenerator();
+        // List<String> activeIds = this.runtimeService.getActiveActivityIds(processInstance.getId());
 
-        InputStream imageStream = diagramGenerator.generateDiagram(
-                bpmnModel, "png",
-                executedActivityIdList, highLightedFlows,
-                processEngine.getProcessEngineConfiguration().getActivityFontName(),
-                processEngine.getProcessEngineConfiguration().getLabelFontName(),
-                "宋体",
-                null, 1.0, currentActivityIdList);
+        InputStream imageStream = diagramGenerator.generateDiagram(bpmnModel, "png", executedActivityIdList,
+            highLightedFlows, processEngine.getProcessEngineConfiguration().getActivityFontName(),
+            processEngine.getProcessEngineConfiguration().getLabelFontName(), "宋体", null, 1.0, currentActivityIdList);
 
         return imageStream;
     }
@@ -522,43 +517,35 @@ public class UserLeaveController extends BaseController {
      * @param historicActivityInstances
      * @return
      */
-    private List<String> getHighLightedFlows(
-            ProcessDefinitionEntity processDefinitionEntity,
-            List<HistoricActivityInstance> historicActivityInstances) {
+    private List<String> getHighLightedFlows(ProcessDefinitionEntity processDefinitionEntity,
+        List<HistoricActivityInstance> historicActivityInstances) {
 
         List<String> highFlows = new ArrayList<String>();// 用以保存高亮的线flowId
         for (int i = 0; i < historicActivityInstances.size() - 1; i++) {// 对历史流程节点进行遍历
-            ActivityImpl activityImpl = processDefinitionEntity
-                    .findActivity(historicActivityInstances.get(i)
-                            .getActivityId());// 得到节点定义的详细信息
+            ActivityImpl activityImpl =
+                processDefinitionEntity.findActivity(historicActivityInstances.get(i).getActivityId());// 得到节点定义的详细信息
             List<ActivityImpl> sameStartTimeNodes = new ArrayList<ActivityImpl>();// 用以保存后需开始时间相同的节点
-            ActivityImpl sameActivityImpl1 = processDefinitionEntity
-                    .findActivity(historicActivityInstances.get(i + 1)
-                            .getActivityId());
+            ActivityImpl sameActivityImpl1 =
+                processDefinitionEntity.findActivity(historicActivityInstances.get(i + 1).getActivityId());
             // 将后面第一个节点放在时间相同节点的集合里
             sameStartTimeNodes.add(sameActivityImpl1);
             for (int j = i + 1; j < historicActivityInstances.size() - 1; j++) {
-                HistoricActivityInstance activityImpl1 = historicActivityInstances
-                        .get(j);// 后续第一个节点
-                HistoricActivityInstance activityImpl2 = historicActivityInstances
-                        .get(j + 1);// 后续第二个节点
-                if (activityImpl1.getStartTime().equals(
-                        activityImpl2.getStartTime())) {
+                HistoricActivityInstance activityImpl1 = historicActivityInstances.get(j);// 后续第一个节点
+                HistoricActivityInstance activityImpl2 = historicActivityInstances.get(j + 1);// 后续第二个节点
+                if (activityImpl1.getStartTime().equals(activityImpl2.getStartTime())) {
                     // 如果第一个节点和第二个节点开始时间相同保存
-                    ActivityImpl sameActivityImpl2 = processDefinitionEntity
-                            .findActivity(activityImpl2.getActivityId());
+                    ActivityImpl sameActivityImpl2 =
+                        processDefinitionEntity.findActivity(activityImpl2.getActivityId());
                     sameStartTimeNodes.add(sameActivityImpl2);
                 } else {
                     // 有不相同跳出循环
                     break;
                 }
             }
-            List<PvmTransition> pvmTransitions = activityImpl
-                    .getOutgoingTransitions();// 取出节点的所有出去的线
+            List<PvmTransition> pvmTransitions = activityImpl.getOutgoingTransitions();// 取出节点的所有出去的线
             for (PvmTransition pvmTransition : pvmTransitions) {
                 // 对所有的线进行遍历
-                ActivityImpl pvmActivityImpl = (ActivityImpl) pvmTransition
-                        .getDestination();
+                ActivityImpl pvmActivityImpl = (ActivityImpl)pvmTransition.getDestination();
                 // 如果取出的线的目标节点存在时间相同的节点里，保存该线的id，进行高亮显示
                 if (sameStartTimeNodes.contains(pvmActivityImpl)) {
                     highFlows.add(pvmTransition.getId());
@@ -567,6 +554,5 @@ public class UserLeaveController extends BaseController {
         }
         return highFlows;
     }
-
 
 }

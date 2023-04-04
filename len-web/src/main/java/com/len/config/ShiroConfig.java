@@ -44,41 +44,9 @@ public class ShiroConfig {
         sessionCache = LenProp.getSessionCache();
     }
 
-    public RetryLimitCredentialsMatcher getRetryLimitCredentialsMatcher() {
-        RetryLimitCredentialsMatcher rm = new RetryLimitCredentialsMatcher(CacheManagerFactory.getCacheManager());
-        rm.setHashAlgorithmName("md5");
-        rm.setHashIterations(4);
-        return rm;
-
-    }
-
-    @Bean(name = "userLoginRealm")
-    public LoginRealm getLoginRealm() {
-        LoginRealm realm = new LoginRealm();
-        realm.setCredentialsMatcher(getRetryLimitCredentialsMatcher());
-        return realm;
-    }
-
-    @Bean(name = "blogLoginRealm")
-    public BlogRealm blogLoginRealm() {
-        return new BlogRealm();
-    }
-
     @Bean
     public static LifecycleBeanPostProcessor getLifecycleBeanPostProcessor() {
         return new LifecycleBeanPostProcessor();
-    }
-
-    @Bean
-    public AtLeastOneSuccessfulStrategy getAtLeastOneSuccessfulStrategy() {
-        return new AtLeastOneSuccessfulStrategy();
-    }
-
-    @Bean
-    public MyModularRealmAuthenticator getMyModularRealmAuthenticator() {
-        MyModularRealmAuthenticator authenticator = new MyModularRealmAuthenticator();
-        authenticator.setAuthenticationStrategy(getAtLeastOneSuccessfulStrategy());
-        return authenticator;
     }
 
     private static RedisSessionDAO redisSessionDAO() {
@@ -101,7 +69,7 @@ public class ShiroConfig {
 
     /**
      * session 储存对象
-     * 
+     *
      * @return
      */
     private static SessionDAO sessionDao() {
@@ -114,6 +82,38 @@ public class ShiroConfig {
                 sessionDAO = new MemorySessionDAO();
         }
         return sessionDAO;
+    }
+
+    public RetryLimitCredentialsMatcher getRetryLimitCredentialsMatcher() {
+        RetryLimitCredentialsMatcher rm = new RetryLimitCredentialsMatcher(CacheManagerFactory.getCacheManager());
+        rm.setHashAlgorithmName("md5");
+        rm.setHashIterations(4);
+        return rm;
+
+    }
+
+    @Bean(name = "userLoginRealm")
+    public LoginRealm getLoginRealm() {
+        LoginRealm realm = new LoginRealm();
+        realm.setCredentialsMatcher(getRetryLimitCredentialsMatcher());
+        return realm;
+    }
+
+    @Bean(name = "blogLoginRealm")
+    public BlogRealm blogLoginRealm() {
+        return new BlogRealm();
+    }
+
+    @Bean
+    public AtLeastOneSuccessfulStrategy getAtLeastOneSuccessfulStrategy() {
+        return new AtLeastOneSuccessfulStrategy();
+    }
+
+    @Bean
+    public MyModularRealmAuthenticator getMyModularRealmAuthenticator() {
+        MyModularRealmAuthenticator authenticator = new MyModularRealmAuthenticator();
+        authenticator.setAuthenticationStrategy(getAtLeastOneSuccessfulStrategy());
+        return authenticator;
     }
 
     @Bean(name = "securityManager")

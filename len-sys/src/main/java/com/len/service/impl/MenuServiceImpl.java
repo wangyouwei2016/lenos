@@ -40,16 +40,32 @@ public class MenuServiceImpl extends BaseServiceImpl<SysMenuMapper, SysMenu> imp
 
     @Autowired
     private ShortcutsMapper shortcutsMapper;
+    @Autowired
+    private SysRoleMenuMapper roleMenuMapper;
+    @Autowired
+    private RoleMenuService roleMenuService;
 
     public MenuServiceImpl(SysMenuMapper menuDao) {
         MenuServiceImpl.menuDao = menuDao;
     }
 
-    @Autowired
-    private SysRoleMenuMapper roleMenuMapper;
-
-    @Autowired
-    private RoleMenuService roleMenuService;
+    /**
+     * 获取菜单编码
+     *
+     * @return 6位数 数字随机编码
+     */
+    public static String randomCode() {
+        SysMenu sysMenu = new SysMenu();
+        boolean exists = true;
+        String code = null;
+        while (exists) {
+            code = RandomUtil.randomNumbers(4);
+            sysMenu.setCode(code);
+            QueryWrapper<SysMenu> queryWrapper = new QueryWrapper<>(sysMenu);
+            exists = menuDao.selectCount(queryWrapper) > 0;
+        }
+        return code;
+    }
 
     @Override
     public String addMenu(SysMenu sysMenu) {
@@ -270,23 +286,5 @@ public class MenuServiceImpl extends BaseServiceImpl<SysMenuMapper, SysMenu> imp
             treeUtil.getChildren().add(m);
         }
         return treeUtil;
-    }
-
-    /**
-     * 获取菜单编码
-     * 
-     * @return 6位数 数字随机编码
-     */
-    public static String randomCode() {
-        SysMenu sysMenu = new SysMenu();
-        boolean exists = true;
-        String code = null;
-        while (exists) {
-            code = RandomUtil.randomNumbers(4);
-            sysMenu.setCode(code);
-            QueryWrapper<SysMenu> queryWrapper = new QueryWrapper<>(sysMenu);
-            exists = menuDao.selectCount(queryWrapper) > 0;
-        }
-        return code;
     }
 }

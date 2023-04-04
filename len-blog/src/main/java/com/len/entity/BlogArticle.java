@@ -1,12 +1,13 @@
 package com.len.entity;
 
+import java.util.Date;
+
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import lombok.Data;
 
-import java.util.Date;
+import lombok.Data;
 
 @TableName(value = "blog_article")
 @Data
@@ -21,7 +22,6 @@ public class BlogArticle {
     @TableField(value = "code")
     private String code;
 
-
     /**
      * 标题
      */
@@ -31,7 +31,7 @@ public class BlogArticle {
     /**
      * 列表缩略图
      */
-    @TableField(value="first_img")
+    @TableField(value = "first_img")
     private String firstImg;
 
     /**
@@ -66,6 +66,5 @@ public class BlogArticle {
 
     @TableField(value = "del_flag")
     private Byte delFlag;
-
 
 }

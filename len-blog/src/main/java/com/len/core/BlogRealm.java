@@ -1,13 +1,5 @@
 package com.len.core;
 
-import com.len.base.CurrentMenu;
-import com.len.base.CurrentRole;
-import com.len.base.CurrentUser;
-import com.len.core.shiro.Principal;
-import com.len.entity.SysUser;
-import com.len.service.SysUserService;
-import com.len.util.JWTUtil;
-import com.len.util.JwtToken;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
@@ -17,6 +9,15 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.len.base.CurrentMenu;
+import com.len.base.CurrentRole;
+import com.len.base.CurrentUser;
+import com.len.core.shiro.Principal;
+import com.len.entity.SysUser;
+import com.len.service.SysUserService;
+import com.len.util.JWTUtil;
+import com.len.util.JwtToken;
+
 /**
  */
 @Service
@@ -24,7 +25,6 @@ public class BlogRealm extends AuthorizingRealm {
 
     @Autowired
     private SysUserService userService;
-
 
     @Override
     public boolean supports(AuthenticationToken token) {
@@ -40,10 +40,10 @@ public class BlogRealm extends AuthorizingRealm {
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-        CurrentUser user = (CurrentUser) principalCollection.getPrimaryPrincipal();
+        CurrentUser user = (CurrentUser)principalCollection.getPrimaryPrincipal();
         JWTUtil.getUsername(user.getUsername());
-        //根据用户获取角色 根据角色获取所有按钮权限
-        CurrentUser cUser = (CurrentUser) Principal.getSession().getAttribute("currentPrincipal");
+        // 根据用户获取角色 根据角色获取所有按钮权限
+        CurrentUser cUser = (CurrentUser)Principal.getSession().getAttribute("currentPrincipal");
         for (CurrentRole cRole : cUser.getCurrentRoleList()) {
             info.addRole(cRole.getId());
         }
@@ -64,8 +64,8 @@ public class BlogRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken)
-            throws AuthenticationException {
-        JwtToken token = (JwtToken) authenticationToken;
+        throws AuthenticationException {
+        JwtToken token = (JwtToken)authenticationToken;
         String username = JWTUtil.getUsername(token.getToken());
         if (StringUtils.isEmpty(username)) {
             throw new UnknownAccountException("令牌无效");

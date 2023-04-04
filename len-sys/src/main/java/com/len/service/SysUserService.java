@@ -1,13 +1,11 @@
 package com.len.service;
 
+import java.util.List;
 
 import com.len.base.BaseService;
 import com.len.entity.SysRoleUser;
 import com.len.entity.SysUser;
 import com.len.util.Checkbox;
-
-import java.util.List;
-
 
 public interface SysUserService extends BaseService<SysUser> {
 
@@ -41,7 +39,6 @@ public interface SysUserService extends BaseService<SysUser> {
 
     int checkUser(String username);
 
-
     List<SysRoleUser> selectByCondition(SysRoleUser sysRoleUser);
 
     List<Checkbox> getUserRoleList(String id);
@@ -49,12 +46,11 @@ public interface SysUserService extends BaseService<SysUser> {
     /**
      * 更新密码
      *
-     * @param id     用户id
+     * @param id 用户id
      * @param newPwd 新密码
      * @return
      */
     int rePass(String id, String newPwd);
-
 
     List<SysUser> getUserByRoleId(String roleId);
 

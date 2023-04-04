@@ -1,9 +1,8 @@
 package com.len.base;
 
+import java.util.List;
 
 import com.len.util.ReType;
-
-import java.util.List;
 
 /**
  * mapper封装 crud

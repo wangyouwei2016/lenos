@@ -84,13 +84,13 @@
             </div>
 
             <#--邮箱-->
-           <#-- <@lenInclude  path="/system/base/blockInput.ftl"
-            for="email"
-            label="邮箱"
-            id="email"
-            name="email"
-            require="true"
-            verify="email"/>-->
+            <#-- <@lenInclude  path="/system/base/blockInput.ftl"
+             for="email"
+             label="邮箱"
+             id="email"
+             name="email"
+             require="true"
+             verify="email"/>-->
 
             <#--邮箱-->
             <div>

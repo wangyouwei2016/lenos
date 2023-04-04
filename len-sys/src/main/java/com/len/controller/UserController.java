@@ -29,7 +29,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 /**
- *  用户管理
+ * 用户管理
  */
 // @Api(value="user")
 @Controller

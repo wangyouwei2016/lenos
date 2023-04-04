@@ -103,7 +103,7 @@
                 del(ids);
             }
         });
-        Len.formBind($('.log-bar .layui-btn'),active);
+        Len.formBind($('.log-bar .layui-btn'), active);
 
     });
 

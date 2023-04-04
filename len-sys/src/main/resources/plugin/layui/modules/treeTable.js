@@ -51,8 +51,7 @@ layui.define(['laytpl', 'form', 'util'], function (exports) {
                 if (haveChild !== undefined) {
                     haveChild = haveChild === true || haveChild === 'true';
                     if (this.haveChildReverse) haveChild = !haveChild;
-                }
-                else if (d[this.childName]) haveChild = d[this.childName].length > 0;
+                } else if (d[this.childName]) haveChild = d[this.childName].length > 0;
                 if (haveChild) return '<i class="ew-tree-icon layui-icon layui-icon-layer"></i>';
                 else return '<i class="ew-tree-icon layui-icon layui-icon-file"></i>';
             }
@@ -90,6 +89,7 @@ layui.define(['laytpl', 'form', 'util'], function (exports) {
      */
     TreeTable.prototype.findDataById = function (id) {
         var options = this.options;
+
         function each(data) {
             for (var i = 0; i < data.length; i++) {
                 if (data[i][options.tree.idName] === id) return data[i];
@@ -99,6 +99,7 @@ layui.define(['laytpl', 'form', 'util'], function (exports) {
                 }
             }
         }
+
         return each(options.data);
     }
 
@@ -242,8 +243,7 @@ layui.define(['laytpl', 'form', 'util'], function (exports) {
                 if (haveChild !== undefined) {
                     haveChild = haveChild === true || haveChild === 'true';
                     if (this.haveChildReverse) haveChild = !haveChild;
-                }
-                else if (d[this.childName]) haveChild = d[this.childName].length > 0;
+                } else if (d[this.childName]) haveChild = d[this.childName].length > 0;
                 if (haveChild) return '<i class="ew-tree-icon ew-tree-icon-folder"></i>';
                 else return '<i class="ew-tree-icon ew-tree-icon-file"></i>';
             }
@@ -886,7 +886,7 @@ layui.define(['laytpl', 'form', 'util'], function (exports) {
      * @returns {string}
      */
     TreeTable.prototype.renderBodyTd = function (d, indent, index, $td, col) {
-        if (!col||col.colGroup) return '';
+        if (!col || col.colGroup) return '';
         var options = this.options;
         var components = this.getComponents();
         if (!indent) indent = 0;

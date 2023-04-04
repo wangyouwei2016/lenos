@@ -1,5 +1,9 @@
 package com.len.config;
 
+import java.nio.charset.Charset;
+import java.util.List;
+import java.util.Locale;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,10 +15,6 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
-
-import java.nio.charset.Charset;
-import java.util.List;
-import java.util.Locale;
 
 /**
  * spring shiro
@@ -33,21 +33,20 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
         return converter;
     }
 
-
     @Override
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
         super.configureMessageConverters(converters);
         converters.add(responseBodyConverter());
     }
 
-
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/**").addResourceLocations("classpath:/META-INF/resources/").setCachePeriod(0);
-        registry.addResourceHandler("/plugin/**", "/static/**")
-                .addResourceLocations("classpath:/plugin/", "classpath:/static/");
+        registry.addResourceHandler("/plugin/**", "/static/**").addResourceLocations("classpath:/plugin/",
+            "classpath:/static/");
         registry.addResourceHandler("/ftl/**").addResourceLocations("classpath:/ftl/", "classpath:/freemarker/");
-        registry.addResourceHandler("/images/**").addResourceLocations("file:" + imagePath, "classpath:/plugin/lenos/img/");
+        registry.addResourceHandler("/images/**").addResourceLocations("file:" + imagePath,
+            "classpath:/plugin/lenos/img/");
         registry.addResourceHandler("/img/**").addResourceLocations("file:" + imagePath);
         registry.addResourceHandler("/file/**").addResourceLocations("file:" + imagePath);
         super.addResourceHandlers(registry);

@@ -1,13 +1,13 @@
 package com.len.exception;
 
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.boot.autoconfigure.web.servlet.error.ErrorViewResolver;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.servlet.ModelAndView;
-
-import javax.servlet.http.HttpServletRequest;
-import java.util.Map;
-
 
 @ControllerAdvice
 public class CustomErrorViewResolver implements ErrorViewResolver {
@@ -18,8 +18,7 @@ public class CustomErrorViewResolver implements ErrorViewResolver {
     private static final String OTHER_ERROR = "/error/error";
 
     @Override
-    public ModelAndView resolveErrorView(HttpServletRequest request,
-                                         HttpStatus status, Map<String, Object> model) {
+    public ModelAndView resolveErrorView(HttpServletRequest request, HttpStatus status, Map<String, Object> model) {
         boolean isServerError = status.is5xxServerError();
         ModelAndView andView = new ModelAndView();
         andView.addObject("message", model.get("message"));

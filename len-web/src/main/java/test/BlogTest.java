@@ -1,11 +1,10 @@
 package test;
 
-import com.len.LenApplication;
-import com.len.entity.BlogCategory;
-import com.len.service.ArticleCategoryService;
-import com.len.service.BlogCategoryService;
-import com.len.service.BlogTagService;
-import com.len.service.SysUserService;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.UUID;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,11 +12,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
-
+import com.len.LenApplication;
+import com.len.entity.BlogCategory;
+import com.len.service.ArticleCategoryService;
+import com.len.service.BlogCategoryService;
+import com.len.service.BlogTagService;
+import com.len.service.SysUserService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = LenApplication.class)
@@ -44,7 +44,7 @@ public class BlogTest {
      */
     @Test
     public void insertTestData() {
-       /* String label[]={"java","spring","spring boot","linux","spring cloud",
+        /* String label[]={"java","spring","spring boot","linux","spring cloud",
                 "vue","mybatis","git","sql","quartz","centos7","oauth2.0"
         ,"spring security","redis","shiro"};
         List<BlogLabel> blogLabels=new ArrayList<>();
@@ -56,7 +56,7 @@ public class BlogTest {
             blogLabel.setLabelName(label[i]);
             blogLabels.add(blogLabel);
         }*/
-       /* boolean isOk = blogLabelService.insertList(blogLabels) > 0;
+        /* boolean isOk = blogLabelService.insertList(blogLabels) > 0;
         System.out.println("录入数据："+isOk);*/
 
     }
@@ -69,7 +69,7 @@ public class BlogTest {
         for (String aCate : cate) {
             BlogCategory category = new BlogCategory();
             category.setId(UUID.randomUUID().toString().replace("-", ""));
-            category.setSequence((byte) ++i);
+            category.setSequence((byte)++i);
             category.setName(aCate);
             category.setCode(aCate);
             category.setCreateDate(new Date());

@@ -11,9 +11,8 @@ import com.len.entity.SysUser;
 import com.len.redis.RedisService;
 import com.len.service.SysUserService;
 
-
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = LenApplication.class,webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(classes = LenApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class BootTest {
 
     @Autowired
@@ -24,15 +23,15 @@ public class BootTest {
 
     @Test
     public void testStartJob() throws Exception {
-        //12
+        // 12
         SysUser user = userService.getById("2211fec3e17c11e795ed201a068c6482");
         System.out.println(user.getUsername());
     }
 
     @Test
     public void redisTest() throws InterruptedException {
-        SysUser user=new SysUser();
-        userService.add(user,null);
+        SysUser user = new SysUser();
+        userService.add(user, null);
 
     }
 
