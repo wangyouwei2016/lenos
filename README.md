@@ -11,9 +11,6 @@
         <a target="_blank" href="https://gitee.com/zzdevelop/lenosp">
 		<img src="https://img.shields.io/badge/-Spring%20boot-green" />
 	</a>
-        <a target="_blank" href="https://gitee.com/zzdevelop/lenosp">
-		<img src="https://img.shields.io/badge/-Spring%20boot-green" />
-	</a>
         <a target="_blank" href="https://gitee.com/zzdevelop">
 		<img src="https://img.shields.io/badge/%E7%BB%84%E7%BB%87-%E9%83%91%E5%B7%9E%E7%A8%8B%E5%BA%8F%E5%91%98-green" />
 	</a>
