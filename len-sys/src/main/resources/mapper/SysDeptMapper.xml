@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.len.mapper.SysDeptMapper">
-  <resultMap id="BaseResultMap" type="com.len.entity.SysDept">
+    <resultMap id="BaseResultMap" type="com.len.entity.SysDept">
 
-    <id column="id" jdbcType="VARCHAR" property="id" />
-    <result column="dept_code" jdbcType="VARCHAR" property="deptCode" />
-    <result column="dept_name" jdbcType="VARCHAR" property="deptName" />
-    <result column="dept_pid" jdbcType="VARCHAR" property="deptPid" />
-    <result column="dept_desc" jdbcType="VARCHAR" property="deptDesc" />
-    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
-    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
-    <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
-  </resultMap>
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="dept_code" jdbcType="VARCHAR" property="deptCode"/>
+        <result column="dept_name" jdbcType="VARCHAR" property="deptName"/>
+        <result column="dept_pid" jdbcType="VARCHAR" property="deptPid"/>
+        <result column="dept_desc" jdbcType="VARCHAR" property="deptDesc"/>
+        <result column="update_by" jdbcType="VARCHAR" property="updateBy"/>
+        <result column="create_date" jdbcType="TIMESTAMP" property="createDate"/>
+        <result column="update_date" jdbcType="TIMESTAMP" property="updateDate"/>
+    </resultMap>
 </mapper>

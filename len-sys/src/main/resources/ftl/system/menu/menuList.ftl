@@ -91,7 +91,7 @@
 
             /*添加*/
             add: function () {
-                Len.add('menu/showAddMenu','','menu');
+                Len.add('menu/showAddMenu', '', 'menu');
             },
         };
 

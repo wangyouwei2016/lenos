@@ -6,5 +6,4 @@ import com.len.entity.SysRole;
 /**
  * 角色 mapper
  */
-public interface SysRoleMapper extends BaseMapper<SysRole> {
-}
+public interface SysRoleMapper extends BaseMapper<SysRole> {}

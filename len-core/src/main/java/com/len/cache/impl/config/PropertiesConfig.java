@@ -7,7 +7,6 @@ public class PropertiesConfig {
 
     private static final String propertiesName = "len.properties";
 
-
     private static Properties properties = new Properties();
 
     static {

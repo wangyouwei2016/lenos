@@ -1,5 +1,14 @@
 package com.len.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
@@ -11,13 +20,6 @@ import com.len.service.BlogCategoryService;
 import com.len.util.IpUtil;
 import com.len.util.LenResponse;
 import com.len.util.ReType;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletRequest;
-import java.text.SimpleDateFormat;
-import java.util.List;
 
 /**
  * 文章管理（后台）
@@ -47,7 +49,6 @@ public class ArticleController {
     public String articleListPage() {
         return "articleList";
     }
-
 
     /**
      * 获取 文章列表

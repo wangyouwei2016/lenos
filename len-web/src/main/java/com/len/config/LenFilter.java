@@ -1,28 +1,26 @@
 package com.len.config;
 
-import com.len.service.SysUserService;
-import com.len.util.LocalLocale;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import java.io.IOException;
+import java.util.Locale;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
-import java.util.Locale;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import com.len.service.SysUserService;
+import com.len.util.LocalLocale;
 
 @Component
 public class LenFilter implements Filter {
 
-    @Autowired
-    SysUserService sysUserService;
-
     /**
      * 支持语言 扩展语言可直接在此添加
      */
-    private static Locale[] supportLocales = {
-            Locale.SIMPLIFIED_CHINESE,
-            Locale.US
-    };
+    private static Locale[] supportLocales = {Locale.SIMPLIFIED_CHINESE, Locale.US};
+    @Autowired
+    SysUserService sysUserService;
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -31,8 +29,8 @@ public class LenFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
-            throws IOException, ServletException {
-        HttpServletRequest request = (HttpServletRequest) servletRequest;
+        throws IOException, ServletException {
+        HttpServletRequest request = (HttpServletRequest)servletRequest;
         Locale locale = request.getLocale();
         LocalLocale.setLocale(getLocale(locale));
         filterChain.doFilter(servletRequest, servletResponse);
@@ -53,7 +51,6 @@ public class LenFilter implements Filter {
         }
         return Locale.US;
     }
-
 
     @Override
     public void destroy() {

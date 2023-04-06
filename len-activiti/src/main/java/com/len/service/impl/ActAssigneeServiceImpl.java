@@ -1,9 +1,9 @@
 package com.len.service.impl;
 
-import com.len.base.impl.BaseServiceImpl;
-import com.len.entity.ActAssignee;
-import com.len.mapper.ActAssigneeMapper;
-import com.len.service.ActAssigneeService;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.activiti.bpmn.converter.BpmnXMLConverter;
 import org.activiti.bpmn.model.BpmnModel;
 import org.activiti.engine.RepositoryService;
@@ -14,9 +14,10 @@ import org.activiti.engine.impl.util.io.InputStreamSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
+import com.len.base.impl.BaseServiceImpl;
+import com.len.entity.ActAssignee;
+import com.len.mapper.ActAssigneeMapper;
+import com.len.service.ActAssigneeService;
 
 /**
  * @author zhuxiaomeng
@@ -24,8 +25,8 @@ import java.util.List;
  * @email lenospmiller@gmail.com
  */
 @Service
-public class ActAssigneeServiceImpl extends BaseServiceImpl<ActAssigneeMapper, ActAssignee> implements
-        ActAssigneeService {
+public class ActAssigneeServiceImpl extends BaseServiceImpl<ActAssigneeMapper, ActAssignee>
+    implements ActAssigneeService {
 
     @Autowired
     ActAssigneeMapper actAssigneeMapper;
@@ -40,11 +41,13 @@ public class ActAssigneeServiceImpl extends BaseServiceImpl<ActAssigneeMapper, A
 
     @Override
     public List<ActivityImpl> getActivityList(String deploymentId) {
-        org.activiti.engine.repository.ProcessDefinition processDefinition = repositoryService
-                .createProcessDefinitionQuery().deploymentId(deploymentId).singleResult();
-        ProcessDefinitionEntity processDefinitionEntity = (ProcessDefinitionEntity) ((RepositoryServiceImpl) repositoryService)
+        org.activiti.engine.repository.ProcessDefinition processDefinition =
+            repositoryService.createProcessDefinitionQuery().deploymentId(deploymentId).singleResult();
+        ProcessDefinitionEntity processDefinitionEntity =
+            (ProcessDefinitionEntity)((RepositoryServiceImpl)repositoryService)
                 .getDeployedProcessDefinition(processDefinition.getId());
-        InputStream inputStream = repositoryService.getResourceAsStream(processDefinition.getDeploymentId(), processDefinition.getResourceName());
+        InputStream inputStream = repositoryService.getResourceAsStream(processDefinition.getDeploymentId(),
+            processDefinition.getResourceName());
         BpmnModel bm = new BpmnXMLConverter().convertToBpmnModel(new InputStreamSource(inputStream), false, true);
         return selectAllActivity(processDefinitionEntity.getActivities());
 

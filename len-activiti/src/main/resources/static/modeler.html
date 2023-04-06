@@ -8,42 +8,70 @@
 <!--[if gt IE 8]><!-->
 <html class="no-js"> <!--<![endif]-->
 <head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Activiti Editor</title>
-	<meta name="description" content="">
-	<meta name="viewport"
-		  content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, width=device-width">
-	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <meta charset="utf-8">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <title>Activiti Editor</title>
+    <meta content="" name="description">
+    <meta content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, width=device-width"
+          name="viewport">
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
-	<link rel="Stylesheet" media="screen" href="editor-app/libs/ng-grid-2.0.7.min.css" type="text/css"/>
-	<link rel="stylesheet" href="editor-app/libs/bootstrap_3.1.1/css/bootstrap.min.css"/>
+    <link href="editor-app/libs/ng-grid-2.0.7.min.css" media="screen" rel="Stylesheet" type="text/css"/>
+    <link href="editor-app/libs/bootstrap_3.1.1/css/bootstrap.min.css" rel="stylesheet"/>
 
-	<link rel="Stylesheet" media="screen" href="editor-app/editor/css/editor.css" type="text/css"/>
-	<link rel="stylesheet" href="editor-app/css/style.css" type="text/css"/>
+    <link href="editor-app/editor/css/editor.css" media="screen" rel="Stylesheet" type="text/css"/>
+    <link href="editor-app/css/style.css" rel="stylesheet" type="text/css"/>
 
-	<link rel="stylesheet" href="editor-app/css/style-common.css">
-	<link rel="stylesheet" href="editor-app/css/style-editor.css">
+    <link href="editor-app/css/style-common.css" rel="stylesheet">
+    <link href="editor-app/css/style-editor.css" rel="stylesheet">
 
-	<style>
-		.page-list{
-			overflow: hidden;
-		}
-		.page-list .pagination {    margin: 0 0 10px 0;    float: left;}
-		.page-list .pagination span {cursor: pointer;}
-		.page-list .pagination .separate span{cursor: default; border-top:none;border-bottom:none;}
-		.page-list .pagination .separate span:hover {background: none;}
-		.page-list .page-total {
-			float: left;
-			margin: 2px 0 2px 11px;
-		}
-		.page-list .page-total input, .page-list .page-total select{height: 26px; border: 1px solid #ddd;}
-		.page-list .page-total input {width: 40px; padding-left:3px;}
-		.page-list .page-total select {width: 50px;}
-		.no-items{
-			text-align: center;
-		}
-	</style>
+    <style>
+        .page-list {
+            overflow: hidden;
+        }
+
+        .page-list .pagination {
+            margin: 0 0 10px 0;
+            float: left;
+        }
+
+        .page-list .pagination span {
+            cursor: pointer;
+        }
+
+        .page-list .pagination .separate span {
+            cursor: default;
+            border-top: none;
+            border-bottom: none;
+        }
+
+        .page-list .pagination .separate span:hover {
+            background: none;
+        }
+
+        .page-list .page-total {
+            float: left;
+            margin: 2px 0 2px 11px;
+        }
+
+        .page-list .page-total input, .page-list .page-total select {
+            height: 26px;
+            border: 1px solid #ddd;
+        }
+
+        .page-list .page-total input {
+            width: 40px;
+            padding-left: 3px;
+        }
+
+        .page-list .page-total select {
+            width: 50px;
+        }
+
+        .no-items {
+            text-align: center;
+        }
+    </style>
 
 </head>
 <body>
@@ -58,24 +86,25 @@
 
 <!--[if lt IE 9]>
 <div class="unsupported-browser">
-	<p class="alert error">You are using an unsupported browser. Please upgrade your browser in order to use the
-		editor.</p>
+    <p class="alert error">You are using an unsupported browser. Please upgrade your browser in order to use the
+        editor.</p>
 </div>
 <![endif]-->
 
 <div class="alert-wrapper" ng-cloak>
-	<div class="alert fadein {{alerts.current.type}}" ng-show="alerts.current" ng-click="dismissAlert()">
-		<i class="glyphicon"
-		   ng-class="{'glyphicon-ok': alerts.current.type == 'info', 'glyphicon-remove': alerts.current.type == 'error'}"></i>
-		<span>{{alerts.current.message}}</span>
+    <div class="alert fadein {{alerts.current.type}}" ng-click="dismissAlert()" ng-show="alerts.current">
+        <i class="glyphicon"
+           ng-class="{'glyphicon-ok': alerts.current.type == 'info', 'glyphicon-remove': alerts.current.type == 'error'}"></i>
+        <span>{{alerts.current.message}}</span>
 
-		<div class="pull-right" ng-show="alerts.queue.length > 0">
-			<span class="badge">{{alerts.queue.length + 1}}</span>
-		</div>
-	</div>
+        <div class="pull-right" ng-show="alerts.queue.length > 0">
+            <span class="badge">{{alerts.queue.length + 1}}</span>
+        </div>
+    </div>
 </div>
 
-<div id="main" class="wrapper full clearfix" ng-style="{height: window.height + 'px'}" ng-app="activitiModeler" ng-include="'editor-app/editor.html'">
+<div class="wrapper full clearfix" id="main" ng-app="activitiModeler" ng-include="'editor-app/editor.html'"
+     ng-style="{height: window.height + 'px'}">
 </div>
 
 <!--[if lt IE 9]>

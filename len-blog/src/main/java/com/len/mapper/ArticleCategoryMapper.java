@@ -1,10 +1,11 @@
 package com.len.mapper;
 
-import com.len.base.BaseMapper;
-import com.len.entity.ArticleCategory;
+import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 
-import java.util.List;
+import com.len.base.BaseMapper;
+import com.len.entity.ArticleCategory;
 
 public interface ArticleCategoryMapper extends BaseMapper<ArticleCategory> {
 

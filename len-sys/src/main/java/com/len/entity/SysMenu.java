@@ -18,47 +18,36 @@ import lombok.ToString;
 @ToString
 public class SysMenu extends BaseEntity implements Serializable {
 
+    private static final long serialVersionUID = 1L;
     /**
      * 编码
      */
     private String code;
-
     private String name;
-
     private String pId;
-
     private String url;
-
     /**
      * 路由
      */
     private String router;
-
     /**
      * 排序字段
      */
     private Integer orderNum;
-
     /**
      * 图标
      */
     private String icon;
-
     /**
      * 权限
      */
     private String permission;
-
     /**
      * 1栏目2菜单
      */
     private Byte menuType;
-
     @TableField(exist = false)
     private List<SysRole> roleList;
-
-    private static final long serialVersionUID = 1L;
-
     @TableField(exist = false)
     private List<SysMenu> children = new ArrayList<SysMenu>();
 

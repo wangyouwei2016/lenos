@@ -1,7 +1,5 @@
 package com.len.core.filter;
 
-import java.util.Collection;
-
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
@@ -11,7 +9,7 @@ import org.apache.shiro.session.Session;
 import org.apache.shiro.web.filter.AccessControlFilter;
 
 /**
- *        验证码拦截
+ * 验证码拦截
  */
 public class VerfityCodeFilter extends AccessControlFilter {
     /**
@@ -47,7 +45,7 @@ public class VerfityCodeFilter extends AccessControlFilter {
             return true;
         }
         Session session = getSubject(request, response).getSession();
-        //Collection<Object> attributeKeys = session.getAttributeKeys();
+        // Collection<Object> attributeKeys = session.getAttributeKeys();
         Object code = getSubject(request, response).getSession().getAttribute(jcaptchaParam);
         String storedCode = null;
         if (null != code) {

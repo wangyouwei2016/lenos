@@ -2,6 +2,7 @@ package org.activiti;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintWriter;
+
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;
@@ -28,21 +29,21 @@ public class GenericResponseWrapper extends HttpServletResponseWrapper {
         return new PrintWriter(getOutputStream(), true);
     }
 
+    public int getContentLength() {
+        return contentLength;
+    }
+
     public void setContentLength(int length) {
         this.contentLength = length;
         super.setContentLength(length);
     }
 
-    public int getContentLength() {
-        return contentLength;
+    public String getContentType() {
+        return contentType;
     }
 
     public void setContentType(String type) {
         this.contentType = type;
         super.setContentType(type);
     }
-
-    public String getContentType() {
-        return contentType;
-    }
-} 
+}

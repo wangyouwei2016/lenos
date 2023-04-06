@@ -1,30 +1,30 @@
 package com.len.entity;
 
+import java.util.Date;
+
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-
-import java.util.Date;
 
 @TableName(value = "blog_category")
 public class BlogCategory {
     @TableId(value = "id", type = IdType.UUID)
     private String id;
 
-    @TableField(value="sequence")
+    @TableField(value = "sequence")
     private Byte sequence;
 
     /**
      * 搜索code
      */
-    @TableField(value="code")
+    @TableField(value = "code")
     private String code;
 
     /**
      * 类别名称
      */
-    @TableField(value="name")
+    @TableField(value = "name")
     private String name;
 
     /**
@@ -58,7 +58,6 @@ public class BlogCategory {
     public void setId(String id) {
         this.id = id == null ? null : id.trim();
     }
-
 
     public Byte getSequence() {
         return sequence;

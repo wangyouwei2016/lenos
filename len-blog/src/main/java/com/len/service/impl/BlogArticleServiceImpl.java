@@ -1,5 +1,15 @@
 package com.len.service.impl;
 
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.github.pagehelper.PageHelper;
 import com.len.base.impl.BaseServiceImpl;
@@ -13,56 +23,35 @@ import com.len.service.*;
 import com.len.util.ApplicationContextUtil;
 import com.len.util.BeanUtil;
 import com.len.util.LenResponse;
-import freemarker.core.LocalContext;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import java.util.stream.Collectors;
-
 
 @Service
-public class BlogArticleServiceImpl extends BaseServiceImpl<BlogArticleMapper, BlogArticle> implements BlogArticleService {
-
-    @Autowired
-    private BlogArticleMapper blogArticleMapper;
-
-    @Autowired
-    private ArticleTagService articleTagService;
-
-    @Autowired
-    private ArticleCategoryService articleCategoryService;
-
-    @Autowired
-    private BlogTagService tagService;
-
-    @Autowired
-    private SysUserService sysUserService;
+public class BlogArticleServiceImpl extends BaseServiceImpl<BlogArticleMapper, BlogArticle>
+    implements BlogArticleService {
 
     private static final Pattern IMG = Pattern.compile("<(img)(.*?)(/>|></img>|>)");
-
     private static final Pattern SRC = Pattern.compile("src\\s*=\\s*\"?(.*?)(\"|>|\\s+)");
-
+    @Autowired
+    private BlogArticleMapper blogArticleMapper;
+    @Autowired
+    private ArticleTagService articleTagService;
+    @Autowired
+    private ArticleCategoryService articleCategoryService;
+    @Autowired
+    private BlogTagService tagService;
+    @Autowired
+    private SysUserService sysUserService;
 
     private ArticleDetail getArticleByCode(String code) {
 
         QueryWrapper<BlogArticle> blogArticleQueryWrapper = new QueryWrapper<>();
         blogArticleQueryWrapper.eq("code", code).eq("del_flag", 0);
         blogArticleMapper.selectList(blogArticleQueryWrapper);
-        List<BlogArticle> articles = blogArticleMapper.selectList(blogArticleQueryWrapper);
-        ;
+        List<BlogArticle> articles = blogArticleMapper.selectList(blogArticleQueryWrapper);;
         if (articles.isEmpty()) {
             return null;
         }
         ArticleDetail detail = new ArticleDetail();
         BlogArticle blogArticle = articles.get(0);
-
 
         Article article = new Article();
         BeanUtil.copyNotNullBean(blogArticle, article);
@@ -84,8 +73,7 @@ public class BlogArticleServiceImpl extends BaseServiceImpl<BlogArticleMapper, B
         List<ArticleTag> articleTags = articleTagService.list(tagQueryWrapper);
         if (!articleTags.isEmpty()) {
             QueryWrapper<BlogTag> queryWrapper = new QueryWrapper<>();
-            queryWrapper.in("id", articleTags.stream()
-                    .map(ArticleTag::getTagId).collect(Collectors.toList()));
+            queryWrapper.in("id", articleTags.stream().map(ArticleTag::getTagId).collect(Collectors.toList()));
             List<BlogTag> blogTags = tagService.list(queryWrapper);
 
             detail.setTags(blogTags.stream().map(BlogTag::getTagCode).collect(Collectors.toList()));
@@ -95,8 +83,8 @@ public class BlogArticleServiceImpl extends BaseServiceImpl<BlogArticleMapper, B
         QueryWrapper<ArticleCategory> blogTagQueryWrapper = new QueryWrapper<>(articleCategory);
         List<ArticleCategory> articleCategories = articleCategoryService.list(blogTagQueryWrapper);
         if (!articleCategories.isEmpty()) {
-            detail.setCategory(articleCategories.stream().map(ArticleCategory::getCategoryId)
-                    .collect(Collectors.toList()));
+            detail.setCategory(
+                articleCategories.stream().map(ArticleCategory::getCategoryId).collect(Collectors.toList()));
         }
         return detail;
     }
@@ -131,13 +119,13 @@ public class BlogArticleServiceImpl extends BaseServiceImpl<BlogArticleMapper, B
             return json;
         }
         Article article = detail.getArticle();
-        //点击次数
+        // 点击次数
         int clickNum = addArticleReadNum(ip, article.getId());
         if (clickNum > 0) {
             article.setReadNumber(clickNum);
         }
 
-        //上一篇
+        // 上一篇
         PageHelper.startPage(1, 1);
         BlogArticle previous = selectPrevious(article.getCreateDate());
         if (previous != null) {
@@ -145,7 +133,7 @@ public class BlogArticleServiceImpl extends BaseServiceImpl<BlogArticleMapper, B
             BeanUtil.copyNotNullBean(previous, simpleArticle);
             detail.setPrevious(simpleArticle);
         }
-        //下一篇
+        // 下一篇
         PageHelper.startPage(1, 1);
         BlogArticle next = selectNext(article.getCreateDate());
         if (next != null) {
@@ -177,7 +165,6 @@ public class BlogArticleServiceImpl extends BaseServiceImpl<BlogArticleMapper, B
     public BlogArticle selectNext(Date date) {
         return blogArticleMapper.selectNext(date);
     }
-
 
     private String generatorCode() {
         Random random = new Random();
@@ -329,16 +316,13 @@ public class BlogArticleServiceImpl extends BaseServiceImpl<BlogArticleMapper, B
         QueryWrapper<ArticleCategory> categoryQueryWrapper = new QueryWrapper<>(articleCategory);
         List<ArticleCategory> categories = articleCategoryService.list(categoryQueryWrapper);
         if (!categories.isEmpty()) {
-            List<String> cateIds = categories.stream().map(ArticleCategory::getCategoryId)
-                    .collect(Collectors.toList());
-            List<String> collect = cateIds.stream().filter(categoryIds::contains)
-                    .collect(Collectors.toList());
+            List<String> cateIds = categories.stream().map(ArticleCategory::getCategoryId).collect(Collectors.toList());
+            List<String> collect = cateIds.stream().filter(categoryIds::contains).collect(Collectors.toList());
             categoryIds.removeAll(collect);
             cateIds.removeAll(collect);
             if (!cateIds.isEmpty()) {
                 List<String> delCategoryIds = categories.stream().filter(s -> cateIds.contains(s.getCategoryId()))
-                        .map(ArticleCategory::getId)
-                        .collect(Collectors.toList());
+                    .map(ArticleCategory::getId).collect(Collectors.toList());
                 articleCategoryService.delByIds(delCategoryIds);
             }
         }
@@ -360,7 +344,7 @@ public class BlogArticleServiceImpl extends BaseServiceImpl<BlogArticleMapper, B
     /**
      * 半小时增加一次有效点击数
      *
-     * @param ip        访问者ip
+     * @param ip 访问者ip
      * @param articleId 文章id
      */
     private int addArticleReadNum(String ip, String articleId) {

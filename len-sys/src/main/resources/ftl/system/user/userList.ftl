@@ -141,8 +141,8 @@
 
             }
         });
-        Len.btnBind($('.user-bar .layui-btn'),active);
-        Len.keydown($('.user-bar .layui-btn'),active);
+        Len.btnBind($('.user-bar .layui-btn'), active);
+        Len.keydown($('.user-bar .layui-btn'), active);
     });
 </script>
 

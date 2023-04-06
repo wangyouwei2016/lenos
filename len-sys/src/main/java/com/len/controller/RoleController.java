@@ -1,5 +1,16 @@
 package com.len.controller;
 
+import java.util.List;
+
+import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 import com.alibaba.fastjson.JSONArray;
 import com.len.base.BaseController;
 import com.len.core.annotation.Log;
@@ -11,19 +22,9 @@ import com.len.service.RoleService;
 import com.len.util.LenResponse;
 import com.len.util.MsHelper;
 import com.len.util.ReType;
+
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-
-import java.util.List;
 
 /**
  * 角色业务
@@ -33,12 +34,9 @@ import java.util.List;
 @Api(value = "用户角色管理", tags = "角色业务处理")
 public class RoleController extends BaseController {
 
-
     private final RoleService roleService;
 
-
     private final MenuService menuService;
-
 
     private final RoleMenuService roleMenuService;
 

@@ -6,5 +6,4 @@ import com.len.entity.SysDept;
 /**
  * 部门 mapper
  */
-public interface SysDeptMapper extends BaseMapper<SysDept> {
-}
+public interface SysDeptMapper extends BaseMapper<SysDept> {}

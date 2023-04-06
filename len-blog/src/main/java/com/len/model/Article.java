@@ -1,8 +1,8 @@
 package com.len.model;
 
-import lombok.Data;
-
 import java.util.Date;
+
+import lombok.Data;
 
 @Data
 public class Article {
@@ -14,12 +14,10 @@ public class Article {
      */
     private String code;
 
-
     /**
      * 标题
      */
     private String title;
-
 
     private String firstImg;
 
@@ -49,6 +47,5 @@ public class Article {
     private String content;
 
     private Byte delFlag;
-
 
 }

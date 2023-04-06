@@ -4,7 +4,6 @@ import com.alibaba.fastjson.JSONObject;
 
 import lombok.Data;
 
-
 @Data
 public class LenResponse {
 
@@ -14,14 +13,6 @@ public class LenResponse {
     private JSONObject jsonObj;
     private Integer status;
     private Object data;
-
-    public boolean isFlag() {
-        return flag;
-    }
-
-    public void setFlag(boolean flag) {
-        this.flag = flag;
-    }
 
     public LenResponse() {}
 
@@ -50,5 +41,13 @@ public class LenResponse {
 
     public static LenResponse sucess(String msg) {
         return new LenResponse(true, msg);
+    }
+
+    public boolean isFlag() {
+        return flag;
+    }
+
+    public void setFlag(boolean flag) {
+        this.flag = flag;
     }
 }
