@@ -1,17 +1,17 @@
 package com.len.util;
 
-import com.len.menu.LoginType;
 import org.apache.shiro.authc.AuthenticationToken;
 
+import com.len.menu.LoginType;
 
 public class JwtToken implements AuthenticationToken {
 
     private String token;
     private LoginType type;
 
-    public JwtToken(String token,LoginType type) {
+    public JwtToken(String token, LoginType type) {
         this.token = token;
-        this.type=type;
+        this.type = type;
     }
 
     @Override

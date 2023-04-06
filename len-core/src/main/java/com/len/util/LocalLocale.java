@@ -1,7 +1,5 @@
 package com.len.util;
 
-
-
 import java.util.Locale;
 
 /**
@@ -14,6 +12,10 @@ public class LocalLocale {
         return Locale.SIMPLIFIED_CHINESE;
     });
 
+    public static Locale getLocale() {
+        return local.get();
+    }
+
     public static void setLocale(String locale) {
         setLocale(new Locale(locale));
     }
@@ -22,13 +24,8 @@ public class LocalLocale {
         local.set(locale);
     }
 
-    public static Locale getLocale() {
-        return local.get();
-    }
-
     public static void clear() {
         local.remove();
     }
-
 
 }

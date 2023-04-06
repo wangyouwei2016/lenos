@@ -1,15 +1,8 @@
 package com.len.core.annotation;
 
-import com.alibaba.fastjson.JSON;
-import com.len.base.CurrentUser;
-import com.len.core.shiro.Principal;
-import com.len.entity.SysLog;
-import com.len.mapper.SysLogMapper;
-import com.len.util.IpUtil;
-
 import java.lang.reflect.Method;
 import java.util.Date;
-import java.util.UUID;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.shiro.UnavailableSecurityManagerException;
@@ -26,9 +19,16 @@ import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import com.alibaba.fastjson.JSON;
+import com.len.base.CurrentUser;
+import com.len.core.shiro.Principal;
+import com.len.entity.SysLog;
+import com.len.mapper.SysLogMapper;
+import com.len.util.IpUtil;
+
 /**
  *
- *        为增删改添加监控
+ * 为增删改添加监控
  */
 @Aspect
 @Component

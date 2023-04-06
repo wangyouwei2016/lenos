@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>模型列表</title>
-<#include "/system/base/head.ftl">
+    <#include "/system/base/head.ftl">
 </head>
 
 <body>
@@ -36,21 +36,21 @@
 
 <table id="actModelList" width="100%" lay-filter="act"></table>
 <script type="text/html" id="modelToolBar">
-<#--    <shiro.hasPermission name="control:del">-->
-        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="update"><i class="layui-icon">&#xe640;</i>编辑</a>
-        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="open"><i class="layui-icon">&#xe640;</i>发布</a>
-        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i class="layui-icon">&#xe640;</i>删除</a>
-<#--    </shiro.hasPermission>-->
+    <#--    <shiro.hasPermission name="control:del">-->
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="update"><i class="layui-icon">&#xe640;</i>编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="open"><i class="layui-icon">&#xe640;</i>发布</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i class="layui-icon">&#xe640;</i>删除</a>
+    <#--    </shiro.hasPermission>-->
 </script>
 <script>
     layui.laytpl.toDateString = function (d, format) {
         var date = new Date(d || new Date())
-                , ymd = [
+            , ymd = [
             this.digit(date.getFullYear(), 4)
             , this.digit(date.getMonth() + 1)
             , this.digit(date.getDate())
         ]
-                , hms = [
+            , hms = [
             this.digit(date.getHours())
             , this.digit(date.getMinutes())
             , this.digit(date.getSeconds())
@@ -59,11 +59,11 @@
         format = format || 'yyyy-MM-dd HH:mm:ss';
 
         return format.replace(/yyyy/g, ymd[0])
-                .replace(/MM/g, ymd[1])
-                .replace(/dd/g, ymd[2])
-                .replace(/HH/g, hms[0])
-                .replace(/mm/g, hms[1])
-                .replace(/ss/g, hms[2]);
+            .replace(/MM/g, ymd[1])
+            .replace(/dd/g, ymd[2])
+            .replace(/HH/g, hms[0])
+            .replace(/mm/g, hms[1])
+            .replace(/ss/g, hms[2]);
     };
     $('#processGroup').on('mouseover', function () {
         layer.tips('设置流程节点的代办人/候选人/候选组，目前只开发到组', this, {time: 2000});
@@ -140,7 +140,7 @@
                 var index = window.top.layer.open({
                     id: 'act-add',
                     type: 2,
-                    area: [$(window).width()+'px',$(window).height()+'px'],
+                    area: [$(window).width() + 'px', $(window).height() + 'px'],
                     fix: false,
                     maxmin: true,
                     shadeClose: false,
@@ -160,7 +160,7 @@
                 var index = window.top.layer.open({
                     id: 'act-update',
                     type: 2,
-                    area: [$(window).width()+'px',$(window).height()+'px'],
+                    area: [$(window).width() + 'px', $(window).height() + 'px'],
                     fix: false,
                     maxmin: true,
                     shadeClose: false,
@@ -203,7 +203,7 @@
     }
 
     function syncdata() {
-       var index= layer.load(2);
+        var index = layer.load(2);
         $.ajax({
             url: "act/syncdata",
             type: "post",

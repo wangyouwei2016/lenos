@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 
@@ -81,7 +80,7 @@
     layui.use(['form', 'layer'], function () {
         $ = layui.jquery;
         var form = layui.form
-                , laydate = layui.laydate;
+            , laydate = layui.laydate;
         var d = new Date();
         var day = d.getFullYear() + "-" + (parseInt(d.getMonth()) + 1) + '-' + d.getDate();
         console.log(day);

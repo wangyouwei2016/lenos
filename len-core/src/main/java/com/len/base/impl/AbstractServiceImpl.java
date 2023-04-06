@@ -1,5 +1,7 @@
 package com.len.base.impl;
 
+import java.util.List;
+
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
@@ -7,20 +9,18 @@ import com.len.base.BaseMapper;
 import com.len.base.BaseService;
 import com.len.exception.LenException;
 import com.len.util.ReType;
+
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.List;
-
-
 @Slf4j
-public class AbstractServiceImpl<E extends com.baomidou.mybatisplus.core.mapper.BaseMapper, T> extends ServiceImpl<BaseMapper<T>, T> implements BaseService<T> {
-
+public class AbstractServiceImpl<E extends com.baomidou.mybatisplus.core.mapper.BaseMapper, T>
+    extends ServiceImpl<BaseMapper<T>, T> implements BaseService<T> {
 
     /**
      * 公共展示类
      *
-     * @param t     实体
-     * @param page  页
+     * @param t 实体
+     * @param page 页
      * @param limit 行
      * @return
      */

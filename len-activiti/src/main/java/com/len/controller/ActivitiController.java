@@ -1,38 +1,26 @@
 /**
  * Copyright 2018 lenos
  * <p>
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
  * <p>
  * http://www.apache.org/licenses/LICENSE-2.0
  * <p>
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
+ * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ * specific language governing permissions and limitations under the License.
  */
 package com.len.controller;
 
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.len.base.BaseController;
-import com.len.config.ActPropertiesConfig;
-import com.len.entity.*;
-import com.len.exception.LenException;
-import com.len.service.ActAssigneeService;
-import com.len.service.RoleService;
-import com.len.service.RoleUserService;
-import com.len.service.SysUserService;
-import com.len.util.Base64Utils;
-import com.len.util.Checkbox;
-import com.len.util.LenResponse;
-import com.len.util.ReType;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
+import java.util.*;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.activiti.bpmn.converter.BpmnXMLConverter;
 import org.activiti.bpmn.model.BpmnModel;
 import org.activiti.editor.constants.ModelDataJsonConstants;
@@ -55,49 +43,54 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
-import java.nio.charset.StandardCharsets;
-import java.util.*;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.len.base.BaseController;
+import com.len.config.ActPropertiesConfig;
+import com.len.entity.*;
+import com.len.exception.LenException;
+import com.len.service.ActAssigneeService;
+import com.len.service.RoleService;
+import com.len.service.RoleUserService;
+import com.len.service.SysUserService;
+import com.len.util.Base64Utils;
+import com.len.util.Checkbox;
+import com.len.util.LenResponse;
+import com.len.util.ReType;
 
 /**
  * @author zhuxiaomeng
  * @date 2018/1/13.
  * @email lenospmiller@gmail.com
- * <p>
- * 流程管理 流程创建、发布 流程节点绑定角色/用户(绑定用户 开始ing)
+ *        <p>
+ *        流程管理 流程创建、发布 流程节点绑定角色/用户(绑定用户 开始ing)
  */
 @Controller
 @RequestMapping(value = "/act")
 public class ActivitiController extends BaseController {
 
     @Autowired
+    ActivitiService activitiService;
+    @Autowired
+    ActPropertiesConfig actPropertiesConfig;
+    @Autowired
     private RepositoryService repositoryService;
-
     @Autowired
     private ObjectMapper objectMapper;
-
     @Autowired
     private IdentityService identityService;
-
     @Autowired
     private SysUserService userService;
-
     @Autowired
     private RoleService roleService;
-
     @Autowired
     private RoleUserService roleUserService;
-
     @Autowired
     private ActAssigneeService actAssigneeService;
-
-    @Autowired
-    ActivitiService activitiService;
-
 
     /**
      * 同步用户 角色 用户角色到activiti表中
@@ -112,7 +105,7 @@ public class ActivitiController extends BaseController {
             for (SysUser user : userList) {
                 au = new UserEntity();
                 au.setId(user.getId());
-//                au.setFirstName(user.getRealName());
+                // au.setFirstName(user.getRealName());
                 au.setEmail(user.getEmail());
                 identityService.deleteUser(au.getId());
                 identityService.saveUser(au);
@@ -141,7 +134,6 @@ public class ActivitiController extends BaseController {
         return j;
     }
 
-
     @GetMapping(value = "goActiviti")
     public String goActiviti() throws UnsupportedEncodingException {
         Model model = repositoryService.newModel();
@@ -163,7 +155,7 @@ public class ActivitiController extends BaseController {
         repositoryService.saveModel(model);
         String id = model.getId();
 
-        //完善ModelEditorSource
+        // 完善ModelEditorSource
         JSONObject editor = new JSONObject();
         editor.put("id", "canvas");
         editor.put("resourceId", "canvas");
@@ -189,10 +181,8 @@ public class ActivitiController extends BaseController {
      */
     @GetMapping(value = "showAct")
     @ResponseBody
-    public ReType showAct(org.springframework.ui.Model model, ProcessDefinition definition,
-                          String page, String limit) {
-        ProcessDefinitionQuery processDefinitionQuery = repositoryService
-                .createProcessDefinitionQuery();
+    public ReType showAct(org.springframework.ui.Model model, ProcessDefinition definition, String page, String limit) {
+        ProcessDefinitionQuery processDefinitionQuery = repositoryService.createProcessDefinitionQuery();
         List<org.activiti.engine.repository.ProcessDefinition> processDefinitionList = null;
         if (definition != null) {
             if (!StringUtils.isEmpty(definition.getDeploymentId())) {
@@ -203,15 +193,14 @@ public class ActivitiController extends BaseController {
 
             }
         }
-        processDefinitionList = processDefinitionQuery.listPage(Integer.valueOf(limit) * (Integer.valueOf(page) - 1), Integer.valueOf(limit));
+        processDefinitionList = processDefinitionQuery.listPage(Integer.valueOf(limit) * (Integer.valueOf(page) - 1),
+            Integer.valueOf(limit));
         long count = repositoryService.createProcessDefinitionQuery().count();
-//        long count = repositoryService.createDeploymentQuery().count();
+        // long count = repositoryService.createDeploymentQuery().count();
         List<ProcessDefinition> list = new ArrayList<>();
-        processDefinitionList
-                .forEach(processDefinition -> list.add(new ProcessDefinition(processDefinition)));
+        processDefinitionList.forEach(processDefinition -> list.add(new ProcessDefinition(processDefinition)));
         return new ReType(count, list);
     }
-
 
     @GetMapping(value = "goActModel")
     public String goActModel(org.springframework.ui.Model model) {
@@ -223,8 +212,7 @@ public class ActivitiController extends BaseController {
      */
     @GetMapping(value = "showAm")
     @ResponseBody
-    public ReType showModel(org.springframework.ui.Model model, ActModel actModel, String page,
-                            String limit) {
+    public ReType showModel(org.springframework.ui.Model model, ActModel actModel, String page, String limit) {
         ModelQuery modelQuery = repositoryService.createModelQuery();
         if (actModel != null) {
             if (!StringUtils.isEmpty(actModel.getKey())) {
@@ -234,8 +222,8 @@ public class ActivitiController extends BaseController {
                 modelQuery.modelNameLike("%" + actModel.getName() + "%");
             }
         }
-        List<Model> models = modelQuery
-                .listPage(Integer.valueOf(limit) * (Integer.valueOf(page) - 1), Integer.valueOf(limit));
+        List<Model> models =
+            modelQuery.listPage(Integer.valueOf(limit) * (Integer.valueOf(page) - 1), Integer.valueOf(limit));
         long count = repositoryService.createModelQuery().count();
         List<ActModel> list = new ArrayList<>();
         models.forEach(mo -> list.add(new ActModel(mo)));
@@ -264,15 +252,13 @@ public class ActivitiController extends BaseController {
                 return LenResponse.error("数据不符合要求");
             }
             byte[] bpmnBytes = new BpmnXMLConverter().convertToXML(model);
-            //发布流程
+            // 发布流程
             String processName = modelData.getName() + ".bpmn20.xml";
             String convertToXML = new String(bpmnBytes);
 
             System.out.println(convertToXML);
-            Deployment deployment = repositoryService.createDeployment()
-                    .name(modelData.getName())
-                    .addString(processName, new String(bpmnBytes, "UTF-8"))
-                    .deploy();
+            Deployment deployment = repositoryService.createDeployment().name(modelData.getName())
+                .addString(processName, new String(bpmnBytes, "UTF-8")).deploy();
             modelData.setDeploymentId(deployment.getId());
             repositoryService.saveModel(modelData);
         } catch (LenException e) {
@@ -285,7 +271,6 @@ public class ActivitiController extends BaseController {
         return j;
     }
 
-
     /**
      * 根据流程部署id获取节点并且传到前端
      *
@@ -294,11 +279,10 @@ public class ActivitiController extends BaseController {
      * @return
      */
     @GetMapping("goAssignee/{deploymentId}")
-    public String goAssignee(@PathVariable("deploymentId") String deploymentId,
-                             org.springframework.ui.Model model) {
-        /**根据流程实例id查询出所有流程节点*/
+    public String goAssignee(@PathVariable("deploymentId") String deploymentId, org.springframework.ui.Model model) {
+        /** 根据流程实例id查询出所有流程节点 */
         List<ActivityImpl> activityList = actAssigneeService.getActivityList(deploymentId);
-        /**角色和节点关系封装成list*/
+        /** 角色和节点关系封装成list */
         List<SysRole> roleList = roleService.list();
         Checkbox checkbox = null;
         Map<String, Object> map = null;
@@ -307,11 +291,11 @@ public class ActivitiController extends BaseController {
         List<Checkbox> checkboxList = null;
         for (ActivityImpl activiti : activityList) {
             map = new HashMap<>();
-            String name = (String) activiti.getProperty("name");
+            String name = (String)activiti.getProperty("name");
             if (StringUtils.isEmpty(name) || "start".equals(name) || "end".equals(name)) {
                 continue;
             }
-            //节点id 、name、节点目前关联的角色 封装成进map
+            // 节点id 、name、节点目前关联的角色 封装成进map
             String nodeId = activiti.getId();
             assigneeList = actAssigneeService.list(new QueryWrapper<>(new ActAssignee(nodeId)));
             List<String> strings = new ArrayList<>();
@@ -356,16 +340,16 @@ public class ActivitiController extends BaseController {
             String nodeId = entry.getKey().substring(0, sub);
             nodeId = nodeId.substring(nodeId.lastIndexOf("_") + 1, nodeId.length());
             String nodeName = entry.getKey().substring(entry.getKey().lastIndexOf("_") + 1, entry.getKey().length());
-            //更新进list
+            // 更新进list
             assignee.setAssigneeType(3);
             assignee.setRoleId(entry.getValue()[0]);
             assignee.setSid(nodeId);
             assignee.setActivtiName(nodeName);
-            //先清除
+            // 先清除
             actAssigneeService.deleteByNodeId(nodeId);
             assigneeList.add(assignee);
         }
-        //后添加 在map循环里添加 多角色会导致添加了的再次被删除 so 要拿出来
+        // 后添加 在map循环里添加 多角色会导致添加了的再次被删除 so 要拿出来
         for (ActAssignee actAssignee : assigneeList) {
             actAssigneeService.save(actAssignee);
         }
@@ -391,7 +375,7 @@ public class ActivitiController extends BaseController {
                 if (StringUtils.isEmpty(nodeId) || "start".equals(nodeId) || "end".equals(nodeId)) {
                     continue;
                 }
-                /**接触节点和代办关联*/
+                /** 接触节点和代办关联 */
                 actAssigneeService.deleteByNodeId(nodeId);
             }
             repositoryService.deleteDeployment(id, true);
@@ -404,9 +388,6 @@ public class ActivitiController extends BaseController {
         return j;
     }
 
-    @Autowired
-    ActPropertiesConfig actPropertiesConfig;
-
     @GetMapping("shinePics/{processInstanceId}")
     public String shinePics(org.springframework.ui.Model model, @PathVariable String processInstanceId) {
         model.addAttribute("processInstanceId", processInstanceId);
@@ -416,7 +397,7 @@ public class ActivitiController extends BaseController {
     @GetMapping("getShineProcImage")
     @ResponseBody
     public JSONObject getShineProcImage(HttpServletRequest request, HttpServletResponse resp, String processInstanceId)
-            throws IOException {
+        throws IOException {
         JSONObject result = new JSONObject();
         JSONArray shineProImages = new JSONArray();
         InputStream imageStream = activitiService.generateStream(processInstanceId, true);
@@ -435,7 +416,6 @@ public class ActivitiController extends BaseController {
         }
 
         List<ActivitiProcess> taskSqu = activitiService.getTaskSqu(processInstanceId);
-
 
         result.put("id", UUID.randomUUID().toString());
         result.put("errorNo", 0);
@@ -462,6 +442,5 @@ public class ActivitiController extends BaseController {
         }
         return j;
     }
-
 
 }

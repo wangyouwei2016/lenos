@@ -80,7 +80,7 @@
                         <div style="margin-left: 20px;margin-top:5px">
                             <ul>
                                 <li style="display: inline-block;width: 50px;">
-                                    <i  id="menu-icon" class="layui-icon" style="font-size: 25px;">${sysMenu.icon}</i>
+                                    <i id="menu-icon" class="layui-icon" style="font-size: 25px;">${sysMenu.icon}</i>
                                 </li>
                                 <li style="display: inline-block;"><i class="layui-btn layui-btn-primary layui-btn-sm"
                                                                       id="select_icon">选择图标</i></li>
@@ -121,7 +121,7 @@
         $ = layui.jquery;
         var form = layui.form
             , layer = layui.layer, tree = layui.tree;
-        var menus =${menus};
+        var menus = ${menus};
         /*过滤掉按钮和兼容新版layui*/
         var convert = function (menus) {
             menus.find(function (v) {

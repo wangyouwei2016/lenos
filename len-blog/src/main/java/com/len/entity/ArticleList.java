@@ -2,9 +2,6 @@ package com.len.entity;
 
 import lombok.Data;
 
-import java.util.Date;
-
-
 @Data
 public class ArticleList {
 
@@ -22,16 +19,16 @@ public class ArticleList {
 
     private String content;
 
-    public ArticleList() {
-    }
+    public ArticleList() {}
 
-    public ArticleList(String id, String code, String title, Integer topNum, String createBy, String createDate,String content) {
+    public ArticleList(String id, String code, String title, Integer topNum, String createBy, String createDate,
+        String content) {
         this.id = id;
         this.code = code;
         this.title = title;
         this.topNum = topNum;
         this.createBy = createBy;
         this.createDate = createDate;
-        this.content=content;
+        this.content = content;
     }
 }

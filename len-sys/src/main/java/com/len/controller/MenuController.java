@@ -1,7 +1,6 @@
 package com.len.controller;
 
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,13 +24,12 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 /**
- *  菜单
+ * 菜单
  */
 @RequestMapping("/menu")
 @Controller
 @Api(value = "菜单管理", tags = "菜单业务处理")
 public class MenuController extends BaseController {
-
 
     private final MenuService menuService;
 

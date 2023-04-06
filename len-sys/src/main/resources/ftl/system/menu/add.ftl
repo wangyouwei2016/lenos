@@ -128,7 +128,7 @@
         $ = layui.jquery;
         var form = layui.form
             , layer = layui.layer, tree = layui.tree;
-        var menus =${menus};
+        var menus = ${menus};
         /*过滤掉按钮和兼容新版layui*/
         var convert = function (menus) {
             menus.find(function (v) {
@@ -270,7 +270,8 @@
     function callback(id) {
         $('#layui-layer-iframe1').contents().find('#menu-icon').val(id);
     }
-    window.memuCallback=function(id){
+
+    window.memuCallback = function (id) {
         debugger
         callback(id)
     };

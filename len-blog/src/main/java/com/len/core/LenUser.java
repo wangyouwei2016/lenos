@@ -1,11 +1,11 @@
 package com.len.core;
 
-import com.len.util.JWTUtil;
-import com.len.util.Principal;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.subject.Subject;
 
+import com.len.util.JWTUtil;
+import com.len.util.Principal;
 
 public class LenUser {
     public static Principal getPrincipal() {

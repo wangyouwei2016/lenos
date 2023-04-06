@@ -1,11 +1,10 @@
 package com.len.entity;
 
+import java.util.Date;
+
 import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-
-import java.util.Date;
 
 @TableName(value = "sys_log")
 public class SysLog {

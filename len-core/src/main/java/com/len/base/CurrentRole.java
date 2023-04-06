@@ -3,20 +3,16 @@ package com.len.base;
 import java.io.Serializable;
 
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
-
 
 @Data
 public class CurrentRole implements Serializable {
 
-    /**  
-	 * @Fields serialVersionUID : TODO(用一句话描述这个变量表示什么)  
-	 */
-	private static final long serialVersionUID = 1L;
+    /**
+     * @Fields serialVersionUID : TODO(用一句话描述这个变量表示什么)
+     */
+    private static final long serialVersionUID = 1L;
 
-	private String id;
+    private String id;
 
     private String roleName;
 
@@ -28,6 +24,5 @@ public class CurrentRole implements Serializable {
         this.remark = remark;
     }
 
-    public CurrentRole() {
-    }
+    public CurrentRole() {}
 }

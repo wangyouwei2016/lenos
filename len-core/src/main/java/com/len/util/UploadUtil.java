@@ -1,10 +1,10 @@
 package com.len.util;
 
-import com.len.exception.LenException;
-import com.len.exception.ServiceException;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import java.io.File;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.UUID;
+
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,14 +12,14 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.UUID;
+import com.len.exception.ServiceException;
+
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
- * Created by meng on 2018/5/8.
- * 文件上传工具类
+ * Created by meng on 2018/5/8. 文件上传工具类
  */
 @Getter
 @Setter
@@ -27,6 +27,7 @@ import java.util.UUID;
 @Component
 public class UploadUtil {
 
+    public static final String IMAGE_SUFFIX = "bmp,jpg,png,gif,jpeg";
     /**
      * 按照当日创建文件夹
      */
@@ -37,15 +38,10 @@ public class UploadUtil {
      */
     @Value("${lenosp.uploadPath}")
     private String uploadPath;
-
     @Value("${lenosp.imagePath}")
     private String imagePath;
 
-    public static final String IMAGE_SUFFIX = "bmp,jpg,png,gif,jpeg";
-
-
-    public UploadUtil() {
-    }
+    public UploadUtil() {}
 
     public String upload(MultipartFile multipartFile) {
         if (isNull(multipartFile)) {
@@ -84,15 +80,14 @@ public class UploadUtil {
         }
         if (!flag) {
             String suffix = curr.substring(suffixLen);
-            index = Arrays.binarySearch(IMAGE_SUFFIX.split(","),
-                    suffix.replace(".", ""));
+            index = Arrays.binarySearch(IMAGE_SUFFIX.split(","), suffix.replace(".", ""));
             curr = UUID.randomUUID() + suffix;
         }
         LoadType loadType = new LoadType();
         loadType.setFileName(curr);
-        //image 情况
-        curr = StringUtils.isEmpty(imagePath) || index == -1 ?
-                uploadPath + File.separator + curr : imagePath + File.separator + curr;
+        // image 情况
+        curr = StringUtils.isEmpty(imagePath) || index == -1 ? uploadPath + File.separator + curr
+            : imagePath + File.separator + curr;
         loadType.setCurrentFile(new File(curr));
         return loadType;
     }

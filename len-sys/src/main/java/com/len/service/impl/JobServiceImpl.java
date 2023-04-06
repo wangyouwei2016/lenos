@@ -1,5 +1,8 @@
 package com.len.service.impl;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.len.base.impl.BaseServiceImpl;
 import com.len.core.quartz.JobTask;
 import com.len.entity.SysJob;
@@ -10,9 +13,8 @@ import com.len.service.JobService;
 import com.len.util.BeanUtil;
 import com.len.util.MsHelper;
 import com.len.validator.ValidatorUtils;
+
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 /**
  * 任务 service
@@ -26,7 +28,6 @@ public class JobServiceImpl extends BaseServiceImpl<SysJobMapper, SysJob> implem
 
     @Autowired
     JobTask jobTask;
-
 
     @Override
     public boolean updateJob(SysJob job) {

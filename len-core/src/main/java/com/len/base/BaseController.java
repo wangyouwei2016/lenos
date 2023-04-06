@@ -25,9 +25,13 @@ import com.len.util.MsHelper;
 
 import lombok.extern.slf4j.Slf4j;
 
-
 @Slf4j
 public abstract class BaseController {
+
+    private static boolean isAjaxRequest(HttpServletRequest request) {
+        String requestedWith = request.getHeader("x-requested-with");
+        return requestedWith != null && requestedWith.equalsIgnoreCase("XMLHttpRequest");
+    }
 
     @InitBinder
     protected void initBinder(WebDataBinder binder) {
@@ -78,11 +82,6 @@ public abstract class BaseController {
         } catch (IOException e1) {
             e1.printStackTrace();
         }
-    }
-
-    private static boolean isAjaxRequest(HttpServletRequest request) {
-        String requestedWith = request.getHeader("x-requested-with");
-        return requestedWith != null && requestedWith.equalsIgnoreCase("XMLHttpRequest");
     }
 
     public LenResponse resp(boolean flag, String msg) {

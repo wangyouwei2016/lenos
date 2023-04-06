@@ -2,9 +2,6 @@ package com.len.core.shiro;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-import lombok.extern.slf4j.Slf4j;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.ExcessiveAttemptsException;
@@ -13,6 +10,7 @@ import org.apache.shiro.cache.Cache;
 import org.apache.shiro.cache.CacheManager;
 
 import cn.hutool.core.util.StrUtil;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * 验证器，增加了登录次数校验功能 限制尝试登陆次数,防止暴力破解
@@ -23,10 +21,6 @@ public class RetryLimitCredentialsMatcher extends HashedCredentialsMatcher {
     private Cache<String, AtomicInteger> loginRetryCache;
 
     private int maxRetryCount = 5;
-
-    public void setMaxRetryCount(int maxRetryCount) {
-        this.maxRetryCount = maxRetryCount;
-    }
 
     public RetryLimitCredentialsMatcher() {}
 
@@ -42,6 +36,10 @@ public class RetryLimitCredentialsMatcher extends HashedCredentialsMatcher {
 
     public RetryLimitCredentialsMatcher(CacheManager cacheManager) {
         this(cacheManager, 5);
+    }
+
+    public void setMaxRetryCount(int maxRetryCount) {
+        this.maxRetryCount = maxRetryCount;
     }
 
     @Override

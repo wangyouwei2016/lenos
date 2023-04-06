@@ -4,30 +4,24 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Map;
-import javax.servlet.Filter;
-import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
+
+import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 @WebFilter("/service/*")
 @Slf4j
 public class JsonpCallbackFilter implements Filter {
 
-    public void init(FilterConfig fConfig) throws ServletException {
-    }
+    public void init(FilterConfig fConfig) throws ServletException {}
 
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        HttpServletRequest httpRequest = (HttpServletRequest) request;
-        HttpServletResponse httpResponse = (HttpServletResponse) response;
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+        throws IOException, ServletException {
+        HttpServletRequest httpRequest = (HttpServletRequest)request;
+        HttpServletResponse httpResponse = (HttpServletResponse)response;
 
         Map<String, String[]> parms = httpRequest.getParameterMap();
 
@@ -41,7 +35,7 @@ public class JsonpCallbackFilter implements Filter {
 
             chain.doFilter(request, wrapper);
 
-            //handles the content-size truncation
+            // handles the content-size truncation
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
             outputStream.write(new String(parms.get("callback")[0] + "(").getBytes());
             outputStream.write(wrapper.getData());
@@ -60,6 +54,5 @@ public class JsonpCallbackFilter implements Filter {
         }
     }
 
-    public void destroy() {
-    }
+    public void destroy() {}
 }

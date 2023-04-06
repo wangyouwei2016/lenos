@@ -1,5 +1,17 @@
 package com.len.controller;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.authc.UnknownAccountException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.len.entity.SysRole;
 import com.len.entity.SysRoleUser;
@@ -10,19 +22,9 @@ import com.len.service.SysUserService;
 import com.len.util.JWTUtil;
 import com.len.util.LenResponse;
 import com.len.util.Md5Util;
+
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.shiro.authc.UnknownAccountException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  */
@@ -45,7 +47,6 @@ public class AuthController {
 
     @Value("${len-blog.roles}")
     private List<String> roles;
-
 
     @ApiOperation(value = "/blogLogin", httpMethod = "POST", notes = "登录method")
     @PostMapping(value = "/blogLogin")
@@ -72,10 +73,7 @@ public class AuthController {
         if (sysRoleUsers.isEmpty()) {
             throw new UnknownAccountException("权限不足");
         }
-        List<String> roleList = sysRoleUsers
-                .stream()
-                .map(SysRoleUser::getRoleId)
-                .collect(Collectors.toList());
+        List<String> roleList = sysRoleUsers.stream().map(SysRoleUser::getRoleId).collect(Collectors.toList());
 
         QueryWrapper<SysRole> roleQueryWrapper = new QueryWrapper<>();
         roleQueryWrapper.in("id", roleList);
@@ -88,11 +86,9 @@ public class AuthController {
         if (isBlogAdmin == 0) {
             throw new UnknownAccountException("权限不足");
         }
-        List<String> roleNames = sysRoles
-                .stream()
-                .map(SysRole::getRoleName)
-                .collect(Collectors.toList());
+        List<String> roleNames = sysRoles.stream().map(SysRole::getRoleName).collect(Collectors.toList());
 
-        return new LenResponse(true, JWTUtil.sign(sysUser.getUsername(), sysUser.getId(), roleNames, sysUser.getPassword()), 200);
+        return new LenResponse(true,
+            JWTUtil.sign(sysUser.getUsername(), sysUser.getId(), roleNames, sysUser.getPassword()), 200);
     }
 }

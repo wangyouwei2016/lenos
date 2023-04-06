@@ -1,14 +1,13 @@
 package com.len.service;
 
+import java.util.Date;
+import java.util.List;
+
 import com.len.base.BaseService;
 import com.len.entity.ArticleDetail;
 import com.len.entity.BlogArticle;
 import com.len.model.Article;
 import com.len.util.LenResponse;
-
-import java.util.Date;
-import java.util.List;
-
 
 public interface BlogArticleService extends BaseService<BlogArticle> {
 

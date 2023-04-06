@@ -6,7 +6,6 @@ import com.alibaba.fastjson.JSONArray;
 import com.len.base.BaseService;
 import com.len.entity.SysMenu;
 
-
 public interface MenuService extends BaseService<SysMenu> {
 
     /**

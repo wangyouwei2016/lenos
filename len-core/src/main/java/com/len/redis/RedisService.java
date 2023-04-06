@@ -1,15 +1,14 @@
 package com.len.redis;
 
+import java.util.concurrent.TimeUnit;
+
+import javax.annotation.Resource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
-import org.springframework.stereotype.Service;
-
-import javax.annotation.Resource;
-import java.util.concurrent.TimeUnit;
-
 
 // @Service
 public class RedisService<T> {
