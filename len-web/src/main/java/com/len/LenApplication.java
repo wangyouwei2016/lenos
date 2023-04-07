@@ -22,6 +22,7 @@ public class LenApplication {
     public static void main(String[] args) {
         SpringApplication.run(LenApplication.class, args);
         System.out.println("Server start succ");
+        // 没啥意思，我就是想加个注释
     }
 
 }
