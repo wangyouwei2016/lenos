@@ -802,13 +802,16 @@ class NeuQuant {
 
     /* defs for freq and bias */
     protected static final int intbiasshift = 16; /* bias for fractions */
-
+    
+    protected static final int betashift = 10;
+    protected static final int gammashift = 10; /* gamma = 1024 */
+    
     protected static final int intbias = (((int)1) << intbiasshift);
     protected static final int beta = (intbias >> betashift); /* beta = 1/1024 */
     protected static final int betagamma = (intbias << (gammashift - betashift));
-    protected static final int gammashift = 10; /* gamma = 1024 */
+    
     protected static final int gamma = (((int)1) << gammashift);
-    protected static final int betashift = 10;
+    
     /* defs for decreasing radius factor */
     protected static final int initrad = (netsize >> 3); /*
                                                            * for 256 cols, radius
