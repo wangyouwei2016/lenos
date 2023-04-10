@@ -14,10 +14,16 @@ import com.len.util.CustomUsernamePasswordToken;
 import com.len.util.JwtToken;
 
 /**
- * 多模块认证
+ * shiro多模块认证
  */
-public class MyModularRealmAuthenticator extends ModularRealmAuthenticator {
+public class LenModularRealmAuthenticator extends ModularRealmAuthenticator {
 
+    /**
+     * 验证
+     *
+     * @param authenticationToken 身份令牌
+     * @return 身份信息
+     */
     @Override
     protected AuthenticationInfo doAuthenticate(AuthenticationToken authenticationToken)
         throws AuthenticationException {

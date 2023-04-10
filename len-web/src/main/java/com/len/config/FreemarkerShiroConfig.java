@@ -7,6 +7,10 @@ import org.springframework.stereotype.Component;
 import com.jagregory.shiro.freemarker.ShiroTags;
 import com.len.freemarker.LenInclude;
 
+/**
+ * freemarker设置shiro变量
+ */
+
 @Component
 public class FreemarkerShiroConfig implements InitializingBean {
 
@@ -15,7 +19,9 @@ public class FreemarkerShiroConfig implements InitializingBean {
 
     @Override
     public void afterPropertiesSet() throws Exception {
+        // 支持shiro标签
         configuration.setSharedVariable("shiro", new ShiroTags());
+        // 支持lenInclude标签
         configuration.setSharedVariable("lenInclude", new LenInclude());
     }
 }
