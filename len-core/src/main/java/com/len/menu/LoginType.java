@@ -2,11 +2,19 @@ package com.len.menu;
 
 public enum LoginType {
 
-    BLOG("BlogLogin"), SYS("UserLogin");
+    /**
+     * blog
+     */
+    BLOG("BlogLogin"),
+
+    /**
+     * admin
+     */
+    SYS("UserLogin");
 
     private String type;
 
-    private LoginType(String type) {
+    LoginType(String type) {
         this.type = type;
     }
 

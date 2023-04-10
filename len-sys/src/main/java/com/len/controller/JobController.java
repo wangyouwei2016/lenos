@@ -40,17 +40,30 @@ public class JobController extends BaseController {
         this.jobTask = jobTask;
     }
 
+    /**
+     * 跳转到 任务列表
+     * 
+     * @return path
+     */
     @GetMapping(value = "showJob")
     @RequiresPermissions("job:show")
-    public String showUser(Model model) {
+    public String showUser() {
         return "/system/job/jobList";
     }
 
+    /**
+     * 任务列表
+     * 
+     * @param job 条件
+     * @param page page
+     * @param limit limit
+     * @return job list
+     */
     @GetMapping(value = "showJobList")
     @ResponseBody
     @RequiresPermissions("job:show")
-    public ReType showUser(SysJob job, String page, String limit) {
-        return jobService.show(job, Integer.parseInt(page), Integer.parseInt(limit));
+    public ReType showUser(SysJob job, int page, int limit) {
+        return jobService.show(job, page, limit);
     }
 
     @GetMapping(value = "showAddJob")

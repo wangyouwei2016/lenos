@@ -9,9 +9,7 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.ExcessiveAttemptsException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
-import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,7 +19,7 @@ import com.len.core.annotation.Log;
 import com.len.core.shiro.Principal;
 import com.len.entity.SysUser;
 import com.len.menu.LoginType;
-import com.len.service.SysUserService;
+import com.len.service.AdminLoginService;
 import com.len.util.CustomUsernamePasswordToken;
 import com.len.util.MsHelper;
 import com.len.util.VerifyCodeUtils;
@@ -39,21 +37,17 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Controller
 @Slf4j
-@Api(value = "登录业务", tags = "登录校验处理")
+@Api(value = "登录业务", tags = "登录业务")
 public class LoginController {
 
     private static final String CODE_ERROR = "code.error";
     private static final String CODE_TIMEOUT = "code.timeout";
     private static final Long TWO_WEEK = 1000 * 60 * 60 * 24 * 14L;
-    SysUserService userService;
-    /**
-     * spring在4.x版本后推荐使用构造器的方式的来注入fileld； Spring4.3+之后，constructor注入支持非显示注入方式。 下方的@Autowired就已经可以去掉了
-     *
-     * @param userService
-     */
-    @Autowired
-    public LoginController(SysUserService userService) {
-        this.userService = userService;
+
+    private final AdminLoginService adminLoginService;
+
+    public LoginController(AdminLoginService adminLoginService) {
+        this.adminLoginService = adminLoginService;
     }
 
     @GetMapping(value = "")
@@ -75,7 +69,6 @@ public class LoginController {
     @GetMapping(value = "/login")
     public String toLogin() {
         Subject sub = SecurityUtils.getSubject();
-        Session session = sub.getSession();
         if (sub.isAuthenticated() || sub.isRemembered()) {
             return "/main/main";
         }
@@ -87,12 +80,11 @@ public class LoginController {
      *
      * @param user
      * @param model
-     * @param rememberMe
      * @return
      */
-    @ApiOperation(value = "/login", httpMethod = "POST", notes = "登录method")
+    @ApiOperation(value = "/login", httpMethod = "POST", notes = "登录接口")
     @PostMapping("/login")
-    public String login(SysUser user, Model model, String rememberMe, HttpServletRequest request) {
+    public String login(SysUser user, Model model, HttpServletRequest request) {
         /* String codeMsg = (String) request.getAttribute("shiroLoginFailure");
         if (CODE_ERROR.equals(codeMsg)) {
             model.addAttribute("message", "验证码错误");
@@ -109,12 +101,9 @@ public class LoginController {
             subject.login(token);
             if (subject.isAuthenticated()) {
                 String isRemember = request.getParameter("isRemember");
-                if (!StringUtils.isEmpty(isRemember)) {
-                    if ("true".equals(isRemember)) {
-                        subject.getSession().setTimeout(TWO_WEEK);
-                    }
+                if (!StringUtils.isEmpty(isRemember) && "true".equals(isRemember)) {
+                    subject.getSession().setTimeout(TWO_WEEK);
                 }
-
                 return "redirect:/main";
             }
         } catch (UnknownAccountException | IncorrectCredentialsException e) {
@@ -136,13 +125,18 @@ public class LoginController {
     @Log(desc = "用户退出平台")
     @GetMapping(value = "/logout")
     public String logout() {
-        Subject sub = SecurityUtils.getSubject();
-        sub.logout();
+        adminLoginService.logout();
         return "/login2";
     }
 
+    /**
+     * 获取验证码
+     * 
+     * @param response
+     * @param request
+     */
     @GetMapping(value = "/getCode")
-    public void getYzm(HttpServletResponse response, HttpServletRequest request) {
+    public void getVerityCode(HttpServletResponse response, HttpServletRequest request) {
         try {
             response.setHeader("Pragma", "No-cache");
             response.setHeader("Cache-Control", "no-cache");

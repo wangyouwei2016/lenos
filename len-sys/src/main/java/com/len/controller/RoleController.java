@@ -38,12 +38,9 @@ public class RoleController extends BaseController {
 
     private final MenuService menuService;
 
-    private final RoleMenuService roleMenuService;
-
-    public RoleController(RoleService roleService, MenuService menuService, RoleMenuService roleMenuService) {
+    public RoleController(RoleService roleService, MenuService menuService) {
         this.roleService = roleService;
         this.menuService = menuService;
-        this.roleMenuService = roleMenuService;
     }
 
     @GetMapping(value = "showRole")
@@ -56,8 +53,8 @@ public class RoleController extends BaseController {
     @GetMapping(value = "showRoleList")
     @ResponseBody
     @RequiresPermissions("role:show")
-    public ReType showRoleList(SysRole role, String page, String limit) {
-        return roleService.show(role, Integer.valueOf(page), Integer.valueOf(limit));
+    public ReType showRoleList(SysRole role, int page, int limit) {
+        return roleService.show(role, page, limit);
     }
 
     @ApiOperation(value = "/showaLLRoleList", httpMethod = "GET", notes = "展示角色")

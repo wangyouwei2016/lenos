@@ -41,23 +41,23 @@ public class LogController extends BaseController {
     /**
      * 日志监控
      *
-     * @param sysLog
-     * @param page
-     * @param limit
-     * @return
+     * @param sysLog 条件
+     * @param page page
+     * @param limit limit
+     * @return log list
      */
     @GetMapping(value = "showLogList")
     @ResponseBody
-    public ReType showLog(SysLog sysLog, String page, String limit) {
-        Page<SysLog> tPage = PageHelper.startPage(Integer.valueOf(page), Integer.valueOf(limit));
+    public ReType showLog(SysLog sysLog, int page, int limit) {
+        Page<SysLog> tPage = PageHelper.startPage(page, limit);
         return new ReType(tPage.getTotal(), logMapper.selectListByPage(sysLog));
     }
 
     /**
      * 删除log
      *
-     * @param
-     * @return
+     * @param ids 日志id列表
+     * @return success
      */
     @PostMapping(value = "del")
     @ResponseBody
