@@ -68,6 +68,13 @@ public class MenuController extends BaseController {
         return succ(MsHelper.getMsg("insert.success"));
     }
 
+    /**
+     * 显示更新菜单信息
+     * 
+     * @param model
+     * @param id
+     * @return
+     */
     @GetMapping(value = "showUpdateMenu")
     public String showUpdateMenu(Model model, String id) {
         SysMenu sysMenu = menuService.getById(id);
@@ -81,6 +88,12 @@ public class MenuController extends BaseController {
         return "/system/menu/update";
     }
 
+    /**
+     * 更新菜单
+     * 
+     * @param sysMenu
+     * @return
+     */
     @Log(desc = "更新菜单", type = LOG_TYPE.ADD)
     @PostMapping(value = "updateMenu")
     @ResponseBody
@@ -91,6 +104,12 @@ public class MenuController extends BaseController {
         return succ(MsHelper.getMsg("update.success"));
     }
 
+    /**
+     * 删除菜单
+     * 
+     * @param id 菜单id
+     * @return
+     */
     @Log(desc = "删除菜单", type = LOG_TYPE.DEL)
     @PostMapping("del")
     @ResponseBody

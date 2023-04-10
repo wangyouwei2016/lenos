@@ -19,9 +19,12 @@ import com.len.util.MsHelper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
+/**
+ * 个人资料
+ */
 @Controller
 @RequestMapping("/person")
-@Api(value = "个人业务", tags = "个人业务处理")
+@Api(value = "个人资料", tags = "个人资料")
 public class PersonController extends BaseController {
 
     private final SysUserService userService;
@@ -30,6 +33,12 @@ public class PersonController extends BaseController {
         this.userService = userService;
     }
 
+    /**
+     * 跳转到个人资料
+     * 
+     * @param model
+     * @return
+     */
     @GetMapping()
     public String toPerson(Model model) {
         CurrentUser principal = Principal.getPrincipal();
@@ -42,6 +51,12 @@ public class PersonController extends BaseController {
         return "/system/person/me";
     }
 
+    /**
+     * 更新个人资料
+     * 
+     * @param user 用户信息
+     * @return success
+     */
     @ApiOperation(value = "/updateUser", httpMethod = "POST", notes = "更新用户")
     @Log(desc = "更新用户", type = Log.LOG_TYPE.UPDATE)
     @PostMapping(value = "updateUser")

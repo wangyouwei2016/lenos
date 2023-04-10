@@ -8,10 +8,13 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
@@ -21,7 +24,12 @@ import com.len.core.annotation.Log.LOG_TYPE;
 import com.len.entity.SysUser;
 import com.len.exception.ServiceException;
 import com.len.service.SysUserService;
-import com.len.util.*;
+import com.len.util.Checkbox;
+import com.len.util.FileUtil;
+import com.len.util.LenResponse;
+import com.len.util.MsHelper;
+import com.len.util.ReType;
+import com.len.util.UploadUtil;
 import com.len.validator.ValidatorUtils;
 import com.len.validator.group.AddGroup;
 
@@ -58,6 +66,14 @@ public class UserController extends BaseController {
         return "/system/user/userList";
     }
 
+    /**
+     * 用户列表
+     * 
+     * @param user 条件
+     * @param page page
+     * @param limit limit
+     * @return user list
+     */
     @GetMapping(value = "showUserList")
     @ResponseBody
     @RequiresPermissions("user:show")
@@ -66,19 +82,33 @@ public class UserController extends BaseController {
         return show;
     }
 
+    /**
+     * 审批流定义 根据角色展示用户信息
+     * 
+     * @param roleId 角色id
+     * @param page 当前页
+     * @param limit 数量
+     * @return role user
+     */
     @ApiOperation(value = "/listByRoleId", httpMethod = "GET", notes = "展示角色")
     @GetMapping(value = "listByRoleId")
     @ResponseBody
     @RequiresPermissions("user:show")
-    public String showUser(String roleId, int page, int limit) {
+    public JSONObject showUser(String roleId, int page, int limit) {
         JSONObject returnValue = new JSONObject();
         Page<Object> startPage = PageHelper.startPage(page, limit);
         List<SysUser> users = userService.getUserByRoleId(roleId);
         returnValue.put("users", users);
         returnValue.put("totals", startPage.getTotal());
-        return JSON.toJSONString(returnValue);
+        return returnValue;
     }
 
+    /**
+     * 跳转到添加用户界面
+     * 
+     * @param model
+     * @return add user path
+     */
     @GetMapping(value = "showAddUser")
     public String goAddUser(Model model) {
         List<Checkbox> checkboxList = userService.getUserRoleList(null);
@@ -102,7 +132,7 @@ public class UserController extends BaseController {
     @GetMapping(value = "updateUser")
     public String goUpdateUser(String id, Model model, boolean detail) {
         ValidatorUtils.notEmpty(id, "failed.get.data");
-        // 用户-角色
+        // 用户 角色
         SysUser user = userService.getById(id);
         if (user != null) {
             String photo = user.getPhoto();
@@ -113,14 +143,6 @@ public class UserController extends BaseController {
         model.addAttribute("user", user);
         model.addAttribute("boxJson", userService.getUserRoleList(id));
         model.addAttribute("detail", detail);
-        return "system/user/update";
-    }
-
-    public String userDetail(String id, Model model) {
-        List<Checkbox> checkboxList = userService.getUserRoleList(id);
-        SysUser user = userService.getById(id);
-        model.addAttribute("user", user);
-        model.addAttribute("boxJson", checkboxList);
         return "system/user/update";
     }
 
@@ -155,11 +177,11 @@ public class UserController extends BaseController {
     }
 
     /**
-     * 修改密码
+     * 修改密码(存在漏洞)
      *
-     * @param id
-     * @param newPwd
-     * @return
+     * @param userId 用户id
+     * @param newPwd 用户新密码
+     * @return success or fail
      */
     @Log(desc = "修改密码", type = LOG_TYPE.UPDATE)
     @PostMapping(value = "rePass")
@@ -171,7 +193,7 @@ public class UserController extends BaseController {
     }
 
     /**
-     * 头像上传 目前首先相对路径
+     * 头像上传 默认相对路径
      */
     @PostMapping(value = "upload")
     @ResponseBody

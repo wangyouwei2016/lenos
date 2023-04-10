@@ -4,7 +4,12 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.len.base.BaseController;
 import com.len.entity.SysPanelOpt;
@@ -14,6 +19,9 @@ import com.len.util.LenResponse;
 
 import io.swagger.annotations.Api;
 
+/**
+ * 仪表盘
+ */
 @Controller
 @RequestMapping("/dashboard")
 @Api(value = "仪表盘", tags = "仪表盘")
@@ -28,6 +36,11 @@ public class DashboardController extends BaseController {
         this.dashboardService = dashboardService;
     }
 
+    /**
+     * 面板列表
+     * 
+     * @return
+     */
     @GetMapping("/panel/list")
     @ResponseBody
     public LenResponse paneList() {
