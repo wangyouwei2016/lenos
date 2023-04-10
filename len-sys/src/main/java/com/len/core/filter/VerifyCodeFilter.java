@@ -11,7 +11,7 @@ import org.apache.shiro.web.filter.AccessControlFilter;
 /**
  * 验证码拦截
  */
-public class VerfityCodeFilter extends AccessControlFilter {
+public class VerifyCodeFilter extends AccessControlFilter {
     /**
      * 是否开启验证码验证 默认true
      */

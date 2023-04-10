@@ -12,9 +12,13 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
+/**
+ * 集成swagger 配置
+ */
 @Configuration
 @EnableSwagger2
 public class SwaggerConfig {
+
     @Bean
     public Docket createRestApi() {
         return new Docket(DocumentationType.SWAGGER_2).apiInfo(apiInfo()).select()
@@ -24,7 +28,7 @@ public class SwaggerConfig {
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder().title("Swagger接口列表").description("接口")
             .termsOfServiceUrl("http://localhost:8081/swagger-ui.html")
-            .contact(new Contact("zxm", "http://www.lenosp.xyz", "")).version("1.1.0").build();
+            .contact(new Contact("zxm", "http://www.lenosp.top", "")).version("1.1.0").build();
     }
 
 }

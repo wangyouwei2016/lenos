@@ -13,11 +13,16 @@ import org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver;
 import freemarker.template.TemplateException;
 
 /**
- * freemarker 配置类
+ * freemarker 配置
  */
 @Configuration
 public class FreeMarkerConfig {
 
+    /**
+     * 支持ftl 后缀视图解析配置
+     * 
+     * @return ViewResolver
+     */
     @Bean
     public ViewResolver viewResolverFtl() {
         FreeMarkerViewResolver resolver = new FreeMarkerViewResolver();
@@ -32,6 +37,12 @@ public class FreeMarkerConfig {
         return resolver;
     }
 
+
+    /**
+     * 支持html 后缀视图解析配置
+     *
+     * @return ViewResolver
+     */
     @Bean
     public ViewResolver viewResolverHtml() {
         FreeMarkerViewResolver resolver = new FreeMarkerViewResolver();
@@ -46,10 +57,17 @@ public class FreeMarkerConfig {
         return resolver;
     }
 
+    /**
+     * freemarker 主要配置类
+     *
+     * @return FreeMarkerConfigurer
+     */
     @Bean
     public FreeMarkerConfigurer freemarkerConfig() throws IOException, TemplateException {
         FreeMarkerConfigurationFactory factory = new FreeMarkerConfigurationFactory();
+        //路径前缀
         factory.setTemplateLoaderPath("classpath:/ftl/");
+        //编码
         factory.setDefaultEncoding("UTF-8");
         factory.setPreferFileSystemAccess(false);
         FreeMarkerConfigurer result = new FreeMarkerConfigurer();

@@ -11,7 +11,10 @@ import org.apache.shiro.web.util.WebUtils;
 import com.len.menu.LoginType;
 import com.len.util.JwtToken;
 
-public class MyBasicHttpAuthenticationFilter extends BasicHttpAuthenticationFilter {
+/**
+ * 博客权限拦截器
+ */
+public class JwtBasicHttpAuthenticationFilter extends BasicHttpAuthenticationFilter {
 
     @Override
     protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) {

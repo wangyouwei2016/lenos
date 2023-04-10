@@ -1,6 +1,10 @@
 package com.len.config;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.Filter;
 
@@ -25,15 +29,15 @@ import org.springframework.web.filter.DelegatingFilterProxy;
 import com.len.cache.CacheManagerFactory;
 import com.len.cache.impl.config.LenProp;
 import com.len.core.BlogRealm;
-import com.len.core.MyBasicHttpAuthenticationFilter;
+import com.len.core.JwtBasicHttpAuthenticationFilter;
 import com.len.core.filter.PermissionFilter;
-import com.len.core.filter.VerfityCodeFilter;
+import com.len.core.filter.VerifyCodeFilter;
 import com.len.core.shiro.LoginRealm;
 import com.len.core.shiro.RetryLimitCredentialsMatcher;
 import com.len.menu.LoginType;
 
 /**
- * 添加redis缓存，支持集群 默认redis缓存，如果单机配置可放开下面 ehcache
+ * shiro 配置 添加redis缓存，支持集群 默认redis缓存，如果单机配置可放开下面 ehcache
  */
 @Configuration
 public class ShiroConfig {
@@ -44,22 +48,36 @@ public class ShiroConfig {
         sessionCache = LenProp.getSessionCache();
     }
 
+    /**
+     * 利用spring 初始化 realm
+     * 
+     * @return
+     */
     @Bean
     public static LifecycleBeanPostProcessor getLifecycleBeanPostProcessor() {
         return new LifecycleBeanPostProcessor();
     }
 
+    /**
+     * redis 储存session配置
+     * 
+     * @return redisSessionDAO
+     */
     private static RedisSessionDAO redisSessionDAO() {
         RedisSessionDAO redisSessionDAO = new RedisSessionDAO();
         redisSessionDAO.setRedisManager(CacheManagerFactory.getRedisManager());
         return redisSessionDAO;
     }
 
+    /**
+     * shiro 默认会话管理器
+     * 
+     * @return
+     */
     public static DefaultWebSessionManager getDefaultWebSessionManager() {
         DefaultWebSessionManager defaultWebSessionManager = new DefaultWebSessionManager();
         defaultWebSessionManager.setSessionIdCookieEnabled(true);
         defaultWebSessionManager.setGlobalSessionTimeout(21600000);
-        // defaultWebSessionManager.setGlobalSessionTimeout(10000L);
         defaultWebSessionManager.setDeleteInvalidSessions(true);
         defaultWebSessionManager.setSessionValidationSchedulerEnabled(true);
         defaultWebSessionManager.setSessionIdUrlRewritingEnabled(false);
@@ -68,9 +86,9 @@ public class ShiroConfig {
     }
 
     /**
-     * session 储存对象
+     * 可配置化 session储存
      *
-     * @return
+     * @return sessionDAO
      */
     private static SessionDAO sessionDao() {
         SessionDAO sessionDAO;
@@ -84,6 +102,11 @@ public class ShiroConfig {
         return sessionDAO;
     }
 
+    /**
+     * 凭证
+     * 
+     * @return
+     */
     public RetryLimitCredentialsMatcher getRetryLimitCredentialsMatcher() {
         RetryLimitCredentialsMatcher rm = new RetryLimitCredentialsMatcher(CacheManagerFactory.getCacheManager());
         rm.setHashAlgorithmName("md5");
@@ -92,65 +115,113 @@ public class ShiroConfig {
 
     }
 
-    @Bean(name = "userLoginRealm")
+    /**
+     * 自定义普通登录 realm
+     * 
+     * @return LoginRealm
+     */
+    @Bean(name = "loginRealm")
     public LoginRealm getLoginRealm() {
         LoginRealm realm = new LoginRealm();
         realm.setCredentialsMatcher(getRetryLimitCredentialsMatcher());
         return realm;
     }
 
+    /**
+     * 博客认证 realm
+     * 
+     * @return BlogRealm
+     */
     @Bean(name = "blogLoginRealm")
     public BlogRealm blogLoginRealm() {
         return new BlogRealm();
     }
 
+    /**
+     * 认证策略
+     * 
+     * @return AtLeastOneSuccessfulStrategy
+     */
     @Bean
     public AtLeastOneSuccessfulStrategy getAtLeastOneSuccessfulStrategy() {
         return new AtLeastOneSuccessfulStrategy();
     }
 
+    /**
+     * 多模块认证
+     * 
+     * @return
+     */
     @Bean
-    public MyModularRealmAuthenticator getMyModularRealmAuthenticator() {
-        MyModularRealmAuthenticator authenticator = new MyModularRealmAuthenticator();
+    public LenModularRealmAuthenticator getMyModularRealmAuthenticator() {
+        LenModularRealmAuthenticator authenticator = new LenModularRealmAuthenticator();
         authenticator.setAuthenticationStrategy(getAtLeastOneSuccessfulStrategy());
         return authenticator;
     }
 
+    /**
+     * SecurityManager 配置
+     * 
+     * @param loginRealm loginRealm
+     * @param blogLoginRealm blogLoginRealm
+     * @return
+     */
     @Bean(name = "securityManager")
-    public SecurityManager getSecurityManager(@Qualifier("userLoginRealm") LoginRealm loginRealm,
+    public SecurityManager getSecurityManager(@Qualifier("loginRealm") LoginRealm loginRealm,
         @Qualifier("blogLoginRealm") BlogRealm blogLoginRealm) {
-        DefaultWebSecurityManager dwm = new DefaultWebSecurityManager();
+        DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         List<Realm> loginRealms = new ArrayList<>();
-        dwm.setAuthenticator(getMyModularRealmAuthenticator());
+        securityManager.setAuthenticator(getMyModularRealmAuthenticator());
         loginRealm.setName(LoginType.SYS.toString());
         blogLoginRealm.setName(LoginType.BLOG.toString());
         loginRealms.add(loginRealm);
         loginRealms.add(blogLoginRealm);
-        dwm.setRealms(loginRealms);
-        dwm.setCacheManager(CacheManagerFactory.getCacheManager());
-        dwm.setSessionManager(getDefaultWebSessionManager());
-        return dwm;
+        securityManager.setRealms(loginRealms);
+        securityManager.setCacheManager(CacheManagerFactory.getCacheManager());
+        securityManager.setSessionManager(getDefaultWebSessionManager());
+        return securityManager;
     }
 
+    /**
+     * 用户登录状态拦截器
+     * 
+     * @return PermissionFilter
+     */
     @Bean
     public PermissionFilter getPermissionFilter() {
         return new PermissionFilter();
     }
 
+    /**
+     * 博客登录状态拦截器
+     * 
+     * @return JwtBasicHttpAuthenticationFilter
+     */
     @Bean
-    public MyBasicHttpAuthenticationFilter getAuthenticationFilter() {
-        return new MyBasicHttpAuthenticationFilter();
+    public JwtBasicHttpAuthenticationFilter getAuthenticationFilter() {
+        return new JwtBasicHttpAuthenticationFilter();
     }
 
+    /**
+     * 验证码拦截
+     * 
+     * @return VerfityCodeFilter
+     */
     @Bean
-    public VerfityCodeFilter getVerfityCodeFilter() {
-        VerfityCodeFilter vf = new VerfityCodeFilter();
+    public VerifyCodeFilter getVerfityCodeFilter() {
+        VerifyCodeFilter vf = new VerifyCodeFilter();
         vf.setFailureKeyAttribute("shiroLoginFailure");
         vf.setJcaptchaParam("code");
         vf.setVerfitiCode(true);
         return vf;
     }
 
+    /**
+     * 注册 ShiroFilterFactoryBean
+     * 
+     * @param securityManager
+     * @return
+     */
     @Bean(name = "shiroFilter")
     public ShiroFilterFactoryBean
         getShiroFilterFactoryBean(@Qualifier("securityManager") SecurityManager securityManager) {
@@ -196,8 +267,13 @@ public class ShiroConfig {
         return as;
     }
 
+    /**
+     * shiro委托代理
+     * 
+     * @return filterRegistrationBean
+     */
     @Bean
-    public FilterRegistrationBean delegatingFilterProxy() {
+    public FilterRegistrationBean<?> delegatingFilterProxy() {
         FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean();
         DelegatingFilterProxy proxy = new DelegatingFilterProxy();
         proxy.setTargetFilterLifecycle(true);

@@ -39,6 +39,11 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
         converters.add(responseBodyConverter());
     }
 
+    /**
+     * 资源处理配置
+     * 
+     * @param registry
+     */
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/**").addResourceLocations("classpath:/META-INF/resources/").setCachePeriod(0);
@@ -52,7 +57,11 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
         super.addResourceHandlers(registry);
     }
 
-    /*保留国际化*/
+    /**
+     * 保留国际化
+     * 
+     * @return
+     */
     @Bean
     public LocaleChangeInterceptor interceptor() {
         LocaleChangeInterceptor interceptor = new LocaleChangeInterceptor();
@@ -60,10 +69,16 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
         return interceptor;
     }
 
+    /**
+     * 拦截器注册
+     * 
+     * @param registry
+     */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(interceptor());
     }
+
 
     @Bean
     public LocaleResolver resolver() {

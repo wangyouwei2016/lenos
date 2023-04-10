@@ -5,7 +5,11 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.shiro.authc.*;
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.AuthenticationInfo;
+import org.apache.shiro.authc.AuthenticationToken;
+import org.apache.shiro.authc.SimpleAuthenticationInfo;
+import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
@@ -23,6 +27,9 @@ import com.len.service.SysUserService;
 import com.len.util.BeanUtil;
 import com.len.util.JWTUtil;
 
+/**
+ * 普通登录 realm
+ */
 @Service
 public class LoginRealm extends AuthorizingRealm {
 
@@ -30,9 +37,17 @@ public class LoginRealm extends AuthorizingRealm {
     private SysUserService userService;
 
     /**
-     * 获取授权
+     * 启动初始化
+     */
+    @Override
+    protected void onInit() {
+        super.onInit();
+    }
+
+    /**
+     * 获取授权对象
      *
-     * @param principalCollection
+     * @param principalCollection 当前用户主体信息
      * @return
      */
     @Override
@@ -66,9 +81,8 @@ public class LoginRealm extends AuthorizingRealm {
     /**
      * 获取认证
      *
-     * @param authenticationToken
-     * @return
-     * @throws AuthenticationException
+     * @param authenticationToken 身份验证令牌
+     * @return AuthenticationInfo
      */
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken)
