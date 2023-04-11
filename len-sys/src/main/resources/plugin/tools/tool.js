@@ -46,9 +46,18 @@ var Len = {
         var extendTitle = Len.isEmpty(name) ? '' : '[<label style="color: #00AA91;">' + name + '</label>]';
         layer.confirm('确定删除' + extendTitle + '?', function () {
             if (Len.isFunction(callback)) {
-                Len.ajaxPost(url, {id: id}, callback);
+                Len.ajaxPost(url, {id: id}, callback).then(function(res) {
+                    // 处理成功回调
+                    // 可以根据res的返回结果进行相应处理
+                    Len.rbSuccess("删除成功");
+                    if (!Len.isEmpty(tableId)) {
+                        layui.table.reload(tableId);
+                    }
+                }).catch(function(error) {
+                    Len.rbError("删除失败：" + error.message,true);
+                });
             } else {
-                Len.ajaxPost(url, {id: id}, function (res) {
+                Len.ajaxPost(url, {id: id}).then(function (res) {
                     Len.rbSuccess("删除成功");
                     if (!Len.isEmpty(tableId)) {
                         layui.table.reload(tableId);
@@ -221,16 +230,20 @@ var Len = {
      * 通用post
      * @param url
      * @param data
-     * @param callback 回调
      */
-    ajaxPost: function (url, data, callback) {
-        $.ajax({
-            url: url,
-            type: "post",
-            data: data,
-            success: function (res) {
-                callback(res);
-            }
+    ajaxPost: function (url, data) {
+        return new Promise(function (resolve, reject) {
+            $.ajax({
+                url: url,
+                type: "post",
+                data: data,
+                success: function (res) {
+                    resolve(res);
+                },
+                error: function (error) {
+                    reject(error);
+                }
+            });
         });
     },
 

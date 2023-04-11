@@ -69,21 +69,15 @@
                         type: type
                     }
                 });
-            }
-            , del: function () {
+            }, del: function () {
                 var checkStatus = table.checkStatus('logList')
                     , data = checkStatus.data;
                 if (data.length === 0) {
                     layer.msg('请选择要删除的数据', {icon: 5});
                     return false;
                 }
-                var ids = [];
-                for (item in data) {
-                    ids.push(data[item].id);
-                }
-                del(ids);
-            }
-            , reload: function () {
+                del(data.map(item => item.id));
+            }, reload: function () {
                 $('#userName').val('');
                 $('#type').val('');
                 table.reload('logList', {

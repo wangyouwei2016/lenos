@@ -143,8 +143,8 @@
 
         tree.render({
             elem: '#tree',
-            nodes: menus
-            , click: function (node) {
+            nodes: menus,
+            click: function (node) {
                 var data = node.data;
                 $('#pId').val(data.id);
                 $('#pName').val(data.name);
@@ -159,7 +159,7 @@
                 shade: 0.4,
                 zIndex: layer.zIndex,
                 title: '图标',
-                content: '../plugin/html/icon.html?param.parentname=' + window.name,
+                content: '../plugin/html/icon.html?param.parentname=' + window.name
             });
         });
 

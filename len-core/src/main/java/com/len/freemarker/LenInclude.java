@@ -37,7 +37,7 @@ public class LenInclude implements TemplateDirectiveModel {
         if (templateLoader.findTemplateSource(templatePath) == null) {
             throw new _MiscTemplateException(String.format("未找到模板文件(Template file not found)[%s]", templatePath));
         }
-        HashMap paramMap = new HashMap<String, Object>(map);
+        HashMap<String, Object> paramMap = new HashMap<>(map);
         paramMap.remove(PATH);
         for (Object key : paramMap.keySet()) {
             TemplateModel templateModel = builder.build().wrap(map.get(key));
