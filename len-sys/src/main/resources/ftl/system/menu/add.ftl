@@ -125,25 +125,24 @@
 <#--js-->
 <script>
     layui.use(['form', 'layer', 'tree'], function () {
-        $ = layui.jquery;
-        var form = layui.form
-            , layer = layui.layer, tree = layui.tree;
+        var $ = layui.jquery,form = layui.form, layer = layui.layer, tree = layui.tree;
         var menus = ${menus};
         /*过滤掉按钮和兼容新版layui*/
         var convert = function (menus) {
-            menus.find(function (v) {
-                v['title'] = v.name;
+            menus.forEach(function (v) {
+                v.title = v.name;
                 if (v.children.length > 0) {
                     var isButton = v.children[0].menuType === 1;
                     if (isButton) {
                         v.children = [];
                     } else {
-                        convert(v.children);
+                        convert(v.children); //递归调用 convert 函数处理子菜单
                     }
                 }
             });
         };
         convert(menus);
+
         tree.render({
             elem: '#tree',
             data: menus
@@ -153,6 +152,7 @@
                 $('#pName').val(data.name);
             }
         });
+
         $('#select_icon').click(function () {
             parent.layer.open({
                 id: 'icon',
@@ -165,8 +165,11 @@
             });
         });
 
-        //自定义验证规则
+        /**
+         * 验证
+         */
         var type = $('#menuType');
+
         form.verify({
             menuType: function (v) {
                 if (Len.isEmpty(v)) {
@@ -195,40 +198,44 @@
         });
 
         form.on('select(menuType)', function (data) {
-            if (data.value === '2') {
-                $('#pId').val('');
-                dOs('pName', true);
-                dOs('permission', true);
-                dOs('url', false);
-            } else if (data.value === '1') {
-                //按钮
-                dOs('url', true);
-                dOs('pName', false);
-                dOs('permission', false);
-            } else if (data.value === '0') {
-                dOs('url', false);
-                dOs('pName', false);
-                dOs('permission', false);
+            var value = data.value;
+            var map = {
+                '2': { pId: '', pName: true, permission: true, url: false },
+                '1': { pId: null, pName: false, permission: false, url: true },
+                '0': { pId: null, pName: false, permission: false, url: false }
+            };
+
+            var obj = map[value];
+            if (!obj) {
+                return;
             }
+            $('#pId').val(obj.pId);
+            disableOrSet('pName', obj.pName);
+            disableOrSet('permission', obj.permission);
+            disableOrSet('url', obj.url);
         });
 
         /**
+         * 启用或禁用
          * id :元素id
          * flag true:禁止输入，false 允许输入
          */
-        function dOs(id, flag) {
+        function disableOrSet(id, flag) {
             var $id = $("#" + id);
             if (flag) {
                 $id.val('');
-                $id.attr('disabled', 'disabled').css('background', '#e6e6e6');
-            } else
-                $id.removeAttr('disabled').css('background', 'white')
+                $id.prop('disabled', true).css('background', '#e6e6e6');
+            } else {
+                $id.prop('disabled', false).css('background', 'white');
+            }
         }
+
 
         $('#close').click(function () {
             var index = parent.layer.getFrameIndex(window.name);
             parent.layer.close(index);
         });
+
         //监听提交
         form.on('submit(add)', function (data) {
             data.field['icon'] = $('#menu-icon').text();
@@ -240,18 +247,20 @@
 
 
     function showTree() {
-        var p = $('#pName');
-        var cityObj = p;
-        var cityOffset = p.offset();
-        var width = p.css('width');
-        $('#treeNode').css({
+        var $p = $('#pName');
+        var $treeNode = $('#treeNode');
+        var cityOffset = $p.offset();
+        var width = $p.css('width');
+
+        $treeNode.css({
             left: cityOffset.left + 'px',
-            top: cityOffset.top + cityObj.outerHeight() + 'px',
+            top: cityOffset.top + $p.outerHeight() + 'px',
             width: width,
             border: '1px solid #e6e6e6'
         }).slideDown('fast');
-        $('body').bind('mousedown', onBodyDown);
-        $('#treeNode').css('display', 'inline');
+
+        $('body').on('mousedown', onBodyDown);
+        $treeNode.css('display', 'inline');
     }
 
 
@@ -262,7 +271,7 @@
 
 
     function onBodyDown(event) {
-        if (!(event.target.id == 'treeNode' || $(event.target).parents('#treeNode').length > 0)) {
+        if (!(event.target.id === 'treeNode' || $(event.target).parents('#treeNode').length > 0)) {
             hideMenu();
         }
     }
@@ -272,7 +281,6 @@
     }
 
     window.memuCallback = function (id) {
-        debugger
         callback(id)
     };
 </script>
