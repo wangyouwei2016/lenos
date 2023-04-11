@@ -18,7 +18,7 @@
 <body>
 <div class="x-body">
     <form class="layui-form layui-form-pane" style="margin-left: 20px;">
-        <div style="width:100%;height:400px;overflow: auto;">
+        <div style="width:100%;min-height:400px;overflow: auto;">
             <div class="layui-tab">
                 <ul class="layui-tab-title">
                     <#list actList as act>
