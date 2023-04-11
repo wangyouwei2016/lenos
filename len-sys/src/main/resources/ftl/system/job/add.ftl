@@ -70,28 +70,28 @@
 
 <script>
     layui.use(['form', 'layer'], function () {
-        $ = layui.jquery;
-        var form = layui.form
-            , layer = layui.layer;
+        var $ = layui.jquery, form = layui.form;
 
         //自定义验证规则
-        form.verify({
-            jobName: function (value) {
+        const formVerify = {
+            jobName: value => {
                 if (Len.isEmpty(value)) {
                     return "任务名称不能为空";
                 }
             },
-            cron: function (value) {
+            cron: value => {
                 if (Len.isEmpty(value)) {
                     return "表达式不能为空";
                 }
             },
-            clazzPath: function (value) {
+            clazzPath: value => {
                 if (Len.isEmpty(value)) {
                     return "执行类不能为空";
                 }
             }
-        });
+        };
+
+        form.verify(formVerify);
 
         $('#close').click(function () {
             Len.close();

@@ -22,6 +22,7 @@
 <#--表格-->
 <table id="jobList" width="100%" lay-filter="job"></table>
 
+<#--toolbar-->
 <script type="text/html" id="toolBar">
     <@lenInclude  path="/system/base/bar.ftl"  hasPermission="job:add"   name="查看" event="detail"/>
     <@lenInclude  path="/system/base/bar.ftl" hasPermission="job:update" code="edit" name="编辑" event="edit"/>
@@ -36,21 +37,21 @@
 <script>
 
     layui.use('table', function () {
-        table = layui.table;
-        //方法级渲染
+        var table = layui.table;
+
         table.render({
             id: 'jobList',
-            elem: '#jobList'
-            , url: 'job/showJobList'
-            , parseData: function (res) {
+            elem: '#jobList',
+            url: 'job/showJobList',
+            parseData: function (res) {
                 return {
                     "code": res.code,
                     "msg": res.msg,
                     "count": res.count,
                     "data": res.data
                 };
-            }
-            , cols: [[
+            },
+            cols: [[
                 {checkbox: true, fixed: true, width: '5%'}
                 , {field: 'jobName', title: '任务名称', width: '10%', sort: true}
                 , {field: 'cron', title: '表达式', width: '10%'}
@@ -63,9 +64,9 @@
                     templet: '<div>{{ moment(+d.createDate).format(\'YYYY-MM-DD\') }}</div>'
                 }
                 , {field: 'remark', title: '操作', width: '20%', toolbar: "#toolBar"}
-            ]]
-            , page: true
-            , height: 'full-100'
+            ]],
+            page: true,
+            height: 'full-100'
         });
 
         var $ = layui.$, active = {
@@ -74,8 +75,8 @@
                 var remark = $('#remark').val();
                 table.reload('jobList', {
                     where: {
-                        jobName: jobName,
-                        jobDesc: remark
+                        jobName: jobName || null,
+                        jobDesc: remark || null
                     }
                 });
             },
@@ -113,7 +114,7 @@
                     Len.detail('/job/updateJob?id=' + data[0].id, '查看任务信息') : false;
             }
         };
-        //监听工具条
+
         table.on('tool(job)', function (obj) {
             var data = obj.data;
             switch (obj.event) {
@@ -122,7 +123,7 @@
                     break;
                 case "del":
                     if (!data.status) {
-                        Len.delete('del', data.id, '', 'jobList');
+                        Len.delete('job/del', data.id, '', 'jobList');
                     } else {
                         layer.msg('已经启动任务无法更新,请停止后删除', {
                             icon: 5,
@@ -146,7 +147,7 @@
                     break;
                 case "start":
                     layer.confirm('确定开启任务[<label style="color: #00AA91;">' + data.jobName + '</label>]?', function () {
-                        Len.ajaxPost('startJob', {id: data.id}, function (res) {
+                        Len.ajaxPost('startJob', {id: data.id}).then(function (res) {
                             Len.rbSuccess(res.msg);
                             layui.table.reload('jobList');
                         });
@@ -154,7 +155,7 @@
                     break;
                 case "end":
                     layer.confirm('确定停止任务[<label style="color: #00AA91;">' + data.jobName + '</label>]?', function () {
-                        Len.ajaxPost('endJob', {id: data.id}, function (res) {
+                        Len.ajaxPost('endJob', {id: data.id}).then(function (res) {
                             Len.rbSuccess(res.msg);
                             layui.table.reload('jobList');
                         });

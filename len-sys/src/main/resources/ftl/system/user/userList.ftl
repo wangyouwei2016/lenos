@@ -131,14 +131,14 @@
 					break;
 				case "del":
 					layer.confirm('确定删除?', function () {
-						Len.ajaxPost('user/del', {id: data.id, realDel: true}, function (result) {
+						Len.ajaxPost('user/del', {id: data.id, realDel: true}).then(function (result) {
 							if (!result.flag) {
 								Len.warn(result.msg);
 							} else {
 								Len.success("删除成功");
 								layui.table.reload('userList');
 							}
-						}, data.username);
+						});
 					});
 
 			}
