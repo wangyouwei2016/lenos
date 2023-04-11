@@ -20,7 +20,7 @@
 <table id="treeList" width="100%"></table>
 
 
-<!-- 表格操作列 -->
+<!-- 表格操作 -->
 <script type="text/html" id="tbBar">
     <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit">修改</a>
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
@@ -28,19 +28,23 @@
 
 
 <script type="text/javascript">
-    /*加载treetable 模块*/
+
+    /**
+     * 载treetable 模块
+     */
     layui.config({
         base: '${re.contextPath}/plugin/layui/modules/'
     }).extend({
         treeTable: 'treeTable'
     });
-    /*渲染tree table*/
+
+
     layui.use(['treeTable'], function () {
         var $ = layui.jquery;
         var treeTable = layui.treeTable;
 
         // 渲染表格
-        table = treeTable.render({
+        var table = treeTable.render({
             elem: '#treeList',
             url: 'menu/showMenuList',
             tree: {
@@ -109,6 +113,7 @@
                     break;
             }
         });
+
         Len.btnBind($('.menu-bar .layui-btn'), active);
         Len.keydown(active);
     });
