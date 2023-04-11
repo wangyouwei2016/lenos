@@ -47,47 +47,55 @@
 
 
 <script>
-    $(document).ready(function () {
-        $('#close').click(function () {
-            var index = parent.layer.getFrameIndex(window.name);
-            parent.layer.close(index);
-        });
-    });
-    layui.use(['form', 'layer'], function () {
-        $ = layui.jquery;
-        var form = layui.form
-            , layer = layui.layer;
-        //自定义验证规则
-        form.verify({
-            newPass: [/(.+){6,12}$/, '密码必须6到12位']
-            , reNewPass: function (value) {
-                if ($('#newPass').val() != $('#reNewPass').val()) {
-                    return '两次密码不一致';
-                }
-            }
-        });
+	$(document).ready(function () {
+		$('#close').click(function () {
+			var index = parent.layer.getFrameIndex(window.name);
+			parent.layer.close(index);
+		});
+	});
+	layui.use(['form', 'layer'], function () {
+		$ = layui.jquery;
+		var form = layui.form
+			, layer = layui.layer;
+		//自定义验证规则
+		form.verify({
+			newPass: [/(.+){6,12}$/, '密码必须6到12位']
+			, reNewPass: function (value) {
+				if ($('#newPass').val() !== $('#reNewPass').val()) {
+					return '两次密码不一致';
+				}
+			}
+		});
 
-        //监听提交
-        form.on('submit(add)', function (data) {
-            $.ajax({
-                url: 'rePass',
-                type: 'post',
-                data: data.field,
-                async: false, dataType: "json", traditional: true,
-                success: function (json) {
-                    var index = parent.layer.getFrameIndex(window.name);
-                    parent.layer.close(index);
-                    window.parent.layui.table.reload('userList');
-                    window.top.layer.msg(json.msg, {icon: 6, offset: 'rb', area: ['120px', '80px'], anim: 2});
-                }, error: function () {
-                    var index = parent.layer.getFrameIndex(window.name);
-                    parent.layer.close(index);
-                    window.top.layer.msg('请求失败', {icon: 5, offset: 'rb', area: ['120px', '80px'], anim: 2});
-                }
-            });
-            return false;
-        });
-        form.render();
-    });
+		//监听提交
+		form.on('submit(add)', function (data) {
+			$.ajax({
+				url: 'rePass',
+				type: 'post',
+				data: data.field,
+				async: false,
+				dataType: "json",
+				traditional: true,
+				success: function (json) {
+					var index = parent.layer.getFrameIndex(window.name);
+					parent.layer.close(index);
+					window.parent.layui.table.reload('userList');
+					window.top.layer.msg(
+						json.msg,
+						{icon: 6, offset: 'rb', area: ['120px', '80px'], anim: 2}
+					);
+				}, error: function () {
+					var index = parent.layer.getFrameIndex(window.name);
+					parent.layer.close(index);
+					window.top.layer.msg(
+						'请求失败',
+						{icon: 5, offset: 'rb', area: ['120px', '80px'], anim: 2}
+					);
+				}
+			});
+			return false;
+		});
+		form.render();
+	});
 </script>
 </body>

@@ -44,7 +44,6 @@
 
 
             <div class="layui-form-item">
-
                 <#--真实姓名-->
                 <@lenInclude  path="/system/base/lineInput.ftl"
                 for="realName"
@@ -74,9 +73,9 @@
 
                 <#--确认密码-->
                 <@lenInclude  path="/system/base/lineInput.ftl"
-                for="L_repass"
+                for="repass"
                 label="确认密码"
-                id="l_repass"
+                id="repass"
                 name="repass"
                 require="true"
                 type="password"
@@ -124,126 +123,80 @@
 
 <script>
 
-    var flag, msg;
+	layui.use(['form', 'layer', 'upload'], function () {
+		$ = layui.jquery;
+		var form = layui.form;
 
-    $(function () {
-        /**
-         * 用户名重复校验
-         */
-        $('#uname').on("blur", function () {
-            var uname = $('#uname').val();
-            if (uname.match(/[\u4e00-\u9fa5]/)) {
-                return;
-            }
-            if (!/(.+){3,12}$/.test(uname)) {
-                return;
-            }
-            if (!Len.isEmpty(uname)) {
-                $.ajax({
-                    url: 'checkUser?uname=' + uname, async: false, type: 'get', success: function (data) {
-                        flag = data.flag;
-                        $('#ms').find('span').remove();
-                        if (!data.flag) {
-                            msg = data.msg;
-                            $('#ms').append("<span style='color: red;'>" + data.msg + "</span>");
-                        } else {
-                            flag = true;
-                            $('#ms').append("<span style='color: green;'>用户名可用</span>");
-                        }
-                    }, beforeSend: function () {
-                        $('#ms').find('span').remove();
-                        $('#ms').append("<span>验证ing</span>");
-                    }
-                });
-            }
-        });
+		/**
+		 * 校验
+		 */
+		form.verify({
+			username: function (value) {
+				if (value.trim() === "") {
+					return "用户名不能为空";
+				}
+				if (/[\u4e00-\u9fa5]/.test(value)) { // 正则表达式检测非中文字符
+					return "用户名不能为中文";
+				}
+				if (!/(.+){3,12}$/.test(value)) {
+					return "用户名必须3到12位";
+				}
 
-    });
+			}
+			, password: [/(.+){6,12}$/, '密码必须6到12位']
+			, repass: function (value) {
+				if ($('#password').val() !== $('#repass').val()) {
+					return '两次密码不一致';
+				}
+			}
+			, email: function (value) {
+				if (value !== "") {
+					if (!/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/.test(value)) {
+						return "邮箱格式不正确";
+					}
+				}
+			}
+		});
 
-    layui.use(['form', 'layer', 'upload'], function () {
-        $ = layui.jquery;
-        var form = layui.form;
+		/**
+		 * 头像上传
+		 */
+		$('#uploadFile').uploadFile({
+			before: function (obj) {
+				var imgObj = $('#showImage');
+				imgObj.find('img').remove();
+				obj.preview(function (index, file, result) {
+					imgObj.append('<img src="' + result + '" alt="' + file.name + '" width="100px" height="100px" class="layui-upload-img layui-circle">');
+				});
+			}, done: function (res) {
+				$("#photo").val(res.msg);
+			}
+		});
 
-        /**
-         * 校验
-         */
-        form.verify({
-            username: function (value) {
-                if (value.trim() === "") {
-                    return "用户名不能为空";
-                }
-                if (value.match(/[\u4e00-\u9fa5]/)) {
-                    return "用户名不能为中文";
-                }
-                if (!/(.+){3,12}$/.test(value)) {
-                    return "用户名必须3到12位";
-                }
-                if (typeof (flag) == 'undefined') {
-                    return "用户名验证ing";
-                }
-                if (!flag) {
-                    return msg;
-                }
-            }
-            , password: [/(.+){6,12}$/, '密码必须6到12位']
-            , repass: function (value) {
-                if ($('#password').val() !== $('#l_repass').val()) {
-                    return '两次密码不一致';
-                }
-            }
-            , email: function (value) {
-                if (value !== "") {
-                    if (!/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/.test(value)) {
-                        return "邮箱格式不正确";
-                    }
-                }
-            }
-        });
+		/**
+		 * 关闭
+		 */
+		$('#close').click(function () {
+			parent.layer.close(parent.layer.getFrameIndex(window.name));
+		});
 
-        /**
-         * 头像上传
-         */
-        $('#uploadFile').uploadFile({
-            before: function (obj) {
-                obj.preview(function (index, file, result) {
-                    var imgObj = $('#showImage');
-                    imgObj.find('img').remove();
-                    imgObj.append('<img src="' + result + '" alt="' + file.name + '" width="100px" height="100px" class="layui-upload-img layui-circle">');
-                });
-            }, done: function (res) {
-                $("#photo").val(res.msg);
-            }
-        });
+		/**
+		 * 保存
+		 */
+		form.on('submit(add)', function (data) {
+			var r = document.getElementsByName("role");
+			const role = Array.from(document.getElementsByName("role"))
+				.filter(item => item.checked).map(item => item.value)
+			if (role.length === 0) {
+				Len.error('请选择角色');
+				return false;
+			}
+			data.field.role = role;
+			Len.layerAjax('addUser', data.field, 'userList');
+			return false;
+		});
 
-        /**
-         * 关闭当前弹框
-         */
-        $('#close').click(function () {
-            var index = parent.layer.getFrameIndex(window.name);
-            parent.layer.close(index);
-        });
-
-        /**
-         * 表单保存
-         */
-        form.on('submit(add)', function (data) {
-            var r = document.getElementsByName("role");
-            var role = [];
-            for (var i = 0; i < r.length; i++) {
-                if (r[i].checked) {
-                    role.push(r[i].value);
-                }
-            }
-            if (role.length === 0) {
-                Len.error('请选择角色');
-                return false;
-            }
-            data.field.role = role;
-            Len.layerAjax('addUser', data.field, 'userList');
-            return false;
-        });
-
-        form.render();
-    });
+		form.render();
+	});
 </script>
 </body>
