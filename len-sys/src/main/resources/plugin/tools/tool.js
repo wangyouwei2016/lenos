@@ -178,6 +178,17 @@ var Len = {
     popup: function (url, title, w, h, id) {
         title = Len.isEmpty(title) ? false : title;
         url = Len.isEmpty(url) ? "error/404" : url;
+        /**
+         * iframe 自适应高度
+         * @param layerObj
+         */
+
+        var iframeAutoHeight = function (layerObj) {
+            var iframe = $(layerObj).find('iframe');
+            var titleHeight = $(layerObj).find('.layui-layer-title').height();
+            iframe.css('height', layerObj.outerHeight() - titleHeight);
+        }
+
         window.top.layer.open({
             id: id,
             type: 2,
@@ -187,7 +198,16 @@ var Len = {
             shadeClose: false,
             shade: 0.4,
             title: title,
-            content: url
+            content: url,
+            full: function (res) {
+                iframeAutoHeight(res);
+            },
+            min: function (res) {
+                iframeAutoHeight(res);
+            },
+            restore: function (res) {
+                iframeAutoHeight(res);
+            },
         });
     },
 
