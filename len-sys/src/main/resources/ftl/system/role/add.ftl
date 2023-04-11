@@ -4,20 +4,7 @@
 <script type="text/javascript" src="${re.contextPath}/plugin/ztree/js/jquery.ztree.core.js"></script>
 <script type="text/javascript" src="${re.contextPath}/plugin/ztree/js/jquery.ztree.excheck.js" charset="utf-8"></script>
 <script type="text/javascript">
-    var setting = {
-        check: {
-            enable: true
-        },
-        data: {
-            simpleData: {
-                enable: true
-            }
-        }
-    };
-    var zNodes = ${menus};
-    $(document).ready(function () {
-        $.fn.zTree.init($("#treeDemo"), setting, zNodes);
-    });
+
 </script>
 
 <div class="x-body">
@@ -72,7 +59,6 @@
         <div style="width: 100%;height: 55px;background-color: white;border-top:1px solid #e6e6e6;
   position: fixed;bottom: 1px;margin-left:-20px;">
             <div class="layui-form-item" style=" float: right;margin-right: 30px;margin-top: 8px">
-
                 <button type="submit" class="layui-btn layui-btn-normal" lay-filter="add" lay-submit>
                     增加
                 </button>
@@ -84,33 +70,61 @@
     </form>
 </div>
 <script>
-    layui.use(['form', 'layer'], function () {
-        $ = layui.jquery;
-        var form = layui.form
-            , layer = layui.layer;
 
-        //自定义验证规则
+    /**
+     * 初始化tree
+     */
+    function initTree() {
+        var setting = {
+            check: {
+                enable: true
+            },
+            data: {
+                simpleData: {
+                    enable: true
+                }
+            }
+        };
+        var zNodes = ${menus};
+        $(document).ready(function () {
+            $.fn.zTree.init($("#treeDemo"), setting, zNodes);
+        });
+    }
+
+    initTree();
+
+
+    layui.use(['form', 'layer'], function () {
+        var $ = layui.jquery, form = layui.form;
+
+        /**
+         * 校验
+         */
         form.verify({
             rolename: function (value) {
-                if (value.trim() == "") {
+                if (value.trim() === "") {
                     return "角色名不能为空";
                 }
             }
         });
 
+        /**
+         * 关闭
+         */
         $('#close').click(function () {
             var index = parent.layer.getFrameIndex(window.name);
             parent.layer.close(index);
         });
-        //监听提交
+
+        /**
+         * 新增
+         */
         form.on('submit(add)', function (data) {
             var zTree = $.fn.zTree.getZTreeObj("treeDemo");
             var jsonArr = zTree.getCheckedNodes(true);
-            var menus = [];
-            for (var item in jsonArr) {
-                menus.push(jsonArr[item].id);
-            }
-            data.field.menus = menus;
+            data.field.menus = jsonArr.map(function(item) {
+                return item.id;
+            })
             Len.layerAjax('addRole', data.field, 'roleList');
             return false;
         });

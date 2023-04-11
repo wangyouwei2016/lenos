@@ -1,9 +1,13 @@
+
+<#--搜索-->
 <div class="lenos-search">
     <div class="search-select">
         <@lenInclude path="/system/base/queryBox.ftl" name="角色名" id="rolename" ></@lenInclude>
         <@lenInclude path="/system/base/queryBox.ftl" name="描述" id="remark" ></@lenInclude>
     </div>
 </div>
+
+<#--按钮-->
 <div class="layui-col-md12 len-button">
     <div class="layui-btn-group role-bar">
         <#include "/system/base/searth.ftl">
@@ -15,16 +19,21 @@
         type="detail" name="查看" icon="&#xe605;"></@lenInclude>
     </div>
 </div>
+
+<#--按钮-->
 <table id="roleList" width="100%" lay-filter="user"></table>
+
+<#--toobar-->
 <script type="text/html" id="toolBar">
     <@lenInclude  path="/system/base/bar.ftl" hasPermission="role:add"   name="查看" event="detail"/>
     <@lenInclude  path="/system/base/bar.ftl" hasPermission="user:update" code="edit"   name="编辑" event="edit"/>
     <@lenInclude  path="/system/base/bar.ftl" hasPermission="user:del"  code="del"  name="删除" event="del"/>
 </script>
+
 <script>
     layui.use('table', function () {
-        table = layui.table;
-        //方法级渲染
+        var table = layui.table;
+
         table.render({
             id: 'roleList',
             elem: '#roleList'
@@ -49,16 +58,18 @@
         });
 
         var $ = layui.$, active = {
+            //查询
             select: function () {
                 var rolename = $('#rolename').val();
                 var remark = $('#remark').val();
                 table.reload('roleList', {
                     where: {
-                        roleName: rolename,
-                        remark: remark
+                        roleName: rolename || null,
+                        remark: remark || null
                     }
                 });
             },
+            //重置
             reload: function () {
                 $('#rolename').val('');
                 $('#remark').val('');
@@ -69,20 +80,25 @@
                     }
                 });
             },
+            //新增
             add: function () {
                 Len.add('/role/showAddRole', '添加角色');
             },
+            //更新
             update: function () {
                 var data = table.checkStatus('roleList').data;
                 Len.onlyOne(data.length) ? Len.update('/role/updateRole?id=' + data[0].id, '编辑角色') : false;
             },
+            //详情
             detail: function () {
                 var data = table.checkStatus('roleList').data;
                 Len.onlyOne(data.length) ? Len.detail('/role/updateRole?id=' + data[0].id, '查看角色信息') : false;
             }
         };
 
-        //监听工具条
+        /**
+         * 监听工具条
+         */
         table.on('tool(user)', function (obj) {
             var data = obj.data;
             if (obj.event === 'detail') {
