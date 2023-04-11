@@ -116,10 +116,8 @@
         </div>
         <@lenInclude path="system/base/formBtn.ftl"></@lenInclude>
     </form>
-
 </div>
 
-<script type="text/javascript" src="/plugin/validator/validator.min.js"></script>
 
 <script>
 
