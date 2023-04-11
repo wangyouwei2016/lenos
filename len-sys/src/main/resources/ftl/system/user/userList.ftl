@@ -91,7 +91,7 @@
 			},
 			/*添加*/
 			add: function () {
-				Len.add('/user/showAddUser', '添加用户');
+				Len.add('/user/showAddUser', '添加用户','userAdd');
 			},
 			/*更新*/
 			update: function () {
