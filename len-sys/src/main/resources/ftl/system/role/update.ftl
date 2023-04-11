@@ -6,46 +6,6 @@
 <script type="text/javascript" src="${re.contextPath}/plugin/ztree/js/jquery.ztree.excheck.js"
         charset="utf-8"></script>
 <script type="text/javascript" src="${re.contextPath}/plugin/tools/update-setting.js"></script>
-<script type="text/javascript">
-    $(document).ready(function () {
-        var flag = '${detail}';
-        if (flag) {
-            $("form").disable();
-        }
-    });
-</script>
-<script type="text/javascript">
-    var setting = {
-        check: {
-            enable: true
-        },
-        data: {
-            simpleData: {
-                enable: true
-            }
-        }
-    };
-    var zNodes = ${menus};
-    $(document).ready(function () {
-        $.fn.zTree.init($("#treeDemo"), setting, zNodes);
-    });
-
-    (function ($) {
-        $.fn.disable = function () {
-            return $(this).find("*").each(function () {
-                $(this).attr("disabled", "disabled");
-            });
-        }
-    })(jQuery);
-</script>
-<script type="text/javascript">
-    $(document).ready(function () {
-        var flag = '${detail}';
-        if (flag) {
-            $("form").disable();
-        }
-    });
-</script>
 
 <body>
 <div class="x-body">
@@ -116,33 +76,70 @@
     </form>
 </div>
 <script>
+
+    /**
+     * 初始化tree
+     */
+    function initTree(){
+        $(document).ready(function () {
+            var flag = '${detail}';
+            if (flag) {
+                $("form ").disable();
+            }
+        });
+
+        var setting = {
+            check: {
+                enable: true
+            },
+            data: {
+                simpleData: {
+                    enable: true
+                }
+            }
+        };
+        var zNodes = ${menus};
+        $(document).ready(function () {
+            $.fn.zTree.init($("#treeDemo"), setting, zNodes);
+            $.fn.disable = function () {
+                return $(this).find("*").each(function () {
+                    $(this).attr("disabled", "disabled");
+                });
+            }
+        });
+    }
+
+    initTree();
+
     layui.use(['form', 'layer'], function () {
-        $ = layui.jquery;
-        var form = layui.form
-            , layer = layui.layer;
+        var $ = layui.jquery, form = layui.form;
 
         //自定义验证规则
         form.verify({
             roleName: function (value) {
-                if (value.trim() == "") {
+                if (value.trim() === "") {
                     return "角色名不能为空";
                 }
             }
         });
 
+        /**
+         * 关闭
+         */
         $('#close').click(function () {
             var index = parent.layer.getFrameIndex(window.name);
             parent.layer.close(index);
         });
-        //监听提交
+
+        /**
+         * 更新
+         */
         form.on('submit(add)', function (data) {
             var zTree = $.fn.zTree.getZTreeObj("treeDemo");
             var jsonArr = zTree.getCheckedNodes(true);
-            var menus = [];
-            for (var item in jsonArr) {
-                menus.push(jsonArr[item].id);
-            }
-            data.field.menus = menus;
+            data.field.menus = jsonArr.map(function (item) {
+                return item.id;
+            })
             Len.layerAjax('updateRole', data.field, 'roleList');
             return false;
         });
