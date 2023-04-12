@@ -6,14 +6,6 @@ import org.springframework.context.ApplicationContextAware;
 
 public class ApplicationContextUtil implements ApplicationContextAware {
 
-	
-	
-	
-	
-	
-	
-	
-	
     private static ApplicationContext applicationContext;
 
     public static ApplicationContext getContext() {
