@@ -1,21 +1,27 @@
 package com.len.core.filter;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.shiro.session.Session;
 import org.apache.shiro.web.filter.AccessControlFilter;
+import org.apache.shiro.web.util.WebUtils;
+
+import com.len.util.MsHelper;
 
 /**
  * 验证码拦截
  */
 public class VerifyCodeFilter extends AccessControlFilter {
+
     /**
      * 是否开启验证码验证 默认true
      */
-    private boolean verfitiCode = true;
+    private boolean enableVerifyCode;
 
     /**
      * 前台提交的验证码name
@@ -25,29 +31,22 @@ public class VerifyCodeFilter extends AccessControlFilter {
     /**
      * 验证失败后setAttribute key
      */
-    private String failureKeyAttribute = "shiroLoginFailure";
+    private String failureKeyAttribute = "loginFailure";
 
     /**
-     * shiro回调 是否允许访问
+     * 验证码校验拦截
      * 
-     * @param request
-     * @param response
-     * @param o
-     * @return
-     * @throws Exception
      */
     @Override
     protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object o) throws Exception {
-        request.setAttribute("verfitiCode", verfitiCode);// 暂时未用到非验证码
+        request.setAttribute("verfitiCode", enableVerifyCode);
         HttpServletRequest httpRequest = (HttpServletRequest)request;
         // 2、判断验证码是否禁用 或不是表单提交
-        if (!verfitiCode || !"post".equalsIgnoreCase(httpRequest.getMethod())) {
+        if (!enableVerifyCode || !"post".equalsIgnoreCase(httpRequest.getMethod())) {
             return true;
         }
-        Session session = getSubject(request, response).getSession();
-        // Collection<Object> attributeKeys = session.getAttributeKeys();
         Object code = getSubject(request, response).getSession().getAttribute(jcaptchaParam);
-        String storedCode = null;
+        String storedCode;
         if (null != code) {
             storedCode = code.toString();
         } else {
@@ -62,18 +61,18 @@ public class VerifyCodeFilter extends AccessControlFilter {
 
     @Override
     protected boolean onAccessDenied(ServletRequest servletRequest, ServletResponse servletResponse) throws Exception {
-        if (servletRequest.getAttribute(failureKeyAttribute) == null) {
-            servletRequest.setAttribute(failureKeyAttribute, "code.error");
-        }
-        return true;
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("message", MsHelper.getMsg("login.code.error"));
+        WebUtils.issueRedirect(servletRequest, servletResponse, "/login", paramMap);
+        return false;
     }
 
-    public boolean isVerfitiCode() {
-        return verfitiCode;
+    public boolean isEnableVerifyCode() {
+        return enableVerifyCode;
     }
 
-    public void setVerfitiCode(boolean verfitiCode) {
-        this.verfitiCode = verfitiCode;
+    public void setEnableVerifyCode(boolean enableVerifyCode) {
+        this.enableVerifyCode = enableVerifyCode;
     }
 
     public String getJcaptchaParam() {

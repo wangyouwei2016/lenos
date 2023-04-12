@@ -27,6 +27,8 @@ import com.len.util.VerifyCodeUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 /**
  * 登录、退出页面
@@ -39,9 +41,6 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Api(value = "登录业务", tags = "登录业务")
 public class LoginController {
-
-    private static final String CODE_ERROR = "code.error";
-    private static final String CODE_TIMEOUT = "code.timeout";
     private static final Long TWO_WEEK = 1000 * 60 * 60 * 24 * 14L;
 
     private final AdminLoginService adminLoginService;
@@ -72,6 +71,12 @@ public class LoginController {
         if (sub.isAuthenticated() || sub.isRemembered()) {
             return "/main/main";
         }
+        HttpServletRequest request = ((ServletRequestAttributes)
+                RequestContextHolder.getRequestAttributes()).getRequest();
+        String loginFailureMsg = request.getParameter("message");
+        if(!StringUtils.isEmpty(loginFailureMsg)){
+            request.setAttribute("message",loginFailureMsg);
+        }
         return "/login2";
     }
 
@@ -85,14 +90,6 @@ public class LoginController {
     @ApiOperation(value = "/login", httpMethod = "POST", notes = "登录接口")
     @PostMapping("/login")
     public String login(SysUser user, Model model, HttpServletRequest request) {
-        /* String codeMsg = (String) request.getAttribute("shiroLoginFailure");
-        if (CODE_ERROR.equals(codeMsg)) {
-            model.addAttribute("message", "验证码错误");
-            return "/login2";
-        } else if (CODE_TIMEOUT.equals(codeMsg)) {
-            model.addAttribute("message", "验证码过期");
-            return "/login2";
-        }*/
         CustomUsernamePasswordToken token =
             new CustomUsernamePasswordToken(user.getUsername().trim(), user.getPassword(), LoginType.SYS);
         Subject subject = Principal.getSubject();

@@ -210,9 +210,9 @@ public class ShiroConfig {
     @Bean
     public VerifyCodeFilter getVerfityCodeFilter() {
         VerifyCodeFilter vf = new VerifyCodeFilter();
-        vf.setFailureKeyAttribute("shiroLoginFailure");
+        vf.setFailureKeyAttribute("loginFailure");
         vf.setJcaptchaParam("code");
-        vf.setVerfitiCode(true);
+        vf.setEnableVerifyCode(LenProp.getEnableVerifyCode());
         return vf;
     }
 
