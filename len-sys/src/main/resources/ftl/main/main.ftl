@@ -20,19 +20,19 @@
         </div>
         <div class="layui-hide-xs">
             <ul class="layui-nav layui-layout-left kit-nav kit-header">
-                <li class="layui-nav-item"><a href="javascript:;">会员管理</a></li>
-                <li class="layui-nav-item"><a href="javascript:;">会员管理</a></li>
+               <#-- <li class="layui-nav-item"><a href="javascript:;">会员管理</a></li>
+                <li class="layui-nav-item"><a href="javascript:;">会员管理</a></li>-->
                 <li class="layui-nav-item"><a href="javascript:;" kit-target
                                               data-options="{url:'/article/articleList',icon:'&#xe658;',title:'文章管理',id:'966'}">文章管理</a>
                 </li>
-                <li class="layui-nav-item">
+                <#--<li class="layui-nav-item">
                     <a href="javascript:;">其它系统</a>
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:;">邮件管理</a></dd>
                         <dd><a href="javascript:;">消息管理</a></dd>
                         <dd><a href="javascript:;">授权管理</a></dd>
                     </dl>
-                </li>
+                </li>-->
             </ul>
         </div>
         <ul class="layui-nav layui-layout-right kit-nav">
