@@ -1,0 +1,1 @@
+你好, ${name}! <#list items as item>${item.name} is ${item.age} years old. </#list>
