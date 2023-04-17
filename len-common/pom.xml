@@ -7,12 +7,12 @@
     <version>lenosp-2.0-SNAPSHOT</version>
   </parent>
 
-  <artifactId>len-conmon</artifactId>
+  <artifactId>len-common</artifactId>
   <packaging>jar</packaging>
 
-  <name>len-conmon Maven Webapp</name>
+  <name>len-common</name>
   <!-- FIXME change it to the project's website -->
-  <url>http://www.example.com</url>
+  <url>https://gitee.com/zzdevelop/lenosp</url>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -30,6 +30,6 @@
   </dependencies>
 
   <build>
-    <finalName>len-conmon</finalName>
+    <finalName>len-common</finalName>
   </build>
 </project>
