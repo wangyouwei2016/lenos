@@ -13,14 +13,16 @@ import freemarker.template.TemplateException;
 /**
  * freemarker render 策略抽象类
  */
-public abstract class AbstractFreemarkerTemplate implements TemplateStrategy {
+public class FreemarkerTemplate implements TemplateStrategy {
 
     protected freemarker.template.Template template;
+    /**
+     * freemarker 配置
+     */
     protected Configuration cfg;
 
-    {
-        cfg = new Configuration(Configuration.VERSION_2_3_31);
-        cfg.setDefaultEncoding("UTF-8");
+    public void setConfiguration(Configuration cfg) {
+        this.cfg = cfg;
     }
 
     /**
@@ -28,7 +30,16 @@ public abstract class AbstractFreemarkerTemplate implements TemplateStrategy {
      * 
      */
     public Configuration getConfiguration() {
+        if (cfg == null) {
+            cfg = new Configuration(Configuration.VERSION_2_3_31);
+            cfg.setDefaultEncoding("UTF-8");
+        }
         return cfg;
+    }
+
+    @Override
+    public String[] getTemplateContext() {
+        return null;
     }
 
     @Override

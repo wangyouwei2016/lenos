@@ -5,7 +5,7 @@ import com.len.generator.metadata.MetaData;
 /**
  * freemarker 字符串模板策略
  */
-public class FreemarkerStrTemplateStrategy extends AbstractFreemarkerTemplate {
+public class FreemarkerStrTemplateStrategy extends FreemarkerTemplate {
 
     private String[] templateContent;
 

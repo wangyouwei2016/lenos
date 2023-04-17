@@ -1,6 +1,5 @@
 package com.len;
 
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -11,6 +10,7 @@ import com.len.generator.metadata.StandardMetaData;
 import com.len.generator.metadata.source.JsonPathSource;
 import com.len.generator.metadata.source.JsonSource;
 import com.len.generator.metadata.source.MetaDataSource;
+import com.len.generator.template.FreemarkerTemplate;
 import com.len.generator.template.FreemarkerPathTemplateStrategy;
 import com.len.generator.template.FreemarkerStrTemplateStrategy;
 import com.len.generator.template.TemplateRenderer;
@@ -134,7 +134,7 @@ public class GeneratorTest extends TestCase {
         //入参 json path
         String path = "data.json";
         TemplateRenderer renderer = new TemplateRenderer.Builder()
-                .withTemplateStrategy(new FreemarkerStrTemplateStrategy())
+                .withTemplateStrategy(FreemarkerTemplate.class)
                 .build();
 
         String[] render = renderer.render(

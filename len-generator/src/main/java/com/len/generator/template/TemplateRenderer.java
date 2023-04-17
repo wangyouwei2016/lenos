@@ -33,6 +33,15 @@ public class TemplateRenderer {
             return this;
         }
 
+        public Builder withTemplateStrategy(Class<? extends TemplateStrategy> templateStrategyClass) {
+            try {
+                this.templateStrategy = templateStrategyClass.newInstance();
+            } catch (InstantiationException | IllegalAccessException e) {
+                throw new RuntimeException(e);
+            }
+            return this;
+        }
+
         public TemplateRenderer build() {
             TemplateRenderer renderer = new TemplateRenderer();
             renderer.templateStrategy = templateStrategy;

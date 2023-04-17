@@ -6,7 +6,7 @@ import com.len.generator.util.TemplateUtil;
 /**
  * 路径寻找模板
  */
-public class FreemarkerPathTemplateStrategy extends AbstractFreemarkerTemplate {
+public class FreemarkerPathTemplateStrategy extends FreemarkerTemplate {
 
     protected String[] templateContent;
 
