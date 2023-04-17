@@ -2,6 +2,7 @@ package com.len.generator.template;
 
 import java.io.IOException;
 
+import com.len.generator.ErrConstant;
 import com.len.generator.metadata.MetaData;
 
 public class TemplateRenderer {
@@ -13,6 +14,9 @@ public class TemplateRenderer {
     }
 
     public String[] render(MetaData metaData) {
+        if (templateStrategy == null) {
+            throw new RuntimeException(ErrConstant.ENGINE_NOT_CONFIG);
+        }
         try {
             return templateStrategy.render(metaData);
         } catch (IOException e) {
@@ -49,6 +53,9 @@ public class TemplateRenderer {
         }
 
         public String[] render(MetaData data) {
+            if (templateStrategy == null) {
+                throw new RuntimeException(ErrConstant.ENGINE_NOT_CONFIG);
+            }
             // 使用策略对象进行模板替换
             try {
                 return templateStrategy.render(data);

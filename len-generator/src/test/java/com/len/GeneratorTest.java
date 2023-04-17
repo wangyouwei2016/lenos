@@ -130,7 +130,7 @@ public class GeneratorTest extends TestCase {
     }
 
 
-    public void testGeneratorByJson() {
+    public void testGeneratorByJsonConfig() {
         //入参 json path
         String path = "data.json";
         TemplateRenderer renderer = new TemplateRenderer.Builder()
