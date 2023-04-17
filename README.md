@@ -20,11 +20,13 @@
 # 简介
 
 lenosp是一个基于spring boot的脚手架，并提供完善社区文档教程，中小企业可以用来快速迭代。
+
+您可以阅读文档快速部署上手：
  <a target="_blank" href="https://www.kancloud.cn/zhuxm/zzdevelop/content">
      **社区文档** 
 </a>
  <a target="_blank" href="https://www.kancloud.cn/zhuxm/zzdevelop/3142792">
-    ** 项目模块介绍** 
+    **项目模块介绍** 
 </a>
  <a target="_blank" href="https://www.kancloud.cn/zhuxm/zzdevelop/3150412">
      **本地开发部署教程** 
