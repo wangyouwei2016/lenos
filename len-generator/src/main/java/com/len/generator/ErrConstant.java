@@ -5,5 +5,8 @@ package com.len.generator;
  */
 public class ErrConstant {
 
-    public static final String ENGINE_NOT_CONFIG="模板引擎未配置,请查阅配置文档进行正确配置：xxx";
+    //代码生成文档模块
+    public static final String BASE_URL="https://www.kancloud.cn/zhuxm/zzdevelop/3150981";
+
+    public static final String ENGINE_NOT_CONFIG="模板引擎未配置,请查阅配置文档进行正确配置："+BASE_URL;
 }

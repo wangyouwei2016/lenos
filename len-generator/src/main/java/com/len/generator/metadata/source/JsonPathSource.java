@@ -4,10 +4,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 
-import com.len.generator.metadata.MetaData;
-import com.len.generator.metadata.MetaDataHelper;
 import org.apache.commons.io.IOUtils;
 
+import com.len.generator.metadata.MetaData;
+import com.len.generator.metadata.MetaDataHelper;
 import com.len.generator.template.FreemarkerPathTemplateStrategy;
 
 /**
@@ -17,6 +17,11 @@ public class JsonPathSource extends MetaDataSource {
 
     protected final String path;
 
+    /**
+     * json配置 实例化
+     * 
+     * @param path json配置路径
+     */
     public JsonPathSource(String path) {
         this.path = path;
     }
