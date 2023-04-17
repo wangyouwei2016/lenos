@@ -1,14 +1,21 @@
 package com.len.generator.util;
 
-import com.len.generator.template.FreemarkerPathTemplateStrategy;
-import org.apache.commons.io.IOUtils;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 
+import org.apache.commons.io.IOUtils;
+
+import com.len.generator.template.FreemarkerPathTemplateStrategy;
+
 public class TemplateUtil {
 
+    /**
+     * 根据模板路径获取模板内容
+     * 
+     * @param path 模板路径
+     * @return 模板内容
+     */
     public static String[] getTemplateContentBypath(String... path) {
         if (path == null || path.length == 0) {
             throw new RuntimeException("模板路径不能为空");
