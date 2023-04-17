@@ -1,5 +1,5 @@
 <p align="center">
-	👉 <a target="_blank" href="http://42.192.219.164:8081">http://42.192.219.164:8081</a>👈
+	👉 <a target="_blank" href="http://42.192.219.164:8081">http://42.192.219.164:8081</a>👈|admin|123456
 </p>
 <p align="center">
 	<a target="_blank" href="https://gitee.com/zzdevelop/lenosp/stargazers">
