@@ -1,5 +1,5 @@
 <p align="center">
-	👉 <a href="http://42.192.219.164:8081">http://42.192.219.164:8081</a> 👈
+	👉 <a target="_blank" href="http://42.192.219.164:8081">http://42.192.219.164:8081</a>👈
 </p>
 <p align="center">
 	<a target="_blank" href="https://gitee.com/zzdevelop/lenosp/stargazers">
@@ -20,6 +20,21 @@
 # 简介
 
 lenosp是一个基于spring boot的脚手架，并提供完善社区文档教程，中小企业可以用来快速迭代。
+ <a target="_blank" href="https://www.kancloud.cn/zhuxm/zzdevelop/content">
+     **社区文档** 
+</a>
+ <a target="_blank" href="https://www.kancloud.cn/zhuxm/zzdevelop/3142792">
+    ** 项目模块介绍** 
+</a>
+ <a target="_blank" href="https://www.kancloud.cn/zhuxm/zzdevelop/3150412">
+     **本地开发部署教程** 
+</a>
+ <a target="_blank" href="https://www.kancloud.cn/zhuxm/zzdevelop/3142806">
+     **如何启动教程** 
+</a>
+ <a target="_blank" href="https://www.kancloud.cn/zhuxm/zzdevelop/3143263">
+     **工具集** 
+</a>
 
 # 体验
 
@@ -27,7 +42,6 @@ lenosp是一个基于spring boot的脚手架，并提供完善社区文档教程
 体验账户：admin，所有账户密码：123456
 测试环境，所有业务增删改不会持久化，默认显示成功
 
-# 架构
 
 # 模块
 
@@ -36,10 +50,17 @@ lenosp是一个基于spring boot的脚手架，并提供完善社区文档教程
 # 里程碑
 
 完善当前单体应用，趋于稳定，可供中小企业快速迭代。
-
-# 功能
-
-xxx
+- 代码风格约束
+- 完善注释
+- 模块划分调整
+- bug&漏洞、pom升级
+- 前端优化生成代码功能
+- 文档工具集教程
+- 安装部署教程
+- pom版本抽离
+- 接口返回值完善封装
+- 模块(maven)命名合理性
+- 前端js方法、封装
 
 # 关于我们
 
