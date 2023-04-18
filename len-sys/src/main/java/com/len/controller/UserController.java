@@ -125,7 +125,7 @@ public class UserController extends BaseController {
         if (role == null) {
             return error(MsHelper.getMsg("user.select.role"));
         }
-        userService.add(user, Arrays.asList(role));
+        //userService.add(user, Arrays.asList(role));
         return succ();
     }
 
@@ -155,7 +155,7 @@ public class UserController extends BaseController {
         if (role != null) {
             roles = Arrays.asList(role);
         }
-        userService.updateUser(user, roles);
+     //   userService.updateUser(user, roles);
         return succ(MsHelper.getMsg("update.success"));
     }
 
@@ -165,7 +165,7 @@ public class UserController extends BaseController {
     @ResponseBody
     @RequiresPermissions("user:del")
     public LenResponse del(String id, boolean realDel) {
-        userService.delById(id, realDel);
+       // userService.delById(id, realDel);
         return succ(MsHelper.getMsg("del.success"));
     }
 
@@ -188,7 +188,7 @@ public class UserController extends BaseController {
     @ResponseBody
     @RequiresPermissions("user:repass")
     public LenResponse rePass(String userId, String newPwd) {
-        userService.rePass(userId, newPwd);
+       // userService.rePass(userId, newPwd);
         return succ(MsHelper.getMsg("update.success"));
     }
 

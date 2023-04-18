@@ -76,17 +76,17 @@ public class JobController extends BaseController {
     @PostMapping(value = "addJob")
     @ResponseBody
     public LenResponse addJob(SysJob job) {
-        job.setStatus(false);
-        jobService.save(job);
+       // job.setStatus(false);
+        //jobService.save(job);
         return succ(MsHelper.getMsg("insert.success"));
     }
 
     @GetMapping(value = "updateJob")
     public String updateJob(String id, Model model, boolean detail) {
-        if (StringUtils.isNotEmpty(id)) {
+        /*if (StringUtils.isNotEmpty(id)) {
             SysJob job = jobService.getById(id);
             model.addAttribute("job", job);
-        }
+        }*/
         model.addAttribute("detail", detail);
         return "system/job/update";
     }
@@ -99,7 +99,7 @@ public class JobController extends BaseController {
         if (jobTask.checkJob(job)) {
             throw new ServiceException(MsHelper.getMsg("job.started"));
         }
-        jobService.updateJob(job);
+       // jobService.updateJob(job);
         return succ(MsHelper.getMsg("update.success"));
 
     }
@@ -110,7 +110,7 @@ public class JobController extends BaseController {
     @ResponseBody
     @RequiresPermissions("job:del")
     public LenResponse del(String id) {
-        jobService.del(id);
+       // jobService.del(id);
         return succ(MsHelper.getMsg("del.success"));
     }
 

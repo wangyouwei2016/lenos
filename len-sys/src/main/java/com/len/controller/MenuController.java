@@ -64,7 +64,7 @@ public class MenuController extends BaseController {
     @PostMapping(value = "addMenu")
     @ResponseBody
     public LenResponse addMenu(SysMenu sysMenu) {
-        menuService.addMenu(sysMenu);
+        //menuService.addMenu(sysMenu);
         return succ(MsHelper.getMsg("insert.success"));
     }
 
@@ -98,9 +98,9 @@ public class MenuController extends BaseController {
     @PostMapping(value = "updateMenu")
     @ResponseBody
     public LenResponse updateMenu(SysMenu sysMenu) {
-        SysMenu oldMenu = menuService.getById(sysMenu.getId());
+        /*SysMenu oldMenu = menuService.getById(sysMenu.getId());
         BeanUtil.copyNotNullBean(sysMenu, oldMenu);
-        menuService.updateById(oldMenu);
+        menuService.updateById(oldMenu);*/
         return succ(MsHelper.getMsg("update.success"));
     }
 
@@ -114,7 +114,7 @@ public class MenuController extends BaseController {
     @PostMapping("del")
     @ResponseBody
     public LenResponse del(String id) {
-        menuService.del(id);
+       // menuService.del(id);
         return succ(MsHelper.getMsg("del.success"));
     }
 

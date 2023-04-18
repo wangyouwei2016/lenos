@@ -69,7 +69,7 @@ public class ListenUserRole {
         o = joinPoint.proceed(joinPoint.getArgs());
         LenResponse jsonUtil = (LenResponse)o;
         if (jsonUtil.isFlag()) {
-            changeUser(args, strings);
+           // changeUser(args, strings);
         }
         return o;
     }
@@ -86,7 +86,7 @@ public class ListenUserRole {
         if (args.length == 2) {
             LenResponse jsonUtil = (LenResponse)o;
             if (jsonUtil.isFlag()) {
-                changeUser(args, Arrays.asList((String[])args[1]));
+              //  changeUser(args, Arrays.asList((String[])args[1]));
             }
         }
         return o;
@@ -98,7 +98,7 @@ public class ListenUserRole {
         LenResponse util = (LenResponse)o;
         if (util.isFlag()) {
             Object[] args = point.getArgs();
-            identityService.deleteUser((String)args[0]);
+           // identityService.deleteUser((String)args[0]);
         }
         return o;
     }
@@ -118,7 +118,7 @@ public class ListenUserRole {
         identityService.saveUser(au);
 
         // 删除用户-组关联
-        for (String roleId : strings) {
+        /*for (String roleId : strings) {
             identityService.deleteMembership(user.getId(), roleId);
         }
         // 再次关联
@@ -126,7 +126,7 @@ public class ListenUserRole {
             for (String roleId : strings) {
                 identityService.createMembership(user.getId(), roleId);
             }
-        }
+        }*/
     }
 
     /********************** 用户处理end ***************************/
@@ -139,7 +139,7 @@ public class ListenUserRole {
         if (j.isFlag()) {
             Object[] args = joinPoint.getArgs();
             if (args.length == 2) {
-                changeRole(args);
+              //  changeRole(args);
             }
         }
         return o;
@@ -151,7 +151,7 @@ public class ListenUserRole {
         Object[] args = joinPoint.getArgs();
         if (args.length == 2) {
             if (((LenResponse)o).isFlag()) {
-                changeRole(args);
+              //  changeRole(args);
             }
         }
 
@@ -164,7 +164,7 @@ public class ListenUserRole {
         LenResponse util = (LenResponse)o;
         if (util.isFlag()) {
             Object[] args = point.getArgs();
-            identityService.deleteGroup((String)args[0]);
+          //  identityService.deleteGroup((String)args[0]);
         }
         return o;
     }

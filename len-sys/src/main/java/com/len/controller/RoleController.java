@@ -77,7 +77,7 @@ public class RoleController extends BaseController {
     @PostMapping(value = "addRole")
     @ResponseBody
     public LenResponse addRole(SysRole sysRole, String[] menus) {
-        roleService.addRole(sysRole, menus);
+       // roleService.addRole(sysRole, menus);
         return succ(MsHelper.getMsg("insert.success"));
     }
 
@@ -98,7 +98,7 @@ public class RoleController extends BaseController {
     @PostMapping(value = "updateRole")
     @ResponseBody
     public LenResponse updateUser(SysRole role, String[] menus) {
-        roleService.updateUser(role, menus);
+       // roleService.updateUser(role, menus);
         return succ(MsHelper.getMsg("update.success"));
     }
 
@@ -108,7 +108,7 @@ public class RoleController extends BaseController {
     @ResponseBody
     @RequiresPermissions("role:del")
     public LenResponse del(String id) {
-        roleService.del(id);
+      //  roleService.del(id);
         return succ(MsHelper.getMsg("del.success"));
     }
 
