@@ -1,5 +1,5 @@
 <p align="center">
-	👉 <a target="_blank" href="http://42.192.219.164:8081">http://42.192.219.164:8081</a>👈|admin|123456
+	👉 <a target="_blank" href="http://42.192.219.164">http://42.192.219.164</a>👈|admin|123456
 </p>
 <p align="center">
 	<a target="_blank" href="https://gitee.com/zzdevelop/lenosp/stargazers">
@@ -37,7 +37,7 @@ lenosp是一个基于spring boot的脚手架，并提供完善社区文档教程
 
 # 体验
 
-[http://42.192.219.164:8081/login](http://42.192.219.164:8081/login)
+[http://42.192.219.164/login](http://42.192.219.164/login)
 体验账户：admin，所有账户密码：123456
 测试环境，所有业务增删改不会持久化，默认显示成功
 
