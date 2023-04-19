@@ -25,12 +25,16 @@ import com.len.util.MsHelper;
 
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * 控制器基础抽象类
+ * @author https://gitee.com/zzdevelop/lenosp 自行补充
+ */
 @Slf4j
 public abstract class BaseController {
 
     private static boolean isAjaxRequest(HttpServletRequest request) {
         String requestedWith = request.getHeader("x-requested-with");
-        return requestedWith != null && requestedWith.equalsIgnoreCase("XMLHttpRequest");
+        return "XMLHttpRequest".equalsIgnoreCase(requestedWith);
     }
 
     @InitBinder
@@ -41,7 +45,7 @@ public abstract class BaseController {
     }
 
     @ExceptionHandler({UnauthorizedException.class, AuthorizationException.class})
-    public String authorizationException(HttpServletRequest request, HttpServletResponse response) {
+    public String authorizationException(HttpServletRequest request) {
         if (isAjaxRequest(request)) {
             Map<String, Object> map = Maps.newHashMap();
             map.put("code", "403");

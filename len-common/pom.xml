@@ -11,7 +11,6 @@
   <packaging>jar</packaging>
 
   <name>len-common</name>
-  <!-- FIXME change it to the project's website -->
   <url>https://gitee.com/zzdevelop/lenosp</url>
 
   <properties>
@@ -24,7 +23,7 @@
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>4.11</version>
+      <version>${junit.version}</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
