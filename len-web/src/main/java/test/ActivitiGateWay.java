@@ -160,17 +160,19 @@ public class ActivitiGateWay {
      */
     @Test
     public void imageById() throws Exception {
+        try(
         InputStream inputStream = repositoryService.getResourceAsStream("12501", "bpmn/leave2.png");
         FileOutputStream outputStream = new FileOutputStream("F:/a.png");
-        byte[] b = new byte[1024];
-        int red = inputStream.read(b);
-        while (red != -1) {
-            outputStream.write(b, 0, red);
-            red = inputStream.read(b);
+        ) {
+            byte[] b = new byte[1024];
+            int red = inputStream.read(b);
+            while (red != -1) {
+                outputStream.write(b, 0, red);
+                red = inputStream.read(b);
+            }
+            outputStream.write(b);
+
         }
-        outputStream.write(b);
-        inputStream.close();
-        outputStream.close();
     }
 
 }

@@ -306,16 +306,15 @@ public class ActivitiDemo {
     @Test
     public void imageById() throws Exception {
         InputStream inputStream = repositoryService.getResourceAsStream("12501", "bpmn/leave.png");
-        FileOutputStream outputStream = new FileOutputStream("F:/a.png");
-        byte[] b = new byte[1024];
-        int red = inputStream.read(b);
-        while (red != -1) {
-            outputStream.write(b, 0, red);
-            red = inputStream.read(b);
-        }
-        outputStream.write(b);
-        inputStream.close();
-        outputStream.close();
+       try(FileOutputStream outputStream = new FileOutputStream("F:/a.png");) {
+           byte[] b = new byte[1024];
+           int red = inputStream.read(b);
+           while (red != -1) {
+               outputStream.write(b, 0, red);
+               red = inputStream.read(b);
+           }
+           outputStream.write(b);
+       }
     }
 
     @Test
@@ -341,9 +340,10 @@ public class ActivitiDemo {
             processEngine.getProcessEngineConfiguration().getLabelFontName(), "宋体", null, 1.0);
         byte[] b = new byte[1024];
         int len;
-        FileOutputStream outputStream = new FileOutputStream("F:/1.png");
-        while ((len = imageStream.read(b, 0, 1024)) != -1) {
-            outputStream.write(b, 0, len);
+        try(FileOutputStream outputStream = new FileOutputStream("F:/1.png");) {
+            while ((len = imageStream.read(b, 0, 1024)) != -1) {
+                outputStream.write(b, 0, len);
+            }
         }
     }
 

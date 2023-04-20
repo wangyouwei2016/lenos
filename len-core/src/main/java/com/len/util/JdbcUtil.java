@@ -22,14 +22,4 @@ public class JdbcUtil {
         return con;
     }
 
-    public static void main(String[] args) throws SQLException {
-        Connection con = getConnection();
-        Statement statement = con.createStatement();
-        String sql = "select * from z_user";
-        ResultSet rs = statement.executeQuery(sql);
-        while (rs.next()) {
-            System.out.println(rs.getString("username"));
-        }
-
-    }
 }

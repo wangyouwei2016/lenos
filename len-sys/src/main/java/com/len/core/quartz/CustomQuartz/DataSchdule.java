@@ -21,14 +21,16 @@ public class DataSchdule {
     @Log(type = Log.LOG_TYPE.UPDATE, desc = "定时还原数据库")
     public static void restData() throws IOException, InterruptedException {
         // SQL文件路径
-        try {
+        String sqlPath = "G:\\os\\sql\\lenos_test.sql";
+        try(
+                BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(sqlPath), "utf-8"));
+        ) {
             Runtime rt = Runtime.getRuntime();
-            String sqlPath = "G:\\os\\sql\\lenos_test.sql";
+
             Process process = rt.exec(
                 "D:\\java\\mysql-5.7.21-winx64\\mysql-5.7.21-winx64\\bin\\mysql.exe -hlocalhost -uroot -ppassword --default-character-set=utf8 "
                     + "lenos_test");
             OutputStream outputStream = process.getOutputStream();
-            BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(sqlPath), "utf-8"));
             String str = null;
             StringBuffer sb = new StringBuffer();
             while ((str = br.readLine()) != null) {

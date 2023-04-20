@@ -134,7 +134,6 @@ public class VerifyCodeUtils {
     public static void outputImage(int w, int h, OutputStream os, String code) throws IOException {
         int verifySize = code.length();
         BufferedImage image = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
-        Random rand = new Random();
         Graphics2D g2 = image.createGraphics();
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         Color[] colors = new Color[5];
@@ -142,8 +141,8 @@ public class VerifyCodeUtils {
             Color.ORANGE, Color.PINK, Color.YELLOW};
         float[] fractions = new float[colors.length];
         for (int i = 0; i < colors.length; i++) {
-            colors[i] = colorSpaces[rand.nextInt(colorSpaces.length)];
-            fractions[i] = rand.nextFloat();
+            colors[i] = colorSpaces[random.nextInt(colorSpaces.length)];
+            fractions[i] = random.nextFloat();
         }
         Arrays.sort(fractions);
 
@@ -155,7 +154,6 @@ public class VerifyCodeUtils {
         g2.fillRect(0, 2, w, h - 4);
 
         // 绘制干扰线
-        Random random = new Random();
         g2.setColor(getRandColor(160, 200));// 设置线条的颜色
         for (int i = 0; i < 20; i++) {
             int x = random.nextInt(w - 1);
@@ -184,7 +182,7 @@ public class VerifyCodeUtils {
         char[] chars = code.toCharArray();
         for (int i = 0; i < verifySize; i++) {
             AffineTransform affine = new AffineTransform();
-            affine.setToRotation(Math.PI / 4 * rand.nextDouble() * (rand.nextBoolean() ? 1 : -1),
+            affine.setToRotation(Math.PI / 4 * random.nextDouble() * (random.nextBoolean() ? 1 : -1),
                 (w / verifySize) * i + fontSize / 2, h / 2);
             g2.setTransform(affine);
             g2.drawChars(chars, i, 1, ((w - 10) / verifySize) * i + 5, h / 2 + fontSize / 2 - 10);
@@ -195,10 +193,12 @@ public class VerifyCodeUtils {
     }
 
     private static Color getRandColor(int fc, int bc) {
-        if (fc > 255)
+        if (fc > 255) {
             fc = 255;
-        if (bc > 255)
+        }
+        if (bc > 255) {
             bc = 255;
+        }
         int r = fc + random.nextInt(bc - fc);
         int g = fc + random.nextInt(bc - fc);
         int b = fc + random.nextInt(bc - fc);
@@ -270,15 +270,6 @@ public class VerifyCodeUtils {
 
     }
 
-    public static void main(String[] args) throws IOException {
-        File dir = new File("F:/verifies");
-        int w = 200, h = 80;
-        for (int i = 0; i < 50; i++) {
-            String verifyCode = generateVerifyCode(4);
-            File file = new File(dir, verifyCode + ".jpg");
-            outputImage(w, h, file, verifyCode);
-        }
-    }
 
     /**
      * 验证码对象

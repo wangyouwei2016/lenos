@@ -12,7 +12,7 @@ import com.len.core.init.job.JobExecuteImpl;
  */
 @Component
 public class LenospInit implements ApplicationListener<ContextRefreshedEvent> {
-
+    @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
         init(event);
     }

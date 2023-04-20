@@ -1,5 +1,7 @@
 package com.len.service.impl;
 
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -27,7 +29,7 @@ import com.len.util.LenResponse;
 @Service
 public class BlogArticleServiceImpl extends BaseServiceImpl<BlogArticleMapper, BlogArticle>
     implements BlogArticleService {
-
+    private Random rand = SecureRandom.getInstanceStrong();
     private static final Pattern IMG = Pattern.compile("<(img)(.*?)(/>|></img>|>)");
     private static final Pattern SRC = Pattern.compile("src\\s*=\\s*\"?(.*?)(\"|>|\\s+)");
     @Autowired
@@ -40,6 +42,9 @@ public class BlogArticleServiceImpl extends BaseServiceImpl<BlogArticleMapper, B
     private BlogTagService tagService;
     @Autowired
     private SysUserService sysUserService;
+
+    public BlogArticleServiceImpl() throws NoSuchAlgorithmException {
+    }
 
     private ArticleDetail getArticleByCode(String code) {
 
@@ -167,10 +172,10 @@ public class BlogArticleServiceImpl extends BaseServiceImpl<BlogArticleMapper, B
     }
 
     private String generatorCode() {
-        Random random = new Random();
+
         StringBuilder result = new StringBuilder();
         for (int i = 0; i < 8; i++) {
-            result.append(random.nextInt(9) + 1);
+            result.append(this.rand.nextInt(9) + 1);
         }
         BlogArticle article = new BlogArticle();
         article.setCode(result.toString());

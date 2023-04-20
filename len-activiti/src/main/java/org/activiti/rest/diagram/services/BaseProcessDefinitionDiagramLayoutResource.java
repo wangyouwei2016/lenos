@@ -117,8 +117,9 @@ public class BaseProcessDefinitionDiagramLayoutResource {
                 activityArray.add(activityName);
             }
 
-            for (String flow : highLightedFlows)
+            for (String flow : highLightedFlows) {
                 flowsArray.add(flow);
+            }
 
             responseJSON.set("highLightedActivities", activityArray);
             responseJSON.set("highLightedFlows", flowsArray);
@@ -185,8 +186,9 @@ public class BaseProcessDefinitionDiagramLayoutResource {
                 laneSetArray.add(laneSetJSON);
             }
 
-            if (laneSetArray.size() > 0)
+            if (laneSetArray.size() > 0) {
                 responseJSON.set("laneSets", laneSetArray);
+            }
         }
 
         ArrayNode sequenceFlowArray = new ObjectMapper().createArrayNode();
@@ -289,12 +291,15 @@ public class BaseProcessDefinitionDiagramLayoutResource {
             flowJSON.put("flow", "(" + sequenceFlow.getSource().getId() + ")--" + sequenceFlow.getId() + "-->("
                 + sequenceFlow.getDestination().getId() + ")");
 
-            if (isConditional)
+            if (isConditional) {
                 flowJSON.put("isConditional", isConditional);
-            if (isDefault)
+            }
+            if (isDefault) {
                 flowJSON.put("isDefault", isDefault);
-            if (isHighLighted)
+            }
+            if (isHighLighted) {
                 flowJSON.put("isHighLighted", isHighLighted);
+            }
 
             flowJSON.set("xPointArray", xPointArray);
             flowJSON.set("yPointArray", yPointArray);
@@ -312,13 +317,13 @@ public class BaseProcessDefinitionDiagramLayoutResource {
         ObjectNode propertiesJSON = new ObjectMapper().createObjectNode();
         for (String key : properties.keySet()) {
             Object prop = properties.get(key);
-            if (prop instanceof String)
-                propertiesJSON.put(key, (String)properties.get(key));
-            else if (prop instanceof Integer)
-                propertiesJSON.put(key, (Integer)properties.get(key));
-            else if (prop instanceof Boolean)
-                propertiesJSON.put(key, (Boolean)properties.get(key));
-            else if ("initial".equals(key)) {
+            if (prop instanceof String) {
+                propertiesJSON.put(key, (String) properties.get(key));
+            } else if (prop instanceof Integer) {
+                propertiesJSON.put(key, (Integer) properties.get(key));
+            }else if (prop instanceof Boolean) {
+                propertiesJSON.put(key, (Boolean) properties.get(key));
+            }else if ("initial".equals(key)) {
                 ActivityImpl act = (ActivityImpl)properties.get(key);
                 propertiesJSON.put(key, act.getId());
             } else if ("timerDeclarations".equals(key)) {
@@ -326,14 +331,14 @@ public class BaseProcessDefinitionDiagramLayoutResource {
                     (ArrayList<TimerDeclarationImpl>)properties.get(key);
                 ArrayNode timerDeclarationArray = new ObjectMapper().createArrayNode();
 
-                if (timerDeclarations != null)
+                if (timerDeclarations != null) {
                     for (TimerDeclarationImpl timerDeclaration : timerDeclarations) {
                         ObjectNode timerDeclarationJSON = new ObjectMapper().createObjectNode();
 
                         timerDeclarationJSON.put("isExclusive", timerDeclaration.isExclusive());
-                        if (timerDeclaration.getRepeat() != null)
+                        if (timerDeclaration.getRepeat() != null) {
                             timerDeclarationJSON.put("repeat", timerDeclaration.getRepeat());
-
+                        }
                         timerDeclarationJSON.put("retries", String.valueOf(timerDeclaration.getRetries()));
                         timerDeclarationJSON.put("type", timerDeclaration.getJobHandlerType());
                         timerDeclarationJSON.put("configuration", timerDeclaration.getJobHandlerConfiguration());
@@ -341,8 +346,10 @@ public class BaseProcessDefinitionDiagramLayoutResource {
 
                         timerDeclarationArray.add(timerDeclarationJSON);
                     }
-                if (timerDeclarationArray.size() > 0)
+                }
+                if (timerDeclarationArray.size() > 0) {
                     propertiesJSON.set(key, timerDeclarationArray);
+                }
                 // TODO: implement getting description
             } else if ("eventDefinitions".equals(key)) {
                 ArrayList<EventSubscriptionDeclaration> eventDefinitions =
@@ -353,8 +360,9 @@ public class BaseProcessDefinitionDiagramLayoutResource {
                     for (EventSubscriptionDeclaration eventDefinition : eventDefinitions) {
                         ObjectNode eventDefinitionJSON = new ObjectMapper().createObjectNode();
 
-                        if (eventDefinition.getActivityId() != null)
+                        if (eventDefinition.getActivityId() != null) {
                             eventDefinitionJSON.put("activityId", eventDefinition.getActivityId());
+                        }
 
                         eventDefinitionJSON.put("eventName", eventDefinition.getEventName());
                         eventDefinitionJSON.put("eventType", eventDefinition.getEventType());
@@ -364,8 +372,9 @@ public class BaseProcessDefinitionDiagramLayoutResource {
                     }
                 }
 
-                if (eventDefinitionsArray.size() > 0)
+                if (eventDefinitionsArray.size() > 0) {
                     propertiesJSON.set(key, eventDefinitionsArray);
+                }
 
                 // TODO: implement it
             } else if ("errorEventDefinitions".equals(key)) {
@@ -377,19 +386,20 @@ public class BaseProcessDefinitionDiagramLayoutResource {
                     for (ErrorEventDefinition errorEventDefinition : errorEventDefinitions) {
                         ObjectNode errorEventDefinitionJSON = new ObjectMapper().createObjectNode();
 
-                        if (errorEventDefinition.getErrorCode() != null)
+                        if (errorEventDefinition.getErrorCode() != null) {
                             errorEventDefinitionJSON.put("errorCode", errorEventDefinition.getErrorCode());
-                        else
+                        }else {
                             errorEventDefinitionJSON.putNull("errorCode");
-
+                        }
                         errorEventDefinitionJSON.put("handlerActivityId", errorEventDefinition.getHandlerActivityId());
 
                         errorEventDefinitionsArray.add(errorEventDefinitionJSON);
                     }
                 }
 
-                if (errorEventDefinitionsArray.size() > 0)
+                if (errorEventDefinitionsArray.size() > 0) {
                     propertiesJSON.set(key, errorEventDefinitionsArray);
+                }
             }
 
         }
@@ -445,14 +455,18 @@ public class BaseProcessDefinitionDiagramLayoutResource {
 
         activityJSON.put("activityId", activity.getId());
         activityJSON.set("properties", propertiesJSON);
-        if (multiInstance != null)
+        if (multiInstance != null) {
             activityJSON.put("multiInstance", multiInstance);
-        if (collapsed)
+        }
+        if (collapsed) {
             activityJSON.put("collapsed", collapsed);
-        if (nestedActivityArray.size() > 0)
+        }
+        if (nestedActivityArray.size() > 0) {
             activityJSON.set("nestedActivities", nestedActivityArray);
-        if (isInterrupting != null)
+        }
+        if (isInterrupting != null) {
             activityJSON.put("isInterrupting", isInterrupting);
+        }
 
         activityJSON.put("x", activity.getX());
         activityJSON.put("y", activity.getY());

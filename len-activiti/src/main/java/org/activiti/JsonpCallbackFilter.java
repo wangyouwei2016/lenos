@@ -15,9 +15,9 @@ import lombok.extern.slf4j.Slf4j;
 @WebFilter("/service/*")
 @Slf4j
 public class JsonpCallbackFilter implements Filter {
-
+    @Override
     public void init(FilterConfig fConfig) throws ServletException {}
-
+    @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
         throws IOException, ServletException {
         HttpServletRequest httpRequest = (HttpServletRequest)request;
@@ -26,9 +26,9 @@ public class JsonpCallbackFilter implements Filter {
         Map<String, String[]> parms = httpRequest.getParameterMap();
 
         if (parms.containsKey("callback")) {
-            if (log.isDebugEnabled())
+            if (log.isDebugEnabled()) {
                 log.debug("Wrapping response with JSONP callback '" + parms.get("callback")[0] + "'");
-
+            }
             OutputStream out = httpResponse.getOutputStream();
 
             GenericResponseWrapper wrapper = new GenericResponseWrapper(httpResponse);
@@ -40,7 +40,7 @@ public class JsonpCallbackFilter implements Filter {
             outputStream.write(new String(parms.get("callback")[0] + "(").getBytes());
             outputStream.write(wrapper.getData());
             outputStream.write(new String(");").getBytes());
-            byte jsonpResponse[] = outputStream.toByteArray();
+            byte[] jsonpResponse = outputStream.toByteArray();
 
             wrapper.setContentType("text/javascript;charset=UTF-8");
             wrapper.setContentLength(jsonpResponse.length);
@@ -53,6 +53,6 @@ public class JsonpCallbackFilter implements Filter {
             chain.doFilter(request, response);
         }
     }
-
+    @Override
     public void destroy() {}
 }
