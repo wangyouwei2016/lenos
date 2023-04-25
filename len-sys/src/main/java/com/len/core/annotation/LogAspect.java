@@ -2,6 +2,7 @@ package com.len.core.annotation;
 
 import java.lang.reflect.Method;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -12,7 +13,8 @@ import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
 import org.springframework.web.context.request.RequestAttributes;
@@ -29,41 +31,45 @@ import com.len.util.IpUtil;
 /**
  *
  * 为增删改添加监控
+ * 
+ * @author star
  */
 @Aspect
 @Component
 public class LogAspect {
 
-    @Autowired
-    private SysLogMapper logMapper;
+    private static final Logger log = LoggerFactory.getLogger(LogAspect.class);
 
-    @Pointcut("@annotation(com.len.core.annotation.Log)")
-    private void pointcut() {
+    private final SysLogMapper logMapper;
 
+    public LogAspect(SysLogMapper logMapper) {
+        this.logMapper = logMapper;
     }
 
+    @Pointcut("@annotation(com.len.core.annotation.Log)")
+    private void pointcut() { /* 织入点无需方法体 */ }
+
     @After("pointcut()")
-    public void insertLogSuccess(JoinPoint jp) {
+    public void insertLogSuccess(JoinPoint jp) throws InterruptedException {
         addLog(jp, getDesc(jp));
     }
 
-    private void addLog(JoinPoint jp, String text) {
+    private void addLog(JoinPoint jp, String text) throws InterruptedException {
         Log.LOG_TYPE type = getType(jp);
-        SysLog log = new SysLog();
+        SysLog sysLog = new SysLog();
         RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
         // 一些系统监控
         if (requestAttributes != null) {
-            HttpServletRequest request =
-                ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest();
+            HttpServletRequest request = ((ServletRequestAttributes)requestAttributes).getRequest();
             String ip = IpUtil.getIp(request);
-            log.setIp(ip);
+            sysLog.setIp(ip);
         }
-        log.setCreateTime(new Date());
-        log.setType(type.toString());
-        log.setText(text);
+        sysLog.setCreateTime(new Date());
+        sysLog.setType(type.toString());
+        sysLog.setText(text);
 
         Object[] obj = jp.getArgs();
-        StringBuffer buffer = new StringBuffer();
+        StringBuilder buffer = new StringBuilder();
         if (obj != null) {
             for (int i = 0; i < obj.length; i++) {
                 buffer.append("[参数").append(i + 1).append(":");
@@ -71,36 +77,37 @@ public class LogAspect {
                 if (o instanceof Model) {
                     continue;
                 }
-                String parameter;
+                String parameter = null;
                 try {
                     parameter = JSON.toJSONString(o);
                 } catch (Exception e) {
-                    continue;
+                    TimeUnit.MILLISECONDS.sleep(0);
                 }
                 buffer.append(parameter);
                 buffer.append("]");
             }
         }
-        log.setParam(buffer.toString());
+        sysLog.setParam(buffer.toString());
         try {
             CurrentUser currentUser = Principal.getCurrentUse();
             if (currentUser != null) {
-                log.setUserName(currentUser.getUsername());
+                sysLog.setUserName(currentUser.getUsername());
             }
         } catch (UnavailableSecurityManagerException e) {
+            log.error(e.getMessage());
         }
-        logMapper.insert(log);
+        logMapper.insert(sysLog);
     }
 
     /**
      * 记录异常
      *
-     * @param joinPoint
-     * @param e
+     * @param joinPoint 连接点对象
+     * @param e 异常对象
      */
     @AfterThrowing(value = "pointcut()", throwing = "e")
-    public void afterException(JoinPoint joinPoint, Exception e) {
-        System.out.print("-----------afterException:" + e.getMessage());
+    public void afterException(JoinPoint joinPoint, Exception e) throws InterruptedException {
+        log.error("-----------afterException:{}", e.getMessage());
         addLog(joinPoint, getDesc(joinPoint) + e.getMessage());
     }
 
