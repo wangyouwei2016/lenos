@@ -9,8 +9,8 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 /**
  * 项目启动类
- * 
- * @author lenosp https://gitee.com/zzdevelop/lenosp
+ *
+ * @author <a href="https://gitee.com/zzdevelop/lenosp">lenosp</a>
  */
 @EnableWebMvc
 @EnableTransactionManagement
