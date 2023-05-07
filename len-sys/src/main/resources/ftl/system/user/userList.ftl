@@ -5,13 +5,24 @@
     <div class="search-select">
         <@lenInclude path="/system/base/queryBox.ftl" name="用户名" id="uname" ></@lenInclude>
         <@lenInclude path="/system/base/queryBox.ftl" name="邮箱" id="email" ></@lenInclude>
+        <@lenInclude path="/system/base/queryBox.ftl" name="邮箱" id="email" ></@lenInclude>
+        <@lenInclude path="/system/base/queryBox.ftl" name="邮箱" id="email" ></@lenInclude>
+        <@lenInclude path="/system/base/queryBox.ftl" name="邮箱" id="email" ></@lenInclude>
+        <@lenInclude path="/system/base/queryBox.ftl" name="邮箱" id="email" ></@lenInclude>
+        <@lenInclude path="/system/base/queryBox.ftl" name="邮箱" id="email" ></@lenInclude>
+        <@lenInclude path="/system/base/queryBox.ftl" name="邮箱" id="email" ></@lenInclude>
+        <@lenInclude path="/system/base/queryBox.ftl" name="邮箱" id="email" ></@lenInclude>
+        <@lenInclude path="/system/base/queryBox.ftl" name="邮箱" id="email" ></@lenInclude>
+        <@lenInclude path="/system/base/queryBox.ftl" name="邮箱" id="email" ></@lenInclude>
     </div>
+	<div style="text-align: center;background-color: #f8f8f8;padding-bottom: 10px">
+		<#include "/system/base/searth.ftl">
+	</div>
 </div>
 
 <#--按钮-->
-<div class="layui-col-md12 len-button">
-    <div class="layui-btn-group  user-bar">
-        <#include "/system/base/searth.ftl">
+<div class="layui-col-md15 len-button" style="width:100%;background: #7979f6;display: flex;justify-content: space-between;flex-wrap: wrap;">
+    <div class="layui-btn-group  user-bar" style="flex: 1;">
         <@lenInclude path="/system/base/btn.ftl" hasPermission="user:select"
         type="add" name="新建" icon="&#xe608;"></@lenInclude>
         <@lenInclude path="/system/base/btn.ftl" hasPermission="user:select"
@@ -21,10 +32,11 @@
         <@lenInclude path="/system/base/btn.ftl" hasPermission="user:repass"
         type="changePwd" name="修改密码" icon="&#xe605;"></@lenInclude>
     </div>
+
 </div>
 
 <#--表格-->
-<table id="userList" width="100%" lay-filter="user"></table>
+<table id="userList" width="100%" lay-filter="user" style="background-color: red;"></table>
 
 <#--toobar-->
 <script type="text/html" id="bar">

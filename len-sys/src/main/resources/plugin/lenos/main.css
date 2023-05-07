@@ -68,7 +68,7 @@ html {
     padding: 10px 0;
     position: relative;
     z-index: 99;
-    height: auto;
+    min-height: 30px;
     background-color: #f8f8f8;
 }
 
