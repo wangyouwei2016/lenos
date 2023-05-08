@@ -6,6 +6,10 @@ var menuFn = (function ($) {
 
 
     return {
+        /**
+         * 绑定事件
+         * @param params
+         */
         bind: function (params) {
             var that = this,
                 _config = that.config;
@@ -22,7 +26,6 @@ var menuFn = (function ($) {
                     var htmlStr = that.loadHtml('/user/showUser?v=1683539731677');
                     _content = $('.wrapper');
                     _content.append(htmlStr);
-                    debugger
                 })
 
             });

@@ -35,6 +35,7 @@
 <body>
 
 <section id="container">
+    <#--头部-->
     <header class="header white-bg">
         <div class="sidebar-toggle-box">
             <div class="fa fa-bars tooltips" data-placement="right" data-original-title="Toggle Navigation"></div>
@@ -293,10 +294,10 @@
                 <#--菜单-->
                 <#macro tree data start end>
                     <#if (start=="start")>
-                        <li class="sub-menu">
                     </#if>
                     <#list data as child>
                         <#if child.children?size gt 0>
+                            <li class="sub-menu">
                             <a href="#" >
                                 <i class="fa fa-laptop"></i>
                                 <span>${child.name}</span>
@@ -304,6 +305,7 @@
                             <ul class="sub">
                                 <@tree data=child.children start="" end=""/>
                             </ul>
+                            </li>
                         <#else>
                             <li class="len-menu-item">
                                 <a href="#">
@@ -314,7 +316,6 @@
                         </#if>
                     </#list>
                     <#if (end=="end")>
-                        </li>
                     </#if>
                 </#macro>
 
@@ -386,7 +387,6 @@
 
     $(function(){
         $('select.styled').customSelect();
-
         menuFn.bind();
     });
 
