@@ -15,6 +15,7 @@
     <link href="${re.contextPath}/plugin/new/assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
     <link href="${re.contextPath}/plugin/new/assets/jquery-easy-pie-chart/jquery.easy-pie-chart.css" rel="stylesheet" type="text/css" media="screen"/>
     <link rel="stylesheet" href="${re.contextPath}/plugin/new/css/owl.carousel.css" type="text/css">
+    <link rel="stylesheet" href="${re.contextPath}/plugin/new/admin.css" type="text/css">
 
     <!--right slidebar-->
     <link href="${re.contextPath}/plugin/new/css/slidebars.css" rel="stylesheet">
@@ -30,6 +31,8 @@
     <script src="${re.contextPath}/plugin/new/js/html5shiv.js"></script>
     <script src="${re.contextPath}/plugin/new/js/respond.min.js"></script>
     <![endif]-->
+    <#--排序表格组件-->
+    <script src="${re.contextPath}/plugin/plugins/sortable/Sortable.js"></script>
 </head>
 
 <body>
@@ -308,7 +311,11 @@
                             </li>
                         <#else>
                             <li class="len-menu-item">
-                                <a href="#">
+                                <#--二级菜单-->
+                                <a draggable="false"
+                                   href="#${child.router}"
+                                   data-options="{url:'${child.url}',icon:'${child.icon}',title:'${child.name}',id:'${child.code}'}"
+                                >
                                     <span>${child.name}</span>
                                 </a>
                             </li>
@@ -329,7 +336,6 @@
     <!-- 内容主体区域 -->
     <section id="main-content">
         <section class="wrapper">
-
         </section>
     </section>
 
@@ -366,7 +372,12 @@
 <script src="${re.contextPath}/plugin/new/js/sparkline-chart.js"></script>
 <script src="${re.contextPath}/plugin/new/js/easy-pie-chart.js"></script>
 <script src="${re.contextPath}/plugin/new/js/count.js"></script>
+<#--菜单组件-->
 <script src="${re.contextPath}/plugin/new/menu.js"></script>
+<#--面板组件-->
+<script src="${re.contextPath}/plugin/new/dashboard.js"></script>
+<#--主入口组件-->
+<script src="${re.contextPath}/plugin/new/main.js"></script>
 
 <script>
 
@@ -387,7 +398,6 @@
 
     $(function(){
         $('select.styled').customSelect();
-        menuFn.bind();
     });
 
     $(window).on("resize",function(){

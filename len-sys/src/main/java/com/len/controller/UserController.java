@@ -63,7 +63,7 @@ public class UserController extends BaseController {
     @GetMapping(value = "showUser")
     @RequiresPermissions("user:show")
     public String showUser() {
-        return "/system/user/userList";
+        return "/new/user/list";
     }
 
     /**

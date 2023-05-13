@@ -42,7 +42,7 @@ public class VerifyCodeFilter extends AccessControlFilter {
         request.setAttribute("verfitiCode", enableVerifyCode);
         HttpServletRequest httpRequest = (HttpServletRequest)request;
         // 2、判断验证码是否禁用 或不是表单提交
-        if (!enableVerifyCode || !"post".equalsIgnoreCase(httpRequest.getMethod())) {
+       /* if (!enableVerifyCode || !"post".equalsIgnoreCase(httpRequest.getMethod())) {
             return true;
         }
         Object code = getSubject(request, response).getSession().getAttribute(jcaptchaParam);
@@ -56,7 +56,8 @@ public class VerifyCodeFilter extends AccessControlFilter {
         // 表单提交，校验验证码的正确性
         String currentCode = httpRequest.getParameter(jcaptchaParam);
 
-        return StringUtils.equalsIgnoreCase(storedCode, currentCode);
+        return StringUtils.equalsIgnoreCase(storedCode, currentCode);*/
+       return true;
     }
 
     @Override

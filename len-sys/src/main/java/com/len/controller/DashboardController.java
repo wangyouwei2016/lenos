@@ -67,7 +67,7 @@ public class DashboardController extends BaseController {
      */
     @GetMapping
     public String main() {
-        return "/main/dashboard";
+        return "/new/main/dashboard";
     }
 
     @GetMapping("/shortCuts")

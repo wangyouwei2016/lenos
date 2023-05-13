@@ -1,36 +1,39 @@
-var menuFn = (function ($) {
+window.lenosp = {};
+/**
+ * 菜单
+ *
+ * 需要提供扩展：增删改查一个菜单
+ */
+(function ($, lenosp) {
 
     var _win = $(window),
         _doc = $(document),
         _content = $('.main-content.wrapper');
 
+    var dashboard = {
+        url: 'dashboard',
+        openWait: true
+    };
 
-    return {
+    var _menu = {
         /**
-         * 绑定事件
-         * @param params
+         * 显示新页面
+         * @param option
          */
-        bind: function (params) {
-            var that = this,
-                _config = that.config;
-            var defaults = {
-                target: undefined
-            };
-            $.extend(true, defaults, params);
-
-            var _target = defaults.target === undefined ? _doc : $(defaults.target);
-
-            _target.find('li.len-menu-item').each(function () {
-                var _that = $(this);
-                _that.off('click').on('click', function () {
-                    var htmlStr = that.loadHtml('/user/showUser?v=1683539731677');
-                    _content = $('.wrapper');
-                    _content.append(htmlStr);
-                })
-
-            });
+        load: function (option) {
+            var that = this;
+            var htmlStr = that.loadHtml(option.url),
+                _content = $('.wrapper');
+            _content.empty();
+            _content.append(htmlStr);
         },
 
+        /**
+         * 加载html
+         * @param url
+         * @param callback
+         * @returns {*}
+         */
         loadHtml: function (url, callback) {
             var result;
             $.ajax({
@@ -38,7 +41,7 @@ var menuFn = (function ($) {
                 async: false,
                 dataType: 'html',
                 beforeSend: function (request) {
-                    request.setRequestHeader("IsGetHtml", 'true');
+                    // request.setRequestHeader("IsGetHtml", 'true');
                 },
                 error: function (xhr, err, msg) {
                     var m = ['<div style="padding: 20px;font-size: 20px;text-align:left;color:#009688;">',
@@ -60,5 +63,53 @@ var menuFn = (function ($) {
             });
             return result;
         },
+
+        /**
+         * 菜单绑定事件
+         * @param params
+         */
+        bind: function (params) {
+            var that = this,
+                _config = that.config;
+            var defaults = {
+                target: undefined
+            };
+            $.extend(true, defaults, params);
+
+            var _target = defaults.target === undefined ? _doc : $(defaults.target);
+
+            _target.find('li.len-menu-item').each(function () {
+                var _that = $(this);
+                _that.off('click').on('click', function () {
+                    var item = _that.find('a');
+                    var options = JSON.stringify(item.data('options'));
+                    _menu.load(options);
+                })
+
+            });
+        },
+    }
+
+
+    lenosp.menu = {
+        /**
+         * 初始化
+         */
+        init: function () {
+            //加载主面板(需要考虑路由)
+            _menu.load(dashboard)
+        },
+        /**
+         * 菜单绑定事件
+         * @param params
+         */
+        bind: function (params) {
+            _menu.bind();
+        },
+
+        load: function (option) {
+            _menu.load(option);
+        }
     };
-})(jQuery);
+
+})(jQuery, lenosp);
