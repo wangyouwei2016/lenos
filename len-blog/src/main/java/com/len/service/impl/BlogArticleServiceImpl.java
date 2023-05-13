@@ -189,7 +189,7 @@ public class BlogArticleServiceImpl extends BaseServiceImpl<BlogArticleMapper, B
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public boolean addArticle(ArticleDetail articleDetail) {
         Article article = articleDetail.getArticle();
         String articleId = UUID.randomUUID().toString().replace("-", "");
@@ -262,7 +262,7 @@ public class BlogArticleServiceImpl extends BaseServiceImpl<BlogArticleMapper, B
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public boolean updateArticle(Article article, List<String> categoryIds, List<String> tags) {
         article.setUpdateBy(LenUser.getPrincipal().getUserId());
         article.setUpdateDate(new Date());
