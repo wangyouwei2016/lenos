@@ -48,8 +48,11 @@
                     var cId = $(item).attr('len-id');
                     item.parentNode.removeChild(item);
                     var children = sBody.children();
-                    if (children.length > 8) {
-                        layer.msg('快捷方式最多8个！', {icon: 5});
+                    if (children.length >= 8) {
+                        toastr.warning('快捷方式最多8个！', '', {
+                            closeButton: true,
+                            timeOut: 1500
+                        });
                         return false;
                     }
 
@@ -62,7 +65,10 @@
                         }
                     });
                     if (exists) {
-                        layer.msg('存在重复快捷方式！', {icon: 5});
+                        toastr.warning('存在重复快捷方式！', '', {
+                            closeButton: true,
+                            timeOut: 1500
+                        });
                         return false;
                     }
                     //保存快捷菜单
@@ -130,14 +136,16 @@
 
         delSingleShortcutBind: function ($that) {
             $that.off('click').on('click', function () {
-                layer.confirm('确定删除快捷菜单？', function () {
-                    var code = $that.attr('len-shortcut-code');
-                    dashboard.removeShortcuts(code, function (resp) {
-                        //删除当前快捷方式
-                        $that.parent().remove();
-                        layer.close(layer.index);
-                    });
+                var code = $that.attr('len-shortcut-code');
+                dashboard.removeShortcuts(code, function (resp) {
+                    //删除当前快捷方式
+                    $that.parent().remove();
+                    toastr.success('删除成功！', '快捷菜单', {
+                        closeButton: true,
+                        timeOut: 1500
+                    })
                 });
+
             });
         },
 
@@ -406,6 +414,9 @@
                 "<i style='font-size: 30px' class=\"len-icon fa fa-tasks\"></i>" +
                 "<span>" + name + "</span>"+
                 "</a>"+
+                "    <i len-shortcut-code=\"" + code + "\" class=\"admin-shortcut-remove\" title=\"删除快捷菜单\">" +
+                "      <i class=\"layui-icon fa fa-times\"></i>" +
+                "    </i>" +
                 /*"   <a  len-shortcut-id = \"" + id + "\" len-shortcut-code=\"" + code + "\">" +
                 "      <i class=\"layui-icon \">" + icon + "</i>" +
                 "      <cite>" + name + "</cite>" +

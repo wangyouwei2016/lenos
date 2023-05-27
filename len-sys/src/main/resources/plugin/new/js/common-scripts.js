@@ -71,8 +71,8 @@ var Script = function () {
             });
             $("#container").removeClass("sidebar-closed");
         }
-        var owl = $("#owl-demo").data("owlCarousel");
-        owl.reinit();
+        //var owl = $("#owl-demo").data("owlCarousel");
+        //owl.reinit();
     });
 
 // custom scrollbar

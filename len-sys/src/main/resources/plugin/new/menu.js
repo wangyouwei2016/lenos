@@ -8,7 +8,7 @@ window.lenosp = {};
 
     var _win = $(window),
         _doc = $(document),
-        _content = $('.main-content.wrapper');
+        _content = $('.main-content.wrapper.content');
 
     var dashboard = {
         url: 'dashboard',
@@ -23,7 +23,7 @@ window.lenosp = {};
         load: function (option) {
             var that = this;
             var htmlStr = that.loadHtml(option.url),
-                _content = $('.wrapper');
+                _content = $('.wrapper .content');
             _content.empty();
             _content.append(htmlStr);
         },
