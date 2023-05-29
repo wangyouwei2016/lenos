@@ -6,7 +6,6 @@ layui.config({
     var $ = layui.jquery;
     var $body = $('body');
 
-
     var admin = {};
     var events = admin.events = {
         fullscreen: function (othis) {

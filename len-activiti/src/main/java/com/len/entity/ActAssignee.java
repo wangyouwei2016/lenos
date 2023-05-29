@@ -5,8 +5,16 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
+/**
+ * act办理人信息表
+ * @author <a href="https://gitee.com/zzdevelop/lenosp">lenosp</a>
+ */
 @TableName(value = "act_assignee")
 public class ActAssignee {
+
+    /**
+     * 主键
+     */
     @TableId(value = "id", type = IdType.UUID)
     private String id;
 
@@ -40,8 +48,15 @@ public class ActAssignee {
     @TableField(value = "activti_name")
     private String activtiName;
 
+    /**
+     * 实例化
+     */
     public ActAssignee() {}
 
+    /**
+     * 实例化时设置节点id
+     * @param sid 节点id
+     */
     public ActAssignee(String sid) {
         this.sid = sid;
     }

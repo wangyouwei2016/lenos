@@ -4,16 +4,17 @@ import java.util.Locale;
 
 /**
  * 区域设置
+ * @author <a href="https://gitee.com/zzdevelop/lenosp">lenosp</a>
  */
 public class LocalLocale {
 
-    private final static ThreadLocal<Locale> local = ThreadLocal.withInitial(() -> {
+    private final static ThreadLocal<Locale> LOCAL = ThreadLocal.withInitial(() -> {
         // 语言的默认值
         return Locale.SIMPLIFIED_CHINESE;
     });
 
     public static Locale getLocale() {
-        return local.get();
+        return LOCAL.get();
     }
 
     public static void setLocale(String locale) {
@@ -21,11 +22,11 @@ public class LocalLocale {
     }
 
     public static void setLocale(Locale locale) {
-        local.set(locale);
+        LOCAL.set(locale);
     }
 
     public static void clear() {
-        local.remove();
+        LOCAL.remove();
     }
 
 }
