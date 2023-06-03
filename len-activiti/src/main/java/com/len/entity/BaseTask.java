@@ -78,6 +78,7 @@ public abstract class BaseTask implements Serializable {
 
     /**
      * 获取id
+     * 
      * @return 任务id
      */
     public String getId() {
@@ -90,6 +91,7 @@ public abstract class BaseTask implements Serializable {
 
     /**
      * 获取用户id
+     * 
      * @return 用户id
      */
     public String getUserId() {
@@ -102,6 +104,7 @@ public abstract class BaseTask implements Serializable {
 
     /**
      * 获取用户名称
+     * 
      * @return 用户名称
      */
     public String getUserName() {
@@ -114,6 +117,7 @@ public abstract class BaseTask implements Serializable {
 
     /**
      * 获取原因
+     * 
      * @return 原因
      */
     public String getReason() {
@@ -126,6 +130,7 @@ public abstract class BaseTask implements Serializable {
 
     /**
      * 获取流程实例id
+     * 
      * @return 流程实例id
      */
     public String getProcessInstanceId() {
@@ -138,6 +143,7 @@ public abstract class BaseTask implements Serializable {
 
     /**
      * 获取状态信息
+     * 
      * @return 状态
      */
     public String getStatus() {
@@ -150,6 +156,7 @@ public abstract class BaseTask implements Serializable {
 
     /**
      * 获取创建时间
+     * 
      * @return 创建时间
      */
     public Date getCreateDate() {
@@ -162,6 +169,7 @@ public abstract class BaseTask implements Serializable {
 
     /**
      * 获取创建者
+     * 
      * @return 创建者
      */
     public String getCreateBy() {
@@ -174,6 +182,7 @@ public abstract class BaseTask implements Serializable {
 
     /**
      * 获取更新时间
+     * 
      * @return 更新时间
      */
     public Date getUpdateDate() {
@@ -186,6 +195,7 @@ public abstract class BaseTask implements Serializable {
 
     /**
      * 获取更新者
+     * 
      * @return 更新者
      */
     public String getUpdateBy() {
@@ -198,6 +208,7 @@ public abstract class BaseTask implements Serializable {
 
     /**
      * 获取act任务名城
+     * 
      * @return 任务名称
      */
     public String getTaskName() {
@@ -210,6 +221,7 @@ public abstract class BaseTask implements Serializable {
 
     /**
      * 获取任务查看地址
+     * 
      * @return 任务查看地址
      */
     public String getUrlpath() {
@@ -222,12 +234,18 @@ public abstract class BaseTask implements Serializable {
 
     /**
      * 获取提交时间
+     * 
      * @return 提交时间
      */
     public Integer getSubmittimes() {
         return submittimes;
     }
 
+    /**
+     * 设置 提交时间
+     * 
+     * @param submittimes 提交时间
+     */
     public void setSubmittimes(Integer submittimes) {
         this.submittimes = submittimes;
     }

@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 
 /**
  * act办理人信息表
+ * 
  * @author <a href="https://gitee.com/zzdevelop/lenosp">lenosp</a>
  */
 @TableName(value = "act_assignee")
@@ -55,6 +56,7 @@ public class ActAssignee {
 
     /**
      * 实例化时设置节点id
+     * 
      * @param sid 节点id
      */
     public ActAssignee(String sid) {
@@ -69,7 +71,9 @@ public class ActAssignee {
     }
 
     /**
-     * @param id
+     * 设置 id
+     * 
+     * @param id id
      */
     public void setId(String id) {
         this.id = id == null ? null : id.trim();

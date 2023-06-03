@@ -8,6 +8,7 @@ import org.apache.log4j.Logger;
 
 /**
  * Base64编码工具类
+ * 
  * @author <a href="https://gitee.com/zzdevelop/lenosp">lenosp</a>
  * @date 2018/7/12
  */
@@ -22,7 +23,7 @@ public class Base64Utils {
 
     private static final Logger logger = Logger.getLogger(Base64Utils.class);
 
-    public static String ioToBase64(InputStream in) throws IOException {
+    public static String ioToBase64(InputStream in) {
         String strBase64 = null;
         try {
             byte[] bytes = new byte[in.available()];

@@ -11,6 +11,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 
 /**
  * 请假流程 表实体
+ * 
  * @author <a href="https://gitee.com/zzdevelop/lenosp">lenosp</a>
  */
 @TableName(value = "user_leave")
@@ -94,9 +95,6 @@ public class UserLeave extends BaseTask {
         return id;
     }
 
-    /**
-     * @param id
-     */
     @Override
     public void setId(String id) {
         this.id = id == null ? null : id.trim();
@@ -141,6 +139,5 @@ public class UserLeave extends BaseTask {
     public void setEndTime(Date endTime) {
         this.endTime = endTime;
     }
-
 
 }
