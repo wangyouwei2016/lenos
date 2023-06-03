@@ -8,8 +8,6 @@
         _init: function () {
             //向左滚动事件
             $('.t-tabs__operations--left').click(function () {
-                // 每隔一段时间更新元素的 transform 属性
-                // var left = 0;
                 //可视区域长度
                 var tabShowWidth = $('.t-tabs__nav-scroll').width();
                 //tab总长度
@@ -18,8 +16,6 @@
                 var transformValue = tab.css('transform');
                 //当前移动的长度
                 var translate3dWidth = _tabs.getTranslate3dValue(transformValue);
-
-                var offsetValue = tabWidth - tabShowWidth;
 
                 if (translate3dWidth === 0) {
                     return;
@@ -43,12 +39,10 @@
                     'transform': 'translate3d(' + translate3dWidth + 'px, 0px, 0px)',
                     'transition': 'transform 0.3s ease'
                 });
-                /*if (tabWidth < (tabShowWidth + (-translate3dWidth))) {
-                    translate3dWidth = translate3dWidth + 100;
-                    //左滚动大于0 取0
-                    translate3dWidth = translate3dWidth > 0 ? 0 : translate3dWidth;
 
-                }*/
+                if (translate3dWidth === 0) {
+                    $('.t-tabs__btn--left').remove();
+                }
             });
 
             //向右滚动事件
@@ -61,6 +55,7 @@
                 var transformValue = tab.css('transform');
                 //当前移动的长度
                 var translate3dWidth = _tabs.getTranslate3dValue(transformValue);
+                //偏移长度
                 var offsetValue = tabWidth - tabShowWidth;
                 translate3dWidth = -translate3dWidth;
                 if (translate3dWidth < offsetValue) {
@@ -74,19 +69,35 @@
                         'transform': 'translate3d(' + -translate3dWidth + 'px, 0px, 0px)',
                         'transition': 'transform 0.3s ease'
                     });
+
+                    var leftIcon = $('.t-tabs__operations--left');
+                    if (leftIcon.find('.t-tabs__btn--left').length === 0) {
+                        leftIcon.append(
+                            '<div class="t-tabs__btn--left t-tabs__btn t-size-m">\n' +
+                            '   <i class="layui-icon fa fa-angle-left"></i>\n' +
+                            '</div>'
+                        )
+                    }
                 }
             });
+
             //tab点击事件
-            $('.t-tabs__nav-wrap').find('.t-tabs__nav-item').click(function () {
+            $('.t-tabs__nav-wrap').on('click', '.t-tabs__nav-item', function () {
                 var index = $(this).index();
                 var active = $('.t-tabs__nav-wrap').find('.t-is-active');
                 var oldIndex = active.index();
                 if (index === oldIndex) {
                     return;
                 }
+
                 active.removeClass('t-is-active');
                 $(this).addClass('t-is-active')
 
+                if ($(this).attr('id') === 'tabs-nav-home') {
+                    return;
+                }
+
+                //实现tab遮挡展示全
                 //左侧长度
                 var leftTotalWidth = 0;
                 $(this).prevAll('.t-tabs__nav-item').addBack().each(function () {
@@ -112,6 +123,7 @@
                         'transform': 'translate3d(' + left + 'px, 0px, 0px)',
                         'transition': 'transform 0.3s ease'
                     });
+                    _tabs.autoCalShowIcon()
                 } else {
                     //当前宽度
                     var thisWidth = $(this).outerWidth(true);
@@ -131,7 +143,101 @@
 
                 }
 
-            })
+            });
+
+            //关闭点击事件
+            $('.t-tabs__nav-wrap').on('click', '.span-icon', function () {
+                var navWrap = $(this).closest('.t-tabs__nav-item');
+                navWrap.remove();
+                _tabs.autoCalRemoveIcon();
+            });
+
+        },
+
+        //删除一个tab
+        _removeByCode: function (code) {
+            $('.t-tabs__nav-wrap').find('div[len-code=' + code + ']').remove();
+            _tabs.autoCalRemoveIcon();
+        },
+
+        /**
+         * 添加一个tab
+         * @param data 格式{"title":"标签","code":"123","url":"xxx","icon":"fa-home"}
+         * @param isActive true 默认
+         * @private
+         */
+        _addTabs: function (data, isActive) {
+            var navWrap = $('.t-tabs__nav-wrap');
+            var tab = $('<div len-code=' + data.code + ' class="t-tabs__nav-item t-tabs__nav--card t-size-m"' +
+                '   draggable="true"><span class="t-tabs__nav-item-text-wrapper"' +
+                '   style="outline: none; z-index: 1;">' +
+                '   <span>' + data.name + '</span>' +
+                '   <span class="span-icon"><i class="layui-icon fa fa-times"></i></span>' +
+                '  </span>' +
+                '</div>');
+
+            navWrap.append(tab);
+            if (isActive) {
+                tab.click();
+            }
+            return {index: tab.index(), tab: tab};
+        },
+
+        autoCalRemoveIcon: function () {
+            //可视区域长度
+            var tabShowWidth = $('.t-tabs__nav-scroll').width();
+            //tab总长度
+            var tab = $('.t-is-smooth');
+            var tabAllWidth = tab.width();
+            var transformValue = tab.css('transform');
+            //当前移动的长度
+            var translate3dWidth = _tabs.getTranslate3dValue(transformValue);
+            //可视区域真实长度
+            var visibleWidth = tabAllWidth - (-translate3dWidth);
+            var right = $('.t-tabs__operations--right');
+            if (tabShowWidth > visibleWidth && right.find('.t-tabs__btn--right').length > 0) {
+                $('.t-tabs__btn--right').remove();
+            }
+        },
+
+        /**
+         * 计算是否显示左右侧图标
+         */
+        autoCalShowIcon: function () {
+            //可视区域长度
+            var tabShowWidth = $('.t-tabs__nav-scroll').width();
+            //tab总长度
+            var tab = $('.t-is-smooth');
+            var tabAllWidth = tab.width();
+            var transformValue = tab.css('transform');
+            //当前移动的长度
+            var translate3dWidth = _tabs.getTranslate3dValue(transformValue);
+            //偏移长度
+            var offsetValue = tabAllWidth - tabShowWidth;
+
+            if (translate3dWidth < offsetValue) {
+                var leftIcon = $('.t-tabs__operations--left');
+                if (leftIcon.find('.t-tabs__btn--left').length === 0) {
+                    //显示左侧icon
+                    leftIcon.append(
+                        '<div class="t-tabs__btn--left t-tabs__btn t-size-m">\n' +
+                        '   <i class="layui-icon fa fa-angle-left"></i>\n' +
+                        '</div>'
+                    )
+                }
+
+            } else {
+                var right = $('.t-tabs__operations--right');
+                if (tabShowWidth <= tabWidth && right.find('.t-tabs__btn--right').length === 0) {
+                    //显示右侧icon
+                    right.append(
+                        '<div class="t-tabs__btn--right t-tabs__btn t-size-m">' +
+                        '<i class="layui-icon fa fa-angle-right"></i>' +
+                        '</div>'
+                    )
+                }
+            }
+
 
         },
         //获取x轴偏移量
@@ -162,21 +268,39 @@
         getCurrent: function () {
 
         },
-        //添加一个tab
-        add: function () {
+        /**
+         *添加一个tab
+         * @param data 数据
+         * @param isActive 是否激活
+         * @param callback 回调
+         */
+        add: function (data, isActive, callback) {
+            if (typeof isActive === 'undefined') {
+                isActive = true;
+            }
 
+            var result = _tabs._addTabs(data, isActive);
+
+
+            if (callback && typeof callback === 'function') {
+                /**
+                 * 参数1：当前tab下标和对象
+                 * 参数2：传入的data数据
+                 */
+                callback(result, data);
+            }
         },
 
-        //删除一个tab
-        remove: function () {
-
+        //根据code 删除一个tab
+        remove: function (code) {
+            _tabs._removeByCode(code);
         },
         //删除所有tab
         removeAll: function () {
 
         },
         //插入一个tab
-        insertTab: function () {
+        insertTab: function (index,data, isActive, callback) {
 
         },
         //选中设置一个tab

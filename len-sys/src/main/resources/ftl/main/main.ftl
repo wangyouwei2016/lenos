@@ -288,7 +288,7 @@
             <!-- sidebar menu start-->
             <ul class="sidebar-menu" id="nav-accordion">
             <li>
-                <a class="active" href="index.html">
+                <a class="active" href="#" onclick="addTab()">
                     <i class="fa fa-dashboard"></i>
                     <span>Dashboard</span>
                 </a>
@@ -342,9 +342,9 @@
                 <div class="t-tabs__header t-is-top">
                     <div class="t-tabs__nav">
                         <div class="t-tabs__operations t-tabs__operations--left">
-                            <div class="t-tabs__btn--left t-tabs__btn t-size-m">
+                            <#--<div class="t-tabs__btn--left t-tabs__btn t-size-m">
                                 <i class="layui-icon fa fa-angle-left"></i>
-                            </div>
+                            </div>-->
                         </div>
                         <div class="t-tabs__operations t-tabs__operations--right">
                             <div class="t-tabs__btn--right t-tabs__btn t-size-m">
@@ -355,12 +355,12 @@
                             <div class="t-tabs__nav-scroll t-is-scrollable">
                                 <div class="t-tabs__nav-wrap t-is-smooth"
                                      style="transform: translate3d(0px, 0px, 0px);">
-                                    <div class="t-tabs__nav-item t-tabs__nav--card t-size-m" draggable="false">
+                                    <div id="tabs-nav-home" class="t-tabs__nav-item t-tabs__nav--card t-size-m" draggable="false">
                                                 <span class="t-tabs__nav-item-text-wrapper" style="z-index: 1;">
                                                     <i class="layui-icon fa fa-home"></i>
                                                     <!----></span><!---->
                                     </div>
-                                    <div class="t-tabs__nav-item t-tabs__nav--card t-is-active t-size-m"
+                                    <div len-code="1" class="t-tabs__nav-item t-tabs__nav--card t-is-active t-size-m"
                                          draggable="true"><span class="t-tabs__nav-item-text-wrapper"
                                                                 style="outline: none; z-index: 1;">
                                                 <span>基础详情页</span>
@@ -369,7 +369,7 @@
 
 
                                     </div>
-                                    <div class="t-tabs__nav-item t-tabs__nav--card t-size-m" draggable="true">
+                                    <div len-code="2" class="t-tabs__nav-item t-tabs__nav--card t-size-m" draggable="true">
                                                 <span class="t-tabs__nav-item-text-wrapper">
                                                     <span>多卡片详情页</span>
                                                     <span class="span-icon"><i
@@ -378,7 +378,7 @@
 
 
                                     </div>
-                                    <div class="t-tabs__nav-item t-tabs__nav--card t-size-m" draggable="true">
+                                    <div len-code="3" class="t-tabs__nav-item t-tabs__nav--card t-size-m" draggable="true">
                                                 <span class="t-tabs__nav-item-text-wrapper">
                                                     <span>数据详情页</span>
                                                     <span class="span-icon"><i
@@ -386,7 +386,7 @@
                                                     <!----></span>
 
                                     </div>
-                                    <div class="t-tabs__nav-item t-tabs__nav--card t-size-m" draggable="true">
+                                    <div len-code="4" class="t-tabs__nav-item t-tabs__nav--card t-size-m" draggable="true">
                                                 <span class="t-tabs__nav-item-text-wrapper">
                                                     <span>二级详情页</span>
                                                     <span class="span-icon"><i
@@ -394,7 +394,7 @@
                                                     <!----></span>
 
                                     </div>
-                                    <div class="t-tabs__nav-item t-tabs__nav--card t-size-m" draggable="true">
+                                    <div len-code="5" class="t-tabs__nav-item t-tabs__nav--card t-size-m" draggable="true">
                                                 <span class="t-tabs__nav-item-text-wrapper">
                                                     <span>基础表单页</span>
                                                     <span class="span-icon"><i
@@ -402,7 +402,7 @@
                                                     <!----></span>
 
                                     </div>
-                                    <div class="t-tabs__nav-item t-tabs__nav--card t-size-m" draggable="true">
+                                    <div len-code="6" class="t-tabs__nav-item t-tabs__nav--card t-size-m" draggable="true">
                                                 <span class="t-tabs__nav-item-text-wrapper">
                                                     <span>分步表单页</span>
                                                     <span class="span-icon"><i
@@ -410,7 +410,7 @@
                                                     <!----></span>
 
                                     </div>
-                                    <div class="t-tabs__nav-item t-tabs__nav--card t-size-m" draggable="true">
+                                    <div len-code="7" class="t-tabs__nav-item t-tabs__nav--card t-size-m" draggable="true">
                                                 <span class="t-tabs__nav-item-text-wrapper">
                                                     <span>基础列表页</span>
                                                     <span class="span-icon"><i
@@ -418,7 +418,7 @@
                                                     <!----></span>
 
                                     </div>
-                                    <div class="t-tabs__nav-item t-tabs__nav--card t-size-m" draggable="true">
+                                    <div len-code="8" class="t-tabs__nav-item t-tabs__nav--card t-size-m" draggable="true">
                                                 <span class="t-tabs__nav-item-text-wrapper">
                                                     <span>卡片列表页</span>
                                                     <span class="span-icon"><i
@@ -426,7 +426,7 @@
                                                     <!----></span>
 
                                     </div>
-                                    <div class="t-tabs__nav-item t-tabs__nav--card t-size-m" draggable="true">
+                                    <div len-code="9" class="t-tabs__nav-item t-tabs__nav--card t-size-m" draggable="true">
                                                 <span class="t-tabs__nav-item-text-wrapper">
                                                     <span>筛选列表页</span>
                                                     <span class="span-icon"><i
@@ -434,56 +434,56 @@
                                                     <!----></span>
 
                                     </div>
-                                    <div class="t-tabs__nav-item t-tabs__nav--card t-size-m" draggable="true">
+                                    <div len-code="10" class="t-tabs__nav-item t-tabs__nav--card t-size-m" draggable="true">
                                                 <span class="t-tabs__nav-item-text-wrapper">
                                                     <span>统计报表</span>
                                                     <span class="span-icon"><i
                                                                 class="layui-icon fa fa-times"></i></span>
                                                     <!----></span>
                                     </div>
-                                    <div class="t-tabs__nav-item t-tabs__nav--card t-size-m" draggable="true">
+                                    <div len-code="11" class="t-tabs__nav-item t-tabs__nav--card t-size-m" draggable="true">
                                                 <span class="t-tabs__nav-item-text-wrapper">
                                                     <span>统计报表</span>
                                                     <span class="span-icon"><i
                                                                 class="layui-icon fa fa-times"></i></span>
                                                     <!----></span>
                                     </div>
-                                    <div class="t-tabs__nav-item t-tabs__nav--card t-size-m" draggable="true">
+                                    <div len-code="12" class="t-tabs__nav-item t-tabs__nav--card t-size-m" draggable="true">
                                                 <span class="t-tabs__nav-item-text-wrapper">
                                                     <span>统计报表1111111111111111</span>
                                                     <span class="span-icon"><i
                                                                 class="layui-icon fa fa-times"></i></span>
                                                     <!----></span>
                                     </div>
-                                    <div class="t-tabs__nav-item t-tabs__nav--card t-size-m" draggable="true">
+                                    <div len-code="13" class="t-tabs__nav-item t-tabs__nav--card t-size-m" draggable="true">
                                                 <span class="t-tabs__nav-item-text-wrapper">
                                                     <span>统计报表</span>
                                                     <span class="span-icon"><i
                                                                 class="layui-icon fa fa-times"></i></span>
                                                     <!----></span>
                                     </div>
-                                    <div class="t-tabs__nav-item t-tabs__nav--card t-size-m" draggable="true">
+                                    <div len-code="14" class="t-tabs__nav-item t-tabs__nav--card t-size-m" draggable="true">
                                                 <span class="t-tabs__nav-item-text-wrapper">
                                                     <span>统计报表</span>
                                                     <span class="span-icon"><i
                                                                 class="layui-icon fa fa-times"></i></span>
                                                     <!----></span>
                                     </div>
-                                    <div class="t-tabs__nav-item t-tabs__nav--card t-size-m" draggable="true">
+                                    <div len-code="15" class="t-tabs__nav-item t-tabs__nav--card t-size-m" draggable="true">
                                                 <span class="t-tabs__nav-item-text-wrapper">
                                                     <span>统计报表</span>
                                                     <span class="span-icon"><i
                                                                 class="layui-icon fa fa-times"></i></span>
                                                     <!----></span>
                                     </div>
-                                    <div class="t-tabs__nav-item t-tabs__nav--card t-size-m" draggable="true">
+                                    <div len-code="16" class="t-tabs__nav-item t-tabs__nav--card t-size-m" draggable="true">
                                                 <span class="t-tabs__nav-item-text-wrapper">
                                                     <span>统计报表</span>
                                                     <span class="span-icon"><i
                                                                 class="layui-icon fa fa-times"></i></span>
                                                     <!----></span>
                                     </div>
-                                    <div class="t-tabs__nav-item t-tabs__nav--card t-size-m" draggable="true">
+                                    <div len-code="17" class="t-tabs__nav-item t-tabs__nav--card t-size-m" draggable="true">
                                                 <span class="t-tabs__nav-item-text-wrapper">
                                                     <span>统计报表</span>
                                                     <span class="span-icon"><i
@@ -589,6 +589,18 @@
     $(window).on("resize",function(){
 
     });
+
+    function addTab(){
+        var data={
+            code:'66',
+            name:'测试1',
+            icon:'fa-home',
+
+        }
+        lenosp.tabs.add(data, true, function (tabData, data) {
+            console.log(tabData, data);
+        });
+    }
 
    /* $(window).on("resize",function(){
         var owl = $("#owl-demo").data("owlCarousel");
