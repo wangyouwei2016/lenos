@@ -592,7 +592,7 @@
 
     function addTab(){
         var data={
-            code:'66',
+            code:'1',
             name:'测试1',
             icon:'fa-home',
 
@@ -600,6 +600,14 @@
         lenosp.tabs.add(data, true, function (tabData, data) {
             console.log(tabData, data);
         });
+
+        var byCode = lenosp.tabs.getByCode('1');
+        var byIndex = lenosp.tabs.getByIndex(1);
+        var current = lenosp.tabs.getCurrent();
+        debugger
+        lenosp.tabs.changeByCode('1');
+        lenosp.tabs.changeByCode(2);
+
     }
 
    /* $(window).on("resize",function(){

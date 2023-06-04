@@ -4,7 +4,7 @@
 (function ($, lenosp) {
 
     var _tabs = {
-        //初始化
+        //初始化 一些点击事件(左移、右移、关闭、点击tab)
         _init: function () {
             //向左滚动事件
             $('.t-tabs__operations--left').click(function () {
@@ -73,8 +73,8 @@
                     var leftIcon = $('.t-tabs__operations--left');
                     if (leftIcon.find('.t-tabs__btn--left').length === 0) {
                         leftIcon.append(
-                            '<div class="t-tabs__btn--left t-tabs__btn t-size-m">\n' +
-                            '   <i class="layui-icon fa fa-angle-left"></i>\n' +
+                            '<div class="t-tabs__btn--left t-tabs__btn t-size-m">' +
+                            '   <i class="layui-icon fa fa-angle-left"></i>' +
                             '</div>'
                         )
                     }
@@ -91,7 +91,7 @@
                 }
 
                 active.removeClass('t-is-active');
-                $(this).addClass('t-is-active')
+                $(this).addClass('t-is-active');
 
                 if ($(this).attr('id') === 'tabs-nav-home') {
                     return;
@@ -162,13 +162,20 @@
 
         /**
          * 添加一个tab
+         * @param insertIndex 插入位置下标，默认最后一个
          * @param data 格式{"title":"标签","code":"123","url":"xxx","icon":"fa-home"}
          * @param isActive true 默认
          * @private
          */
-        _addTabs: function (data, isActive) {
+        _addTabs: function (insertIndex, data, isActive) {
+            var tab = _tabs.getByCode(data.code);
+
+            if (tab.length > 0) {
+                tab.click();
+                return {index: tab.index(), tab: tab, exists: true};
+            }
             var navWrap = $('.t-tabs__nav-wrap');
-            var tab = $('<div len-code=' + data.code + ' class="t-tabs__nav-item t-tabs__nav--card t-size-m"' +
+            tab = $('<div len-code=' + data.code + ' class="t-tabs__nav-item t-tabs__nav--card t-size-m"' +
                 '   draggable="true"><span class="t-tabs__nav-item-text-wrapper"' +
                 '   style="outline: none; z-index: 1;">' +
                 '   <span>' + data.name + '</span>' +
@@ -176,11 +183,25 @@
                 '  </span>' +
                 '</div>');
 
-            navWrap.append(tab);
+
+            if (typeof insertIndex === 'number') {
+                var indexTab = navWrap.find('.t-tabs__nav-item').eq(insertIndex);
+                if (indexTab.length > 0) {
+                    indexTab.after(tab);
+                } else {
+                    navWrap.append(tab);
+                }
+
+            } else {
+                navWrap.append(tab);
+            }
+
             if (isActive) {
                 tab.click();
             }
-            return {index: tab.index(), tab: tab};
+
+            //index：小标，tab:当前jquery对象，exists：是否已存在
+            return {index: tab.index(), tab: tab, exists: false};
         },
 
         autoCalRemoveIcon: function () {
@@ -253,20 +274,77 @@
             } else {
                 return null;
             }
+        },
+
+        getByCode: function (code) {
+            return $('.t-tabs__nav-wrap').find('div[len-code=' + code + ']')
+        },
+
+        getByIndex: function (index) {
+            return $('.t-tabs__nav-wrap').find('.t-tabs__nav-item').eq(index);
+        },
+
+        //获取当前点击的tab
+        getCurrent: function () {
+            return $('.t-tabs__nav-wrap').find('div.t-tabs__nav-item.t-is-active')
+        },
+
+        removeAll: function () {
+            $('.t-tabs__nav-wrap').find('div.t-tabs__nav-item:not(#tabs-nav-home)').remove();
+        },
+
+        changeByCode: function (code) {
+            var tab = $('.t-tabs__nav-wrap').find('div[len-code=' + code + ']');
+            if (tab.length === 0) {
+                console.error('tabs code:' + code + ',not exists!');
+                return;
+            }
+            tab.click();
+        },
+
+        changeByIndex: function (index) {
+            var tab = $('.t-tabs__nav-wrap').find('.t-tabs__nav-item').eq(index);
+            if (tab.length === 0) {
+                console.error('tabs index:' + index + ',not exists!');
+                return;
+            }
+            tab.click();
+        },
+
+        existsByCode: function (code) {
+            var tab = $('.t-tabs__nav-wrap').find('div[len-code=' + code + ']');
+            return tab.length === 0
+        },
+
+        existsByIndex: function (index) {
+            var tab = $('.t-tabs__nav-wrap').find('.t-tabs__nav-item').eq(index);
+            return tab.length === 0
+        },
+
+        getData: function () {
+
         }
     };
 
     var tabs = {
+        //下方已经在类加载时，主动调用，无需再次调用
         init: function () {
             _tabs._init();
         },
-        //获取一个tab
-        get: function () {
+        /**
+         * 根据code获取一个tab jquery对象
+         * @param code
+         */
+        getByCode: function (code) {
+            return _tabs.getByCode(code)
+        },
 
+        getByIndex: function (index) {
+            return _tabs.getByIndex(index)
         },
         //获取当前选中的tab
         getCurrent: function () {
-
+            return _tabs.getCurrent();
         },
         /**
          *添加一个tab
@@ -279,7 +357,7 @@
                 isActive = true;
             }
 
-            var result = _tabs._addTabs(data, isActive);
+            var result = _tabs._addTabs(null, data, isActive);
 
 
             if (callback && typeof callback === 'function') {
@@ -297,19 +375,51 @@
         },
         //删除所有tab
         removeAll: function () {
-
+            _tabs.removeAll();
         },
         //插入一个tab
-        insertTab: function (index,data, isActive, callback) {
+        insertTab: function (index, data, isActive, callback) {
+            if (typeof isActive === 'undefined') {
+                isActive = true;
+            }
 
+            var result = _tabs._addTabs(index, data, isActive);
+            if (callback && typeof callback === 'function') {
+                /**
+                 * 参数1：当前tab下标和对象
+                 * 参数2：传入的data数据
+                 */
+                callback(result, data);
+            }
         },
-        //选中设置一个tab
-        change: function () {
 
+        /**
+         * 根据编码选中设置一个tab
+         * @param code
+         */
+        changeByCode: function (code) {
+            _tabs.changeByCode(code);
         },
-        //tab是否存在
-        exists: function () {
-
+        /**
+         * 根据下标选中设置一个tab
+         * @param index
+         */
+        changeByIndex: function (index) {
+            _tabs.changeByIndex(index);
+        },
+        /**
+         * 根据 code 判断tab是否存在
+         * @param code
+         */
+        existsByCode: function (code) {
+            return _tabs.existsByCode(code);
+        },
+        /**
+         * 根据下标 判断tab是否存在
+         * @param index
+         */
+        existsByIndex: function (index) {
+            return _tabs.existsByIndex(index);
         }
 
     };
