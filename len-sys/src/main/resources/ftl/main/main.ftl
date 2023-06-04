@@ -335,7 +335,7 @@
 
     <!-- 内容主体区域 -->
     <section id="main-content">
-        <div style="position: sticky;z-index: 1002;top: 60px;width: 100%">
+        <div style="position: sticky;z-index: 100;top: 60px;width: 100%">
             <!--breadcrumbs start -->
             <div class="t-tabs tdesign-starter-layout-tabs-nav"
                  style="position: sticky; top: 0px; width: 100%;">
