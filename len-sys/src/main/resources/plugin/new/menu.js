@@ -12,7 +12,7 @@ window.lenosp = {};
 
     var dashboard = {
         url: 'dashboard',
-        openWait: true
+        code: 'dashboard'
     };
 
     var _menu = {
@@ -21,6 +21,10 @@ window.lenosp = {};
          * @param option
          */
         load: function (option) {
+            _menu._load(option);
+        },
+
+        _load: function (option) {
             var that = this;
             var htmlStr = that.loadHtml(option.url),
                 _content = $('.wrapper .content');
@@ -67,23 +71,21 @@ window.lenosp = {};
         /**
          * 菜单绑定事件
          * @param params
+         * @param callback 回调
          */
-        bind: function (params) {
-            var that = this,
-                _config = that.config;
+        bind: function (params, callback) {
             var defaults = {
                 target: undefined
             };
             $.extend(true, defaults, params);
 
             var _target = defaults.target === undefined ? _doc : $(defaults.target);
-
             _target.find('li.len-menu-item').each(function () {
                 var _that = $(this);
                 _that.off('click').on('click', function () {
                     var item = _that.find('a');
-                    var options = JSON.stringify(item.data('options'));
-                    _menu.load(options);
+                    var options = item.data('options');
+                    typeof callback === 'function' && callback(options);
                 })
 
             });
@@ -102,14 +104,17 @@ window.lenosp = {};
         /**
          * 菜单绑定事件
          * @param params
+         * @param callback
          */
-        bind: function (params) {
-            _menu.bind();
+        bind: function (params, callback) {
+            _menu.bind(params, callback);
         },
 
         load: function (option) {
             _menu.load(option);
-        }
+        },
+
+        dashboard: dashboard
     };
 
 })(jQuery, lenosp);

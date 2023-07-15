@@ -4,8 +4,9 @@
 (function ($, lenosp) {
 
     var _tabs = {
+        homeOption: null,
         //初始化 一些点击事件(左移、右移、关闭、点击tab)
-        _init: function () {
+        _init: function (tabClickCallback, closeCallback) {
             //向左滚动事件
             $('.t-tabs__operations--left').click(function () {
                 //可视区域长度
@@ -94,6 +95,7 @@
                 $(this).addClass('t-is-active');
 
                 if ($(this).attr('id') === 'tabs-nav-home') {
+                    typeof tabClickCallback === 'function' && tabClickCallback(_tabs.homeOption);
                     return;
                 }
 
@@ -140,22 +142,67 @@
                             'transition': 'transform 0.3s ease'
                         });
                     }
-
                 }
+                typeof tabClickCallback === 'function' && tabClickCallback(_tabs._getOptionByThis($(this)));
 
             });
 
             //关闭点击事件
-            $('.t-tabs__nav-wrap').on('click', '.span-icon', function () {
+            $('.t-tabs__nav-wrap').on('click', '.span-icon', function (event) {
+                event.stopPropagation();
+                //当前tab
+                var $navTtem = $(this).parent().parent();
+                //当前
+                var currentIndex = $navTtem.index();
+                var option = _tabs._getOptionByThis($navTtem);
+                var isActive = _tabs.isActiveByCode(option.code);
+
                 var navWrap = $(this).closest('.t-tabs__nav-item');
                 navWrap.remove();
                 _tabs.autoCalRemoveIcon();
+
+                if (!isActive) {
+                    return;
+                }
+
+                if (currentIndex > 1) {
+                    //左侧存在
+                    _tabs.changeByIndex(currentIndex - 1);
+                    typeof closeCallback === 'function' && closeCallback(option);
+                    return
+                }
+
+                //总tabs
+                var tabSize = _tabs.getTabAllSize() - 1;
+
+                if (tabSize === 0) {
+                    //最后一个
+                    _tabs.changeByIndex(0);
+                    typeof closeCallback === 'function' && closeCallback(option);
+                    return;
+                }
+
+
+                _tabs.changeByIndex(1);
+                typeof closeCallback === 'function' && closeCallback(option);
+
             });
 
         },
 
+        /**
+         * 获取option信息
+         * @param _this
+         * @returns {*}
+         * @private
+         */
+        _getOptionByThis: function (_this) {
+            return _this.data('options');
+
+        },
+
         //删除一个tab
-        _removeByCode: function (code) {
+        _removeByCode: function (code, callback) {
             $('.t-tabs__nav-wrap').find('div[len-code=' + code + ']').remove();
             _tabs.autoCalRemoveIcon();
         },
@@ -163,7 +210,7 @@
         /**
          * 添加一个tab
          * @param insertIndex 插入位置下标，默认最后一个
-         * @param data 格式{"title":"标签","code":"123","url":"xxx","icon":"fa-home"}
+         * @param data 格式{"name":"标签","code":"123","url":"xxx","icon":"fa-home"}
          * @param isActive true 默认
          * @private
          */
@@ -175,7 +222,7 @@
                 return {index: tab.index(), tab: tab, exists: true};
             }
             var navWrap = $('.t-tabs__nav-wrap');
-            tab = $('<div len-code=' + data.code + ' class="t-tabs__nav-item t-tabs__nav--card t-size-m"' +
+            tab = $('<div data-options=' + JSON.stringify(data) + ' len-code=' + data.code + ' class="t-tabs__nav-item t-tabs__nav--card t-size-m"' +
                 '   draggable="true"><span class="t-tabs__nav-item-text-wrapper"' +
                 '   style="outline: none; z-index: 1;">' +
                 '   <span>' + data.name + '</span>' +
@@ -294,31 +341,67 @@
         },
 
         changeByCode: function (code) {
-            var tab = $('.t-tabs__nav-wrap').find('div[len-code=' + code + ']');
-            if (tab.length === 0) {
-                console.error('tabs code:' + code + ',not exists!');
-                return;
+            if (code === 'dashboard') {
+                _tabs.home();
+            } else {
+                var tab = $('.t-tabs__nav-wrap').find('div[len-code=' + code + ']');
+                if (tab.length === 0) {
+                    console.error('tabs code:' + code + ',not exists!');
+                    return;
+                }
             }
+
             tab.click();
         },
 
         changeByIndex: function (index) {
-            var tab = $('.t-tabs__nav-wrap').find('.t-tabs__nav-item').eq(index);
-            if (tab.length === 0) {
-                console.error('tabs index:' + index + ',not exists!');
-                return;
+            if (index === 0) {
+                _tabs.home();
+            } else {
+                var tab = $('.t-tabs__nav-wrap').find('.t-tabs__nav-item').eq(index);
+                if (tab.length === 0) {
+                    console.error('tabs index:' + index + ',not exists!');
+                    return;
+                }
             }
+
             tab.click();
         },
 
         existsByCode: function (code) {
             var tab = $('.t-tabs__nav-wrap').find('div[len-code=' + code + ']');
-            return tab.length === 0
+            return tab.length > 0
         },
 
         existsByIndex: function (index) {
             var tab = $('.t-tabs__nav-wrap').find('.t-tabs__nav-item').eq(index);
-            return tab.length === 0
+            return tab.length > 0
+        },
+
+        home: function (callback) {
+            var homeTab = $('.t-tabs__nav-wrap').find('div[id=tabs-nav-home]');
+            homeTab.click();
+            typeof callback === 'function' && callback();
+        },
+
+        getTabAllSize: function () {
+            return $('.t-tabs__nav-wrap').find('.t-tabs__nav-item').length;
+        },
+
+        isActiveByIndex: function (index) {
+            var tab = $('.t-tabs__nav-wrap').find('.t-tabs__nav-item').eq(index);
+            if (tab.length > 0) {
+                return tab.hasClass('t-is-active');
+            }
+            return false;
+        },
+
+        isActiveByCode: function (code) {
+            var tab = $('.t-tabs__nav-wrap').find('div[len-code=' + code + ']');
+            if (tab.length > 0) {
+                return tab.hasClass('t-is-active');
+            }
+            return false;
         },
 
         getData: function () {
@@ -328,8 +411,15 @@
 
     var tabs = {
         //下方已经在类加载时，主动调用，无需再次调用
-        init: function () {
-            _tabs._init();
+        /**
+         * 初始化
+         * @param homeOption home按钮的option
+         * @param tabClickCallback tab点击回调
+         * @param closeCallback tab关闭回调
+         */
+        init: function (homeOption, tabClickCallback, closeCallback) {
+            _tabs.homeOption = homeOption;
+            _tabs._init(tabClickCallback, closeCallback);
         },
         /**
          * 根据code获取一个tab jquery对象
@@ -353,13 +443,15 @@
          * @param callback 回调
          */
         add: function (data, isActive, callback) {
+            if (tabs.existsByIndex(data.code)) {
+                tabs.changeByCode(data.code);
+                return;
+            }
             if (typeof isActive === 'undefined') {
                 isActive = true;
             }
 
             var result = _tabs._addTabs(null, data, isActive);
-
-
             if (callback && typeof callback === 'function') {
                 /**
                  * 参数1：当前tab下标和对象
@@ -420,10 +512,24 @@
          */
         existsByIndex: function (index) {
             return _tabs.existsByIndex(index);
+        },
+
+        /**
+         * 根据下标判断是否为显示状态
+         * @param index
+         */
+        isActiveByIndex: function (index) {
+            return _tabs.isActiveByIndex(index);
+        },
+
+        /**
+         * 选择home
+         * @param callback
+         */
+        selectHome: function (callback) {
+            _tabs.home(callback);
         }
 
     };
-
-    tabs.init();
     lenosp.tabs = tabs;
 })(jQuery, lenosp);

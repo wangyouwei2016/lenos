@@ -3,9 +3,22 @@
  */
 /**框架*/
 (function ($) {
+    //tabs初始化
+    lenosp.tabs.init(lenosp.menu.dashboard,
+        function (options) {
+            //tab点击回调，加载页面
+            lenosp.menu.load(options);
+        }, function () {
 
-    //绑定菜单
-    lenosp.menu.bind();
-    //初始化
-    lenosp.menu.init();
+        });
+
+    //初始化dashboard
+    lenosp.tabs.selectHome();
+
+    //菜单绑定tabs
+    lenosp.menu.bind({}, function (option) {
+        lenosp.tabs.add(option, true);
+    });
+
+
 })(jQuery);
