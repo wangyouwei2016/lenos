@@ -256,7 +256,7 @@
             return "<div panel-item='true'  class=\"dragdropPanel\" style='margin-bottom: 15px' > " +
                 " <section panel-id=" + id + " class=\"panel admin-shortcut\" title=\"可从左侧菜单拖拽\">" +
                 "        <header class=\"panel-heading\" style='font-weight: bold'>" +
-                "            快捷菜单" +
+                "            快捷入口" +
                 "        </header>" +
                 "        <div class=\"panel-body admin-shortcut-content\" style='height: 230px'>" +
                 " <div carousel-item=\"\">"+

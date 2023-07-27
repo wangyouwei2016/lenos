@@ -5,7 +5,7 @@ $(function() {
         autoClose: true,
         saveState: true,
         disableLink: true,
-        speed: 'slow',
+        speed: 'fast',
         showCount: false,
         autoExpand: true,
 //        cookie: 'dcjq-accordion-1',
@@ -86,15 +86,25 @@ var Script = function () {
 
 // widget tools
 
-    jQuery('.panel .tools .fa-chevron-down').click(function () {
-        var el = jQuery(this).parents(".panel").children(".panel-body");
-        if (jQuery(this).hasClass("fa-chevron-down")) {
-            jQuery(this).removeClass("fa-chevron-down").addClass("fa-chevron-up");
+    jQuery(document).on('click', '.panel .tools .fa-chevron-down', function () {
+        upDown(this);
+    });
+
+    function upDown(_this){
+        var el = jQuery(_this).parents(".panel").children(".panel-body");
+        if (jQuery(_this).hasClass("fa-chevron-down")) {
+            jQuery(_this).removeClass("fa-chevron-down").addClass("fa-chevron-up");
             el.slideUp(200);
         } else {
-            jQuery(this).removeClass("fa-chevron-up").addClass("fa-chevron-down");
+            jQuery(_this).removeClass("fa-chevron-up").addClass("fa-chevron-down");
             el.slideDown(200);
         }
+    }
+
+
+
+    jQuery(document).on('click', '.panel .tools .fa-chevron-up', function () {
+        upDown(this);
     });
 
 // by default collapse widget
@@ -108,8 +118,7 @@ var Script = function () {
 //            $(this).removeClass("fa-chevron-up").addClass("fa-chevron-down");
 //            el.slideDown(200); }
 //    });
-
-    jQuery('.panel .tools .fa-times').click(function () {
+    jQuery(document).on('click', '.panel .tools .fa-times', function () {
         jQuery(this).parents(".panel").parent().remove();
     });
 
@@ -135,10 +144,4 @@ var Script = function () {
             }, 2000)
         })
     }
-
-
-
-
-
-
 }();

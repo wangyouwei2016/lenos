@@ -39,7 +39,7 @@ a:hover {
 }
 
 .label-primary {
-    background-color: #59ace2;
+    background-color: #0052d9;
 }
 
 .label-success {
@@ -73,7 +73,7 @@ a:hover {
 }
 
 .text-primary {
-    color: #59ace2;
+    color: #0052d9;
 }
 
 .text-warning {
@@ -188,14 +188,14 @@ ul {
 }
 
 .btn-info {
-    background-color: #58c9f3;
-    border-color: #58c9f3;
+    background-color: #0052d9;
+    border-color: #0052d9;
     color: #FFFFFF;
 }
 
 .btn-info:hover, .btn-info:focus, .btn-info:active, .btn-info.active, .open .dropdown-toggle.btn-info {
-    background-color: #53bee6;
-    border-color: #53BEE6;
+    background-color: rgba(37, 97, 239, 0.8);
+    border-color: rgba(37, 97, 239, 0.8);
     color: #FFFFFF;
 }
 

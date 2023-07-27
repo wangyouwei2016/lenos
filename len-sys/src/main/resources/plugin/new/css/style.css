@@ -1456,7 +1456,7 @@ h3.timeline-title {
 /*flatlab carousel model*/
 
 .flat-carousal {
-    background: #58c9f3;
+    background: #0052d9;
     -webkit-border-radius: 4px 4px 0px 0px;
     border-radius: 4px 4px 0px 0px;
     padding: 10px;
@@ -1507,7 +1507,7 @@ ul.ft-link li a {
 }
 
 ul.ft-link li a:hover, ul.ft-link li.active a {
-    color: #58c9f3;
+    color: #0052d9;
 }
 
 ul.ft-link li:last-child {
@@ -1728,7 +1728,7 @@ ul.ft-link li a i {
 }
 
 .social-footer ul li a:hover i.fa-twitter, .social-footer ul li.active a i.fa-twitter {
-    color: #58c9f3;
+    color: #0052d9;
 }
 
 .social-footer ul li a:hover i.fa-google-plus, .social-footer ul li.active a i.fa-google-plus {
@@ -3771,7 +3771,7 @@ table.sliders tr td {
 }
 
 .twt-feed.blue-bg {
-    background: #58C9F3;
+    background: #0052d9;
 }
 
 .twt-feed h1 {
@@ -4496,7 +4496,7 @@ tr.odd.gradeX td.sorting_1, tr.even.gradeX td.sorting_1, table.display tr.even.g
 }
 
 .ui-sortable li.list-info {
-    border-left: 3px solid #58C9F3;
+    border-left: 3px solid #0052d9;
 }
 
 .ui-sortable li.list-inverse {

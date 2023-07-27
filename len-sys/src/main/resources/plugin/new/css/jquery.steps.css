@@ -258,7 +258,7 @@
 .wizard > .actions a:hover,
 .wizard > .actions a:active
 {
-    background: #53bee6;
+    background: rgba(37, 97, 239, 0.8);
     color: #fff;
     display: block;
     padding: 0.5em 1em;
