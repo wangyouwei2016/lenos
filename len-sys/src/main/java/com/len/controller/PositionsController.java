@@ -3,6 +3,8 @@ package com.len.controller;
 import com.len.entity.SysPositions;
 import com.len.service.PositionsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,8 +22,8 @@ public class PositionsController {
     }
 
     @GetMapping
-    public List<SysPositions> getAllPositions() {
-        return positionsService.getAllPositions();
+    public Page<SysPositions> getAllPositions(Pageable pageable) {
+        return positionsService.findByPage(pageable);
     }
 
     @GetMapping("/{id}")

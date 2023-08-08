@@ -5,6 +5,8 @@ import com.len.entity.SysPositions;
 import com.len.mapper.SysPositionMapper;
 import com.len.service.PositionsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,6 +16,11 @@ public class PositionsServiceImpl extends BaseServiceImpl<SysPositionMapper, Sys
 
     @Autowired
     private SysPositionMapper positionMapper;
+
+    @Override
+    public Page<SysPositions> findByPage(Pageable pageable) {
+        return positionMapper.findByPage(pageable);
+    }
 
     @Override
     public List<SysPositions> getAllPositions() {
