@@ -34,14 +34,19 @@ window.lenosp = {};
 
         /**
          * 加载html
-         * @param url
+         * @param path 文件路径
          * @param callback
          * @returns {*}
          */
-        loadHtml: function (url, callback) {
+        loadHtml: function (path, callback) {
+            var newPath ='ftl/new' + path + '.html';
+            /*标记-- 需要迁移目录*/
+            if (path === 'dashboard') {
+                newPath = 'ftl/new/main/dashboard.html';
+            }
             var result;
             $.ajax({
-                url: url,
+                url: newPath,
                 async: false,
                 dataType: 'html',
                 beforeSend: function (request) {
@@ -49,7 +54,7 @@ window.lenosp = {};
                 },
                 error: function (xhr, err, msg) {
                     var m = ['<div style="padding: 20px;font-size: 20px;text-align:left;color:#009688;">',
-                        '<p>{{msg}}  >>> ' + url + '</p>',
+                        '<p>{{msg}}  >>> ' + path + '</p>',
                         '</div>'
                     ].join('');
                     if (xhr.status === 404) {

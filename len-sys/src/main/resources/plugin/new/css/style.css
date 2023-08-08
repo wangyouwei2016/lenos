@@ -2807,7 +2807,7 @@ ul.amounts li {
 
 .dataTables_paginate.paging_bootstrap.pagination {
     float: right;
-    margin-top: -5px;
+    margin-top: 0px;
     margin-bottom: 15px;
 
 }

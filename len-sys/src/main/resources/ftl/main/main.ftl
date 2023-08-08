@@ -427,6 +427,8 @@
 <#--面板组件-->
 <script src="${re.contextPath}/plugin/new/dashboard.js"></script>
 <script src="${re.contextPath}/plugin/new/tabs.js"></script>
+<script src="${re.contextPath}/plugin/new/assets/data-tables/jquery.dataTables1.js"></script>
+<script src="${re.contextPath}/plugin/new/assets/data-tables/DT_bootstrap.js"></script>
 <#--主入口组件-->
 <script src="${re.contextPath}/plugin/new/main.js"></script>
 
