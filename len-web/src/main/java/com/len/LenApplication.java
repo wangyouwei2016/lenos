@@ -17,7 +17,8 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @EnableTransactionManagement
 @MapperScan(basePackages = {"com.len.mapper"})
 @SpringBootApplication(scanBasePackages = {"com.len", "org.activiti"},
-    exclude = {RedisAutoConfiguration.class,
+    exclude = {
+    RedisAutoConfiguration.class,
         org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration.class,
         org.springframework.boot.actuate.autoconfigure.security.servlet.ManagementWebSecurityAutoConfiguration.class})
 public class LenApplication {

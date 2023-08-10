@@ -7,6 +7,7 @@ import com.len.entity.SysPositions;
 import com.len.response.Result;
 import com.len.service.PositionsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,16 +34,16 @@ public class PositionsController {
         );
     }
 
-    @PostMapping
-    public Result<SysPositions> add(@RequestBody @Valid SysPositions position) {
+    @PostMapping(value = "", consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE })
+    public Result<SysPositions> add(@ModelAttribute @Valid SysPositions position) {
         positionsService.add(position);
         return Result.ok(position);
     }
 
-    @PostMapping("/{id}")
+    @PostMapping(value = "/{id}", consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE })
     public Result<Object> update(
         @PathVariable String id,
-        @Valid SysPositions position) {
+        @ModelAttribute @Valid SysPositions position) {
         position.setId(id);
         positionsService.update(position);
         return Result.ok(position);

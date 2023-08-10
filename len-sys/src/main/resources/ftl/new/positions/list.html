@@ -1,12 +1,15 @@
-
 <style>
-    .dataTables_length, .dataTables_paginate {
-        float: right;
+    .dataTables_length, .dataTables_filter {
+        padding: 5px;
     }
-    .dataTables_length select {
-        border: 1px solid #e2e2e4;
-        border-radius: 4px;
+    .dataTables_wrapper .dataTables_paginate{
+        padding-right: 14px;
     }
+    .loading {
+        position: relative;
+    }
+
+
 </style>
 <div>
     <div class="row">
@@ -98,7 +101,8 @@
                                         <button type="button" class="btn btn-info">新增岗位</button>
                                     </div>
                                     <div class="col-lg-5">
-                                        <button class="btn dropdown-toggle pull-right" data-toggle="dropdown">更多操作 <i class="fa fa-angle-down"></i>
+                                        <button class="btn dropdown-toggle pull-right" data-toggle="dropdown">更多操作 <i
+                                                class="fa fa-angle-down"></i>
                                         </button>
                                         <ul class="dropdown-menu pull-right">
                                             <li><a href="#">Print</a></li>
@@ -134,42 +138,33 @@
 </div>
 
 <script>
-    $(document).ready(function() {
-        var jsonData = [
-            {
-                "name": "John Doe",
-                "position": "Manager",
-                "office": "New York",
-                "age": 35,
-                "salary": "$100,000"
-            },
-            {
-                "name": "Jane Smith",
-                "position": "Developer",
-                "office": "San Francisco",
-                "age": 28,
-                "salary": "$85,000"
-            },
-            // ... 更多 JSON 数据项
-        ];
+    $(document).ready(function () {
         $('#employeeList').DataTable({
-            /*ajax: {
-                url: '',
-                dataSrc: 'data'
-            },*/
-            data:jsonData,
+            ajax: {
+                url: '/api/positions',
+                dataSrc: 'data.records',
+                dataFilter: function (json) {
+                    var data = JSON.parse(json);
+                    data.recordsTotal = data.data.total;
+                    data.recordsFiltered = data.data.total;
+                    return JSON.stringify(data);
+                },
+                beforeSend: function () {
+                },
+                complete: function () {
+                },
+            },
             columns: [
-                { data: 'name' },
-                { data: 'position' },
-                { data: 'office' },
-                { data: 'age' },
-                { data: 'salary' },
+                {data: 'code', orderable: true},
+                {data: 'name'},
+                {data: 'departmentId'},
+                {data: 'description'},
+                {data: 'level'},
                 {
                     data: null,
-                    render: function(data, type, row) {
-                        return `<button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button> `+
-                            `<button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button> `+
-                            `<button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>`
+                    orderable: false,
+                    render: function (data, type, row) {
+                        return `<button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>`
                     }
                 }
             ],
@@ -177,20 +172,21 @@
             "pageLength": 10,
             "bFilter": false,
             "dom": '<"top"i>rb<"bottom"flp><"clear">',
-            /*"aoColumns": [
-                { "bSortable": true }
-            ],*/
-            "oLanguage":{
-                "sInfo":"",
-                "sLengthMenu":'每页显示 _MENU_ 条记录',
+            "oLanguage": {
+                "sInfo": "",
+                "sLengthMenu": '每页显示 _MENU_ 条记录',
                 "oPaginate": {
                     "sPrevious": "上一页",
                     "sNext": "下一页"
                 },
-            }
-            // bLengthChange: false
+            },
+            serverSide: true,
+            serverParams: function (params) {
+                params.pageNum = Math.ceil(params.start / params.length) + 1;
+                params.pageSize = params.length;
+            },
+
         });
-        $('#employeeList_paginate').appendTo('#paginationWrapper');
     });
 </script>
 

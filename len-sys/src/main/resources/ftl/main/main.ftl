@@ -24,6 +24,7 @@
     <link href="${re.contextPath}/plugin/new/css/style.css" rel="stylesheet">
     <link href="${re.contextPath}/plugin/new/tabs.css" rel="stylesheet">
     <link href="${re.contextPath}/plugin/new/css/style-responsive.css" rel="stylesheet" />
+    <link href="${re.contextPath}/plugin/new/css/jquery.dataTables.css" rel="stylesheet" />
     <link href="${re.contextPath}/plugin/new/assets/toastr-master/toastr.css" rel="stylesheet" type="text/css" />
 
 

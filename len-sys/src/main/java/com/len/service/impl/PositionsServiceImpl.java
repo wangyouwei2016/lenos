@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.len.core.shiro.Principal;
 import com.len.entity.SysPositions;
 import com.len.handler.BusinessException;
 import com.len.mapper.SysPositionsMapper;
@@ -44,6 +45,7 @@ public class PositionsServiceImpl extends ServiceImpl<SysPositionsMapper, SysPos
     @Transactional
     public boolean add(SysPositions position) {
         position.setId(RandomUtil.randomUUID());
+        position.create(Principal.getPrincipal().getUsername());
         return save(position);
     }
 
@@ -53,6 +55,7 @@ public class PositionsServiceImpl extends ServiceImpl<SysPositionsMapper, SysPos
             throw new BusinessException(ResultCode.ARITHMETIC_EXCEPTION.getCode(),
                 String.format("岗位id：%s，不存在！", position.getId()));
         }
+        position.update(Principal.getPrincipal().getUsername());
         return updateById(position);
     }
 
