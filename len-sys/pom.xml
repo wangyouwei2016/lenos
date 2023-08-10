@@ -22,5 +22,11 @@
             <groupId>com.len</groupId>
             <artifactId>len-core</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>com.len</groupId>
+            <artifactId>len-common</artifactId>
+            <version>${version}</version>
+        </dependency>
     </dependencies>
 </project>

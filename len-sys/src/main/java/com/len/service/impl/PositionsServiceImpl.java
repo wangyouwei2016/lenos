@@ -1,49 +1,68 @@
 package com.len.service.impl;
 
-import com.len.base.impl.BaseServiceImpl;
+import cn.hutool.core.util.RandomUtil;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.metadata.OrderItem;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.len.entity.SysPositions;
-import com.len.mapper.SysPositionMapper;
+import com.len.handler.BusinessException;
+import com.len.mapper.SysPositionsMapper;
+import com.len.response.ResultCode;
 import com.len.service.PositionsService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
-public class PositionsServiceImpl extends BaseServiceImpl<SysPositionMapper, SysPositions> implements PositionsService {
+public class PositionsServiceImpl extends ServiceImpl<SysPositionsMapper, SysPositions> implements PositionsService {
 
     @Autowired
-    private SysPositionMapper positionMapper;
+    private SysPositionsMapper positionsMapper;
 
-    @Override
-    public Page<SysPositions> findByPage(Pageable pageable) {
-        return positionMapper.findByPage(pageable);
+    public IPage<SysPositions> getAllPositionsByPage(Page<SysPositions> page, SysPositions positions,
+        OrderItem sort) {
+        QueryWrapper<SysPositions> queryWrapper = new QueryWrapper<>();
+        if (positions != null) {
+            if (StringUtils.isNotBlank(positions.getCode())) {
+                queryWrapper.like("code", positions.getCode());
+            }
+            if (StringUtils.isNotBlank(positions.getName())) {
+                queryWrapper.like("name", positions.getName());
+            }
+        }
+
+        if (sort != null && StringUtils.isNotBlank(sort.getColumn())) {
+            page.addOrder(sort);
+        }
+
+        return positionsMapper.selectPage(page, queryWrapper);
     }
 
-    @Override
-    public List<SysPositions> getAllPositions() {
-        return positionMapper.getAllPositions();
+    @Transactional
+    public boolean add(SysPositions position) {
+        position.setId(RandomUtil.randomUUID());
+        return save(position);
     }
 
-    @Override
-    public SysPositions getPositionById(String id) {
-        return positionMapper.getPositionById(id);
+    @Transactional
+    public boolean update(SysPositions position) {
+        if (getById(position.getId()) == null) {
+            throw new BusinessException(ResultCode.ARITHMETIC_EXCEPTION.getCode(),
+                String.format("岗位id：%s，不存在！", position.getId()));
+        }
+        return updateById(position);
     }
 
-    @Override
-    public void createPosition(SysPositions position) {
-        positionMapper.createPosition(position);
+    @Transactional
+    public boolean delete(String id) {
+        if (getById(id) == null) {
+            throw new BusinessException(ResultCode.ARITHMETIC_EXCEPTION.getCode(),
+                String.format("岗位id：%s，不存在！", id));
+        }
+        return removeById(id);
     }
 
-    @Override
-    public void updatePosition(SysPositions position) {
-        positionMapper.updatePosition(position);
-    }
-
-    @Override
-    public void deletePosition(String id) {
-        positionMapper.deletePosition(id);
-    }
 }

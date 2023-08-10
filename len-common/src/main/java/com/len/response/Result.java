@@ -35,6 +35,15 @@ public class Result<T> {
         return result;
     }
 
+    public static <T> Result<T> ok(T t){
+        Result<T> result = new Result<T>();
+        result.setSuccess(true);
+        result.setCode(ResultCode.SUCCESS.getCode());
+        result.setMessage(ResultCode.SUCCESS.getMessage());
+        result.setData(t);
+        return result;
+    }
+
     /**
      * 自定义返回成功与否
      * @param success

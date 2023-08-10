@@ -1,12 +1,16 @@
 package com.len.handler;
 
-
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+import com.len.response.Result;
+import com.len.response.ResultCode;
+import org.springframework.validation.BindException;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.len.response.Result;
-import com.len.response.ResultCode;
+import java.util.List;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
@@ -18,9 +22,24 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     @ResponseBody
     public Result error(Exception e){
-        //e.printStackTrace();
-    	System.err.println(e.getMessage());
+        e.printStackTrace();
         return Result.error();
+    }
+
+    @ExceptionHandler(BindException.class)
+    @ResponseBody
+    public Result error(BindException e) {
+        List<FieldError> fieldErrors = e.getFieldErrors();
+        JSONArray arr = new JSONArray();
+        for (FieldError fieldError : fieldErrors) {
+            JSONObject obj = new JSONObject();
+            obj.put("field", fieldError.getField());
+            obj.put("msg", fieldError.getDefaultMessage());
+            arr.add(obj);
+        }
+        return Result.error()
+            .code(ResultCode.PARAM_NOT_VALID.getCode())
+            .message(arr.toJSONString());
     }
 
     /**
@@ -31,22 +50,18 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(ArithmeticException.class)
     @ResponseBody
     public Result error(ArithmeticException e){
-        //e.printStackTrace();
-    	System.err.println(e.getMessage());
         return Result.error().code(ResultCode.ARITHMETIC_EXCEPTION.getCode())
                 .message(ResultCode.ARITHMETIC_EXCEPTION.getMessage());
     }
 
     /**
-     * 处理业务异常,我们自己定义的异常
+     * 处理业务异常
      * @param e
      * @return
      */
     @ExceptionHandler(BusinessException.class)
     @ResponseBody
     public Result error(BusinessException e){
-        //e.printStackTrace();
-        System.err.println(e.getErrMsg());
         return Result.error().code(e.getCode())
                 .message(e.getErrMsg());
     }

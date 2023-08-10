@@ -1,24 +1,18 @@
 package com.len.service;
 
-import com.len.base.BaseService;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.metadata.OrderItem;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.len.entity.SysPositions;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 
-import java.util.List;
+public interface PositionsService extends IService<SysPositions> {
 
-public interface PositionsService extends BaseService<SysPositions> {
+    IPage<SysPositions> getAllPositionsByPage(Page<SysPositions> page, SysPositions positions, OrderItem sort);
 
-    Page<SysPositions> findByPage(Pageable pageable);
+    boolean add(SysPositions position);
 
-    List<SysPositions> getAllPositions();
+    boolean update(SysPositions position);
 
-    SysPositions getPositionById(String id);
-
-    void createPosition(SysPositions position);
-
-    void updatePosition(SysPositions position);
-
-    void deletePosition(String id);
-
+    boolean delete(String id);
 }

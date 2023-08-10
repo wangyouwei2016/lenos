@@ -1,18 +1,20 @@
 package com.len.controller;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.metadata.OrderItem;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.len.entity.SysPositions;
+import com.len.response.Result;
 import com.len.service.PositionsService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/api/positions")
+@Validated
 public class PositionsController {
     private final PositionsService positionsService;
 
@@ -22,38 +24,33 @@ public class PositionsController {
     }
 
     @GetMapping
-    public Page<SysPositions> getAllPositions(Pageable pageable) {
-        return positionsService.findByPage(pageable);
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<SysPositions> getPositionById(@PathVariable String id) {
-        SysPositions position = positionsService.getPositionById(id);
-        return position != null ? ResponseEntity.ok(position) : ResponseEntity.notFound().build();
+    public Result<IPage<SysPositions>> getAllByPage(
+        @RequestParam(defaultValue = "1") Integer pageNum,
+        @RequestParam(defaultValue = "10") Integer pageSize,
+        SysPositions positions, OrderItem sort) {
+        return Result.ok(
+            positionsService.getAllPositionsByPage(new Page<>(pageNum, pageSize), positions, sort)
+        );
     }
 
     @PostMapping
-    public ResponseEntity<SysPositions> createPosition(@RequestBody SysPositions position) {
-        positionsService.createPosition(position);
-        return ResponseEntity.status(HttpStatus.CREATED).body(position);
+    public Result<SysPositions> add(@RequestBody @Valid SysPositions position) {
+        positionsService.add(position);
+        return Result.ok(position);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<SysPositions> updatePosition(@PathVariable String id, @RequestBody SysPositions newPosition) {
-        if (positionsService.getPositionById(id) == null) {
-            return ResponseEntity.notFound().build();
-        }
-        newPosition.setId(id);
-        positionsService.updatePosition(newPosition);
-        return ResponseEntity.ok(newPosition);
+    @PostMapping("/{id}")
+    public Result<Object> update(
+        @PathVariable String id,
+        @Valid SysPositions position) {
+        position.setId(id);
+        positionsService.update(position);
+        return Result.ok(position);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletePosition(@PathVariable String id) {
-        if (positionsService.getPositionById(id) != null) {
-            positionsService.deletePosition(id);
-            return ResponseEntity.noContent().build();
-        }
-        return ResponseEntity.notFound().build();
+    @PostMapping("/delete/{id}")
+    public Result<Void> delete(@PathVariable String id) {
+        positionsService.delete(id);
+        return Result.ok();
     }
 }
