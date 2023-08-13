@@ -23,8 +23,9 @@ public class PositionsServiceImpl extends ServiceImpl<SysPositionsMapper, SysPos
     @Autowired
     private SysPositionsMapper positionsMapper;
 
+    @Override
     public IPage<SysPositions> getAllPositionsByPage(Page<SysPositions> page, SysPositions positions,
-        OrderItem sort) {
+                                                     OrderItem sort) {
         QueryWrapper<SysPositions> queryWrapper = new QueryWrapper<>();
         if (positions != null) {
             if (StringUtils.isNotBlank(positions.getCode())) {
@@ -42,6 +43,7 @@ public class PositionsServiceImpl extends ServiceImpl<SysPositionsMapper, SysPos
         return positionsMapper.selectPage(page, queryWrapper);
     }
 
+    @Override
     @Transactional
     public boolean add(SysPositions position) {
         position.setId(RandomUtil.randomUUID());
@@ -49,6 +51,7 @@ public class PositionsServiceImpl extends ServiceImpl<SysPositionsMapper, SysPos
         return save(position);
     }
 
+    @Override
     @Transactional
     public boolean update(SysPositions position) {
         if (getById(position.getId()) == null) {
@@ -59,6 +62,7 @@ public class PositionsServiceImpl extends ServiceImpl<SysPositionsMapper, SysPos
         return updateById(position);
     }
 
+    @Override
     @Transactional
     public boolean delete(String id) {
         if (getById(id) == null) {

@@ -29,7 +29,7 @@
                                 <div class="form-group">
                                     <label class="col-sm-4 control-label">部门</label>
                                     <div class="col-sm-8">
-                                        <select class="form-control m-bot15">
+                                        <select name="departmentId" class="form-control m-bot15">
                                             <option>开发</option>
                                             <option>测试</option>
                                             <option>销售</option>
@@ -39,25 +39,25 @@
                             </div>
                             <div class="col-lg-3">
                                 <div class="form-group">
-                                    <label class="col-sm-4 control-label">Input focus</label>
+                                    <label class="col-sm-4 control-label">编码</label>
                                     <div class="col-sm-8">
-                                        <input class="form-control" type="text" value="">
+                                        <input name="code" class="form-control" type="text" value="">
                                     </div>
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <div class="form-group">
-                                    <label class="col-sm-4 control-label">Input focus</label>
+                                    <label class="col-sm-4 control-label">名称</label>
                                     <div class="col-sm-8">
-                                        <input class="form-control" type="text" value="">
+                                        <input name="name" class="form-control" type="text" value="">
                                     </div>
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <div class="form-group">
-                                    <label class="col-sm-4 control-label">Input focus</label>
+                                    <label class="col-sm-4 control-label">描述</label>
                                     <div class="col-sm-8">
-                                        <input class="form-control" type="text" value="">
+                                        <input name="description" class="form-control" type="text" value="">
                                     </div>
                                 </div>
                             </div>
@@ -66,30 +66,18 @@
                         <div class="row">
                             <div class="col-lg-3">
                                 <div class="form-group">
-                                    <label class="col-sm-4 control-label">Input focus</label>
+                                    <label class="col-sm-4 control-label">级别</label>
                                     <div class="col-sm-8">
-                                        <input class="form-control" type="text" value="">
+                                        <input name="level" class="form-control" type="text" value="">
                                     </div>
                                 </div>
                             </div>
                             <div class="col-lg-3">
 
-                                <div class="form-group">
-                                    <label class="col-sm-4 control-label">Input focus</label>
-                                    <div class="col-sm-8">
-                                        <input class="form-control" type="text" value="">
-                                    </div>
-                                </div>
 
                             </div>
                             <div class="col-lg-3">
 
-                                <div class="form-group">
-                                    <label class="col-sm-4 control-label">Input focus</label>
-                                    <div class="col-sm-8">
-                                        <input class="form-control" type="text" value="">
-                                    </div>
-                                </div>
 
                             </div>
                             <div class="col-lg-3">
@@ -139,6 +127,14 @@
 
 <script>
     $(document).ready(function () {
+        var getOrderObj = function (params) {
+            if (params.order.length > 0) {
+                var columns = params.columns;
+                var order = params.order[0];
+                return {column: columns[order.column].data, asc: order.dir === 'asc'}
+            }
+            return null;
+        };
         $('#employeeList').DataTable({
             ajax: {
                 url: '/api/positions',
@@ -182,10 +178,14 @@
             },
             serverSide: true,
             serverParams: function (params) {
+                var orderObj = getOrderObj(params);
                 params.pageNum = Math.ceil(params.start / params.length) + 1;
                 params.pageSize = params.length;
+                if (orderObj !== null) {
+                    params.column = orderObj.column;
+                    params.asc = orderObj.asc
+                }
             },
-
         });
     });
 </script>
