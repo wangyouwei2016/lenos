@@ -69,7 +69,7 @@ lenosp是一个基于spring boot的脚手架，并提供完善社区文档教程
 
 # 加入开源组织
 
-![输入图片说明](image/image.png)
+![输入图片说明](image/image.jpg)
 
 # 社区
 
