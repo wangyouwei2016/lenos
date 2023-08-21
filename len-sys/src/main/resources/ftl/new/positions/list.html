@@ -22,21 +22,9 @@
                      </span>
                 </header>
                 <div class="panel-body">
-                    <form class="form-horizontal tasi-form" method="get">
+                    <form class="form-horizontal tasi-form">
                         <!--条件行一-->
                         <div class="row">
-                            <div class="col-lg-3">
-                                <div class="form-group">
-                                    <label class="col-sm-4 control-label">部门</label>
-                                    <div class="col-sm-8">
-                                        <select name="departmentId" class="form-control m-bot15">
-                                            <option>开发</option>
-                                            <option>测试</option>
-                                            <option>销售</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
                             <div class="col-lg-3">
                                 <div class="form-group">
                                     <label class="col-sm-4 control-label">编码</label>
@@ -61,9 +49,6 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <!--条件行二-->
-                        <div class="row">
                             <div class="col-lg-3">
                                 <div class="form-group">
                                     <label class="col-sm-4 control-label">级别</label>
@@ -71,6 +56,13 @@
                                         <input name="level" class="form-control" type="text" value="">
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                        <!--条件行二-->
+                            <div class="col-lg-3">
+
+
                             </div>
                             <div class="col-lg-3">
 
@@ -83,7 +75,7 @@
                             <div class="col-lg-3">
                                 <div class="form-group">
                                     <div class="col-lg-3">
-                                        <button type="button" class="btn btn-info">查询</button>
+                                        <button type="button"  id="search" class="btn btn-info">查询</button>
                                     </div>
                                     <div class="col-lg-4">
                                         <button type="button" class="btn btn-info">新增岗位</button>
@@ -93,9 +85,8 @@
                                                 class="fa fa-angle-down"></i>
                                         </button>
                                         <ul class="dropdown-menu pull-right">
-                                            <li><a href="#">Print</a></li>
-                                            <li><a href="#">Save as PDF</a></li>
-                                            <li><a href="#">Export to Excel</a></li>
+                                            <li><a href="#">导出</a></li>
+                                            <li><a href="#">打印</a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -125,20 +116,27 @@
     </div>
 </div>
 
+
 <script>
     $(document).ready(function () {
         var getOrderObj = function (params) {
             if (params.order.length > 0) {
                 var columns = params.columns;
                 var order = params.order[0];
-                return {column: columns[order.column].data, asc: order.dir === 'asc'}
+                return {column: columns[order.column].column, asc: order.dir === 'asc'}
             }
             return null;
         };
-        $('#employeeList').DataTable({
+        var dataTable = $('#employeeList').DataTable({
             ajax: {
                 url: '/api/positions',
                 dataSrc: 'data.records',
+                "data": function(d) {
+                    d.code = $('[name="code"]').val();
+                    d.name = $('[name="name"]').val();
+                    d.description = $('[name="description"]').val();
+                    d.devel = $('[name="devel"]').val();
+                },
                 dataFilter: function (json) {
                     var data = JSON.parse(json);
                     data.recordsTotal = data.data.total;
@@ -151,11 +149,11 @@
                 },
             },
             columns: [
-                {data: 'code', orderable: true},
-                {data: 'name'},
-                {data: 'departmentId'},
-                {data: 'description'},
-                {data: 'level'},
+                {data: 'code', column: 'code', orderable: true},
+                {data: 'name', column: 'name'},
+                {data: 'departmentId', column: "department_id"},
+                {data: 'description', column: 'description'},
+                {data: 'level', column: 'level'},
                 {
                     data: null,
                     orderable: false,
@@ -169,6 +167,7 @@
             "bFilter": false,
             "dom": '<"top"i>rb<"bottom"flp><"clear">',
             "oLanguage": {
+                "emptyTable": "无数据",
                 "sInfo": "",
                 "sLengthMenu": '每页显示 _MENU_ 条记录',
                 "oPaginate": {
@@ -187,6 +186,11 @@
                 }
             },
         });
+
+        $('#search').on('click', function() {
+            dataTable.ajax.reload();
+        });
     });
 </script>
+
 
