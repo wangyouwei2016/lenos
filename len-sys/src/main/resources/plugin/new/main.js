@@ -8,8 +8,8 @@
         function (options) {
             //tab点击回调，加载页面
             lenosp.menu.load(options);
-        }, function () {
-
+        }, function (options) {
+            lenosp.menu.close(options);
         });
 
     //初始化dashboard

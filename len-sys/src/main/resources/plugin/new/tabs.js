@@ -203,8 +203,8 @@
 
         //删除一个tab
         _removeByCode: function (code, callback) {
-            $('.t-tabs__nav-wrap').find('div[len-code=' + code + ']').remove();
-            _tabs.autoCalRemoveIcon();
+            $('.t-tabs__nav-wrap').find('div[len-code=' + code + ']')
+                .find('.span-icon').click();
         },
 
         /**
@@ -345,13 +345,13 @@
                 _tabs.home();
             } else {
                 var tab = $('.t-tabs__nav-wrap').find('div[len-code=' + code + ']');
-                if (tab.length === 0) {
+                if (tab.length > 0) {
                     console.error('tabs code:' + code + ',not exists!');
-                    return;
+                    tab.click();
+                } else {
+                    //新增
                 }
             }
-
-            tab.click();
         },
 
         changeByIndex: function (index) {
@@ -363,9 +363,8 @@
                     console.error('tabs index:' + index + ',not exists!');
                     return;
                 }
+                tab.click();
             }
-
-            tab.click();
         },
 
         existsByCode: function (code) {

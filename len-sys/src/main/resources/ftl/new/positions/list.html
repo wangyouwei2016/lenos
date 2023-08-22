@@ -78,7 +78,7 @@
                                         <button type="button"  id="search" class="btn btn-info">查询</button>
                                     </div>
                                     <div class="col-lg-4">
-                                        <button type="button" class="btn btn-info">新增岗位</button>
+                                        <button type="button" id="add" class="btn btn-info">新增岗位</button>
                                     </div>
                                     <div class="col-lg-5">
                                         <button class="btn dropdown-toggle pull-right" data-toggle="dropdown">更多操作 <i
@@ -167,7 +167,6 @@
             "bFilter": false,
             "dom": '<"top"i>rb<"bottom"flp><"clear">',
             "oLanguage": {
-                "emptyTable": "无数据",
                 "sInfo": "",
                 "sLengthMenu": '每页显示 _MENU_ 条记录',
                 "oPaginate": {
@@ -189,6 +188,17 @@
 
         $('#search').on('click', function() {
             dataTable.ajax.reload();
+        });
+
+        $('#add').on('click', function() {
+            var data={
+                code:'position-add',
+                name:'新增岗位信息',
+                icon:'fa-home',
+                url:'/positions/add',
+
+            }
+            lenosp.tabs.add(data, true);
         });
     });
 </script>

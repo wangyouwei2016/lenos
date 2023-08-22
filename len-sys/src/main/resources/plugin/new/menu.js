@@ -28,8 +28,34 @@ window.lenosp = {};
             var that = this;
             var htmlStr = that.loadHtml(option.url),
                 _content = $('.wrapper .content');
-            _content.empty();
-            _content.append(htmlStr);
+            _content.find('div[code]').each(function () {
+                $(this).hide();
+            });
+            var exists = _content.find('div[code=' + option.code + ']').length > 0;
+            if (exists) {
+                _content.find('div[code=' + option.code + ']').each(function () {
+                    $(this).show();
+                });
+            } else {
+                var wrapperDiv = $('<div>')
+                    .attr('id', option.code)
+                    .attr('code', option.code)
+                    .attr('data-options', JSON.stringify(option))
+                    .html(htmlStr);
+                _content.append(wrapperDiv);
+            }
+
+        },
+
+        _close: function (option) {
+            var _content = $('.wrapper .content');
+            var exists = _content.find('div[code=' + option.code + ']').length > 0;
+            if (exists) {
+                _content.find('div[code=' + option.code + ']').each(function () {
+                    $(this).remove();
+                });
+            }
+
         },
 
         /**
@@ -39,7 +65,7 @@ window.lenosp = {};
          * @returns {*}
          */
         loadHtml: function (path, callback) {
-            var newPath ='ftl/new' + path + '.html';
+            var newPath = 'ftl/new' + path + '.html';
             /*标记-- 需要迁移目录*/
             if (path === 'dashboard') {
                 newPath = 'ftl/new/main/dashboard.html';
@@ -117,6 +143,10 @@ window.lenosp = {};
 
         load: function (option) {
             _menu.load(option);
+        },
+
+        close: function (option) {
+            _menu._close(option);
         },
 
         dashboard: dashboard

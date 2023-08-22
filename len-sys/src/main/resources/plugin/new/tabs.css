@@ -123,7 +123,7 @@
 }
 
 .t-tabs__nav--card.t-tabs__nav-item {
-    padding-right: 16px;
+    padding-right: 10px;
     padding-left: 16px;
     border-bottom: 1px solid #e7e7e7;
 }
@@ -170,4 +170,5 @@
 
 .t-tabs__nav-item-text-wrapper .span-icon {
     margin-left: 5px;
+    padding-right: 10px;
 }
