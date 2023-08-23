@@ -5,7 +5,10 @@ import com.alibaba.fastjson.JSONObject;
 import com.len.response.Result;
 import com.len.response.ResultCode;
 import org.springframework.validation.BindException;
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -26,10 +29,17 @@ public class GlobalExceptionHandler {
         return Result.error();
     }
 
-    @ExceptionHandler(BindException.class)
+    @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseBody
-    public Result error(BindException e) {
-        List<FieldError> fieldErrors = e.getFieldErrors();
+    public Result error(MethodArgumentNotValidException e) {
+        BindingResult bindingResult = e.getBindingResult();
+        List<FieldError> allErrors = bindingResult.getFieldErrors();
+        return Result.error()
+            .code(ResultCode.PARAM_NOT_VALID.getCode())
+            .message((result(allErrors)).toJSONString());
+    }
+
+    protected JSONArray result(List<FieldError> fieldErrors){
         JSONArray arr = new JSONArray();
         for (FieldError fieldError : fieldErrors) {
             JSONObject obj = new JSONObject();
@@ -37,9 +47,16 @@ public class GlobalExceptionHandler {
             obj.put("msg", fieldError.getDefaultMessage());
             arr.add(obj);
         }
+        return arr;
+    }
+
+    @ExceptionHandler(BindException.class)
+    @ResponseBody
+    public Result error(BindException e) {
+        List<FieldError> fieldErrors = e.getFieldErrors();
         return Result.error()
             .code(ResultCode.PARAM_NOT_VALID.getCode())
-            .message(arr.toJSONString());
+            .message((result(fieldErrors)).toJSONString());
     }
 
     /**

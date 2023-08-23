@@ -34,14 +34,44 @@ public class PositionsController {
         );
     }
 
-    @PostMapping(value = "", consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE })
-    public Result<SysPositions> add(@ModelAttribute @Valid SysPositions position) {
+    @PostMapping(value = "", consumes = { MediaType.APPLICATION_JSON_VALUE })
+    public Result<SysPositions> add(@RequestBody @Valid SysPositions position) {
         positionsService.add(position);
         return Result.ok(position);
     }
 
-    @PostMapping(value = "/{id}", consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE })
-    public Result<Object> update(
+    @PostMapping(value = "")
+    public Result<SysPositions> add1(@ModelAttribute @Valid SysPositions position) {
+        positionsService.add(position);
+        return Result.ok(position);
+    }
+
+    @PostMapping(value = "", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
+    public Result<SysPositions> add2(@ModelAttribute @Valid SysPositions position) {
+        positionsService.add(position);
+        return Result.ok(position);
+    }
+
+    @PostMapping(value = "/{id}", consumes = { MediaType.APPLICATION_JSON_VALUE })
+    public Result<SysPositions> update(
+        @PathVariable String id,
+        @RequestBody @Valid SysPositions position) {
+        position.setId(id);
+        positionsService.update(position);
+        return Result.ok(position);
+    }
+
+    @PostMapping(value = "/{id}", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
+    public Result<SysPositions> update1(
+        @PathVariable String id,
+        @ModelAttribute @Valid SysPositions position) {
+        position.setId(id);
+        positionsService.update(position);
+        return Result.ok(position);
+    }
+
+    @PostMapping(value = "/{id}")
+    public Result<SysPositions> update2(
         @PathVariable String id,
         @ModelAttribute @Valid SysPositions position) {
         position.setId(id);
@@ -51,6 +81,12 @@ public class PositionsController {
 
     @PostMapping("/delete/{id}")
     public Result<Void> delete(@PathVariable String id) {
+        positionsService.delete(id);
+        return Result.ok();
+    }
+
+    @PostMapping("/delete")
+    public Result<Void> deleteById(@RequestParam String id) {
         positionsService.delete(id);
         return Result.ok();
     }

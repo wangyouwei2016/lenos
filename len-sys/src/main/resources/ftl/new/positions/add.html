@@ -1,39 +1,42 @@
+<style>
+
+</style>
 <div>
     <section class="panel">
         <header class="panel-heading">
             新增岗位信息
         </header>
         <div class="panel-body">
-            <form class="form-horizontal" role="form">
+            <form class="form-horizontal" id="positionForm" action="#">
                 <div class="form-group">
-                    <label for="code" class="col-lg-2 col-sm-2 control-label">编码</label>
+                    <label for="code" class="required col-lg-2 col-sm-2 control-label">编码 *</label>
                     <div class="col-lg-10">
-                        <input type="text" class="form-control" id="code" placeholder="编码">
-                        <p class="help-block">Example block-level help text here.</p>
+                        <input type="text" class="form-control" id="code" name="code" placeholder="编码" required>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="name" class="col-lg-2 col-sm-2 control-label">名称</label>
+                    <label for="name" class="col-lg-2 col-sm-2 control-label">名称 *</label>
                     <div class="col-lg-10">
-                        <input type="text" class="form-control" id="name" placeholder="名称">
+                        <input type="text" class="form-control" id="name" name="name" placeholder="名称" required>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="departmentId" class="col-lg-2 col-sm-2 control-label">所属部门</label>
                     <div class="col-lg-10">
-                        <input type="text" class="form-control" id="departmentId" placeholder="所属部门">
+                        <input type="text" class="form-control" id="departmentId" name="departmentId"
+                               placeholder="所属部门">
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="level" class="col-lg-2 col-sm-2 control-label">职级</label>
                     <div class="col-lg-10">
-                        <input type="text" class="form-control" id="level" placeholder="职级">
+                        <input type="text" class="form-control" id="level" name="level" placeholder="职级">
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="desc" class="col-lg-2 col-sm-2 control-label">描述</label>
                     <div class="col-lg-10">
-                        <input type="text" class="form-control" id="desc" placeholder="描述">
+                        <input type="text" class="form-control" id="desc" name="desc" placeholder="描述">
                     </div>
                 </div>
                 <div class="form-group">
@@ -42,7 +45,7 @@
                             <div class="col-lg-4">
                             </div>
                             <div class="col-lg-2">
-                                <button type="submit" class="btn btn-info">新增</button>
+                                <button id="positionAdd" class="btn btn-info">新增</button>
                             </div>
                             <div class="col-lg-2">
                                 <button type="submit" id="close" class="btn btn-danger">关闭</button>
@@ -61,8 +64,37 @@
     $(document).ready(function () {
         var options = $('#position-add').attr('data-options');
         options = JSON.parse(options);
+
+        //关闭 close
         $('#close').on('click', function () {
             lenosp.tabs.remove(options.code);
+        })
+
+        //新增 add
+        $('#positionAdd').on('click', function (event) {
+            event.preventDefault();
+            var form = $('#positionForm');
+
+            var valid = form.valid();
+
+            if (!valid) {
+                return;
+            }
+
+            var data = form.serializeObject();
+
+            $.ajax({
+                type: "POST",
+                url: "api/positions",
+                contentType: "application/json",
+                data: JSON.stringify(data),
+                success: function (response) {
+                    console.log("Form submitted successfully:", response);
+                },
+                error: function (error) {
+                    console.error("Form submission error:", error);
+                }
+            });
         })
     });
 

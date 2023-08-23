@@ -391,6 +391,8 @@
 <script src="${re.contextPath}/plugin/new/assets/jquery-easy-pie-chart/jquery.easy-pie-chart.js"></script>
 <script src="${re.contextPath}/plugin/new/js/owl.carousel.js" ></script>
 <script src="${re.contextPath}/plugin/new/js/jquery.customSelect.min.js" ></script>
+<script src="${re.contextPath}/plugin/new/js/jquery.validate.js" ></script>
+<script src="${re.contextPath}/plugin/new/js/messages_zh.min.js" ></script>
 <#--排序表格组件-->
 <script src="${re.contextPath}/plugin/plugins/sortable/Sortable.js"></script>
 <script type="application/javascript">
