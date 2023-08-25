@@ -118,6 +118,7 @@
 
 
 <script>
+    var dataTable;
     $(document).ready(function () {
         var getOrderObj = function (params) {
             if (params.order.length > 0) {
@@ -127,7 +128,7 @@
             }
             return null;
         };
-        var dataTable = $('#employeeList').DataTable({
+        dataTable = $('#employeeList').DataTable({
             ajax: {
                 url: '/api/positions',
                 dataSrc: 'data.records',
@@ -158,7 +159,7 @@
                     data: null,
                     orderable: false,
                     render: function (data, type, row) {
-                        return `<button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>`
+                        return `<button class="btn btn-danger btn-xs" onclick="del('` + row.id + `');"><i class="fa fa-trash-o "></i></button>`
                     }
                 }
             ],
@@ -201,6 +202,22 @@
             lenosp.tabs.add(data, true);
         });
     });
+
+    function del(id) {
+        if (confirm("确定要删除吗？")) {
+            $.ajax({
+                type: "POST",
+                url: "api/positions/delete/" + id,
+                success: function (response) {
+                    dataTable.ajax.reload();
+                },
+                error: function (error) {
+                }
+            });
+        } else {
+            return false;
+        }
+    }
 </script>
 
 
