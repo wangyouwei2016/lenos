@@ -23,6 +23,7 @@
     <!-- Custom styles for this template -->
     <link href="${re.contextPath}/plugin/new/css/style.css" rel="stylesheet">
     <link href="${re.contextPath}/plugin/new/tabs.css" rel="stylesheet">
+    <link href="${re.contextPath}/plugin/new/dropdownTable.css" rel="stylesheet">
     <link href="${re.contextPath}/plugin/new/css/style-responsive.css" rel="stylesheet" />
     <link href="${re.contextPath}/plugin/new/css/jquery.dataTables.css" rel="stylesheet" />
     <link href="${re.contextPath}/plugin/new/assets/toastr-master/toastr.css" rel="stylesheet" type="text/css" />
@@ -391,6 +392,7 @@
 <script src="${re.contextPath}/plugin/new/assets/jquery-easy-pie-chart/jquery.easy-pie-chart.js"></script>
 <script src="${re.contextPath}/plugin/new/js/owl.carousel.js" ></script>
 <script src="${re.contextPath}/plugin/new/js/jquery.customSelect.min.js" ></script>
+<script src="${re.contextPath}/plugin/new/dropdownTable.js" ></script>
 <script src="${re.contextPath}/plugin/new/js/jquery.validate.js" ></script>
 <script src="${re.contextPath}/plugin/new/js/messages_zh.min.js" ></script>
 <#--排序表格组件-->

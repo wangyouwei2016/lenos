@@ -118,8 +118,8 @@
 
 
 <script>
-    var dataTable;
     $(document).ready(function () {
+
         var getOrderObj = function (params) {
             if (params.order.length > 0) {
                 var columns = params.columns;
@@ -128,7 +128,8 @@
             }
             return null;
         };
-        dataTable = $('#employeeList').DataTable({
+
+        var dataTable = $('#employeeList').DataTable({
             ajax: {
                 url: '/api/positions',
                 dataSrc: 'data.records',
@@ -159,7 +160,7 @@
                     data: null,
                     orderable: false,
                     render: function (data, type, row) {
-                        return `<button class="btn btn-danger btn-xs" onclick="del('` + row.id + `');"><i class="fa fa-trash-o "></i></button>`
+                        return `<button class="btn btn-danger btn-xs delete-btn" data-id="${row.id}"><i class="fa fa-trash-o "></i></button>`
                     }
                 }
             ],
@@ -201,23 +202,28 @@
             }
             lenosp.tabs.add(data, true);
         });
-    });
 
-    function del(id) {
-        if (confirm("确定要删除吗？")) {
-            $.ajax({
-                type: "POST",
-                url: "api/positions/delete/" + id,
-                success: function (response) {
-                    dataTable.ajax.reload();
-                },
-                error: function (error) {
-                }
-            });
-        } else {
-            return false;
+        dataTable.on('click', '.delete-btn', function () {
+            var id = $(this).data('id');
+            del(id);
+        });
+
+        var del = function (id) {
+            if (confirm("确定要删除吗？")) {
+                $.ajax({
+                    type: "POST",
+                    url: "api/positions/delete/" + id,
+                    success: function (response) {
+                        dataTable.ajax.reload();
+                    },
+                    error: function (error) {
+                    }
+                });
+            } else {
+                return false;
+            }
         }
-    }
+    });
 </script>
 
 
