@@ -2,6 +2,11 @@
  * 下拉表格
  */
 (function ($) {
+    /**
+     * options 所有datatable配置
+     * @param options
+     * @returns {*}
+     */
     $.fn.dropdownTable = function (options) {
         const defaults = {
             //可传递ajax
@@ -33,11 +38,12 @@
             }
         };
 
-        const settings = $.extend({}, defaults, options);
+        let settings = $.extend({}, defaults, options);
 
         return this.each(function () {
             const input = this;
             let dataTable;
+
 
             const createTable = function () {
                 const container = $('<div class="table-container dropdown-menu" aria-labelledby="tableInput">');
@@ -45,25 +51,12 @@
                 container.append(table);
                 $(input).after(container);
 
-                let option = {
-                    columns: settings.columns,
-                    ordering: false,
-                    searching: false,
-                    info: false
-                };
-
-                if (settings.ajax !== null) {
-                    option.ajax = settings.ajax;
-                    option.paging = true;
-                } else {
-                    option.data = settings.data;
-                    option.paging = false;
-                }
-
-
-                dataTable = table.DataTable(option);
+                dataTable = table.DataTable(settings);
 
                 const populateInput = function (e, rowData) {
+                    if (rowData === undefined) {
+                        return;
+                    }
                     $(input).val(rowData[1]);
                     const onSelectResult = settings.onSelect(e, rowData);
                     if (onSelectResult === undefined || onSelectResult) {
@@ -79,6 +72,14 @@
                     const rowData = dataTable.row(this).data();
                     populateInput(e, rowData);
                 });
+
+                const tableContainer = $(input).siblings('.table-container');
+
+                tableContainer.on('click', function (e) {
+                    e.stopPropagation(); // Prevent event from bubbling up
+                });
+
+
             };
 
             $(input).on('input', function (e) {
