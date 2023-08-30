@@ -35,9 +35,9 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="desc" class="col-lg-2 col-sm-2 control-label">描述</label>
+                    <label class="col-lg-2 col-sm-2 control-label" for="description">描述</label>
                     <div class="col-lg-10">
-                        <input type="text" class="form-control" id="desc" name="desc" placeholder="描述">
+                        <input class="form-control" id="description" name="description" placeholder="描述" type="text">
                     </div>
                 </div>
                 <div class="form-group">
@@ -90,7 +90,12 @@
                 contentType: "application/json",
                 data: JSON.stringify(data),
                 success: function (response) {
-                    console.log("Form submitted successfully:", response);
+                    if (response.success === true) {
+                        console.log("Form submitted successfully:", response);
+                        lenosp.tabs.remove(options.code);
+                    } else {
+                        console.error("Form submission error:", response);
+                    }
                 },
                 error: function (error) {
                     console.error("Form submission error:", error);
@@ -158,6 +163,7 @@
             },
             onSelect: function (e,rowData) {
                 console.log('Selected:', rowData);
+                $('#departmentId').val(rowData.id);
                 // return false
             },
             onShowPanel: function (e) {

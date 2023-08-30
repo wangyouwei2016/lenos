@@ -8,6 +8,8 @@ import com.len.entity.SysPositions;
 
 public interface PositionsService extends IService<SysPositions> {
 
+    SysPositions get(String id);
+
     IPage<SysPositions> getAllPositionsByPage(Page<SysPositions> page, SysPositions positions, OrderItem sort);
 
     boolean add(SysPositions position);

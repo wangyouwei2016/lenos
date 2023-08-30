@@ -160,7 +160,8 @@
                     data: null,
                     orderable: false,
                     render: function (data, type, row) {
-                        return `<button class="btn btn-danger btn-xs delete-btn" data-id="${row.id}"><i class="fa fa-trash-o "></i></button>`
+                        return `<button class="btn btn-primary btn-xs edit-btn" data-id="${row.id}"><i class="fa fa-pencil"></i></button>`
+                            + `<button class="btn btn-danger btn-xs delete-btn" data-id="${row.id}"><i class="fa fa-trash-o "></i></button>`
                     }
                 }
             ],
@@ -199,6 +200,18 @@
                 icon:'fa-home',
                 url:'/positions/add',
 
+            }
+            lenosp.tabs.add(data, true);
+        });
+
+        dataTable.on('click', '.edit-btn', function () {
+            var id = $(this).data('id');
+            var data = {
+                code: 'position-edit',
+                name: '编辑岗位信息',
+                icon: 'fa-home',
+                url: '/positions/update',
+                id : id
             }
             lenosp.tabs.add(data, true);
         });

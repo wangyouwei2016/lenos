@@ -24,6 +24,13 @@ public class PositionsController {
         this.positionsService = positionsService;
     }
 
+    @GetMapping("/{id}")
+    public Result<SysPositions> get(@PathVariable String id) {
+        return Result.ok(
+                positionsService.get(id)
+        );
+    }
+
     @GetMapping
     public Result<IPage<SysPositions>> getAllByPage(
         @RequestParam(defaultValue = "1") Integer pageNum,

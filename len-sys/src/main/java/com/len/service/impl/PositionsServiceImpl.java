@@ -24,6 +24,11 @@ public class PositionsServiceImpl extends ServiceImpl<SysPositionsMapper, SysPos
     private SysPositionsMapper positionsMapper;
 
     @Override
+    public SysPositions get(String id) {
+        return positionsMapper.selectById(id);
+    }
+
+    @Override
     public IPage<SysPositions> getAllPositionsByPage(Page<SysPositions> page, SysPositions positions,
                                                      OrderItem sort) {
         QueryWrapper<SysPositions> queryWrapper = new QueryWrapper<>();

@@ -30,5 +30,5 @@ public class SysPositions extends BaseEntity {
     private String description;
 
     @TableField
-    private String level;
+    private Integer level;
 }

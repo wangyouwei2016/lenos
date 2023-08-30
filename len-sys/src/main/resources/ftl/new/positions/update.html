@@ -1,4 +1,208 @@
+<style>
+
+</style>
 <div>
-
-
+    <section class="panel">
+        <header class="panel-heading">
+            编辑岗位信息
+        </header>
+        <div class="panel-body">
+            <form action="#" class="form-horizontal" id="positionForm">
+                <div class="form-group">
+                    <label class="required col-lg-2 col-sm-2 control-label" for="code">编码 *</label>
+                    <div class="col-lg-10">
+                        <input class="form-control" id="code" name="code" placeholder="编码" required type="text">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-2 col-sm-2 control-label" for="name">名称 *</label>
+                    <div class="col-lg-10">
+                        <input class="form-control" id="name" name="name" placeholder="名称" required type="text">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-2 col-sm-2 control-label" for="departmentId">所属部门</label>
+                    <div class="col-lg-10">
+                        <input class="form-control" id="departmentId" name="departmentId" placeholder="所属部门"
+                               type="text">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-2 col-sm-2 control-label" for="level">职级</label>
+                    <div class="col-lg-10">
+                        <input class="form-control" id="level" name="level" placeholder="职级" type="text">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-2 col-sm-2 control-label" for="description">描述</label>
+                    <div class="col-lg-10">
+                        <input class="form-control" id="description" name="description" placeholder="描述" type="text">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-lg-24">
+                        <div class="row">
+                            <div class="col-lg-4">
+                            </div>
+                            <div class="col-lg-2">
+                                <button class="btn btn-info" id="positionEdit">保存</button>
+                            </div>
+                            <div class="col-lg-2">
+                                <button class="btn btn-danger" id="close" type="submit">关闭</button>
+                            </div>
+                            <div class="col-lg-4">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
 </div>
+
+<script>
+    $(document).ready(function () {
+        var options = $('#position-edit').attr('data-options');
+        options = JSON.parse(options);
+
+        //关闭 close
+        $('#close').on('click', function () {
+            lenosp.tabs.remove(options.code);
+        })
+
+        //加载数据
+        $(function () {
+            $.ajax({
+                type: "GET",
+                url: "api/positions/" + options.id,
+                // contentType: "application/json",
+                // data: JSON.stringify(data),
+                success: function (response) {
+                    if (response.success === true) {
+                        console.log("Form submitted successfully:", response);
+                        var data = response.data;
+                        $('#code').val(data.code);
+                        $('#name').val(data.name);
+                        $('#departmentId').val(data.departmentId);
+                        $('#level').val(data.level);
+                        $('#description').val(data.description);
+                    } else {
+                        console.error("Form submission error:", response);
+                    }
+                },
+                error: function (error) {
+                    console.error("Form submission error:", error);
+                }
+            });
+        });
+
+        //编辑 edit
+        $('#positionEdit').on('click', function (event) {
+            event.preventDefault();
+            var form = $('#positionForm');
+
+            var valid = form.valid();
+
+            if (!valid) {
+                return;
+            }
+
+            var data = form.serializeObject();
+            var id = options.id;
+            data.id = id;
+            $.ajax({
+                type: "POST",
+                url: "api/positions/" + id,
+                contentType: "application/json",
+                data: JSON.stringify(data),
+                success: function (response) {
+                    if (response.success === true) {
+                        console.log("Form submitted successfully:", response);
+                        lenosp.tabs.remove(options.code);
+                    } else {
+                        console.error("Form submission error:", response);
+                    }
+                },
+                error: function (error) {
+                    console.error("Form submission error:", error);
+                }
+            });
+        })
+
+
+        const data = [
+            { id: 1, name: 'Item 1', description: 'Description 1' },
+            { id: 2, name: 'Item 2', description: 'Description 2' },
+            { id: 3, name: 'Item 3', description: 'Description 3' },
+            // ... more items
+        ];
+
+        var getOrderObj = function (params) {
+            if (params.order.length > 0) {
+                var columns = params.columns;
+                var order = params.order[0];
+                return {column: columns[order.column].column, asc: order.dir === 'asc'}
+            }
+            return null;
+        };
+
+        $('#departmentId').dropdownTable({
+            ajax: {
+                url: '/api/positions',
+                dataSrc: 'data.records',
+                "data": function(d) {
+                },
+                dataFilter: function (json) {
+                    var data = JSON.parse(json);
+                    data.recordsTotal = data.data.total;
+                    data.recordsFiltered = data.data.total;
+                    return JSON.stringify(data);
+                },
+                beforeSend: function () {
+                },
+                complete: function () {
+                },
+            },
+            columns: [
+                {title:'编码',data: 'code', column: 'code', orderable: true},
+                {title:'单位名称',data: 'name', column: 'name'}
+            ],
+            lengthChange: false,
+            "paging": true,
+            "bFilter": false,
+            "oLanguage": {
+                "sInfo": "",
+                "oPaginate": {
+                    "sPrevious": "上一页",
+                    "sNext": "下一页"
+                },
+            },
+            serverSide: true,
+            serverParams: function (params) {
+                var orderObj = getOrderObj(params);
+                params.pageNum = Math.ceil(params.start / params.length) + 1;
+                params.pageSize = params.length;
+                if (orderObj !== null) {
+                    params.column = orderObj.column;
+                    params.asc = orderObj.asc
+                }
+            },
+            onSelect: function (e,rowData) {
+                console.log('Selected:', rowData);
+                $('#departmentId').val(rowData.id);
+                // return false
+            },
+            onShowPanel: function (e) {
+                console.log('onShowPanel',e);
+                return true
+            },
+            onHidePanel:function(e){
+                console.log('onHidePanel',e);
+                return true
+            }
+
+        });
+    });
+
+
+</script>
