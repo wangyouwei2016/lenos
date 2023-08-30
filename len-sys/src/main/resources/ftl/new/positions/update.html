@@ -75,17 +75,12 @@
             $.ajax({
                 type: "GET",
                 url: "api/positions/" + options.id,
-                // contentType: "application/json",
-                // data: JSON.stringify(data),
                 success: function (response) {
                     if (response.success === true) {
-                        console.log("Form submitted successfully:", response);
                         var data = response.data;
-                        $('#code').val(data.code);
-                        $('#name').val(data.name);
-                        $('#departmentId').val(data.departmentId);
-                        $('#level').val(data.level);
-                        $('#description').val(data.description);
+                        $('#positionForm').find(':input').each(function () {
+                            $(this).val(data[$(this).attr('name')]);
+                        });
                     } else {
                         console.error("Form submission error:", response);
                     }
@@ -94,7 +89,7 @@
                     console.error("Form submission error:", error);
                 }
             });
-        });
+        })
 
         //编辑 edit
         $('#positionEdit').on('click', function (event) {
@@ -117,8 +112,7 @@
                 data: JSON.stringify(data),
                 success: function (response) {
                     if (response.success === true) {
-                        console.log("Form submitted successfully:", response);
-                        lenosp.tabs.remove(options.code);
+                        toastr.success('保存成功！');
                     } else {
                         console.error("Form submission error:", response);
                     }
@@ -197,7 +191,6 @@
                 return true
             },
             onHidePanel:function(e){
-                console.log('onHidePanel',e);
                 return true
             }
 

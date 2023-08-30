@@ -162,6 +162,7 @@
                 _tabs.autoCalRemoveIcon();
 
                 if (!isActive) {
+                    typeof closeCallback === 'function' && closeCallback(option);
                     return;
                 }
 

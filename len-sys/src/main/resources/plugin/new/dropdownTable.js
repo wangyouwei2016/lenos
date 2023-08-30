@@ -108,11 +108,10 @@
             });
 
             $(document).on('click', function (e) {
-                if (!$(e.target).closest('.dropdown').length) {
-                    const hidePanel = settings.onHidePanel(e);
-                    if (hidePanel === undefined || hidePanel) {
-                        $(input).siblings('.table-container').removeClass('show');
-                    }
+                //这里仍有问题
+                const hidePanel = settings.onHidePanel(e);
+                if (hidePanel === undefined || hidePanel) {
+                    $(input).siblings('.table-container').removeClass('show');
                 }
             });
         });

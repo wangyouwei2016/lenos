@@ -91,8 +91,17 @@
                 data: JSON.stringify(data),
                 success: function (response) {
                     if (response.success === true) {
-                        console.log("Form submitted successfully:", response);
+
+                        var data = {
+                            code: 'position-edit',
+                            name: '编辑岗位信息',
+                            icon: 'fa-home',
+                            url: '/positions/update',
+                            id : response.data.id
+                        }
                         lenosp.tabs.remove(options.code);
+                        lenosp.tabs.add(data, true);
+                        toastr.success('新增成功！');
                     } else {
                         console.error("Form submission error:", response);
                     }
@@ -171,7 +180,6 @@
                 return true
             },
             onHidePanel:function(e){
-                console.log('onHidePanel',e);
                 return true
             }
 

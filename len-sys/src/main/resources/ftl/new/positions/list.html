@@ -160,7 +160,7 @@
                     data: null,
                     orderable: false,
                     render: function (data, type, row) {
-                        return `<button class="btn btn-primary btn-xs edit-btn" data-id="${row.id}"><i class="fa fa-pencil"></i></button>`
+                        return `<button class="btn btn-primary btn-xs edit-btn" data-id="${row.id}"><i class="fa fa-pencil"></i></button>  `
                             + `<button class="btn btn-danger btn-xs delete-btn" data-id="${row.id}"><i class="fa fa-trash-o "></i></button>`
                     }
                 }
@@ -213,6 +213,7 @@
                 url: '/positions/update',
                 id : id
             }
+            lenosp.tabs.remove('position-edit');
             lenosp.tabs.add(data, true);
         });
 
