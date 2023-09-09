@@ -1,18 +1,17 @@
-package com.len.entity;
-
-import javax.validation.constraints.NotEmpty;
+package com.len.form;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.len.base.BaseEntity;
 import com.len.validator.group.AddGroup;
 import com.len.validator.group.UpdateGroup;
-
 import lombok.Data;
+
+import javax.validation.constraints.NotEmpty;
 
 @TableName(value = "sys_user")
 @Data
-public class SysUser extends BaseEntity {
+public class UserForm extends BaseEntity {
 
     @NotEmpty(message = "用户名不能为空", groups = {AddGroup.class, UpdateGroup.class})
     @TableField
@@ -43,4 +42,5 @@ public class SysUser extends BaseEntity {
      */
     private Byte delFlag;
 
+    private String role;
 }

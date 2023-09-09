@@ -4,15 +4,17 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.metadata.OrderItem;
+import com.len.form.UserForm;
+import com.len.response.Result;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.alibaba.fastjson.JSONObject;
@@ -36,13 +38,17 @@ import com.len.validator.group.AddGroup;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
+import javax.validation.Valid;
+
 /**
  * 用户管理
  */
 // @Api(value="user")
 @Controller
+@RestController
 @RequestMapping(value = "/user")
 @Api(value = "用户管理", tags = "用户管理业务")
+@Validated
 public class UserController extends BaseController {
 
     private final SysUserService userService;
@@ -52,6 +58,16 @@ public class UserController extends BaseController {
     public UserController(SysUserService userService, UploadUtil uploadUtil) {
         this.userService = userService;
         this.uploadUtil = uploadUtil;
+    }
+
+    @GetMapping
+    public Result<IPage<SysUser>> getAllByPage(
+            @RequestParam(defaultValue = "1") Integer pageNum,
+            @RequestParam(defaultValue = "10") Integer pageSize,
+            SysUser sysUser, OrderItem sort) throws InterruptedException {
+        return Result.ok(
+                userService.getAllUserByPage(new com.baomidou.mybatisplus.extension.plugins.pagination.Page<SysUser>(pageNum, pageSize), sysUser, sort)
+        );
     }
 
     @GetMapping(value = "mainTest")
@@ -96,7 +112,7 @@ public class UserController extends BaseController {
     @RequiresPermissions("user:show")
     public JSONObject showUser(String roleId, int page, int limit) {
         JSONObject returnValue = new JSONObject();
-        Page<Object> startPage = PageHelper.startPage(page, limit);
+        Page<Object> startPage = PageHelper.startPage(page);
         List<SysUser> users = userService.getUserByRoleId(roleId);
         returnValue.put("users", users);
         returnValue.put("totals", startPage.getTotal());
@@ -127,6 +143,14 @@ public class UserController extends BaseController {
         }
         userService.add(user, Arrays.asList(role));
         return succ();
+    }
+
+    @PostMapping(value = "", consumes = { MediaType.APPLICATION_JSON_VALUE })
+    public Result<UserForm> add(@RequestBody @Valid UserForm user) {
+        String[] role = new String[]{user.getRole()};
+        SysUser sysUser = JSONObject.parseObject(JSONObject.toJSONString(user),SysUser.class);
+        userService.add(sysUser, Arrays.asList(role));
+        return Result.ok(user);
     }
 
     @GetMapping(value = "updateUser")

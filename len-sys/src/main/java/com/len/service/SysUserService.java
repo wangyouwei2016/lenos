@@ -2,7 +2,11 @@ package com.len.service;
 
 import java.util.List;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.metadata.OrderItem;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.len.base.BaseService;
+import com.len.entity.SysPositions;
 import com.len.entity.SysRoleUser;
 import com.len.entity.SysUser;
 import com.len.util.Checkbox;
@@ -10,6 +14,14 @@ import com.len.util.Checkbox;
 public interface SysUserService extends BaseService<SysUser> {
 
     SysUser login(String username);
+
+    /**
+     * 获取用户列表
+     *
+     * @param page 分页信息
+     * @return 用户列表
+     */
+    IPage<SysUser> getAllUserByPage(Page<SysUser> page, SysUser sysUser, OrderItem sort);
 
     /**
      * 新增用户和用户角色信息

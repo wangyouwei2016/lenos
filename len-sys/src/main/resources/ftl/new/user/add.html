@@ -1,0 +1,210 @@
+﻿<style>
+
+</style>
+<div>
+    <section class="panel">
+        <header class="panel-heading">
+            添加用户
+        </header>
+        <div class="panel-body">
+            <form class="form-horizontal" id="userForm" action="#">
+                <div class="form-group">
+                    <label for="username" class="required col-lg-2 col-sm-2 control-label">用户名 *</label>
+                    <div class="col-lg-10">
+                        <input type="text" class="form-control" id="username" name="username" placeholder="用户名"
+                               required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="realName" class="col-lg-2 col-sm-2 control-label">真实姓名 </label>
+                    <div class="col-lg-2">
+                        <input type="text" class="form-control" id="realName" name="realName" placeholder="真实姓名"
+                               required>
+                    </div>
+                    <label for="age" class="col-lg-1 col-sm-1 control-label">年龄 </label>
+                    <div class="col-lg-2">
+                        <input type="text" class="form-control" id="age" name="age" placeholder="年龄" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="password" class="col-lg-1 col-sm-1 control-label">密码 </label>
+                    <div class="col-lg-2">
+                        <input type="password" class="form-control" id="password" name="password" placeholder="密码"
+                               required>
+                    </div>
+                    <!--<label for="repass" class="col-lg-1 col-sm-1 control-label">确认密码 </label>
+                    <div class="col-lg-2">
+                        <input type="password" class="form-control" id="repass" name="password" placeholder="确认密码"
+                               required>
+                    </div>-->
+                </div>
+                <label for="email" class="col-lg-2 col-sm-2 control-label">邮箱 </label>
+                <div class="col-lg-10">
+                    <input type="text" class="form-control" id="email" name="email" placeholder="邮箱" required>
+                </div>
+                <div class="form-group">
+                    <input type="radio" class="form-check-input" id="hr" name="role" value="hr" checked>hr
+                    <label class="form-check-label" for="hr"></label>
+                    <input type="radio" class="form-check-input" id="manage" name="role" value="manage">manage
+                    <label class="form-check-label" for="manage"></label>
+                    <input type="radio" class="form-check-input" id="admin" name="role" value="admin">admin
+                    <label class="form-check-label" for="admin"></label>
+                    <input type="radio" class="form-check-input" id="blogAdmin" name="role" value="blogAdmin">blogAdmin
+                    <label class="form-check-label" for="blogAdmin"></label>
+                    <input type="radio" class="form-check-input" id="dev" name="role" value="dev">dev
+                    <label class="form-check-label" for="dev"></label>
+                    <input type="radio" class="form-check-input" id="DeputyManager" name="role" value="DeputyManager">DeputyManager
+                    <label class="form-check-label" for="DeputyManager"></label>
+                </div>
+                <div class="form-group">
+                    <div class="col-lg-24">
+                        <div class="row">
+                            <div class="col-lg-4">
+                            </div>
+                            <div class="col-lg-2">
+                                <button id="positionAdd" class="btn btn-info">新增</button>
+                            </div>
+                            <div class="col-lg-2">
+                                <button type="submit" id="close" class="btn btn-danger">关闭</button>
+                            </div>
+                            <div class="col-lg-4">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+</div>
+
+<script>
+    $(document).ready(function () {
+        var options = $('#position-add').attr('data-options');
+        options = JSON.parse(options);
+
+        //关闭 close
+        $('#close').on('click', function () {
+            lenosp.tabs.remove(options.code);
+        })
+
+        //新增 add
+        $('#positionAdd').on('click', function (event) {
+            event.preventDefault();
+            var form = $('#userForm');
+
+            var valid = form.valid();
+
+            if (!valid) {
+                return;
+            }
+
+            var data = form.serializeObject();
+
+            $.ajax({
+                type: "POST",
+                url: "/user",
+                contentType: "application/json",
+                data: JSON.stringify(data),
+                success: function (response) {
+                    if (response.success === true) {
+
+                       /* var data = {
+                            code: 'employeeList',
+                            name: '用户管理',
+                            icon: 'fa-home',
+                            url: '/user/list',
+                            id: response.data.id
+                        }*/
+                        lenosp.tabs.remove(options.code);
+                        lenosp.tabs.add(data, true);
+                        toastr.success('新增成功！');
+                    } else {
+                        console.error("Form submission error:", response);
+                    }
+                },
+                error: function (error) {
+                    console.error("Form submission error:", error);
+                }
+            });
+        })
+
+
+        const data = [
+            {id: 1, name: 'Item 1', description: 'Description 1'},
+            {id: 2, name: 'Item 2', description: 'Description 2'},
+            {id: 3, name: 'Item 3', description: 'Description 3'},
+            // ... more items
+        ];
+
+        var getOrderObj = function (params) {
+            if (params.order.length > 0) {
+                var columns = params.columns;
+                var order = params.order[0];
+                return {column: columns[order.column].column, asc: order.dir === 'asc'}
+            }
+            return null;
+        };
+
+        $('#departmentId').dropdownTable({
+            ajax: {
+                url: '/user/getAllByPage',
+                dataSrc: 'data.records',
+                "data": function (d) {
+                },
+                dataFilter: function (json) {
+                    var data = JSON.parse(json);
+                    data.recordsTotal = data.data.total;
+                    data.recordsFiltered = data.data.total;
+                    return JSON.stringify(data);
+                },
+                beforeSend: function () {
+                },
+                complete: function () {
+                },
+            },
+            columns: [
+                {title: '用户名', data: 'username', column: 'username'},
+                {title: '真实姓名', data: 'realName', column: 'realName'},
+                {title: '年龄', data: 'age', column: 'age'},
+                {title: '密码', data: 'password', column: 'password'},
+                {title: '邮箱', data: 'email', column: 'email'},
+                {title: '角色', data: 'role', column: 'role'}
+            ],
+            lengthChange: false,
+            "paging": true,
+            "bFilter": false,
+            "oLanguage": {
+                "sInfo": "",
+                "oPaginate": {
+                    "sPrevious": "上一页",
+                    "sNext": "下一页"
+                },
+            },
+            serverSide: true,
+            serverParams: function (params) {
+                var orderObj = getOrderObj(params);
+                params.pageNum = Math.ceil(params.start / params.length) + 1;
+                params.pageSize = params.length;
+                if (orderObj !== null) {
+                    params.column = orderObj.column;
+                    params.asc = orderObj.asc
+                }
+            },
+            onSelect: function (e, rowData) {
+                console.log('Selected:', rowData);
+                $('#departmentId').val(rowData.id);
+                // return false
+            },
+            onShowPanel: function (e) {
+                console.log('onShowPanel', e);
+                return true
+            },
+            onHidePanel: function (e) {
+                return true
+            }
+
+        });
+    });
+
+
+</script>

@@ -1,8 +1,8 @@
-
 <style>
     .dataTables_length, .dataTables_paginate {
         float: right;
     }
+
     .dataTables_length select {
         border: 1px solid #e2e2e4;
         border-radius: 4px;
@@ -13,99 +13,66 @@
         <div class="col-lg-12">
             <section class="panel">
                 <header class="panel-heading">
-                    员工档案
+                    用户管理
                     <span class="tools pull-right">
-                        <a class="fa fa-chevron-down" href="javascript:;"></a>
+                         <div class="col-lg-6 tools pull-right">
+                             <a class="fa fa-chevron-down" href="javascript:"></a>
+                         </div>
+                          <div id="columnSetting" class="col-lg-6" style="cursor: pointer">
+                            <a style="position: absolute">
+                                <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                <i class="fa fa-bars"></i>
+                            </a>
+                                <ul style="left:-80px" class="dropdown-menu" role="menu">
+                                    <li>
+                                        <label><input data-column="0" checked type="checkbox">用户名</label>
+                                    </li>
+                                    <li>
+                                        <label><input data-column="1" checked type="checkbox">年龄</label>
+                                    </li>
+                                     <li>
+                                        <label><input data-column="=2" checked type="checkbox">真实姓名</label>
+                                    </li>
+
+                                     <li>
+                                        <label><input data-column="3" checked type="checkbox">邮箱</label>
+                                    </li>
+                                </ul>
+                            </a>
+                       </div>
                      </span>
                 </header>
                 <div class="panel-body">
-                    <form class="form-horizontal tasi-form" method="get">
+                    <form class="form-horizontal">
                         <!--条件行一-->
-                        <div class="row">
-                            <div class="col-lg-3">
-                                <div class="form-group">
-                                    <label class="col-sm-4 control-label">部门</label>
-                                    <div class="col-sm-8">
-                                        <select class="form-control m-bot15">
-                                            <option>开发</option>
-                                            <option>测试</option>
-                                            <option>销售</option>
-                                        </select>
-                                    </div>
-                                </div>
+                        <div class="form-group">
+                            <label for="username" class="col-sm-1 control-label">用户名</label>
+                            <div class="col-sm-2">
+                                <input id="username" name="username" class="form-control" type="text" value="">
                             </div>
-                            <div class="col-lg-3">
-                                <div class="form-group">
-                                    <label class="col-sm-4 control-label">Input focus</label>
-                                    <div class="col-sm-8">
-                                        <input class="form-control" type="text" value="">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3">
-                                <div class="form-group">
-                                    <label class="col-sm-4 control-label">Input focus</label>
-                                    <div class="col-sm-8">
-                                        <input class="form-control" type="text" value="">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3">
-                                <div class="form-group">
-                                    <label class="col-sm-4 control-label">Input focus</label>
-                                    <div class="col-sm-8">
-                                        <input class="form-control" type="text" value="">
-                                    </div>
-                                </div>
+
+                            <label for="email" class="col-sm-1 control-label">邮箱</label>
+                            <div class="col-sm-2">
+                                <input id="email" name="email" class="form-control" type="text" value="">
                             </div>
                         </div>
-                        <!--条件行二-->
-                        <div class="row">
-                            <div class="col-lg-3">
-                                <div class="form-group">
-                                    <label class="col-sm-4 control-label">Input focus</label>
-                                    <div class="col-sm-8">
-                                        <input class="form-control" type="text" value="">
-                                    </div>
+                        <div class="form-group">
+                            <div class="col-lg-8"></div>
+                            <div class="col-lg-4">
+                                <div class="col-lg-3">
+                                    <button type="button" id="search" class="btn btn-info">查询</button>
                                 </div>
-                            </div>
-                            <div class="col-lg-3">
-
-                                <div class="form-group">
-                                    <label class="col-sm-4 control-label">Input focus</label>
-                                    <div class="col-sm-8">
-                                        <input class="form-control" type="text" value="">
-                                    </div>
+                                <div class="col-lg-3">
+                                    <button type="button" id="add" class="btn btn-info">新增员工</button>
                                 </div>
-
-                            </div>
-                            <div class="col-lg-3">
-
-                                <div class="form-group">
-                                    <label class="col-sm-4 control-label">Input focus</label>
-                                    <div class="col-sm-8">
-                                        <input class="form-control" type="text" value="">
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div class="col-lg-3">
-                                <div class="form-group">
-                                    <div class="col-lg-3">
-                                        <button type="button" class="btn btn-info">查询</button>
-                                    </div>
-                                    <div class="col-lg-4">
-                                        <button type="button" class="btn btn-info">新增员工</button>
-                                    </div>
-                                    <div class="col-lg-5">
-                                        <button class="btn dropdown-toggle pull-right" data-toggle="dropdown">更多操作 <i class="fa fa-angle-down"></i>
-                                        </button>
-                                        <ul class="dropdown-menu pull-right">
-                                            <li><a href="#">Print</a></li>
-                                            <li><a href="#">Save as PDF</a></li>
-                                            <li><a href="#">Export to Excel</a></li>
-                                        </ul>
-                                    </div>
+                                <div class="col-lg-3">
+                                    <button class="btn dropdown-toggle " data-toggle="dropdown">更多 <i
+                                            class="fa fa-angle-down"></i>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="#">导出</a></li>
+                                        <li><a href="#">打印</a></li>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
@@ -115,66 +82,16 @@
                 <table class="table table-striped table-advance table-hover" id="employeeList">
                     <thead>
                     <tr>
-                        <th><i class="fa fa-bullhorn"></i> 姓名</th>
-                        <th><i class="fa fa-question-circle"></i> 工号</th>
-<!--                        <th class="hidden-phone"><i class="fa fa-question-circle"></i> 工号</th>-->
-                        <th><i class="fa fa-bookmark"></i> 部门</th>
-                        <th><i class=" fa fa-edit"></i> 职位</th>
-                        <th><i class=" fa fa-edit"></i> 类型</th>
-                        <th><i class=" fa fa-edit"></i> 入职日期</th>
-                        <th><i class=" fa fa-edit"></i> 操作</th>
+                        <th><i class="fa fa-bullhorn"></i> 用户名</th>
+                        <th><i class="fa fa-question-circle"></i> 年龄</th>
+                        <!--                        <th class="hidden-phone"><i class="fa fa-question-circle"></i> 工号</th>-->
+                        <th><i class="fa fa-bookmark"></i> 真实姓名</th>
+                        <th><i class=" fa fa-edit"></i> 邮箱</th>
+                        <th> 操作</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td><a href="#">Vector Ltd</a></td>
-                        <td class="hidden-phone">Lorem Ipsum dorolo imit</td>
-                        <td class="hidden-phone">Lorem Ipsum dorolo imit</td>
-                        <td class="hidden-phone">Lorem Ipsum dorolo imit</td>
-                        <td>12120.00$ </td>
-                        <td><span class="label label-info label-mini">Due</span></td>
-                        <td>
-                            <button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button>
-                            <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
-                            <button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <a href="#">
-                                Adimin co
-                            </a>
-                        </td>
-                        <td class="hidden-phone">Lorem Ipsum dorolo</td>
-                        <td class="hidden-phone">Lorem Ipsum dorolo</td>
-                        <td class="hidden-phone">Lorem Ipsum dorolo</td>
-                        <td>56456.00$ </td>
-                        <td><span class="label label-warning label-mini">Due</span></td>
-                        <td>
-                            <button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button>
-                            <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
-                            <button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <a href="#">
-                                boka soka
-                            </a>
-                        </td>
-                        <td class="hidden-phone">Lorem Ipsum dorolo</td>
-                        <td class="hidden-phone">Lorem Ipsum dorolo</td>
-                        <td class="hidden-phone">Lorem Ipsum dorolo</td>
-                        <td>14400.00$ </td>
-                        <td><span class="label label-success label-mini">Paid</span></td>
-                        <td>
-                            <button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button>
-                            <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
-                            <button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
-                        </td>
-                    </tr>
 
-                    </tbody>
                 </table>
             </section>
         </div>
@@ -182,26 +99,135 @@
 </div>
 
 <script>
-    $(document).ready(function() {
-        $('#employeeList').DataTable({
+    $(document).ready(function () {
+
+        var getOrderObj = function (params) {
+            if (params.order.length > 0) {
+                var columns = params.columns;
+                var order = params.order[0];
+                return {column: columns[order.column].data, asc: order.dir === 'asc'}
+            }
+            return null;
+        };
+        var dataTable = $('#employeeList').DataTable({
+            ajax: {
+                url: '/user',
+                dataSrc: 'data.records',
+                "data": function (d) {
+                    d.username = $('#positionsList [name="username"]').val();
+                    d.age = $('#positionsList [name="age"]').val();
+                    d.realName = $('#positionsList [name="realName"]').val();
+                    d.email = $('#positionsList [name="email"]').val();
+                },
+                dataFilter: function (json) {
+                    var data = JSON.parse(json);
+                    data.recordsTotal = data.data.total;
+                    data.recordsFiltered = data.data.total;
+                    return JSON.stringify(data);
+                },
+                beforeSend: function () {
+                },
+                complete: function () {
+                },
+            },
+            columns: [
+                {data: 'username', column: 'username', orderable: true},
+                {data: 'age', column: 'age'},
+                {data: 'realName', column: "realName"},
+                {data: 'email', column: 'email'},
+                {
+                    data: null,
+                    orderable: false,
+                    render: function (data, type, row) {
+                        return `<button class="btn btn-primary btn-xs edit-btn" data-id="${row.id}"><i class="fa fa-pencil"></i></button>  `
+                            + `<button class="btn btn-danger btn-xs delete-btn" data-id="${row.id}"><i class="fa fa-trash-o "></i></button>`
+                    }
+                }
+            ],
             "paging": true,
             "pageLength": 10,
             "bFilter": false,
             "dom": '<"top"i>rb<"bottom"flp><"clear">',
-            /*"aoColumns": [
-                { "bSortable": true }
-            ],*/
-            "oLanguage":{
-                "sInfo":"",
-                "sLengthMenu":'每页显示 _MENU_ 条记录',
+            "oLanguage": {
+                "sInfo": "",
+                "sInfoEmpty": "",
+                "sEmptyTable": "无数据",
+                "sLengthMenu": '每页显示 _MENU_ 条记录',
                 "oPaginate": {
                     "sPrevious": "上一页",
                     "sNext": "下一页"
                 },
-            }
-            // bLengthChange: false
+            },
+            serverSide: true,
+            serverParams: function (params) {
+                var orderObj = getOrderObj(params);
+                params.pageNum = Math.ceil(params.start / params.length) + 1;
+                params.pageSize = params.length;
+                if (orderObj !== null) {
+                    params.column = orderObj.column;
+                    params.asc = orderObj.asc
+                }
+            },
         });
-        $('#employeeList_paginate').appendTo('#paginationWrapper');
+
+        $('#columnSetting input[type="checkbox"]').on('change', function (e) {
+            e.stopPropagation();
+            var columnIdx = $(this).data('column');
+            dataTable.column(columnIdx).visible($(this).prop('checked'));
+        });
+
+        $('#columnSetting ul.dropdown-menu').on('click', function (e) {
+            e.stopPropagation();
+        });
+
+        $('#search').on('click', function () {
+            dataTable.ajax.reload();
+        });
+
+        $('#add').on('click', function () {
+            var data = {
+                code: 'position-add',
+                name: '新增岗位信息',
+                icon: 'fa-home',
+                url: '/user/add',
+
+            }
+            lenosp.tabs.add(data, true);
+        });
+
+        dataTable.on('click', '.edit-btn', function () {
+            var id = $(this).data('id');
+            var data = {
+                code: 'position-edit',
+                name: '编辑岗位信息',
+                icon: 'fa-home',
+                url: '/positions/update',
+                id: id
+            }
+            lenosp.tabs.remove('position-edit');
+            lenosp.tabs.add(data, true);
+        });
+
+        dataTable.on('click', '.delete-btn', function () {
+            var id = $(this).data('id');
+            del(id);
+        });
+
+        var del = function (id) {
+            if (confirm("确定要删除吗？")) {
+                $.ajax({
+                    type: "POST",
+                    url: "api/positions/delete/" + id,
+                    success: function (response) {
+                        dataTable.ajax.reload();
+                    },
+                    error: function (error) {
+                    }
+                });
+            } else {
+                return false;
+            }
+        }
     });
 </script>
 

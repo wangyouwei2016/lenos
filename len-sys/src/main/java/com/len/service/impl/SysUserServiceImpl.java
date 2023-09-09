@@ -7,6 +7,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.metadata.OrderItem;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.len.entity.*;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,10 +24,6 @@ import com.len.base.CurrentRole;
 import com.len.base.CurrentUser;
 import com.len.base.impl.BaseServiceImpl;
 import com.len.core.shiro.Principal;
-import com.len.entity.SysMenu;
-import com.len.entity.SysRole;
-import com.len.entity.SysRoleUser;
-import com.len.entity.SysUser;
 import com.len.exception.ServiceException;
 import com.len.mapper.SysRoleUserMapper;
 import com.len.mapper.SysUserMapper;
@@ -55,6 +56,34 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUserMapper, SysUser> 
     @Override
     public SysUser login(String username) {
         return sysUserMapper.login(username);
+    }
+
+
+    /**
+     * 获取用户列表
+     *
+     * @param page    分页信息
+     * @param sysUser 用户实体
+     * @param sort 排序
+     * @return 用户列表
+     */
+    @Override
+    public IPage<SysUser> getAllUserByPage(Page<SysUser> page, SysUser sysUser, OrderItem sort) {
+        QueryWrapper<SysUser> queryWrapper = new QueryWrapper<>();
+        if (sysUser != null) {
+            if (StringUtils.isNotBlank(sysUser.getUsername())) {
+                queryWrapper.like("username", sysUser.getUsername());
+            }
+            if (StringUtils.isNotBlank(sysUser.getEmail())) {
+                queryWrapper.like("email", sysUser.getEmail());
+            }
+        }
+
+        if (sort != null && StringUtils.isNotBlank(sort.getColumn())) {
+            page.addOrder(sort);
+        }
+
+        return sysUserMapper.selectPage(page, queryWrapper);
     }
 
     @Override
