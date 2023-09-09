@@ -9,6 +9,14 @@
         position: relative;
     }
 
+    .dropdown-menu li {
+        padding: 0 20px;
+    }
+
+    .dropdown-menu li:hover, .dropdown-menu li:hover input, .dropdown-menu li:hover label {
+        cursor: pointer;
+    }
+
 
 </style>
 <div id="positionsList">
@@ -18,47 +26,73 @@
                 <header class="panel-heading">
                     岗位信息
                     <span class="tools pull-right">
-                        <a class="fa fa-chevron-down" href="javascript:;"></a>
+                        <div class="col-lg-6 tools pull-right">
+                            <a class="fa fa-chevron-down" href="javascript:;"></a>
+                        </div>
+                       <div id="columnSetting" class="col-lg-6" style="cursor: pointer">
+                            <a style="position: absolute">
+                                <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                <i class="fa fa-bars"></i>
+                            </a>
+                                <ul style="left:-80px" class="dropdown-menu" role="menu">
+                                    <li>
+                                        <label><input data-column="0" checked type="checkbox"> 编码</label>
+                                    </li>
+                                    <li>
+                                        <label><input data-column="1" checked type="checkbox">岗位名称</label>
+                                    </li>
+                                    <li>
+                                        <label><input type="checkbox" checked data-column="2">所属部门</label>
+                                    </li>
+                                    <li>
+                                        <label><input type="checkbox" checked data-column="3"> 岗位描述</label>
+                                    </li>
+                                    <li>
+                                        <label><input data-column="4" checked type="checkbox">级别</label>
+                                    </li>
+                                </ul>
+                            </a>
+                       </div>
                      </span>
                 </header>
                 <div class="panel-body">
                     <form class="form-horizontal">
                         <!--条件行一-->
                         <div class="form-group">
-                            <label class="control-label col-sm-1">编码</label>
+                            <label for="code" class="control-label col-sm-1">编码</label>
                             <div class="col-sm-2">
-                                <input name="code" class="form-control" type="text" value="">
+                                <input id="code" name="code" class="form-control" type="text" value="">
                             </div>
-                            <label class="control-label col-sm-1">名称</label>
+                            <label for="name" class="control-label col-sm-1">名称</label>
                             <div class="col-sm-2">
-                                <input name="name" class="form-control" type="text" value="">
+                                <input id="name" name="name" class="form-control" type="text" value="">
                             </div>
-                            <label class="control-label col-sm-1">级别</label>
+                            <label for="level" class="control-label col-sm-1">级别</label>
                             <div class="col-sm-2">
-                                <select id="devel" name="level" class="form-control form-control-placeholder">
+                                <select id="level" name="level" class="form-control form-control-placeholder">
                                     <option value="" disabled selected hidden>请选择</option>
                                     <option value="0" style="color: black;">一级</option>
                                     <option value="1" style="color: black;">二级</option>
                                     <option value="2" style="color: black;">三级</option>
                                 </select>
                             </div>
-                            <label class="control-label col-sm-1">描述</label>
+                            <label for="description" class="control-label col-sm-1">描述</label>
                             <div class="col-sm-2">
-                                <input name="description" class="form-control" type="text" value="">
+                                <input id="description" name="description" class="form-control" type="text" value="">
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <div class="col-lg-9"></div>
-                            <div class="col-lg-3">
+                            <div class="col-lg-8"></div>
+                            <div class="col-lg-4">
                                 <div class="col-lg-3">
                                     <button type="button" id="search" class="btn btn-info">查询</button>
                                 </div>
-                                <div class="col-lg-4">
+                                <div class="col-lg-3">
                                     <button type="button" id="add" class="btn btn-info">新增岗位</button>
                                 </div>
-                                <div class="col-lg-5">
-                                    <button class="btn dropdown-toggle " data-toggle="dropdown">更多操作 <i
+                                <div class="col-lg-3">
+                                    <button class="btn dropdown-toggle " data-toggle="dropdown">更多 <i
                                             class="fa fa-angle-down"></i>
                                     </button>
                                     <ul class="dropdown-menu">
@@ -79,7 +113,7 @@
                         <th><i class="fa fa-bookmark"></i> 所属部门</th>
                         <th><i class=" fa fa-edit"></i> 岗位描述</th>
                         <th><i class=" fa fa-edit"></i> 级别</th>
-                        <th><i class=" fa fa-edit"></i> 操作</th>
+                        <th> 操作</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -163,6 +197,16 @@
                     params.asc = orderObj.asc
                 }
             },
+        });
+
+        $('#columnSetting input[type="checkbox"]').on('change', function (e) {
+            e.stopPropagation();
+            var columnIdx = $(this).data('column');
+            dataTable.column(columnIdx).visible($(this).prop('checked'));
+        });
+
+        $('#columnSetting ul.dropdown-menu').on('click', function (e) {
+            e.stopPropagation();
         });
 
         $('#search').on('click', function() {
