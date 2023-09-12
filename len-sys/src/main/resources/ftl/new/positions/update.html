@@ -7,29 +7,25 @@
             编辑岗位信息
         </header>
         <div class="panel-body">
-            <form action="#" class="form-horizontal" id="positionForm">
-                <div class="form-group">
-                    <label class="required col-lg-2 col-sm-2 control-label" for="code">编码 *</label>
-                    <div class="col-lg-10">
-                        <input class="form-control" id="code" name="code" placeholder="编码" required type="text">
+            <form action="#" id="positionForm">
+                <div class="form-row  mt-5">
+                    <div class="col-md-6 form-group">
+                        <label for="code" class="required">编码 *</label>
+                        <input type="text" class="form-control" id="code" name="code" placeholder="编码" required>
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label for="name">名称 *</label>
+                        <input type="text" class="form-control" id="name" name="name" placeholder="名称" required>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label class="col-lg-2 col-sm-2 control-label" for="name">名称 *</label>
-                    <div class="col-lg-10">
-                        <input class="form-control" id="name" name="name" placeholder="名称" required type="text">
+                <div class="form-row  mt-5">
+                    <div class="col-md-6 form-group">
+                        <label for="departmentId">所属部门</label>
+                        <input type="text" class="form-control" id="departmentId" name="departmentId"
+                               placeholder="所属部门">
                     </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-lg-2 col-sm-2 control-label" for="departmentId">所属部门</label>
-                    <div class="col-lg-10">
-                        <input class="form-control" id="departmentId" name="departmentId" placeholder="所属部门"
-                               type="text">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-lg-2 col-sm-2 control-label" for="level">职级</label>
-                    <div class="col-lg-10">
+                    <div class="col-md-6 form-group">
+                        <label for="level">职级</label>
                         <select id="level" name="level" class="form-control form-control-placeholder">
                             <option value="" disabled selected hidden>请选择</option>
                             <option value="0" style="color: black;">一级</option>
@@ -38,25 +34,21 @@
                         </select>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label class="col-lg-2 col-sm-2 control-label" for="description">描述</label>
-                    <div class="col-lg-10">
-                        <input class="form-control" id="description" name="description" placeholder="描述" type="text">
-                    </div>
+                <div class="col-md-12 form-group">
+                    <label for="description">描述</label>
+                    <input class="form-control" id="description" name="description" placeholder="描述" type="text">
                 </div>
                 <div class="form-group">
-                    <div class="col-lg-24">
-                        <div class="row">
-                            <div class="col-lg-4">
-                            </div>
-                            <div class="col-lg-2">
-                                <button class="btn btn-info" id="positionEdit">保存</button>
-                            </div>
-                            <div class="col-lg-2">
-                                <button class="btn btn-danger" id="close" type="submit">关闭</button>
-                            </div>
-                            <div class="col-lg-4">
-                            </div>
+                    <div class="row">
+                        <div class="col-lg-4">
+                        </div>
+                        <div class="col-lg-2">
+                            <button class="btn btn-info" id="positionEdit">保存</button>
+                        </div>
+                        <div class="col-lg-2">
+                            <button class="btn btn-danger" id="close" type="submit">关闭</button>
+                        </div>
+                        <div class="col-lg-4">
                         </div>
                     </div>
                 </div>

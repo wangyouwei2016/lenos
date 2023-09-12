@@ -21,6 +21,12 @@
     });
 
 
+    //获取浏览器高度
+    var windowHeight = $(window).height();
+    console.log(windowHeight-108-48)
+    $('.wrapper').css('min-height',`${windowHeight-108-48}px`)
+
+
 })(jQuery);
 
 
