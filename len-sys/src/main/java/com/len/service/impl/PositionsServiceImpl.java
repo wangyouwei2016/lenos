@@ -17,6 +17,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 public class PositionsServiceImpl extends ServiceImpl<SysPositionsMapper, SysPositions> implements PositionsService {
 
@@ -36,22 +38,19 @@ public class PositionsServiceImpl extends ServiceImpl<SysPositionsMapper, SysPos
             if (StringUtils.isNotBlank(positions.getCode())) {
                 queryWrapper.like("code", positions.getCode());
             }
-            if (StringUtils.isNotBlank(positions.getName())) {
-                queryWrapper.like("name", positions.getName());
-            }
-            if (positions.getLevel() != null) {
-                queryWrapper.like("level", positions.getLevel());
-            }
-            if (StringUtils.isNotBlank(positions.getDescription())) {
-                queryWrapper.like("description", positions.getDescription());
-            }
         }
 
         if (sort != null && StringUtils.isNotBlank(sort.getColumn())) {
             page.addOrder(sort);
         }
 
-        return positionsMapper.selectPage(page, queryWrapper);
+        IPage<SysPositions> sysPositionsIPage = positionsMapper.selectPage(page, queryWrapper);
+        List<SysPositions> records = sysPositionsIPage.getRecords();
+        for (SysPositions record : records) {
+            //其他操作
+        }
+
+        return sysPositionsIPage;
     }
 
     @Override

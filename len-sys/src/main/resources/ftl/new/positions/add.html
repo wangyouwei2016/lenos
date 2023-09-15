@@ -1,13 +1,11 @@
-<style>
-
-</style>
+<#include "/new/main/form-head.html">
 <div>
     <section class="panel">
         <header class="panel-heading">
             新增岗位信息
         </header>
         <div class="panel-body">
-            <form id="positionForm" action="#">
+            <form id="positionFormAdd" action="#">
                 <div class="form-row  mt-5">
                     <div class="col-md-6 form-group">
                         <label for="code" class="required">编码 *</label>
@@ -56,21 +54,21 @@
         </div>
     </section>
 </div>
-
+<#include "/new/main/form-foot.html">
 <script>
     $(document).ready(function () {
-        var options = $('#position-add').attr('data-options');
+        var options = $('#position-add', window.parent.document).attr('data-options');
         options = JSON.parse(options);
 
         //关闭 close
         $('#close').on('click', function () {
-            lenosp.tabs.remove(options.code);
+            window.parent.lenosp.tabs.remove(options.code);
         })
 
         //新增 add
         $('#positionAdd').on('click', function (event) {
             event.preventDefault();
-            var form = $('#positionForm');
+            var form = $('#positionFormAdd');
 
             var valid = form.valid();
 
@@ -82,7 +80,7 @@
 
             $.ajax({
                 type: "POST",
-                url: "api/positions",
+                url: "/api/positions",
                 contentType: "application/json",
                 data: JSON.stringify(data),
                 success: function (response) {
@@ -95,8 +93,8 @@
                             url: '/positions/update',
                             id : response.data.id
                         }
-                        lenosp.tabs.remove(options.code);
-                        lenosp.tabs.add(data, true);
+                        window.parent.lenosp.tabs.add(data, true);
+                        window.parent.lenosp.tabs.remove(options.code);
                         toastr.success('新增成功！');
                     } else {
                         console.error("Form submission error:", response);

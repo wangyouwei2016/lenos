@@ -60,16 +60,6 @@ public class DashboardController extends BaseController {
         return succ();
     }
 
-    /**
-     * 展示面板
-     * 
-     * @return
-     */
-    @GetMapping
-    public String main() {
-        return "/new/main/dashboard";
-    }
-
     @GetMapping("/shortCuts")
     @ResponseBody
     public LenResponse getShortCuts() {

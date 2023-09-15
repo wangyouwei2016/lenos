@@ -34,6 +34,7 @@
     <!--[if lt IE 9]>
     <script src="${re.contextPath}/plugin/new/js/html5shiv.js"></script>
     <script src="${re.contextPath}/plugin/new/js/respond.min.js"></script>
+    <script src="${re.contextPath}/plugin/new/load.css"></script>
     <![endif]-->
 </head>
 
@@ -371,14 +372,14 @@
         </section>
     </section>
 
-    <footer class="site-footer">
+    <#--<footer class="site-footer">
         <div class="text-center">
             2023 &copy; lenosp.
             <a href="#" class="go-top">
                 <i class="fa fa-angle-up"></i>
             </a>
         </div>
-    </footer>
+    </footer>-->
 
 </section>
 
@@ -436,6 +437,7 @@
 <script src="${re.contextPath}/plugin/new/assets/data-tables/DT_bootstrap.js"></script>
 <#--主入口组件-->
 <script src="${re.contextPath}/plugin/new/main.js"></script>
+<script src="${re.contextPath}/plugin/new/load.js"></script>
 
 
 <script>

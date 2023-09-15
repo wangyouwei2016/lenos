@@ -532,4 +532,4 @@
 
     };
     lenosp.tabs = tabs;
-})(jQuery, lenosp);
+})(jQuery, window.lenosp);
