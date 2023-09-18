@@ -12,7 +12,6 @@
 
     <name>len-activiti</name>
     <url>https://gitee.com/zzdevelop/lenosp</url>
-    <!-- <packaging>war</packaging>-->
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

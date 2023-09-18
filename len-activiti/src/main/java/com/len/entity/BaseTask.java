@@ -4,165 +4,213 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * Created by kingdee-001 on 2018/6/30.
+ * 基础任务类 （不可直接实例化）
+ *
+ * @author kingdee-001
+ * @date 2018/6/30
  */
 public abstract class BaseTask implements Serializable {
 
+    /**
+     * 任务id
+     */
     protected String id;
+
+    /**
+     * 用户id
+     */
     protected String userId;
+
+    /**
+     * 用户名称
+     */
     protected String userName;
+
+    /**
+     * act流程实例id
+     */
     protected String processInstanceId;
+
+    /**
+     * 状态说明
+     */
     protected String status;
+
+    /**
+     * 创建时间
+     */
     protected Date createDate;
+
+    /**
+     * 创建者
+     */
     protected String createBy;
+
+    /**
+     * 更新日期
+     */
     protected Date updateDate;
+
+    /**
+     * 更新者
+     */
     protected String updateBy;
+
+    /**
+     * 原因
+     */
     protected String reason;
-    // ***实时节点信息
+
+    /**
+     * act任务名称
+     */
     protected String taskName;
+
+    /**
+     * 流程查看地址
+     */
     private String urlpath;
+
+    /**
+     * 提交时间
+     */
     private Integer submittimes;
 
     /**
-     * @return id
+     * 获取id
+     * 
+     * @return 任务id
      */
     public String getId() {
         return id;
     }
 
-    /**
-     * @param id
-     */
     public void setId(String id) {
         this.id = id == null ? null : id.trim();
     }
 
     /**
-     * @return user_id
+     * 获取用户id
+     * 
+     * @return 用户id
      */
     public String getUserId() {
         return userId;
     }
 
-    /**
-     * @param userId
-     */
     public void setUserId(String userId) {
         this.userId = userId == null ? null : userId.trim();
     }
 
     /**
-     * @return user_name
+     * 获取用户名称
+     * 
+     * @return 用户名称
      */
     public String getUserName() {
         return userName;
     }
 
-    /**
-     * @param userName
-     */
     public void setUserName(String userName) {
         this.userName = userName == null ? null : userName.trim();
     }
 
     /**
-     * @return reason
+     * 获取原因
+     * 
+     * @return 原因
      */
     public String getReason() {
         return reason;
     }
 
-    /**
-     * @param reason
-     */
     public void setReason(String reason) {
         this.reason = reason == null ? null : reason.trim();
     }
 
     /**
-     * @return process_instance_Id
+     * 获取流程实例id
+     * 
+     * @return 流程实例id
      */
     public String getProcessInstanceId() {
         return processInstanceId;
     }
 
-    /**
-     * @param processInstanceId
-     */
     public void setProcessInstanceId(String processInstanceId) {
         this.processInstanceId = processInstanceId == null ? null : processInstanceId.trim();
     }
 
     /**
-     * @return status
+     * 获取状态信息
+     * 
+     * @return 状态
      */
     public String getStatus() {
         return status;
     }
 
-    /**
-     * @param status
-     */
     public void setStatus(String status) {
         this.status = status == null ? null : status.trim();
     }
 
     /**
-     * @return create_date
+     * 获取创建时间
+     * 
+     * @return 创建时间
      */
     public Date getCreateDate() {
         return createDate;
     }
 
-    /**
-     * @param createDate
-     */
     public void setCreateDate(Date createDate) {
         this.createDate = createDate;
     }
 
     /**
-     * @return create_by
+     * 获取创建者
+     * 
+     * @return 创建者
      */
     public String getCreateBy() {
         return createBy;
     }
 
-    /**
-     * @param createBy
-     */
     public void setCreateBy(String createBy) {
         this.createBy = createBy == null ? null : createBy.trim();
     }
 
     /**
-     * @return update_date
+     * 获取更新时间
+     * 
+     * @return 更新时间
      */
     public Date getUpdateDate() {
         return updateDate;
     }
 
-    /**
-     * @param updateDate
-     */
     public void setUpdateDate(Date updateDate) {
         this.updateDate = updateDate;
     }
 
     /**
-     * @return update_by
+     * 获取更新者
+     * 
+     * @return 更新者
      */
     public String getUpdateBy() {
         return updateBy;
     }
 
-    /**
-     * @param updateBy
-     */
     public void setUpdateBy(String updateBy) {
         this.updateBy = updateBy == null ? null : updateBy.trim();
     }
 
+    /**
+     * 获取act任务名城
+     * 
+     * @return 任务名称
+     */
     public String getTaskName() {
         return taskName;
     }
@@ -171,6 +219,11 @@ public abstract class BaseTask implements Serializable {
         this.taskName = taskName;
     }
 
+    /**
+     * 获取任务查看地址
+     * 
+     * @return 任务查看地址
+     */
     public String getUrlpath() {
         return urlpath;
     }
@@ -179,10 +232,20 @@ public abstract class BaseTask implements Serializable {
         this.urlpath = urlpath;
     }
 
+    /**
+     * 获取提交时间
+     * 
+     * @return 提交时间
+     */
     public Integer getSubmittimes() {
         return submittimes;
     }
 
+    /**
+     * 设置 提交时间
+     * 
+     * @param submittimes 提交时间
+     */
     public void setSubmittimes(Integer submittimes) {
         this.submittimes = submittimes;
     }

@@ -9,31 +9,81 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
+/**
+ * 请假流程 表实体
+ * 
+ * @author <a href="https://gitee.com/zzdevelop/lenosp">lenosp</a>
+ */
 @TableName(value = "user_leave")
 public class UserLeave extends BaseTask {
 
+    /**
+     * 主键
+     */
     @TableId(value = "id", type = IdType.UUID)
-    protected String id;
+    private String id;
+
+    /**
+     * 请假天数
+     */
     private Integer days;
+
+    /**
+     * 请假开始时间
+     */
     @TableField(value = "begin_time")
     private Date beginTime;
+
+    /**
+     * 请假介绍时间
+     */
     @TableField(value = "end_time")
     private Date endTime;
+
+    /**
+     * act流程实例id
+     */
     @TableField(value = "process_instance_Id")
     private String processInstanceId;
+
+    /**
+     * 状态信息
+     */
     private String status;
+
+    /**
+     * 创建时间
+     */
     @TableField(value = "create_date")
     private Date createDate;
+
+    /**
+     * 创建者
+     */
     @TableField(value = "create_by")
     private String createBy;
+
+    /**
+     * 更新时间
+     */
     @TableField(value = "update_date")
     private Date updateDate;
+
+    /**
+     * 更新者
+     */
     @TableField(value = "update_by")
     private String updateBy;
-    // ***实时节点信息
+
+    /**
+     * act实时节点信息
+     */
     @TableField(exist = false)
     private String taskName;
-    // 请假单审核信息
+
+    /**
+     * 请假单审核信息
+     */
     @TableField(exist = false)
     private List<LeaveOpinion> opinionList = new ArrayList<>();
 
@@ -45,9 +95,6 @@ public class UserLeave extends BaseTask {
         return id;
     }
 
-    /**
-     * @param id
-     */
     @Override
     public void setId(String id) {
         this.id = id == null ? null : id.trim();
@@ -69,16 +116,10 @@ public class UserLeave extends BaseTask {
         this.opinionList = opinionList;
     }
 
-    /**
-     * @return days
-     */
     public Integer getDays() {
         return days;
     }
 
-    /**
-     * @param days
-     */
     public void setDays(Integer days) {
         this.days = days;
     }
@@ -98,4 +139,5 @@ public class UserLeave extends BaseTask {
     public void setEndTime(Date endTime) {
         this.endTime = endTime;
     }
+
 }
