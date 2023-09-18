@@ -64,9 +64,9 @@ public class UserController extends BaseController {
     public Result<IPage<SysUser>> getAllByPage(
             @RequestParam(defaultValue = "1") Integer pageNum,
             @RequestParam(defaultValue = "10") Integer pageSize,
-            SysUser sysUser, OrderItem sort) throws InterruptedException {
+            SysUser sysUser, OrderItem sort) {
         return Result.ok(
-                userService.getAllUserByPage(new com.baomidou.mybatisplus.extension.plugins.pagination.Page<SysUser>(pageNum, pageSize), sysUser, sort)
+                userService.getAllUserByPage(new com.baomidou.mybatisplus.extension.plugins.pagination.Page<>(pageNum, pageSize), sysUser, sort)
         );
     }
 

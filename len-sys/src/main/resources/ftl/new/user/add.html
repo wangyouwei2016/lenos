@@ -1,6 +1,4 @@
-﻿<style>
-
-</style>
+﻿<#include "/new/main/form-head.html">
 <div>
     <section class="panel">
         <header class="panel-heading">
@@ -62,7 +60,7 @@
                             <div class="col-lg-4">
                             </div>
                             <div class="col-lg-2">
-                                <button id="positionAdd" class="btn btn-info">新增</button>
+                                <button id="userAdd" class="btn btn-info">新增</button>
                             </div>
                             <div class="col-lg-2">
                                 <button type="submit" id="close" class="btn btn-danger">关闭</button>
@@ -76,10 +74,10 @@
         </div>
     </section>
 </div>
-
+<#include "/new/main/form-foot.html">
 <script>
     $(document).ready(function () {
-        var options = $('#position-add').attr('data-options');
+        var options = $('#user-add').attr('data-options');
         options = JSON.parse(options);
 
         //关闭 close
@@ -88,7 +86,7 @@
         })
 
         //新增 add
-        $('#positionAdd').on('click', function (event) {
+        $('#userAdd').on('click', function (event) {
             event.preventDefault();
             var form = $('#userForm');
 
@@ -108,15 +106,15 @@
                 success: function (response) {
                     if (response.success === true) {
 
-                       /* var data = {
-                            code: 'employeeList',
+                       var data = {
+                            code: 'user-edit',
                             name: '用户管理',
                             icon: 'fa-home',
-                            url: '/user/list',
+                            url: '/user/update',
                             id: response.data.id
-                        }*/
-                        lenosp.tabs.remove(options.code);
-                        lenosp.tabs.add(data, true);
+                        }
+                        window.parent.lenosp.tabs.add(data, true);
+                        window.parent.lenosp.tabs.remove(options.code);
                         toastr.success('新增成功！');
                     } else {
                         console.error("Form submission error:", response);
@@ -147,7 +145,7 @@
 
         $('#departmentId').dropdownTable({
             ajax: {
-                url: '/user/getAllByPage',
+                url: '/user',
                 dataSrc: 'data.records',
                 "data": function (d) {
                 },
