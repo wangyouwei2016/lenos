@@ -460,4 +460,4 @@
 
 
     lenosp.dashboard = dashboard;
-})(jQuery, lenosp);
+})(jQuery, window.parent.lenosp);

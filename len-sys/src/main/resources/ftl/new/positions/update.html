@@ -1,6 +1,4 @@
-<style>
-
-</style>
+<#include "/new/main/form-head.html">
 <div>
     <section class="panel">
         <header class="panel-heading">
@@ -56,23 +54,24 @@
         </div>
     </section>
 </div>
-
+<#include "/new/main/form-foot.html">
 <script>
     $(document).ready(function () {
-        var options = $('#position-edit').attr('data-options');
+        var options = $('#position-edit', window.parent.document).attr('data-options');
         options = JSON.parse(options);
 
         //关闭 close
         $('#close').on('click', function () {
-            lenosp.tabs.remove(options.code);
+            window.parent.lenosp.tabs.remove(options.code);
         })
 
         //加载数据
         $(function () {
             $.ajax({
                 type: "GET",
-                url: "api/positions/" + options.id,
+                url: "/api/positions/" + options.id,
                 success: function (response) {
+                    console.log(response)
                     if (response.success === true) {
                         var data = response.data;
                         $('#positionForm').find(':input').each(function () {

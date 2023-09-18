@@ -1,3 +1,5 @@
+
+<#include "/new/main/grid-head.html">
 <style>
     .dataTables_length, .dataTables_filter {
         padding: 5px;
@@ -17,10 +19,8 @@
         cursor: pointer;
     }
 
-
 </style>
 <div id="positionsList">
-    <div class="row">
         <div class="col-lg-12">
             <section class="panel">
                 <!--列表标题-->
@@ -30,11 +30,11 @@
                         <div class="col-lg-6 tools pull-right">
                             <a class="fa fa-chevron-down" href="javascript:;"></a>
                         </div>
-                       <div id="columnSetting" class="col-lg-6" style="cursor: pointer">
+                        <div id="columnSetting" class="col-lg-6" style="cursor: pointer">
                             <a style="position: absolute">
                                 <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                <i class="fa fa-bars"></i>
-                            </a>
+                                    <i class="fa fa-bars"></i>
+                                </a>
                                 <ul style="left:-80px" class="dropdown-menu" role="menu">
                                     <li>
                                         <label><input data-column="0" checked type="checkbox"> 编码</label>
@@ -53,8 +53,8 @@
                                     </li>
                                 </ul>
                             </a>
-                       </div>
-                     </div>
+                        </div>
+                    </div>
                 </header>
                 <!--搜索条件-->
                 <div class="panel-body">
@@ -124,10 +124,9 @@
                 <div class="table-cards"></div>
             </section>
         </div>
-    </div>
 </div>
 
-
+<#include "/new/main/grid-foot.html">
 <script>
     $(document).ready(function () {
 
@@ -172,8 +171,8 @@
                     data: null,
                     orderable: false,
                     render: function (data, type, row) {
-                        return `<button class="btn btn-primary btn-xs edit-btn" data-id="${row.id}"><i class="fa fa-pencil"></i></button>  `
-                            + `<button class="btn btn-danger btn-xs delete-btn" data-id="${row.id}"><i class="fa fa-trash-o "></i></button>`
+                        return '<button class="btn btn-primary btn-xs edit-btn" data-id='+row.id+'><i class="fa fa-pencil"></i></button>  '
+                            + '<button class="btn btn-danger btn-xs delete-btn" data-id='+row.id+'><i class="fa fa-trash-o "></i></button>'
                     }
                 }
             ],
@@ -229,7 +228,7 @@
                 url:'/positions/add',
 
             }
-            lenosp.tabs.add(data, true);
+            window.parent.lenosp.tabs.add(data, true);
         });
 
         /*编辑事件*/
@@ -242,11 +241,11 @@
                 url: '/positions/update',
                 id : id
             };
-            lenosp.tabs.remove('position-edit');
-            lenosp.tabs.add(data, true);
+            window.parent.lenosp.tabs.remove('position-edit');
+            window.parent.lenosp.tabs.add(data, true);
         });
 
-       /*删除事件*/
+        /*删除事件*/
         dataTable.on('click', '.delete-btn', function () {
             var id = $(this).data('id');
             del(id);
@@ -257,7 +256,7 @@
             if (confirm("确定要删除吗？")) {
                 $.ajax({
                     type: "POST",
-                    url: "api/positions/delete/" + id,
+                    url: "/api/positions/delete/" + id,
                     success: function (response) {
                         dataTable.ajax.reload();
                     },
@@ -270,5 +269,3 @@
         };
     });
 </script>
-
-
