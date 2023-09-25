@@ -26,8 +26,8 @@ window.lenosp = {};
 
         _load: function (option) {
             var that = this;
-           // var htmlStr = that.loadHtml(option.url),
-            var   _content = $('.wrapper .content');
+
+            var  _content = $('.wrapper .content');
             _content.find('div[code]').each(function () {
                 $(this).hide();
             });
@@ -37,21 +37,26 @@ window.lenosp = {};
                     $(this).show();
                 });
             } else {
-                var windowHeight = $(window).height();
-                const $iframe = $('<iframe>', {
-                    id: 'myIframe',
-                    width: '100%',
-                    height: windowHeight - 108 - 48,
-                    src: option.url
-                });
+                var htmlStr;
+                if (option.code === 'dashboard') {
+                    //主面板用div
+                    htmlStr = that.loadHtml(option.url);
+                } else {
+                    htmlStr = $('<iframe>', {
+                        id: 'myIframe',
+                        width: '100%',
+                        height: $(window).height() - 108 - 48,
+                        src: option.url
+                    });
 
-                $iframe.css('border', 0);
+                    htmlStr.css('border', 0);
+                }
 
                 var wrapperDiv = $('<div>')
                     .attr('id', option.code)
                     .attr('code', option.code)
                     .attr('data-options', JSON.stringify(option))
-                    .html($iframe);
+                    .html(htmlStr);
                 _content.append(wrapperDiv);
             }
 
@@ -82,11 +87,10 @@ window.lenosp = {};
             }
             var result;
             $.ajax({
-                url: 'api/positions/list',//newPath,
+                url: newPath,
                 async: false,
                 dataType: 'html',
                 beforeSend: function (request) {
-                    // request.setRequestHeader("IsGetHtml", 'true');
                 },
                 error: function (xhr, err, msg) {
                     var m = ['<div style="padding: 20px;font-size: 20px;text-align:left;color:#009688;">',
