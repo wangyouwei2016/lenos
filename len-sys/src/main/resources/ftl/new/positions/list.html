@@ -108,18 +108,6 @@
                 </div>
                 <!--列表主体-->
                 <table class="table table-striped table-advance table-hover" id="employeeList">
-                    <thead>
-                    <tr>
-                        <th><i class="fa fa-bullhorn"></i> 编码</th>
-                        <th><i class="fa fa-question-circle"></i> 岗位名称</th>
-                        <th><i class="fa fa-bookmark"></i> 所属部门</th>
-                        <th><i class=" fa fa-edit"></i> 岗位描述</th>
-                        <th><i class=" fa fa-edit"></i> 级别</th>
-                        <th> 操作</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
                 </table>
                 <div class="table-cards"></div>
             </section>
@@ -138,6 +126,15 @@
             }
             return null;
         };
+
+        var column = [
+            {data: 'code', title: '<i class="fa fa-bullhorn"></i> 编码'},
+            {data: 'name', title: '<i class="fa fa-question-circle"></i> 岗位名称'},
+            {data: 'departmentId', title: '<i class="fa fa-bookmark"></i> 所属部门'},
+            {data: 'description', title: '<i class=" fa fa-edit"></i> 岗位描述'},
+            {data: 'level', title: '<i class=" fa fa-edit"></i> 级别'},
+            {data: 'updateDate', "visible": false},
+        ]
 
         /*加载列表数据*/
         var dataTable = $('#employeeList').DataTable({
@@ -161,21 +158,16 @@
                 complete: function () {
                 },
             },
-            columns: [
-                {data: 'code', column: 'code', orderable: true},
-                {data: 'name', column: 'name'},
-                {data: 'departmentId', column: "department_id"},
-                {data: 'description', column: 'description'},
-                {data: 'level', column: 'level'},
-                {
+            "order": [[5, 'desc']],
+            columns: column.concat({
                     data: null,
                     orderable: false,
+                    title:'<th> 操作</th>',
                     render: function (data, type, row) {
                         return '<button class="btn btn-primary btn-xs edit-btn" data-id='+row.id+'><i class="fa fa-pencil"></i></button>  '
                             + '<button class="btn btn-danger btn-xs delete-btn" data-id='+row.id+'><i class="fa fa-trash-o "></i></button>'
                     }
-                }
-            ],
+                }),
             "paging": true,
             "pageLength": 10,
             "bFilter": false,

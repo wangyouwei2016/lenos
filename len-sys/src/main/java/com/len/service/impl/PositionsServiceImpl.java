@@ -38,9 +38,19 @@ public class PositionsServiceImpl extends ServiceImpl<SysPositionsMapper, SysPos
             if (StringUtils.isNotBlank(positions.getCode())) {
                 queryWrapper.like("code", positions.getCode());
             }
+            if (StringUtils.isNotBlank(positions.getName())) {
+                queryWrapper.like("name", positions.getName());
+            }
+            if (positions.getLevel() != null) {
+                queryWrapper.like("level", positions.getLevel());
+            }
+            if (StringUtils.isNotBlank(positions.getDescription())) {
+                queryWrapper.like("description", positions.getDescription());
+            }
         }
 
         if (sort != null && StringUtils.isNotBlank(sort.getColumn())) {
+            sort.setColumn(SysPositions.getColumn(sort.getColumn()));
             page.addOrder(sort);
         }
 

@@ -103,7 +103,7 @@
             data.id = id;
             $.ajax({
                 type: "POST",
-                url: "api/positions/" + id,
+                url: "/api/positions/" + id,
                 contentType: "application/json",
                 data: JSON.stringify(data),
                 success: function (response) {

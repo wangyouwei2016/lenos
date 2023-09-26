@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.len.base.BaseEntity;
 import lombok.Data;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.validation.constraints.NotBlank;
 
@@ -31,4 +32,19 @@ public class SysPositions extends BaseEntity {
 
     @TableField
     private Integer level;
+
+    public static String getColumn(String columnData) {
+        if (StringUtils.isEmpty(columnData)) {
+            return "";
+        }
+        switch (columnData) {
+            case "departmentId":
+                return "department_id";
+            case "createDate":
+                return "create_date";
+            case "updateDate":
+                return "update_date";
+        }
+        return columnData;
+    }
 }
