@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 
 import com.len.base.BaseMapper;
 import com.len.entity.SysMenu;
+import org.apache.ibatis.annotations.Select;
 
 /**
  * 菜单 mapper

@@ -1,0 +1,115 @@
+
+<#include "/new/main/grid-head.html">
+<link rel="stylesheet" type="text/css" href="/plugin/new/css/tree/metroStyle/metroStyle.css" />
+<div id="positionsList">
+        <div class="col-lg-3">
+            <section class="panel">
+                <!--列表标题-->
+                <header class="panel-heading">
+                    菜单信息
+                    <div class="tools pull-right">
+                        <div class="col-lg-6 tools pull-right">
+                            <a class="fa fa-chevron-down" href="javascript:;"></a>
+                        </div>
+                    </div>
+                </header>
+                <div class="panel-body"  style="min-height: 400px">
+                    <ul id="treeDemo" class="ztree"></ul>
+                </div>
+            </section>
+        </div>
+    <div class="col-lg-9">
+        <section class="panel">
+            <!--列表标题-->
+            <header class="panel-heading">
+                编辑
+                <div class="tools pull-right">
+                    <div class="col-lg-6 tools pull-right">
+                        <a class="fa fa-chevron-down" href="javascript:;"></a>
+                    </div>
+                </div>
+            </header>
+            <div class="panel-body" style="height: 400px">
+                <form id="positionFormAdd" action="#">
+                    <div class="form-row  mt-5">
+                        <div class="col-md-6 form-group">
+                            <label for="code" class="required">类型 *</label>
+                            <input type="text" class="form-control" id="code" name="code" placeholder="类型" required>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label for="pId">父级菜单 *</label>
+                            <input type="text" class="form-control" id="pId" name="pId" placeholder="父级菜单" required>
+                        </div>
+                    </div>
+                    <div class="form-row  mt-5">
+                        <div class="col-md-6 form-group">
+                            <label for="name" class="required">名称 *</label>
+                            <input type="text" class="form-control" id="name" name="name" placeholder="名称" required>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label for="url">URL *</label>
+                            <input type="text" class="form-control" id="url" name="url" placeholder="URL" required>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </div>
+</div>
+
+<#include "/new/main/grid-foot.html">
+<script src="/plugin/new/js/ztree.js"></script>
+<script>
+
+
+
+
+    $(document).ready(function(){
+
+
+        var refreshData = function (id) {
+            $.ajax({
+                type: "GET",
+                url: "/api/menu/"+id,
+                contentType: "application/json",
+                success: function (response) {
+                    var data = response.data;
+                    $('#code').val(data.code);
+                    $('#pId').val(data.pId);
+                    $('#name').val(data.name);
+                    $('#url').val(data.url);
+
+                },
+                error: function (error) {
+                    console.error("Form submission error:", error);
+                }
+            });
+        }
+
+        var setting = {
+            data: {
+                simpleData: {
+                    enable: true
+                }
+            },
+            callback:{
+                onClick:function(event, treeId, treeNode){
+                    refreshData(treeNode.id);
+                }
+            }
+        };
+
+
+        $.ajax({
+            type: "GET",
+            url: "/api/menu",
+            contentType: "application/json",
+            success: function (response) {
+                $.fn.zTree.init($("#treeDemo"), setting, response.data);
+            },
+            error: function (error) {
+                console.error("Form submission error:", error);
+            }
+        });
+    });
+</script>
